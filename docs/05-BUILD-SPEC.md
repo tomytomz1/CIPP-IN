@@ -13,7 +13,8 @@ This document distinguishes three kinds of items:
 | Label | Meaning |
 |---|---|
 | **LOCKED** | Operator-approved architectural decision. Change only with explicit operator approval, logged in `01-CURRENT-STATE.md` → Last Major Decisions. |
-| **IMPLEMENTATION PENDING** | Locked architecture that has not been built. No application code, package, infrastructure, account, or deployment exists yet. |
+| **IMPLEMENTATION PENDING** | Locked architecture that has not been built yet. |
+| **IMPLEMENTED (Phase 2A)** / **PARTIALLY IMPLEMENTED (Phase 2A)** | Built and tested in the repository (see Implementation Record: Phase 2A). Not deployed; no cloud or vendor resources exist. |
 | **OPEN** | Legal, business, or operational question that is still unresolved. Must not be decided silently by an agent. |
 
 Implementation-level details that this spec leaves unspecified (exact file names, library versions, header values, table column names) may be decided during the build. Record them in the run receipt and, if material, in this document. They must preserve every LOCKED requirement below.
@@ -47,7 +48,7 @@ Do not write current third-party prices into permanent requirements. Any price u
 
 ---
 
-## Approved Stack — LOCKED (IMPLEMENTATION PENDING)
+## Approved Stack — LOCKED (PARTIALLY IMPLEMENTED — Phase 2A: Astro, TypeScript, Cloudflare adapter/config, Zod records)
 
 | Concern | Choice | Notes |
 |---|---|---|
@@ -67,9 +68,9 @@ Do not write current third-party prices into permanent requirements. Any price u
 
 ---
 
-## Repository Structure — LOCKED at responsibility level (IMPLEMENTATION PENDING)
+## Repository Structure — LOCKED at responsibility level (PARTIALLY IMPLEMENTED — Phase 2A)
 
-Current contents: `AGENTS.md`, `CLAUDE.md`, `docs/`, `research/` (JSON evidence), `logs/` (run audit trail). No application code.
+Current contents: `AGENTS.md`, `CLAUDE.md`, `docs/`, `research/` (JSON evidence), `logs/` (run audit trail), and the Phase 2A application foundation. Paths chosen in Phase 2A are listed in Implementation Record: Phase 2A.
 
 Intended future organization. Responsibilities are locked; exact folder names are **not** locked unless stated, and are decided at build time following Astro conventions.
 
@@ -109,7 +110,7 @@ AI coding agents normally work by branch / pull request, not by unrestricted dir
 
 Observed 2026-09-19 12:58 EDT (via GitHub API): `main` is **not protected** and the repository has **no rulesets**. This is acceptable for documentation-only work and must be fixed before production publishing.
 
-## Environment Variables / Secrets — LOCKED principles (IMPLEMENTATION PENDING)
+## Environment Variables / Secrets — LOCKED principles (PARTIALLY IMPLEMENTED — Phase 2A)
 
 - Secrets are never committed.
 - Use Cloudflare/Wrangler secret management for Worker secrets (e.g., Resend, Twilio, OpenAI, Turnstile secret keys).
@@ -158,7 +159,7 @@ Every page has a publication record (see Publication / Indexing Architecture) th
 
 ---
 
-## Content / Editorial Storage — LOCKED (IMPLEMENTATION PENDING)
+## Content / Editorial Storage — LOCKED (PARTIALLY IMPLEMENTED — Phase 2A: structured records; no page bodies yet)
 
 - **Git is the initial CMS.**
 - Public page bodies: Markdown / MDX.
@@ -166,7 +167,7 @@ Every page has a publication record (see Publication / Indexing Architecture) th
 - Git must preserve changes, attribution, review history, diffability, AI-agent handoff, evidence records, and publication-gate state.
 - A CMS may be reconsidered only if human editorial throughput actually becomes a bottleneck, and only with operator approval.
 
-## Publication / Indexing Architecture — LOCKED (IMPLEMENTATION PENDING)
+## Publication / Indexing Architecture — LOCKED (IMPLEMENTED — Phase 2A)
 
 **Public availability and Google indexability are separate states.**
 
@@ -207,18 +208,18 @@ indexable = hard_gates_passed
 - Operator index approval is a separate governance requirement, held in an operator-controlled, CODEOWNERS-protected registry (see Branch / Index Governance).
 - This calculation implements the Indexing Gate in `03-GOOGLE-RESILIENCE.md` plus the operator-approval requirement. It never replaces or relaxes that gate.
 
-## Sitemap — LOCKED (IMPLEMENTATION PENDING)
+## Sitemap — LOCKED (IMPLEMENTED — Phase 2A)
 
 Include only effectively `indexable` canonical URLs. `draft`, `review`, `published_noindex`, and `index_candidate` URLs never appear in the production XML sitemap. Only the production canonical site is submitted to Search Console.
 
-## Robots — LOCKED (IMPLEMENTATION PENDING)
+## Robots — LOCKED (IMPLEMENTED — Phase 2A)
 
 - Draft pages are not shipped publicly by default.
 - Public pages that have not passed the indexing gates emit `noindex`.
 - `robots.txt` blocking is not a substitute for `noindex`.
 - Preview environments are globally non-indexable.
 
-## Canonicals — LOCKED (IMPLEMENTATION PENDING)
+## Canonicals — LOCKED (IMPLEMENTED — Phase 2A; no production origin configured)
 
 Canonicals are generated centrally from route/page configuration. No ad hoc per-page canonical strings.
 
@@ -337,7 +338,7 @@ Use a Domain property, preferably verified through DNS, once the domain is regis
 
 ---
 
-## Performance Budget — LOCKED (testable in CI once implemented)
+## Performance Budget — LOCKED (build-time checks IMPLEMENTED — Phase 2A; field CWV after launch)
 
 **Core Web Vitals (mobile, p75):** LCP ≤ 2.0 s; CLS ≤ 0.05; INP ≤ 150 ms.
 
@@ -358,7 +359,7 @@ Use a Domain property, preferably verified through DNS, once the domain is regis
 - Lead/form pages: may additionally load Turnstile.
 - Not at launch without a justified requirement: Google Tag Manager, chat widgets, heatmaps, review widgets, autoplay video, marketing-script stacks.
 
-## Accessibility — LOCKED (IMPLEMENTATION PENDING)
+## Accessibility — LOCKED (PARTIALLY IMPLEMENTED — Phase 2A: baseline shell + automated CI checks)
 
 **Target conformance: WCAG 2.2 Level AA** (operator-approved 2026-09-19). AA is the formal target. AAA improvements may be made opportunistically where low-cost, but AAA is not a requirement.
 
@@ -392,7 +393,7 @@ Accessibility is a release and quality requirement, not optional polish. It is p
   - call-recording legal requirements
   - partner disclosure wording
 
-## Security — LOCKED (IMPLEMENTATION PENDING)
+## Security — LOCKED (PARTIALLY IMPLEMENTED — Phase 2A: baseline headers, secret scanning, no secrets)
 
 - Secrets are never committed; Cloudflare/Wrangler secret management.
 - Cloudflare Access protects operational admin. No custom auth system initially.
@@ -431,7 +432,7 @@ Optional homeowner media upload (camera images/report/video to private R2) is su
 - The operational admin (leads, routing, partners, outcomes) is protected by Cloudflare Access.
 - Contractor renters receive no unrestricted editorial administration and no publishing rights (`00-PROJECT-CHARTER.md`, `/AGENTS.md` §4.7).
 
-## Publication-Quality Enforcement — LOCKED (IMPLEMENTATION PENDING)
+## Publication-Quality Enforcement — LOCKED (PARTIALLY IMPLEMENTED — Phase 2A: records + evaluator; embedding runs not yet automated)
 
 Inherited requirements from `03-GOOGLE-RESILIENCE.md` (thresholds unchanged):
 
@@ -462,7 +463,7 @@ Every similarity record persists:
 
 Scores from different embedding models are not comparable. If the model changes, rerun the active comparison corpus.
 
-## Testing Requirements — LOCKED (IMPLEMENTATION PENDING)
+## Testing Requirements — LOCKED (PARTIALLY IMPLEMENTED — Phase 2A)
 
 The build phase must implement and enforce in CI at least:
 
@@ -505,6 +506,81 @@ Before production publishing / live lead collection:
 10. Backups (PITR plus scheduled R2 export) verified.
 11. Call recording confirmed OFF (unless legal review has since resolved it).
 12. WCAG 2.2 AA verified for the major page types and lead workflows (automated checks plus manual keyboard/screen-reader review).
+
+## Implementation Record: Phase 2A (build foundation + indexing firewall)
+
+Implemented 2026-09-19 on branch `phase-2a-build-foundation` (see `logs/runs/` for the receipt, PR, and CI results). Implementation-level choices below were permitted by the Status section; none changes a LOCKED decision.
+
+**Versions (exact, from `package-lock.json`):** Node ≥ 22.12 (CI uses Node 24); `astro` 7.3.3; `@astrojs/cloudflare` 14.3.2; `wrangler` 4.135.0; `zod` 4.6.5; `typescript` 6.0.3 (TypeScript 7 is not yet supported by `@astrojs/check` 0.9.10); `vitest` 5.0.1; `@playwright/test` 1.63.0; `@axe-core/playwright` 4.13.0; `@types/node` 24.13.6. No UI framework, CMS, ORM, analytics, or tag manager.
+
+**Paths chosen:**
+
+| Responsibility | Path |
+|---|---|
+| Publication records (one JSON file per page) | `content/publication-records/*.json` |
+| Operator index-approval registry | `governance/index-approvals.json` (CODEOWNERS: `@tomytomz1`) |
+| Locked constants, schema, evaluator, registry | `src/lib/publication/` |
+| Robots / canonical / sitemap / robots.txt firewall | `src/lib/seo/firewall.ts` |
+| Structured-data guardrails | `src/lib/seo/structured-data.ts` |
+| Site environment config | `src/config/site.ts` |
+| Only permitted page layout (central SEO head) | `src/layouts/BaseLayout.astro` |
+| Build/QA scripts | `scripts/` |
+| Unit tests (fixtures clearly marked artificial) | `tests/unit/`, `tests/fixtures/` |
+| Accessibility + lab performance tests | `tests/a11y/` |
+| CI | `.github/workflows/ci.yml`; ownership in `.github/CODEOWNERS` |
+| Cloudflare Worker config (no bindings) | `wrangler.jsonc` |
+
+**Firewall behavior:**
+
+- **Environment:** `SITE_ENV` is `development`, `preview`, or `production`, and anything missing or unknown means `development`. Only `production` can index.
+- **Production origin:** production requires `PUBLIC_SITE_ORIGIN`: https, a bare origin, and not a test host. There is no default, because the domain is unregistered.
+- **Draft pages:** a production build fails if any page in lifecycle `draft` is built. This means the Phase 2A development shell blocks production builds until it is replaced.
+- **Robots meta:** always derived from the evaluator plus the environment. Non-production is `noindex, nofollow`. Production pages that are not effectively indexable get `noindex, follow`.
+- **Non-production headers:** every non-production build also writes `X-Robots-Tag: noindex, nofollow` for all responses (`_headers`).
+- **robots.txt:** never `Disallow`s as a substitute for `noindex`. A sitemap is advertised only in production with an origin.
+- **Sitemap:** exactly the evaluator's effectively indexable canonical URLs. At Phase 2A that is zero.
+- **Indexing requests:** a record that requests lifecycle `indexable` but fails the gate fails CI; it is never silently downgraded.
+- **Approvals:** the approval registry accepts only `approved: true` by `tomytomz1`. Anything else fails validation. A missing approval means not indexable.
+
+**Implementation-level decisions:**
+
+- **Page type `utility`:** added for support/legal/development pages. It is never indexable, matching the Site Quality Firewall `NOINDEX` class. The five-state lifecycle is unchanged.
+- **Workflow step 13:** may be `not_applicable` only when expert review is not required. No other step may be.
+- **Similarity records:** a record must use the locked model `text-embedding-3-small`. No embedding API calls exist yet; similarity results are recorded data.
+- **Adapter:** Astro `output` stays static (all current routes prerendered). `session: false` disables the adapter's default KV session binding (no KV exists). `imageService: 'passthrough'` is used until images exist.
+- **Headers:** CSP is `default-src 'self'` with `style-src`/`script-src 'self'`, and `build.inlineStylesheets: 'never'` keeps it satisfiable. HSTS is deferred until the production domain exists.
+- **npm install scripts:** allowed only for `esbuild` and `workerd` (`allowScripts` in `package.json`).
+
+**CI checks (stable names; required on `main`):**
+
+- `build-and-test`: `npm ci`, typecheck (`astro check` + `tsc`), unit tests, record validation, build, post-build SEO/firewall/link/structured-data checks, and build-time budgets.
+- `accessibility-and-lab-performance`: axe WCAG 2.0/2.1/2.2 A+AA, landmarks and skip-link keyboard check, and lab LCP ≤ 2.0 s / CLS ≤ 0.05 under 4× CPU throttling (desktop and Pixel 7 profiles).
+- `secret-scan`: Gitleaks.
+
+**Performance measurement boundary:**
+
+- Enforced now at build time: first-party JS (editorial target 0 B, hard 35 KB gzip), CSS ≤ 40 KB gzip, no custom fonts, and third-party requests limited to Cloudflare Web Analytics and Turnstile.
+- Lab LCP/CLS are synthetic. They are not Core Web Vitals.
+- Field p75 LCP/CLS/INP can only be measured from real users after launch. INP has no lab substitute here. No RUM data exists or is simulated.
+
+**Manual accessibility review (required; automated checks are not sufficient):** before any page is `index_candidate`, and for every lead workflow:
+
+1. Complete the page's main tasks using only the keyboard; focus order is logical and focus is always visible.
+2. Check with a screen reader (NVDA or VoiceOver): headings, landmarks, link text, form labels, errors, and instructions are announced correctly.
+3. Zoom to 200% and view at 320 CSS px width with no loss of content or function.
+4. Check that color is never the only signal, and that text and non-text contrast meet AA.
+5. Check that targets meet the WCAG 2.2 target-size minimum.
+6. Check that reduced motion is respected.
+
+Record the result in the page's Technical SEO QA gate note.
+
+**Not implemented in Phase 2A (still IMPLEMENTATION PENDING):**
+
+- the lead backend: D1 tables, intake endpoint, queues, Resend, Twilio, uploads, admin UI
+- partner routing
+- the embedding/similarity runner
+- analytics and Search Console
+- any deployment or Cloudflare resource
 
 ## Definition of Done
 

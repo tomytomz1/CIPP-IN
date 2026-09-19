@@ -1,0 +1,92 @@
+# CI for the Indy Sewer Resource build foundation (docs/05-BUILD-SPEC.md, Testing Requirements).
+# Job names are STABLE: they are required status checks on `main`. Do not rename without
+# updating the repository ruleset.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  ASTRO_TELEMETRY_DISABLED: '1'
+  # CI builds are non-production: every page must be noindex.
+  SITE_ENV: development
+
+jobs:
+  build-and-test:
+    name: build-and-test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install (clean, from lockfile)
+        run: npm ci
+      - name: Typecheck (astro check + tsc)
+        run: npm run typecheck
+      - name: Unit tests (schema, indexability evaluator, noindex/sitemap/robots firewall)
+        run: npm test
+      - name: Validate publication records and operator approvals
+        run: npm run validate:records
+      - name: Astro build
+        run: npm run build
+      - name: Post-build SEO / indexing firewall / links / structured data
+        run: npm run check:dist
+      - name: Build-time performance budgets
+        run: npm run check:budgets
+      - name: Upload build output
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: dist
+          path: dist/
+          retention-days: 7
+          if-no-files-found: error
+
+  accessibility-and-lab-performance:
+    name: accessibility-and-lab-performance
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install (clean, from lockfile)
+        run: npm ci
+      - name: Download build output
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: dist
+          path: dist/
+      - name: Install Chromium for Playwright
+        run: npx playwright install --with-deps chromium
+      - name: Accessibility (axe, WCAG 2.2 A/AA) and lab LCP/CLS
+        run: npm run test:a11y
+
+  secret-scan:
+    name: secret-scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Gitleaks
+        uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_COMMENTS: 'false'

@@ -1,0 +1,11 @@
+{
+  // Cloudflare Workers + Static Assets (docs/05 → Approved Stack).
+  // Phase 2A: repository configuration only. No Worker, D1, R2, Queue, Turnstile, Access,
+  // or DNS resources exist, and none are referenced here. Bindings will be added (with real
+  // IDs) only when those resources are provisioned in a later phase. Do not invent IDs.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "indy-sewer-resource",
+  "main": "@astrojs/cloudflare/entrypoints/server",
+  "compatibility_date": "2026-09-01",
+  "observability": { "enabled": true }
+}
