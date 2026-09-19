@@ -69,3 +69,13 @@ This file is an audit trail, not a strategy document and not a replacement for `
 - Full receipt: [`logs/runs/2026-09-19-1319-phase-1-final-doc-reconciliation.md`](runs/2026-09-19-1319-phase-1-final-doc-reconciliation.md)
 - Summary: Locked WCAG 2.2 Level AA in `05` (operator-approved). Corrected stale "NOT YET LOCKED" pointers in `03` (similarity tooling, page records) and `04` (workflow-record storage), and renamed `04` step 20 "Index Approval". Reconciled `01`; `02` unchanged. No thresholds, code, infrastructure, domain purchase, or deployment.
 - Blockers: None for build preparation. Production publishing needs domain registration and branch/index governance; live leads need legal review.
+
+### 2026-09-19 13:32 — Phase 2A: Build foundation + indexing firewall
+
+- Agent: Claude
+- Starting SHA: `2bdd77840c7c8f3d91e75031ef692d61cece5a6d`
+- Work commit: PR #1 merge `b3c60e677e2479d410fbaae0f0eae15c4acc14f3` (implementation `60fb7b4`); this entry is in the PR #2 merge commit (resolve with `git log -- logs/runs/2026-09-19-1332-phase-2a-build-foundation.md`)
+- Result: COMPLETE
+- Full receipt: [`logs/runs/2026-09-19-1332-phase-2a-build-foundation.md`](runs/2026-09-19-1332-phase-2a-build-foundation.md)
+- Summary: Astro 7.3.3 + TypeScript 6.0.3 + `@astrojs/cloudflare` 14.3.2 scaffold (static, no resources). Zod publication records, a pure indexability evaluator, and a noindex/sitemap/robots firewall (0 indexable pages). CI jobs `build-and-test`, `accessibility-and-lab-performance`, and `secret-scan`, all green. CODEOWNERS plus rulesets `main-protection` (no bypass) and `index-governance-code-owner-review` (admin PR-only bypass; observed inert for the sole owner's own PRs). No deployment, cloud/vendor resources, domain purchase, leads, or SEO content.
+- Blockers: None for Phase 2B. Open: agent GitHub identity, public repository, domain registration, legal review.

@@ -97,7 +97,7 @@ Intended future organization. Responsibilities are locked; exact folder names ar
 - **Preview environments are globally non-indexable** (`noindex` on every response, plus no production sitemap).
 - No production infrastructure exists. None is created until the build phase, and production publishing waits for Branch / Index Governance to be in place.
 
-## Branch / Index Governance — LOCKED (launch prerequisite; not yet configured)
+## Branch / Index Governance — LOCKED (CONFIGURED — Phase 2A, 2026-09-19)
 
 Before production publishing begins, configure a protected `main` branch or GitHub ruleset with:
 
@@ -108,7 +108,17 @@ Before production publishing begins, configure a protected `main` branch or GitH
 
 AI coding agents normally work by branch / pull request, not by unrestricted direct production publishing. **A coding agent's or developer's deploy alone must never make a page indexable.**
 
-Observed 2026-09-19 12:58 EDT (via GitHub API): `main` is **not protected** and the repository has **no rulesets**. This is acceptable for documentation-only work and must be fixed before production publishing.
+Configured 2026-09-19 and read back through the GitHub API:
+
+- **Ruleset `main-protection`** (id 23705333; active; default branch; **no bypass actors**):
+  - block deletion
+  - block non-fast-forward (force) pushes
+  - require a pull request
+  - require the status checks `build-and-test`, `accessibility-and-lab-performance`, and `secret-scan` from GitHub Actions (integration 15368), with the branch up to date
+- **Ruleset `index-governance-code-owner-review`** (id 23705344; active; default branch):
+  - requires code-owner review for changes to CODEOWNERS paths (`.github/CODEOWNERS`: approval registry, evaluator, firewall, config, CI, docs)
+  - bypass: the repository **admin role, pull-request-only** (`bypass_mode: pull_request`). A sole owner cannot approve their own PR, so without this bypass the owner could never merge governance changes. Bypass is only possible through a PR that has passed `main-protection`'s required checks.
+- **Known limitation (observed on PR #2):** a PR authored by the sole code owner was mergeable without any code-owner review (`reviewDecision: null`; no bypass needed). GitHub cannot distinguish an AI agent from the operator while the agent uses the operator's own credentials, so the code-owner rule does not currently constrain agents. `main-protection` (PR + required CI, no bypass) is the effective control. Making the index-approval boundary binding on agents requires a separate non-admin GitHub identity for agents (OPEN; operator decision).
 
 ## Environment Variables / Secrets — LOCKED principles (PARTIALLY IMPLEMENTED — Phase 2A)
 
