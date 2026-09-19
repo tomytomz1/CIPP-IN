@@ -14,3 +14,5 @@ The files under `/docs/` contain active production requirements.
 If implementation convenience conflicts with those requirements, preserve the documented requirement unless the human operator explicitly changes it.
 
 After meaningful work, update `/docs/01-CURRENT-STATE.md`.
+
+Follow the run-logging requirements in `AGENTS.md`. Every meaningful repository work session must create a session receipt and update `logs/RUN-LOG.md` before the final completion report.

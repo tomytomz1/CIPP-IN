@@ -1,11 +1,11 @@
 # CURRENT STATE
 
 Last updated: 2026-09-19
-Last verified commit: `c8cf100a85a023b4e03e5dfbfeac094439320507` (Phase 0). Phase 0.1 commit follows; see `git log`.
+Last verified commit: `52d4d96b34fb00ab68712cd96dfaaa1893f59cc2` (Phase 0.1). Phase 0.2 commit follows; see `git log`.
 Production URL: None — no production deployment exists
 Repository: https://github.com/tomytomz1/CIPP-IN
 Current branch: main
-Current phase: Phase 0.1 — Research evidence reconciliation (complete). Next: Phase 1 — Brand, Domain, Technical Architecture & Build Specification (not started).
+Current phase: Phase 0.2 — Run log / session receipt system (complete). Next: Phase 1 — Brand, Domain, Technical Architecture & Build Specification (not started).
 
 > This file is authoritative for what currently exists and what has been completed. It does not override strategic rules in higher-precedence documents (see `/AGENTS.md` §1). Update it after every meaningful piece of work.
 
@@ -25,10 +25,11 @@ Locked by the operator (change only with explicit operator approval):
 - **AI policy:** AI assists; it does not substitute for evidence, local research, expert validation, or editorial judgment. No detection evasion.
 - **Documentation structure and precedence:** as defined in `/AGENTS.md`.
 - **Research evidence location:** structured JSON under `/research/` (index: `/research/index.json`). Supporting material only; it does not outrank `/docs/`.
+- **Run logging:** append-only audit trail in `logs/RUN-LOG.md` (index) and `logs/runs/` (one receipt per meaningful work session), per `/AGENTS.md` §3. History only; this file stays authoritative for current state.
 
 ## Current Project Status
 
-Documentation and research evidence are in the repository. There is no website, framework, production deployment, indexing, or collected leads.
+Documentation, research evidence, and the run-log audit trail are in the repository. There is no website, framework, production deployment, indexing, or collected leads.
 
 ## Completed
 
@@ -40,6 +41,7 @@ Documentation and research evidence are in the repository. There is no website, 
   - Prospective tenant evidence: `research/sources/prospective-tenants.json`
   - Google Search policy evidence: `research/sources/google-search-policy.json`
   - SERP/competitor snapshot: `research/serps/2026-09-19-competitor-snapshot.json`
+- Phase 0.2 run-log system: `logs/RUN-LOG.md`, `logs/RUN-RECEIPT-TEMPLATE.md`, and `logs/runs/`, with receipts backfilled for Phase 0 and Phase 0.1 (2026-09-19).
 
 ## In Progress
 
@@ -176,6 +178,7 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 
 ## Last Major Decisions
 
+- 2026-09-19 — Append-only run log adopted: every meaningful work session needs a receipt in `logs/runs/` and a `logs/RUN-LOG.md` entry before the final report (Phase 0.2).
 - 2026-09-19 — Research evidence stored as structured JSON under `/research/`, subordinate to `/docs/` (Phase 0.1).
 - 2026-09-19 — Lawrence private-lateral owner responsibility, permit framework, lining/bursting allowance, and post-repair CCTV requirement recorded as verified from current primary sources. Remaining uncertainties listed explicitly.
 - 2026-09-19 — Documentation system and precedence hierarchy adopted (`/AGENTS.md`).
@@ -195,3 +198,4 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 - 2026-09-19 — Phase 0: created `AGENTS.md`, `CLAUDE.md`, and `docs/00-PROJECT-CHARTER.md` through `docs/05-BUILD-SPEC.md`. No code, framework, content, domain, or data created.
 - 2026-09-19 — Initialized Git repository; pushed Phase 0 documentation to `main` at https://github.com/tomytomz1/CIPP-IN (commit `c8cf100`).
 - 2026-09-19 — Phase 0.1: created `/research/` evidence files (index, Lawrence primary sources, prospective tenants, Google policy, SERP snapshot). Re-verified Lawrence rules, competitors, tenant candidates, and Google policy. Reconciled this file and `02-SEO-SERP-BLUEPRINT.md`, added the research row to the ownership table in `AGENTS.md`, and made a narrow repository-contents correction in `05-BUILD-SPEC.md`. No code, framework, content, domain, or fake data created.
+- 2026-09-19 — Phase 0.2: added `logs/` run-log system (index, template, receipts incl. backfills for Phase 0 and 0.1), logging rules in `AGENTS.md` §2–§3, and a reminder in `CLAUDE.md`. No strategy, code, or research changes.

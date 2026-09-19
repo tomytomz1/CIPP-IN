@@ -35,8 +35,11 @@ If you find a conflict, do not resolve it silently. Follow the higher document, 
 | Content workflow, writing rules, sourcing, claim classification, expert review, disclosure | `docs/04-CONTENT-EDITORIAL-SYSTEM.md` |
 | Technical implementation specification and Definition of Done | `docs/05-BUILD-SPEC.md` |
 | Research evidence (supporting only; does not outrank `/docs/`) | `research/` (JSON; index at `research/index.json`) |
+| Historical run/session audit trail | `logs/RUN-LOG.md` and `logs/runs/` |
 
 Do not create additional strategy Markdown files unless the operator explicitly instructs it. Store evidence as structured JSON under `research/`, not as new strategy documents. Put new knowledge in the owning document above; cross-reference instead of copying.
+
+`/logs/` holds historical evidence of agent work: what each session was asked to do, did, verified, and left unresolved. It does not override project requirements, and `docs/01-CURRENT-STATE.md` remains authoritative for current state. Receipts are append-only. Never silently rewrite a historical receipt or RUN-LOG entry. Correct errors by adding a later correction entry (obvious formatting corruption excepted).
 
 ---
 
@@ -45,10 +48,12 @@ Do not create additional strategy Markdown files unless the operator explicitly 
 1. Read `AGENTS.md` completely.
 2. Read `docs/00-PROJECT-CHARTER.md`.
 3. Read `docs/01-CURRENT-STATE.md`.
-4. Read every strategy document relevant to the task.
-5. Read `docs/05-BUILD-SPEC.md` before any implementation work.
-6. Inspect the current repository and code before changing anything.
-7. Never rely on stale summaries (including CURRENT-STATE or your own memory) when the current code contradicts them. Report the discrepancy.
+4. Read `logs/RUN-LOG.md`.
+5. Read at least the latest relevant run receipt in `logs/runs/`. Read older receipts only when needed to understand the current task; do not read every historical receipt by default. Context order: CURRENT-STATE → RUN-LOG index → latest/relevant full receipt.
+6. Read every strategy document relevant to the task.
+7. Read `docs/05-BUILD-SPEC.md` before any implementation work.
+8. Inspect the current repository and code before changing anything.
+9. Never rely on stale summaries (including CURRENT-STATE or your own memory) when the current code contradicts them. Report the discrepancy.
 
 ### Additional requirement for any indexable page work
 
@@ -68,13 +73,31 @@ Anything marked `NOT YET LOCKED` (see `docs/05-BUILD-SPEC.md` and `docs/01-CURRE
 
 ## 3. After Work
 
-1. Run relevant tests/checks.
-2. Inspect your own work (re-read diffs and outputs; do not assume success).
-3. Update `docs/01-CURRENT-STATE.md` (status sections, Change Log, and anything now stale).
-4. Document material decisions in `docs/01-CURRENT-STATE.md` → Last Major Decisions, and in the owning document if a rule or spec changed.
-5. Report what changed.
-6. Report unresolved risks.
-7. Report the current commit SHA when Git exists.
+Before giving the human the final completion response, every meaningful work session MUST, in this order:
+
+1. Complete the relevant work.
+2. Run relevant tests/checks.
+3. Inspect your own work (re-read diffs and outputs; do not assume success).
+4. Update `docs/01-CURRENT-STATE.md` when required (status sections, Change Log, anything now stale). Document material decisions in its Last Major Decisions section, and in the owning document if a rule or spec changed. Do not turn CURRENT-STATE into a run log.
+5. Create a new full session receipt in `logs/runs/`, copied from `logs/RUN-RECEIPT-TEMPLATE.md`. Name it `YYYY-MM-DD-HHMM-<short-slug>.md` (local time; state the timezone, or use UTC and say so). Never overwrite an existing receipt; if a phase is run again, create another receipt.
+6. Append the matching entry to `logs/RUN-LOG.md`.
+7. Confirm that every factual claim planned for the final response appears in the receipt.
+8. Commit and push when the task calls for repository changes.
+9. Give the human the final response: what changed, unresolved risks, and the current commit SHA when Git exists.
+
+### Critical final-response rule
+
+An agent must not claim in its final response that it created, changed, verified, tested, committed, pushed, fixed, or completed something unless that claim is supported by the actual repository/tool state and is recorded in the current run receipt.
+
+If the final response materially differs from the prepared run receipt, update the receipt before finalizing.
+
+### What requires a receipt
+
+- **Required:** every meaningful work session: code changes, research, configuration, deployment, SEO or content work, architectural decisions, documentation changes, production verification, bug fixes, migrations, significant audits.
+- **Also required for failed work:** runs that are blocked, lack credentials, cannot verify a source, do research without repository changes, start but cannot finish, or conclude the request should not proceed. Record them with `Run result: PARTIAL` or `BLOCKED` (or `NO-CHANGE` where nothing was changed). Failed attempts are part of project history.
+- **Not required** (unless the operator asks): typo fixes, read-only status checks, casual questions, and discussion with no project work.
+
+A receipt cannot reliably contain the SHA of the commit that contains it. Record the starting SHA and "the commit containing this receipt; resolve with git log". Never create extra commits solely to insert a commit's own SHA.
 
 ---
 
