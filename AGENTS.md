@@ -34,8 +34,9 @@ If you find a conflict, do not resolve it silently. Follow the higher document, 
 | Publication/indexing gates, AI policy, quality thresholds, update protocol | `docs/03-GOOGLE-RESILIENCE.md` |
 | Content workflow, writing rules, sourcing, claim classification, expert review, disclosure | `docs/04-CONTENT-EDITORIAL-SYSTEM.md` |
 | Technical implementation specification and Definition of Done | `docs/05-BUILD-SPEC.md` |
+| Research evidence (supporting only; does not outrank `/docs/`) | `research/` (JSON; index at `research/index.json`) |
 
-Do not create additional strategy Markdown files unless the operator explicitly instructs it. Put new knowledge in the owning document above; cross-reference instead of copying.
+Do not create additional strategy Markdown files unless the operator explicitly instructs it. Store evidence as structured JSON under `research/`, not as new strategy documents. Put new knowledge in the owning document above; cross-reference instead of copying.
 
 ---
 

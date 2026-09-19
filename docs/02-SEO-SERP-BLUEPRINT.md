@@ -4,7 +4,12 @@ Owner of: organic strategy, competitor model, query targets, page strategy, link
 
 Publication and indexing gates are **not** defined here — they live in `03-GOOGLE-RESILIENCE.md` and override this document. The content production workflow lives in `04-CONTENT-EDITORIAL-SYSTEM.md`.
 
-> Provenance: the competitive observations below are operator-supplied conclusions from Phase 0 research. The underlying SERP evidence is not yet stored in this repository (see `01-CURRENT-STATE.md` → Open Questions). SERPs change; re-verify before relying on any competitor claim for a publishing decision.
+> Provenance: the competitive observations below come from pre-Phase 0 research and were independently re-verified on 2026-09-19. Supporting evidence is stored under `/research/` (index: `/research/index.json`):
+> - Lawrence municipal evidence: `research/sources/lawrence-primary-sources.json`
+> - SERP/competitor evidence: `research/serps/2026-09-19-competitor-snapshot.json`
+> - Prospective tenant evidence: `research/sources/prospective-tenants.json`
+>
+> SERPs are dynamic and vary by location, device, and personalization. Exact positions in the snapshot are not reliable. Re-verify before any material publishing decision.
 
 ---
 
@@ -29,6 +34,8 @@ Known competitors (operator-identified):
 - NuFlow Indy
 - Carter's My Plumber
 
+Also observed in the 2026-09-19 snapshot: 317 Plumber (Lawrence service-area page seen on three of the five Lawrence queries) and SLB Pipe Solutions (specialist lining operator, strong on Indianapolis lining/CIPP queries). Exact competitor URLs and page evidence: `research/serps/2026-09-19-competitor-snapshot.json`.
+
 Competitor classes these represent:
 
 - **National/franchise plumbing brands with local pages** (e.g., Roto-Rooter).
@@ -43,7 +50,7 @@ Competitor classes these represent:
 **Lawrence:**
 
 - more attackable than Indianapolis head terms
-- a municipal/local-information gap exists
+- a municipal/local-information gap exists. It is a gap in homeowner translation, not in raw availability: in the 2026-09-19 snapshot, the City's own scanned policy-manual PDF was the first organic result for the primary query (inference from one capture)
 - generic/local plumbing pages currently rank
 - opportunity exists to provide stronger homeowner-specific local information
 
@@ -72,7 +79,7 @@ Map every page to one or more stages. Commercial/action stages (repair-method de
 
 ## Information Advantage
 
-Our core Lawrence moat (each item must be verified from primary sources before publication — currently **unverified**):
+Our core Lawrence moat. Status as of 2026-09-19: owner responsibility, the permit requirement, lining/bursting allowance, and post-repair CCTV requirements are verified from current primary sources. The remaining uncertainties are listed in `01-CURRENT-STATE.md` → Lawrence Municipal Evidence Status. Re-verify before publication. Components:
 
 - municipal vs. private lateral responsibility
 - permit process

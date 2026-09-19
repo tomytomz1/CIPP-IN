@@ -1,0 +1,304 @@
+{
+  "file": "research/serps/2026-09-19-competitor-snapshot.json",
+  "category": "serp",
+  "captured_at": "2026-09-19",
+  "location_assumption": "United States. Google set the location to 'Lawrence, IN' (shown on the results page). Parameters: gl=us, hl=en, num=20. Desktop browser session in the Claude desktop app's built-in browser, not signed in.",
+  "exact_positions_reliable": false,
+  "method": "Google web search in a real browser session. For each query we recorded the organic result titles in page order, with the domain and breadcrumb Google displayed. Google's links go through redirect URLs, so the breadcrumb is not always a full URL. Exact URLs for named competitors were resolved separately in competitor_pages. We also noted AI Overview, Sponsored, and local/places elements where the page text showed them. Video and forum results appear as titles without URLs.",
+  "caveats": [
+    "SERPs vary by physical location, device, personalization, ads, Local Pack, time, and search history.",
+    "The order in observed_urls is the order observed in this single capture, not a stable ranking.",
+    "No keyword volumes, traffic, or backlink counts were collected. None may be inferred from this file.",
+    "Re-capture before any material publishing decision."
+  ],
+  "queries": [
+    {
+      "query": "sewer lateral repair lawrence in",
+      "market": "Lawrence",
+      "features": { "ai_overview": true, "sponsored_blocks": 1, "local_places": true },
+      "observed_urls": [
+        "cityoflawrence.org › docs › utilities — Water & Sewer Design & Construction Standards (City policy manual PDF)",
+        "https://www.rotorooter.com/lawrencein/ — Roto-Rooter Plumber in Lawrence, IN | Plumbing & Drains",
+        "yelp.com › Home Services — Top 10 Best Plumbing Supply in Lawrence, Indiana",
+        "[social/forum] Lawrence Indiana sewer cleaning schedule for September …",
+        "https://www.317plumber.com/service-areas/lawrence/ — Plumbing Services in Lawrence",
+        "[video] Sewer Lateral Repair Explained",
+        "info.citizensenergygroup.com — Properly Connecting a Sewer Service Line",
+        "petermanhvac.com › drain-services — Trenchless Sewer Line Repair In Indianapolis",
+        "angi.com › lawrence › plumbing — Top 10 Best Plumbers in Lawrence, IN"
+      ],
+      "notes": "The primary query. A City of Lawrence policy manual PDF was the first organic result. Official information exists and ranks, but as a scanned engineering policy PDF rather than homeowner-facing guidance. The rest is mostly general plumbers, directories, and Indianapolis-level pages. A sponsored result was labeled for a different metro (Detroit). YoHomeFix and Mr. Plumber were not seen in this capture."
+    },
+    {
+      "query": "sewer line repair lawrence in",
+      "market": "Lawrence",
+      "features": { "ai_overview": false, "sponsored_blocks": 0, "local_places": true },
+      "observed_urls": [
+        "https://www.rotorooter.com/lawrencein/ — Roto-Rooter Plumber in Lawrence, IN",
+        "primeplumbingdrains.com › Service Areas — Expert Plumber Lawrence, IN",
+        "m.yelp.com — Best Sewer Line Repair near Lawrenceburg, IN",
+        "https://www.317plumber.com/service-areas/lawrence/ — Plumbing Services in Lawrence",
+        "angi.com › lawrence › plumbing — Top 10 Best Plumbers in Lawrence, IN",
+        "fowlerplumb.com › service-area › lawrence-in — Lawrence, IN",
+        "isleyplumbing.com › Areas We Serve — Plumber in Lawrence, Indiana",
+        "hopeplumbing.com › plumbing-repair-lawre… — Plumbing Repair in Lawrence, IN",
+        "thumbtack.com › IN › Lawrence — Residential Plumbing Services in Lawrence"
+      ],
+      "notes": "Dominated by general-plumber Lawrence location pages and directories. The Yelp result is for Lawrenceburg, a different city. YoHomeFix's Lawrence sewer page was not seen in this capture."
+    },
+    {
+      "query": "trenchless sewer repair lawrence in",
+      "market": "Lawrence",
+      "features": { "ai_overview": false, "sponsored_blocks": 0, "local_places": true },
+      "observed_urls": [
+        "https://www.rotorooter.com/lawrencein/ — Roto-Rooter Plumber in Lawrence, IN",
+        "petermanhvac.com › drain-services — Trenchless Sewer Line Repair In Indianapolis",
+        "lawrence-in.royalsewerdrain.com › services — Best Trenchless Sewer Replacement in Lawrence, IN Near Me",
+        "facebook.com › fb-answers — Trenchless Sewer Repair Lawrenceville",
+        "https://mrplumberindy.com/location/lawrence-indiana/ — Lawrence Plumbers, Water Heater, Sewer Repair, Drain …",
+        "sewerlinesavers.com › Services — Trenchless Sewer Repair Indianapolis | CIPP Lining & Pipe …",
+        "https://www.317plumber.com/service-areas/lawrence/ — Plumbing Services in Lawrence",
+        "bbb.org › Lawrence › Sewer Pipes — Trenchless Sewer Repair LLC | BBB Business Profile",
+        "serviceplusnow.com — Trenchless Sewer Services in Indianapolis"
+      ],
+      "notes": "Mr. Plumber's Lawrence location page appears here. A city-subdomain page (lawrence-in.royalsewerdrain.com) points to a templated multi-city pattern (inference, not assessed). The Facebook result is for Lawrenceville, a different city."
+    },
+    {
+      "query": "sewer lining lawrence in",
+      "market": "Lawrence",
+      "features": { "ai_overview": true, "sponsored_blocks": 0, "local_places": false },
+      "observed_urls": [
+        "https://www.rotorooter.com/lawrencein/ — Roto-Rooter Plumber in Lawrence, IN",
+        "https://slbpipesolutions.com/ — SLB Pipe Solutions: Leading Pipe Lining Company …",
+        "sewerlinesavers.com › sewer-line-replacement-indi… — Indianapolis Sewer Line Repair & Free Second Opinions",
+        "[social] Lawrence Utilities 46th St. & Post Rd. Sewer Project …",
+        "youarecurrent.com — Lawrence moves forward with sewer projects",
+        "https://www.317plumber.com/drain-sewer-services/trenchless-pipe-repair-pipe-bursting/ — Indianapolis Trenchless Pipe Repair & Pipe Bursting",
+        "nuflowindy.com › solving-sewer-line-problems-t… — Solving Sewer Line Problems Throughout Indiana",
+        "rapiddrainlining.com — Trenchless Sewer Repair in Central Indiana",
+        "missionmechanical.com › residential-plumbing — Sewer Line Replacement Services in Indianapolis & …"
+      ],
+      "notes": "Specialist lining companies (SLB, NuFlow, Rapid Drain Lining) appear, along with Lawrence public-works news. No Lawrence-specific homeowner lining resource was observed."
+    },
+    {
+      "query": "sewer camera inspection lawrence in",
+      "market": "Lawrence",
+      "features": { "ai_overview": true, "sponsored_blocks": 0, "local_places": false },
+      "observed_urls": [
+        "blueduckplumbing.com › sewer-camera-inspection — Sewer Camera Inspections Lawrence KS",
+        "smithplumbingks.com — Sewer Camera Inspection by Smith Plumbing / Kansas NuDrain",
+        "petermanhvac.com › drain-services › camera-ins… — Sewer Camera Inspection In Indianapolis",
+        "sewerscopeusa.com › indianapolis — Sewer Scope Inspection Indianapolis",
+        "317plumber.com › drain-sewer-services › s… — Indianapolis Sewer Camera Inspection",
+        "lafayetteindianaplumber.com › drains — Camera Inspection Services for Drains and Sewer - Lafayette, IN",
+        "primeplumbingdrains.com › Services — Sewer Camera Inspection in Noblesville, IN",
+        "yelp.com — TOP 10 BEST Sewer Camera Inspection in Warren, MI",
+        "rootaway.com — Sewer Camera Inspections Flint, MI",
+        "inddraincleaning.com › Services › Lawrence — Sewer Camera Inspection Lawrence | Indy Drain Pros"
+      ],
+      "notes": "Weak intent matching: Lawrence, KS results ranked first, plus Michigan and other Indiana cities. This suggests limited Lawrence, IN-specific camera-inspection content (inference from one capture)."
+    },
+    {
+      "query": "trenchless sewer repair indianapolis",
+      "market": "Indianapolis",
+      "features": { "ai_overview": false, "sponsored_blocks": 0, "local_places": true },
+      "observed_urls": [
+        "https://nuflowindy.com/ — NuFlow Indy: Indianapolis Sewer Repair Experts | Trenchless …",
+        "hopeplumbing.com › trenchless-plumbing-r… — Trenchless Sewer Pipe Repair in Indianapolis, IN",
+        "https://www.rotorooter.com/indianapolis/sewer-line-repair/ — Indianapolis Sewer Line Repair Services",
+        "https://slbpipesolutions.com/ — SLB Pipe Solutions: Leading Pipe Lining Company …",
+        "yelp.com › questions — Best Trenchless Sewer Repair Services in Indianapolis, IN",
+        "petermanhvac.com — Trenchless Sewer Line Repair In Indianapolis",
+        "https://mrplumberindy.com/trenchless-pipe-bursting/ — Indianapolis Trenchless Sewer Pipe Repair",
+        "[forum] Thoughts on sewer line break? Is trench-less repair an option …",
+        "thumbtack.com › IN › Indianapolis — The Best Trenchless Sewer Repair in Indianapolis, IN"
+      ],
+      "notes": "Specialist and strong-brand results dominate. NuFlow Indy ranked first here. Carter's trenchless page was not seen in this capture, though it ranked in the prior research."
+    },
+    {
+      "query": "sewer lining indianapolis",
+      "market": "Indianapolis",
+      "features": { "ai_overview": false, "sponsored_blocks": 0, "local_places": true },
+      "observed_urls": [
+        "slbpipesolutions.com › Top-Notch Services — CIPP Pipe Lining and Relining Indianapolis, IN",
+        "https://nuflowindy.com/ — NuFlow Indy: Indianapolis Sewer Repair Experts",
+        "https://slbpipesolutions.com/ — SLB Pipe Solutions: Leading Pipe Lining Company …",
+        "[forum] Sewage line replacement in Indianapolis.",
+        "mrrooter.com › residential-services › pipe-l… — Sewer Pipe Lining Services | Indianapolis, IN",
+        "williamscomfortair.com › pipe-lining-services — Pipe Lining Services | Indianapolis, Indiana",
+        "nuflowindy.com › Pipe Relining — Relining Sewer Pipes vs. Replacement in Indianapolis …",
+        "https://mrplumberindy.com/trenchless-pipe-bursting/ — Indianapolis Trenchless Sewer Pipe Repair",
+        "rapiddrainlining.com — Trenchless Sewer Repair in Central Indiana"
+      ],
+      "notes": "SLB and NuFlow each hold multiple results, a sign of strong topical focus among specialist lining operators."
+    },
+    {
+      "query": "CIPP indianapolis",
+      "market": "Indianapolis",
+      "features": { "ai_overview": true, "sponsored_blocks": 0, "local_places": true },
+      "observed_urls": [
+        "slbpipesolutions.com › Top-Notch Services — CIPP Pipe Lining and Relining Indianapolis, IN",
+        "https://nuflowindy.com/ — NuFlow Indy: Indianapolis Sewer Repair Experts",
+        "millerpipeline.com › cipp-lining-systems — CIPP Lining Systems",
+        "ellingsoncompanies.com › industries › indiana — Expert Underground Infrastructure Solutions in Indiana",
+        "slbpipesolutions.com › … › Indianapolis, IN — CIPP Lining and Relining in Indianapolis, IN",
+        "nuflowindy.com › Pipe Relining — Hydrojetting vs. CIPP in Indianapolis",
+        "vortexcompanies.com › Services — CIPP Lining - Vortex Companies",
+        "facebook.com › fb-answers — Indianapolis Trenchless Pipe Repair: Costs, Methods, and …",
+        "hydromaxservices.com › services › pipe-lining — Pipe Lining Services"
+      ],
+      "notes": "Mixes residential specialists with municipal/industrial CIPP contractors (Miller Pipeline, Ellingson, Vortex). The query is technical, and its residential intent is ambiguous. It supports keeping head CIPP terms out of the initial battleground."
+    },
+    {
+      "query": "sewer camera inspection indianapolis",
+      "market": "Indianapolis",
+      "features": { "ai_overview": false, "sponsored_blocks": 0, "local_places": true },
+      "observed_urls": [
+        "sewerscopeusa.com › indianapolis — Sewer Scope Inspection Indianapolis",
+        "petermanhvac.com › drain-services › camera-ins… — Sewer Camera Inspection In Indianapolis",
+        "gp-radar.com › vpi › indianapolis-indiana — Video Pipe Inspection Services in Indianapolis, Indiana",
+        "indyspect.com › sewer-scope-inspection — Best Sewer Camera Inspection in Indianapolis",
+        "[social] Sewer camera inspections in Indianapolis area for $199",
+        "yelp.com — TOP 10 BEST Sewer Inspection in Indianapolis, IN",
+        "npiweb.com › Services — Indianapolis Sewer Scope Inspections",
+        "mrquikhomeservices.com › drains-sewers — Sewer Repair - Indianapolis - Mister Quik",
+        "precisionsewerinspections.com — Sewer Scope Indianapolis"
+      ],
+      "notes": "Heavily weighted to home-inspection 'sewer scope' businesses (a real-estate transaction intent). This is relevant to the home-inspector backlink and partnership strategy (inference)."
+    },
+    {
+      "query": "sewer lining cost indianapolis",
+      "market": "Indianapolis",
+      "features": { "ai_overview": true, "sponsored_blocks": 0, "local_places": false },
+      "observed_urls": [
+        "[forum] Sewage line replacement in Indianapolis.",
+        "slbpipesolutions.com › Top-Notch Services — CIPP Pipe Lining and Relining Indianapolis, IN",
+        "mrrooter.com › residential-services › pipe-l… — Sewer Pipe Lining Services | Indianapolis, IN",
+        "https://nuflowindy.com/ — NuFlow Indy: Indianapolis Sewer Repair Experts",
+        "nuflow.com › blog — Cost Of Sewer Pipe Repair Using CIPP Liner Per Foot",
+        "[video] How Much Do Trenchless Sewer Liners Cost?",
+        "angi.com › articles › indianapolis — How Much Does Trenchless Sewer Line Replacement …",
+        "sewerlinesavers.com › sewer-line-repair-cost-india… — Indianapolis Sewer Line Repair & Free Second Opinions",
+        "pro.peakzi.me › blogs — Carmel, IN Sewer Line Replacement Costs & Benefits"
+      ],
+      "notes": "An AI Overview appeared, and a forum thread ranked first. Cost intent is served mostly by national or franchisor articles and forums. No verified local cost dataset was observed, which matches the first-party cost-evidence moat thesis (inference)."
+    }
+  ],
+  "competitor_pages": [
+    {
+      "id": "serp-comp-001",
+      "category": "competitor",
+      "claim": "Roto-Rooter has a dedicated Lawrence, IN page covering trenchless pipe lining, pipe bursting, sewer excavation, camera inspection, root intrusion, and residential and commercial service.",
+      "status": "verified",
+      "source_title": "Roto-Rooter Plumber in Lawrence, IN | Plumbing & Drains",
+      "source_url": "https://www.rotorooter.com/lawrencein/",
+      "publisher": "Roto-Rooter",
+      "source_date": null,
+      "verified_at": "2026-09-19",
+      "evidence_summary": "A Lawrence-targeted franchise location page with trenchless lining, bursting, excavation, camera inspection, root-intrusion content, a local phone number, and plumbing license information. It ranked first or second for four of the five Lawrence queries.",
+      "limitations": "It includes generic regional soil and water claims. These are competitor claims and must not be repeated as fact.",
+      "supports": ["docs/02-SEO-SERP-BLUEPRINT.md"]
+    },
+    {
+      "id": "serp-comp-002",
+      "category": "competitor",
+      "claim": "Mr. Plumber (mrplumberindy.com) has a Lawrence-specific location page covering sewer repair, trenchless sewer line service, and free sewer main estimates.",
+      "status": "verified",
+      "source_title": "Lawrence Plumbers, Water Heater, Sewer Repair, Drain Cleaning, 24/7 Plumbing",
+      "source_url": "https://mrplumberindy.com/location/lawrence-indiana/",
+      "publisher": "Mr. Plumber by Metzler & Hallam",
+      "source_date": null,
+      "verified_at": "2026-09-19",
+      "evidence_summary": "A Lawrence location page linking to sewer repair (https://mrplumberindy.com/sewer-repair/), describing Lawrence trenchless sewer line service, and offering free estimates on sewer main lines. It sits on a larger multi-location Central Indiana domain.",
+      "limitations": "The prior research said it links to a 'Lawrence sewer-line repair' page. The link found goes to the site-wide /sewer-repair/ page, not a Lawrence-specific one.",
+      "supports": ["docs/02-SEO-SERP-BLUEPRINT.md"]
+    },
+    {
+      "id": "serp-comp-003",
+      "category": "competitor",
+      "claim": "YoHomeFix runs a lead-generation intermediary page for Lawrence, IN sewer line repair that is part of a very large templated city/service page set.",
+      "status": "verified",
+      "source_title": "Sewer Line Repair Lawrence IN | YoHomeFix",
+      "source_url": "https://yohomefix.com/plumber-lawrence-in-sewer-line-repair",
+      "publisher": "YoHomeFix",
+      "source_date": null,
+      "verified_at": "2026-09-19",
+      "evidence_summary": "The page targets sewer line and lateral repair, trenchless relining, camera inspection, under-slab repair, root intrusion, pricing ranges, and homeowner insurance. It carries a disclaimer that YoHomeFix connects homeowners with plumbers and does not guarantee their work. The phrasing is visibly templated. Its Indiana sitemap (https://yohomefix.com/sitemap-states/indiana.xml) listed 17,453 URLs on 2026-09-19, including at least 10 Lawrence plumber-service URLs.",
+      "limitations": "Treat as competitor evidence only; none of its pricing or technical claims are facts for our use. The page did not appear in the top organic results of this capture for the Lawrence queries.",
+      "supports": ["docs/02-SEO-SERP-BLUEPRINT.md", "docs/03-GOOGLE-RESILIENCE.md"]
+    },
+    {
+      "id": "serp-comp-004",
+      "category": "competitor",
+      "claim": "NuFlow Indy is the strongest technical CIPP competitor for Indianapolis head terms.",
+      "status": "verified",
+      "source_title": "NuFlow Indy homepage and 'How CIPP Sewer Lining Works'",
+      "source_url": "https://nuflowindy.com/",
+      "related_urls": ["https://nuflowindy.com/how-it-works/"],
+      "publisher": "NuFlow Indy",
+      "source_date": null,
+      "verified_at": "2026-09-19",
+      "evidence_summary": "It ranked first for 'trenchless sewer repair indianapolis' and in the top results for 'sewer lining indianapolis', 'CIPP indianapolis', and 'sewer lining cost indianapolis'. It publishes technical CIPP process content and multiple relining comparison pages.",
+      "limitations": "'Strongest' is an INFERENCE from one SERP capture plus content depth, not from link or traffic data.",
+      "supports": ["docs/02-SEO-SERP-BLUEPRINT.md"]
+    },
+    {
+      "id": "serp-comp-005",
+      "category": "competitor",
+      "claim": "Carter's My Plumber has an Indianapolis trenchless sewer repair page with camera diagnosis, lining, pipe bursting, and booking conversion paths.",
+      "status": "verified",
+      "source_title": "Trenchless Sewer Repair Indianapolis, IN | Carter's My Plumber",
+      "source_url": "https://www.cartersmyplumber.com/trenchless-sewer-repair/",
+      "publisher": "Carter's My Plumber",
+      "source_date": null,
+      "verified_at": "2026-09-19",
+      "evidence_summary": "See research/sources/prospective-tenants.json ten-carters-001.",
+      "limitations": "Not observed in the top organic results of this capture for the 10 target queries.",
+      "supports": ["docs/02-SEO-SERP-BLUEPRINT.md"]
+    },
+    {
+      "id": "serp-comp-006",
+      "category": "competitor",
+      "claim": "Modern Plumbing (indianasewerrepair.com) is a Central Indiana trenchless sewer specialist.",
+      "status": "verified",
+      "source_title": "Modern Plumbing | Indiana Sewer Repair",
+      "source_url": "https://www.indianasewerrepair.com/",
+      "related_urls": ["https://www.indianasewerrepair.com/trenchless-pipe-repair/"],
+      "publisher": "Modern Plumbing",
+      "source_date": null,
+      "verified_at": "2026-09-19",
+      "evidence_summary": "See research/sources/prospective-tenants.json ten-modern-001 and ten-modern-002.",
+      "limitations": "Not observed in the top organic results of this capture for the 10 target queries.",
+      "supports": ["docs/02-SEO-SERP-BLUEPRINT.md"]
+    },
+    {
+      "id": "serp-comp-007",
+      "category": "competitor",
+      "claim": "317 Plumber has an Indianapolis trenchless pipe repair and pipe bursting page and a Lawrence service-area page, and appeared on multiple Lawrence and Indianapolis queries.",
+      "status": "verified",
+      "source_title": "Indianapolis Trenchless Pipe Repair & Pipe Bursting | 317 Plumber",
+      "source_url": "https://www.317plumber.com/drain-sewer-services/trenchless-pipe-repair-pipe-bursting/",
+      "related_urls": ["https://www.317plumber.com/service-areas/lawrence/"],
+      "publisher": "317 Plumber",
+      "source_date": null,
+      "verified_at": "2026-09-19",
+      "evidence_summary": "Its Lawrence page appeared for three Lawrence queries, and its trenchless page appeared for 'sewer lining lawrence in'. See prospective-tenants.json ten-317-001 and ten-317-002.",
+      "limitations": "Newly elevated to a Lawrence SERP competitor by this capture. It was not in the original competitor list.",
+      "supports": ["docs/02-SEO-SERP-BLUEPRINT.md"]
+    },
+    {
+      "id": "serp-comp-008",
+      "category": "competitor",
+      "claim": "SLB Pipe Solutions ranks prominently for Indianapolis lining and CIPP queries and also appeared for 'sewer lining lawrence in'.",
+      "status": "verified",
+      "source_title": "SLB Pipe Solutions: Leading Pipe Lining Company",
+      "source_url": "https://slbpipesolutions.com/",
+      "publisher": "SLB Pipe Solutions",
+      "source_date": null,
+      "verified_at": "2026-09-19",
+      "evidence_summary": "It holds multiple results for 'sewer lining indianapolis', 'CIPP indianapolis', and 'sewer lining cost indianapolis', and one result for 'sewer lining lawrence in'.",
+      "limitations": "Single capture only.",
+      "supports": ["docs/02-SEO-SERP-BLUEPRINT.md"]
+    }
+  ]
+}

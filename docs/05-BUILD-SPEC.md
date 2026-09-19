@@ -20,7 +20,7 @@ NOT YET LOCKED.
 
 NOT YET LOCKED.
 
-Current contents: `AGENTS.md`, `CLAUDE.md`, `docs/`. No application code.
+Current contents: `AGENTS.md`, `CLAUDE.md`, `docs/`, `research/` (JSON evidence). No application code.
 
 ## Deployment
 

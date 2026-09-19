@@ -1,0 +1,192 @@
+{
+  "file": "research/sources/lawrence-primary-sources.json",
+  "category": "municipal",
+  "last_verified": "2026-09-19",
+  "note": "Supporting evidence only. /docs/ remains authoritative. Paraphrases only; short excerpts used solely where exact regulatory language matters. Re-verify before any Lawrence page is indexed.",
+  "sources": [
+    {
+      "source_id": "src-lawrence-code-title5",
+      "source_title": "Lawrence, IN Code of Ordinances, Title 5, Article 1 (Sewer Utilities) — 2025 S-18 (current)",
+      "source_url": "https://codelibrary.amlegal.com/codes/lawrence/latest/lawrence_in/0-0-0-16768",
+      "related_urls": [
+        "https://codelibrary.amlegal.com/codes/lawrence/latest/lawrence_in/0-0-0-16488",
+        "https://codelibrary.amlegal.com/codes/lawrence/latest/lawrence_in/0-0-0-16815"
+      ],
+      "publisher": "City of Lawrence, Indiana (hosted by American Legal Publishing)",
+      "source_date": null,
+      "source_date_note": "Hosted code labeled '2025 S-18 (current)'. American Legal disclaimer: online code may not reflect the most recent legislation; official printed copy governs.",
+      "authority_tier": 1
+    },
+    {
+      "source_id": "src-lawrence-policy-manual-2019",
+      "source_title": "City of Lawrence Water & Sewer Design & Construction Standards — Unit I – Policy and Procedures (approved 12/23/2019; revised 191224)",
+      "source_url": "http://www.cityoflawrence.org/sites/default/files/document-group/191223_USB%20Appvd-Policy%20and%20Procedures%20Manual_0.pdf",
+      "linked_from": "https://www.cityoflawrence.org/construction-specifications",
+      "publisher": "City of Lawrence Utilities / Utility Services Board",
+      "source_date": "2019-12-23",
+      "source_date_note": "Scanned PDF. Approved by Utility Superintendent and Utility Services Board 12/23/2019. This is the Policy and Procedure Manual currently linked from the City's Construction Specifications page. No newer revision was found on the City site or in Internet Archive listings. The City's specifications page warns that specifications may not contain recent changes regarding acceptable materials.",
+      "authority_tier": 2
+    },
+    {
+      "source_id": "src-lawrence-policy-manual-2018",
+      "source_title": "City of Lawrence Water & Sewer Design & Construction Standards — Unit I – Policy and Procedures (Revised 181226)",
+      "source_url": "https://www.cityoflawrence.org/docs/utilities/181226_LU%20POLICY%20&%20PROCEDURE%20MANUAL_updated.pdf",
+      "publisher": "City of Lawrence Utilities / Utility Services Board",
+      "source_date": "2018-12-26",
+      "source_date_note": "Superseded by the 2019 revision. The hosted file is a 4-page scanned excerpt (cover, table of contents, page I-1) and does NOT contain Section 1.06.",
+      "authority_tier": 2
+    },
+    {
+      "source_id": "src-lawrence-lift-2023-08",
+      "source_title": "THE LAWRENCE LIFT — AUGUST 2023 — ISSUE 90",
+      "source_url": "https://www.cityoflawrence.org/sites/default/files/document-group/lift-2023-august.pdf",
+      "archived_url": "http://web.archive.org/web/20240808015706/https://www.cityoflawrence.org/sites/default/files/document-group/lift-2023-august.pdf",
+      "publisher": "City of Lawrence Utilities",
+      "source_date": null,
+      "source_date_note": "Issue dated August 2023 (no day given). The original City URL returned HTTP 404 on 2026-09-19. The content was verified from the Internet Archive capture dated 2024-08-08. The Lawrence Lift index page (https://www.cityoflawrence.org/utilities/lawrence-lift) no longer lists 2023 issues directly.",
+      "authority_tier": 2
+    }
+  ],
+  "records": [
+    {
+      "id": "law-001-building-sewer-definition",
+      "category": "municipal",
+      "claim": "Lawrence ordinance defines the building sewer as the extension from the building drain to the public sewer, including the portion within the public right-of-way.",
+      "status": "verified",
+      "source_title": "Lawrence, IN Code of Ordinances § 5-1-1-2(A)(11) — Definitions (BUILDING SEWER)",
+      "source_url": "https://codelibrary.amlegal.com/codes/lawrence/latest/lawrence_in/0-0-0-16488",
+      "publisher": "City of Lawrence, Indiana (American Legal Publishing)",
+      "source_date": null,
+      "verified_at": "2026-09-19",
+      "evidence_summary": "§ 5-1-1-2(A)(11) defines the building sewer as running from the building drain to the public sewer (or other place of disposal) and expressly includes the portion of the drain in the public right-of-way. § 5-1-1-2(A)(10) says the building drain ends five feet outside the inner face of the building wall.",
+      "limitations": "The online code carries American Legal's standard disclaimer that it may not reflect the latest legislation.",
+      "supports": ["docs/01-CURRENT-STATE.md", "docs/02-SEO-SERP-BLUEPRINT.md"]
+    },
+    {
+      "id": "law-002-owner-responsibility-ordinance",
+      "category": "municipal",
+      "claim": "Under current Lawrence ordinance, the benefited property owner is responsible for all necessary repairs, relocations, changes, or replacements of the building sewer (private lateral).",
+      "status": "verified",
+      "source_title": "Lawrence, IN Code of Ordinances § 5-1-2-7 — Building Sewer Responsibility",
+      "source_url": "https://codelibrary.amlegal.com/codes/lawrence/latest/lawrence_in/0-0-0-16815",
+      "publisher": "City of Lawrence, Indiana (American Legal Publishing)",
+      "source_date": null,
+      "verified_at": "2026-09-19",
+      "evidence_summary": "§ 5-1-2-7 makes the benefited owner responsible for providing, installing, and connecting the private connection, and for all necessary repairs, extensions, relocations, changes, or replacements and their accessories. The Director may alter, modify, or waive these requirements where compliance is not possible because of extenuating circumstances. Read with law-001, this places responsibility for the whole building sewer, including the right-of-way portion, on the owner.",
+      "limitations": "The Director's discretionary waiver means individual cases can differ. We did not verify how often waivers are granted or whether any City cost-share or assistance program exists.",
+      "supports": ["docs/01-CURRENT-STATE.md", "docs/02-SEO-SERP-BLUEPRINT.md"]
+    },
+    {
+      "id": "law-003-repair-permit-required-ordinance",
+      "category": "municipal",
+      "claim": "Current Lawrence ordinance makes it unlawful to repair, modify, or connect a building sewer without a valid sanitary sewer connection permit issued by the Director.",
+      "status": "verified",
+      "source_title": "Lawrence, IN Code of Ordinances § 5-1-2-1 — Connection Permits",
+      "source_url": "https://codelibrary.amlegal.com/codes/lawrence/latest/lawrence_in/0-0-0-16768",
+      "publisher": "City of Lawrence, Indiana (American Legal Publishing)",
+      "source_date": null,
+      "verified_at": "2026-09-19",
+      "evidence_summary": "§ 5-1-2-1(A) requires a valid sanitary sewer connection permit for repair, modification, or connection of a building sewer. § 5-1-2-1(D) requires the application to include owner and contractor information, the premises, and plans that show materials of construction and installation method.",
+      "limitations": "Current permit fees, forms, and the permit office location were not verified.",
+      "supports": ["docs/01-CURRENT-STATE.md"]
+    },
+    {
+      "id": "law-004-mandatory-inspection-ordinance",
+      "category": "municipal",
+      "claim": "Lawrence ordinance requires notice for inspection of building sewer work and gives the Director a right of entry for inspection.",
+      "status": "verified",
+      "source_title": "Lawrence, IN Code of Ordinances § 5-1-2-4 — Mandatory Inspection",
+      "source_url": "https://codelibrary.amlegal.com/codes/lawrence/latest/lawrence_in/0-0-0-16815",
+      "publisher": "City of Lawrence, Indiana (American Legal Publishing)",
+      "source_date": null,
+      "verified_at": "2026-09-19",
+      "evidence_summary": "Permit holders must give at least 24 hours' notice that sewer work is ready for inspection. The building sewer must be exposed from the foundation to the connection for inspection, and the Director may waive the inspection with or without conditions. The Director has a right of entry for inspections.",
+      "limitations": "The exposure requirement is written around open-cut connection work. How it applies to lining or bursting is governed in practice by the Utility policy manual (see law-006/law-007), not by explicit ordinance text.",
+      "supports": ["docs/01-CURRENT-STATE.md"]
+    },
+    {
+      "id": "law-005-owner-responsibility-newsletter",
+      "category": "municipal",
+      "claim": "Lawrence Utilities' homeowner newsletter states the private sanitary sewer lateral (building sewer) is the property owner's responsibility from the structure all the way to the public main.",
+      "status": "verified",
+      "source_title": "THE LAWRENCE LIFT — AUGUST 2023 — ISSUE 90",
+      "source_url": "https://www.cityoflawrence.org/sites/default/files/document-group/lift-2023-august.pdf",
+      "publisher": "City of Lawrence Utilities",
+      "source_date": null,
+      "verified_at": "2026-09-19",
+      "evidence_summary": "The newsletter describes the building sewer, or private sanitary sewer lateral, as the pipe carrying wastewater from a home or business to the public sanitary sewer main, and says the owner must maintain it from the structure to the public main. It cites ordinance §5-1-1-2(A)(11) and quotes §5-1-2-7. It lists breaks, partial collapses, offset joints, and broken cleanout caps as defects that allow I&I (a violation of §5-1-2-2). It describes City crews cleaning mains, CCTV-inspecting mains and building sewers, installing liners in old pipes, and excavating broken pipes. It advises owners to call the City's after-hours line first, because the City does not reimburse contractor costs if a problem turns out to be in the public main.",
+      "limitations": "The original City URL is now 404. Content was verified from the Internet Archive capture of 2024-08-08 (archived_url in sources). This is homeowner-facing guidance, not law; the ordinance (law-001, law-002) is the governing source. The after-hours phone number printed in 2023 was not re-verified.",
+      "supports": ["docs/01-CURRENT-STATE.md", "docs/02-SEO-SERP-BLUEPRINT.md"]
+    },
+    {
+      "id": "law-006-repair-permit-and-trenchless-allowed-policy",
+      "category": "municipal",
+      "claim": "The currently linked Lawrence Utilities policy manual (§1.06) requires a permit before repairing, replacing, or relocating a sanitary sewer lateral, and states the City of Lawrence Utility allows lateral rehabilitation using pipe-bursting and lining technologies.",
+      "status": "verified",
+      "source_title": "Water & Sewer Design & Construction Standards — Unit I – Policy and Procedures, §1.06 Sanitary Sewer Repair/Replacement or Relocation (approved 12/23/2019)",
+      "source_url": "http://www.cityoflawrence.org/sites/default/files/document-group/191223_USB%20Appvd-Policy%20and%20Procedures%20Manual_0.pdf",
+      "publisher": "City of Lawrence Utilities / Utility Services Board",
+      "source_date": "2019-12-23",
+      "verified_at": "2026-09-19",
+      "evidence_summary": "§1.06 (page I-4) requires a permit before repair, replacement, or relocation of any lateral connected to the City's sanitary sewer. The applicant must submit a drawing of existing and proposed structures and utilities and describe the nature, methods, and materials of the work. The section states that the City of Lawrence Utility does allow rehabilitation of laterals by pipe-bursting and lining technologies with appropriate materials.",
+      "limitations": "This is a 2019 administrative policy. It is the version the City currently links, and no newer revision was found, but whether it is still applied in practice without unpublished changes was not confirmed with the Utility. The permit office address in the manual (DPW Office, 9001 East 59th Street, Suite 300) was not re-verified as current.",
+      "supports": ["docs/01-CURRENT-STATE.md", "docs/02-SEO-SERP-BLUEPRINT.md"]
+    },
+    {
+      "id": "law-007-trenchless-cctv-requirement-policy",
+      "category": "municipal",
+      "claim": "Under the currently linked Lawrence Utilities policy (§1.06), approval of pipe-bursting or lining repairs requires the contractor to submit CCTV video of the repair. Full rehabilitation video must cover the lateral from the cleanout by the structure to the public-main connection, and point repairs must be filmed from the cleanout to at least 2 feet beyond the repaired section.",
+      "status": "verified",
+      "source_title": "Water & Sewer Design & Construction Standards — Unit I – Policy and Procedures, §1.06 (approved 12/23/2019)",
+      "source_url": "http://www.cityoflawrence.org/sites/default/files/document-group/191223_USB%20Appvd-Policy%20and%20Procedures%20Manual_0.pdf",
+      "publisher": "City of Lawrence Utilities / Utility Services Board",
+      "source_date": "2019-12-23",
+      "verified_at": "2026-09-19",
+      "evidence_summary": "For pipe-bursting or lining repairs to be approved, the contractor must submit video documentation of the repair to the Utility (the text specifies DVD). CCTV must cover the entire lateral from the cleanout near the structure to the public-main connection. The Utility may withhold approval if the video shows a defective repair. For a point repair with a sectional liner, CCTV must run from the cleanout to no less than 2 feet beyond the repaired section.",
+      "limitations": "Same currency caveat as law-006. The DVD delivery format is likely outdated in practice, and the currently accepted video format was not verified.",
+      "supports": ["docs/01-CURRENT-STATE.md", "docs/02-SEO-SERP-BLUEPRINT.md"]
+    },
+    {
+      "id": "law-008-installation-requirements-policy",
+      "category": "municipal",
+      "claim": "The currently linked Lawrence Utilities policy (§1.02–§1.04) sets lateral installation requirements: an owner-hired contractor licensed, bonded, and insured with the City; approved pipe materials; size, depth, and slope; granular backfill near driveways, sidewalks, and roadways; cleanouts; tracer wire; and inspection before backfill.",
+      "status": "verified",
+      "source_title": "Water & Sewer Design & Construction Standards — Unit I – Policy and Procedures, §§1.02–1.04 (approved 12/23/2019)",
+      "source_url": "http://www.cityoflawrence.org/sites/default/files/document-group/191223_USB%20Appvd-Policy%20and%20Procedures%20Manual_0.pdf",
+      "publisher": "City of Lawrence Utilities / Utility Services Board",
+      "source_date": "2019-12-23",
+      "verified_at": "2026-09-19",
+      "evidence_summary": "The owner must hire a contractor licensed, bonded, and insured in the City of Lawrence (§1.02). The owner is responsible for installing the lateral to the City main. Allowed materials are SDR35 gasketed pipe, Schedule 40 PVC, or Schedule 80 PVC, in 4-inch or 6-inch diameter, with a minimum 6-inch pipe inside the City right-of-way (§1.03–1.04). Laterals must be at least 18 inches deep at the building and 4 feet deep beyond 10 feet from the building (if stub depth allows), with minimum slopes by pipe size. Laterals in or under a driveway or sidewalk, or within 5 feet of a roadway, need granular backfill to City standards. Cleanouts go 1.5–3 feet from the building, at bends, and at least every 100 feet. Tracer tape or wire is required, the trench may not be backfilled before Utility inspection, and 24 hours' notice is required for lateral inspection. The City may also require a lateral camera inspection, with the video provided on disc, in lieu of excavation.",
+      "limitations": "These rules are written for new or replacement installation. How far each applies to trenchless rehabilitation (e.g., pipe material through a burst) was not confirmed with the Utility. Same currency caveat as law-006.",
+      "supports": ["docs/01-CURRENT-STATE.md"]
+    },
+    {
+      "id": "law-009-responsibility-wording-reconciliation",
+      "category": "municipal",
+      "claim": "The policy manual says the owner is responsible for maintenance, repair, and replacement of the building sewer 'from the property line to the point of connection with the public main'. Read with the ordinance and the 2023 newsletter, this wording confirms that owner responsibility extends into the right-of-way. It does not create a City-owned segment.",
+      "status": "partially_verified",
+      "source_title": "Water & Sewer Design & Construction Standards — Unit I – Policy and Procedures, Section 1 (page I-4, paragraph preceding §1.06) (approved 12/23/2019)",
+      "source_url": "http://www.cityoflawrence.org/sites/default/files/document-group/191223_USB%20Appvd-Policy%20and%20Procedures%20Manual_0.pdf",
+      "publisher": "City of Lawrence Utilities / Utility Services Board",
+      "source_date": "2019-12-23",
+      "verified_at": "2026-09-19",
+      "evidence_summary": "The manual's sentence explicitly assigns the property-line-to-main (right-of-way) segment to the owner. The ordinance defines the building sewer as running from the building drain to the public sewer, including the right-of-way portion (§5-1-1-2(A)(11)), and makes the owner responsible for its repairs and replacements (§5-1-2-7). The 2023 Utility newsletter describes owner responsibility from the structure to the public main. All three sources point the same way: owner responsibility for the full lateral, including the right-of-way portion.",
+      "limitations": "Marked partially_verified because this reconciliation is an INFERENCE from three consistent sources, not a single statement. The manual's wording, read alone, could be misread as limiting owner responsibility to the right-of-way segment. Who is responsible for the tap or wye at the main itself, and whether the Director has waived responsibility in practice (§5-1-2-7), were not verified. Confirm with Lawrence Utilities before publishing any responsibility diagram.",
+      "supports": ["docs/01-CURRENT-STATE.md", "docs/02-SEO-SERP-BLUEPRINT.md"]
+    },
+    {
+      "id": "law-010-utility-service-boundary",
+      "category": "municipal",
+      "claim": "Whether every address inside Lawrence city limits is served by Lawrence Utilities sanitary sewer, rather than another provider, is unverified.",
+      "status": "unverified",
+      "source_title": "No authoritative service-boundary source located",
+      "source_url": null,
+      "publisher": null,
+      "source_date": null,
+      "verified_at": "2026-09-19",
+      "evidence_summary": "Lawrence Utilities publishes the sources above for its sanitary sewer system. A Citizens Energy Group page on connecting sewer service lines appeared in the SERP for the primary query, but that does not establish Citizens as the provider for any Lawrence address.",
+      "limitations": "Before publishing, confirm the service-area boundary with Lawrence Utilities or an official map so content does not mis-assign rules to addresses served by another utility.",
+      "supports": ["docs/01-CURRENT-STATE.md"]
+    }
+  ]
+}
