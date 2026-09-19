@@ -118,7 +118,7 @@ Configured 2026-09-19 and read back through the GitHub API:
 - **Ruleset `index-governance-code-owner-review`** (id 23705344; active; default branch):
   - requires code-owner review for changes to CODEOWNERS paths (`.github/CODEOWNERS`: approval registry, evaluator, firewall, config, CI, docs)
   - bypass: the repository **admin role, pull-request-only** (`bypass_mode: pull_request`). A sole owner cannot approve their own PR, so without this bypass the owner could never merge governance changes. Bypass is only possible through a PR that has passed `main-protection`'s required checks.
-- **Known limitation:** GitHub cannot distinguish an AI agent from the operator while the agent uses the operator's own credentials. Such an agent inherits the admin pull-request bypass. Making the code-owner boundary binding on agents requires giving them a separate non-admin GitHub identity (OPEN; operator decision).
+- **Known limitation (observed on PR #2):** a PR authored by the sole code owner was mergeable without any code-owner review (`reviewDecision: null`; no bypass needed). GitHub cannot distinguish an AI agent from the operator while the agent uses the operator's own credentials, so the code-owner rule does not currently constrain agents. `main-protection` (PR + required CI, no bypass) is the effective control. Making the index-approval boundary binding on agents requires a separate non-admin GitHub identity for agents (OPEN; operator decision).
 
 ## Environment Variables / Secrets — LOCKED principles (PARTIALLY IMPLEMENTED — Phase 2A)
 

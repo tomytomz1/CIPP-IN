@@ -212,6 +212,7 @@ None to `research/`. The implementation research is summarized above.
 - `GET rules/branches/main` returned all five effective rules. `GET codeowners/errors` returned `[]`.
 - PR #1 merged under `main-protection` without an admin override. Status was `CLEAN`/`MERGEABLE` after all three required checks passed.
 - **Not tested:** a live direct push to `main`. It was not attempted, to avoid risking an unreviewed commit on production. Enforcement is evidenced by the ruleset readback, not a live push.
+- **Observed on PR #2 (changes CODEOWNERS-owned `docs/`):** after all three required checks passed, GitHub reported `mergeStateStatus: CLEAN`, `reviewDecision: null`, no review requests, and `viewerCanMergeAsAdmin: false`. GitHub did not require a code-owner review, so no bypass was needed. Conclusion: with a single account that is both the sole code owner and the PR author, the code-owner rule has **no practical effect** today. It would only bind a different author (for example a separate agent identity). This is an observation, not a documented GitHub guarantee.
 
 ## Decisions Made
 
@@ -255,7 +256,7 @@ None to `research/`. The implementation research is summarized above.
 - **Accessibility:** verified only on the development shell (automated); manual review is not yet performed.
 - **Lab vs field:** lab performance numbers come from a trivial page; they do not predict real-page CWV.
 - **Direct-push test:** not live-tested (see Governance Result).
-- **Operator merges:** PR #2 changes CODEOWNERS-owned `docs/`. Merging it needs either a code-owner approval (impossible for the author) or the admin PR-only bypass. This is the documented expected path for sole-owner changes.
+- **Code-owner rule is currently inert:** as observed on PR #2, a PR authored by the sole code owner (the operator's own account, which agents use) is mergeable without any code-owner review. The CODEOWNERS/index-approval boundary therefore does not yet constrain agents; `main-protection` (PR + required CI, no bypass) is the effective control. Fix: separate non-admin agent identity (`01` Open Question 9).
 
 ## Current Blockers
 
@@ -296,7 +297,7 @@ Phase 2B (lead-data/backend foundation) on operator instruction. Separately: dom
   - merged with a normal merge → `b3c60e677e2479d410fbaae0f0eae15c4acc14f3`
 - **PR #2** (`phase-2a-audit-trail` → `main`):
   - contains this receipt, RUN-LOG, CURRENT-STATE, and the `05` governance status
-  - merge happens after its required checks pass, using the admin PR-only bypass for the code-owner rule (sole-owner case)
+  - merged with a normal merge (no `--admin` flag) after its three required checks passed; GitHub required no code-owner review (see Governance Result)
   - merge commit: the commit containing this receipt; resolve with `git log`
 
 ## Final Operator Report
@@ -305,7 +306,7 @@ Phase 2B (lead-data/backend foundation) on operator instruction. Separately: dom
 - **Versions:** Astro 7.3.3, `@astrojs/cloudflare` 14.3.2, TypeScript 6.0.3, Zod 4.6.5, Vitest 5.0.1, Playwright 1.63.0, axe 4.13.0, Wrangler 4.135.0.
 - **Build, type, and tests:** build PASS; typecheck 0 errors; 70/70 unit tests; 6/6 a11y/lab tests; CI green on all three required checks.
 - **Schema, evaluator, and firewall:** implemented and tested, including the 10 required scenarios. Zero indexable pages; empty production sitemap.
-- **Governance:** `main-protection` (no bypass; PR plus 3 required checks; no force push or deletion) and `index-governance-code-owner-review` (admin PR-only bypass), both active and read back.
+- **Governance:** `main-protection` (no bypass; PR plus 3 required checks; no force push or deletion) and `index-governance-code-owner-review` (admin PR-only bypass), both active and read back. Observed: the code-owner rule did not require review for the sole owner's own PR (#2), so it is currently inert. `main-protection` is the effective control until agents use a separate non-admin identity.
 - **Decisions:** as listed above.
 - **Blockers:** none for Phase 2B.
 - **Risks:** agent identity, public repository, domain, legal review, expert reviewer, Lawrence confirmations, manual accessibility review.

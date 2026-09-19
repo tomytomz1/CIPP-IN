@@ -228,7 +228,7 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 - **Legal/compliance risk** around sharing homeowner contact data with a contractor and call recording, pending legal review.
 - **Evidence staleness:** SERP, contractor, and policy evidence decays. See the `stale_after` guidance in `/research/index.json`.
 - **Domain still unregistered:** the approved target could be registered by someone else before the operator buys it.
-- **Agent identity:** AI agents currently use the operator's own GitHub credentials (admin), so they inherit the admin pull-request bypass of `index-governance-code-owner-review`. `main-protection` (PR plus required checks, no bypass) still binds them. A separate non-admin identity for agents is needed to make the code-owner boundary binding on agents.
+- **Agent identity / inert code-owner rule:** AI agents use the operator's own GitHub account, which is also the sole code owner. As observed on PR #2, GitHub then requires no code-owner review, so `index-governance-code-owner-review` does not currently constrain agents. `main-protection` (PR plus required checks, no bypass) still binds everyone. A separate non-admin identity for agents is needed to make the index-approval boundary binding on agents.
 - **Public repository:** the GitHub repository is public (observed 2026-09-19). Strategy, competitor research, and prospective-tenant research in `research/` and `docs/` are publicly readable. Operator decision whether that is acceptable.
 - **Privacy/consent legal review** is required before live lead routing.
 - **Expert reviewer** is still required for pages where `04-CONTENT-EDITORIAL-SYSTEM.md` requires expert review. Those pages stay `noindex` until one exists.
