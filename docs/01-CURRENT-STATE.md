@@ -1,11 +1,11 @@
 # CURRENT STATE
 
 Last updated: 2026-09-19
-Last verified commit: `b3c60e677e2479d410fbaae0f0eae15c4acc14f3` (merge of PR #1, Phase 2A build foundation). The Phase 2A audit-trail merge follows; resolve with `git log` (a file cannot contain its own commit SHA).
+Last verified commit: `1cde61f908b02dd2719e6d202cc3fb78a3650d22` (Phase 2A audit trail, PR #2). The Phase 2B merge follows; resolve with `git log` (a file cannot contain its own commit SHA).
 Production URL: None — no production deployment exists. Target domain `indysewerresource.com` is approved but NOT registered.
 Repository: https://github.com/tomytomz1/CIPP-IN
 Current branch: main
-Current phase: Phase 2A — Build foundation and indexing firewall (complete; merged via PR #1; `main` governance configured). Next: lead-data/backend foundation (Phase 2B, not started). No deployment exists; domain not registered; no page is indexable.
+Current phase: Phase 2B — Lead-data/backend foundation (complete). Next: not scheduled; candidates are the queue consumer/notifications, the admin surface, or first content work. No deployment exists; domain not registered; no page is indexable; live lead collection is DISABLED and no lead has been collected.
 
 > This file is authoritative for what currently exists and what has been completed. It does not override strategic rules in higher-precedence documents (see `/AGENTS.md` §1). Update it after every meaningful piece of work.
 
@@ -63,7 +63,9 @@ The foundation includes:
 - the publication-record schema, indexability evaluator, and noindex/sitemap/robots firewall
 - CI and `main` governance
 
-There is no deployment, cloud or vendor resource, database, registered domain, analytics or Search Console configuration, Twilio setup, lead system, SEO content, indexing, or collected leads. The only page is a non-production development shell (lifecycle `draft`, `noindex`).
+Phase 2B adds the lead-data/backend foundation: D1 migrations for all ten logical domains, strict intake contracts, the routing/persistence/queue service, and the fail-closed activation boundary.
+
+There is no deployment, cloud or vendor resource, remote database, registered domain, analytics or Search Console configuration, Twilio number, notification provider, public lead form, SEO content, indexing, or collected lead. The only page is a non-production development shell (lifecycle `draft`, `noindex`).
 
 ## Completed
 
@@ -86,6 +88,13 @@ There is no deployment, cloud or vendor resource, database, registered domain, a
   - CI: `build-and-test`, `accessibility-and-lab-performance`, `secret-scan`
   - CODEOWNERS; rulesets `main-protection` and `index-governance-code-owner-review`
   - details: `05-BUILD-SPEC.md` → Implementation Record: Phase 2A
+- Phase 2B lead-data/backend foundation (2026-09-19):
+  - `migrations/0001_lead_data_foundation.sql`: 10 tables (leads, lead_contacts, consents, lead_events, lead_routes, lead_outcomes, partners, routing_rules, calls, uploads), 14 indexes, 4 append-only triggers, no seed data
+  - contact PII isolated in `lead_contacts`; append-only consent/event/route/outcome history
+  - strict intake contract (approved minimum fields only), UUID-key idempotency, deterministic partner routing, persist-before-queue, identifier-only queue messages
+  - live intake DISABLED and fail-closed; `POST /api/lead-intake` returns 503 before reading a body
+  - 58 backend tests against a local D1 database (Miniflare); CI gained `npm run validate:migrations` inside the existing `build-and-test` check
+  - details: `05-BUILD-SPEC.md` → Implementation Record: Phase 2B
 
 ## In Progress
 
@@ -95,7 +104,8 @@ There is no deployment, cloud or vendor resource, database, registered domain, a
 
 - Domain registration (approved target; requires separate operator authorization)
 - Real site pages / homepage (only a non-production development shell exists)
-- Lead-data/backend foundation (D1 schema and migrations, intake endpoint, queues, notifications, uploads, admin UI)
+- Queue consumer worker, partner/operator notifications (Resend, Twilio), R2 uploads, admin UI
+- Live lead collection (blocked by legal review and by production bindings; the code path is disabled)
 - Similarity/embedding runner (records only; no OpenAI calls)
 - Cloudflare resources (Workers, D1, R2, Queues, Turnstile, Access, DNS)
 - Resend, Twilio, and OpenAI accounts/resources for this project
@@ -150,6 +160,13 @@ Phase 2A foundation built (not deployed). Astro 7.3.3 static site with the Cloud
 - **Operator approvals:** 0.
 - **Effectively indexable pages:** 0.
 - **Production sitemap eligibility:** 0 URLs.
+
+Phase 2B lead backend built (not deployed, not active): D1 migration for 10 tables, intake/routing/persistence service, and the disabled activation boundary. See `05-BUILD-SPEC.md` → Implementation Record: Phase 2B.
+
+- **Remote D1 database:** none (migrations run against a local database in tests/CI).
+- **Queue / notification providers / uploads:** none.
+- **Live intake:** disabled; no public form exists.
+- **Leads collected:** 0.
 
 ## Current Indexed URLs
 
@@ -215,6 +232,8 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 8. Wording observation (no rule conflict): `AGENTS.md` §2 "Decisions not yet locked" refers to items marked `NOT YET LOCKED`, but `05-BUILD-SPEC.md` now labels unresolved items `OPEN`. The rule's intent (never decide unresolved items silently) clearly covers `OPEN` items too. Updating the `AGENTS.md` wording needs operator approval.
 9. AI-agent GitHub identity: should agents use a separate non-admin GitHub account or token, so the code-owner/index-approval boundary binds them? (Phase 2A limitation.)
 10. Repository visibility: the repository is public. Keep it public or make it private? (Research and strategy are currently publicly readable.)
+11. Contact-PII protection beyond the platform: should `lead_contacts` use application-level (field) encryption, or is Cloudflare's platform encryption-at-rest sufficient? Phase 2B did not implement extra encryption, and did not decide this. Operator/legal decision.
+12. Retention and deletion mechanics: the append-only triggers block UPDATE but deliberately allow DELETE so lawful deletion stays possible. The actual retention periods and the deletion procedure are still OPEN (Open Question 3).
 
 ## Known Risks
 
@@ -230,19 +249,21 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 - **Domain still unregistered:** the approved target could be registered by someone else before the operator buys it.
 - **Agent identity / inert code-owner rule:** AI agents use the operator's own GitHub account, which is also the sole code owner. As observed on PR #2, GitHub then requires no code-owner review, so `index-governance-code-owner-review` does not currently constrain agents. `main-protection` (PR plus required checks, no bypass) still binds everyone. A separate non-admin identity for agents is needed to make the index-approval boundary binding on agents.
 - **Public repository:** the GitHub repository is public (observed 2026-09-19). Strategy, competitor research, and prospective-tenant research in `research/` and `docs/` are publicly readable. Operator decision whether that is acceptable.
-- **Privacy/consent legal review** is required before live lead routing.
+- **Privacy/consent legal review** is required before live lead routing. The Phase 2B code path is disabled until that review and the production bindings exist, so this is enforced in code, not only in policy.
+- **Lead data protection:** the schema minimizes and separates PII, but field-level encryption and retention/deletion mechanics are undecided (Open Questions 11–12).
 - **Expert reviewer** is still required for pages where `04-CONTENT-EDITORIAL-SYSTEM.md` requires expert review. Those pages stay `noindex` until one exists.
 - **Algorithm-update risk:** handled by protocol in `03-GOOGLE-RESILIENCE.md`.
 
 ## Current Blockers
 
-- None block Phase 2B (lead-data/backend foundation).
+- None block the next implementation phase.
 - Before **production publishing**: domain registration (operator action), replacing the draft development shell, real pages passing the indexing gate with operator approval, and the Launch Checklist in `05-BUILD-SPEC.md`. Branch/index governance is now configured.
-- Before **live lead collection/routing**: legal review of consent/privacy/disclosure/retention.
+- Before **live lead collection/routing**: legal review of consent/privacy/disclosure/retention, plus provisioning D1/Queues/Turnstile and setting the activation configuration. Until then the intake endpoint fails closed.
 - The remaining Lawrence uncertainties must be confirmed with Lawrence Utilities before any Lawrence content is indexed. This does not block Phase 1.
 
 ## Last Major Decisions
 
+- 2026-09-19 — Phase 2B implemented (operator-authorized): physical lead schema and migration, intake contract, routing, persist-before-queue delivery, idempotency, enrichment (outcomes/calls/uploads), and a fail-closed live-intake activation boundary. Implementation-level choices are recorded in `05` → Implementation Record: Phase 2B. `miniflare` was added as a dev dependency so tests execute real SQL locally.
 - 2026-09-19 — Phase 2A implemented (operator-authorized) and merged via PR #1:
   - Astro 7.3.3 / TypeScript 6.0.3 / `@astrojs/cloudflare` 14.3.2 / Zod 4.6.5
   - publication records in `content/publication-records/`; operator approvals in `governance/index-approvals.json`
@@ -267,8 +288,8 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 ## Next 5 Priorities
 
 1. Operator: register `indysewerresource.com` (separate authorization; not done by agents).
-2. Phase 2B (on operator instruction): lead-data/backend foundation per `05-BUILD-SPEC.md` (D1 schema/migrations, intake endpoint, queue, notifications). Live lead collection still waits on legal review.
-3. Operator decisions: a separate non-admin GitHub identity for AI agents, and whether the repository should stay public.
+2. Operator: start the legal review of consent/privacy/retention/disclosure. It blocks live lead collection, which is currently disabled in code.
+3. Operator decisions: a separate non-admin GitHub identity for AI agents; repository visibility; contact-PII encryption and retention mechanics (Open Questions 9–12).
 4. Confirm the remaining Lawrence uncertainties directly with Lawrence Utilities and record the results in `research/sources/lawrence-primary-sources.json`. Start legal review of consent/privacy.
 5. Begin identifying a real expert reviewer (Indiana-licensed plumber with trenchless/CIPP experience); decide the AI-use disclosure policy (Open Question 7).
 
@@ -286,3 +307,4 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
   - This file reconciled. Run receipt and RUN-LOG entry added.
   - No code, packages, infrastructure, domain purchase, or deployment.
 - 2026-09-19 — Phase 2A: build foundation and indexing firewall merged via PR #1 (`b3c60e6`). Rulesets `main-protection` and `index-governance-code-owner-review` configured and read back. `05-BUILD-SPEC.md` gained an Implementation Record and governance status. Audit trail in a follow-up PR. No deployment, cloud/vendor resources, domain purchase, leads, or indexable content.
+- 2026-09-19 — Phase 2B: lead-data/backend foundation. Added `migrations/0001_lead_data_foundation.sql` (10 tables, 14 indexes, 4 append-only triggers, no seed data), `src/lib/leads/*` (contracts, repository, routing, intake, enrichment, activation, Turnstile, HTTP adapter, logging), the disabled `POST /api/lead-intake` route, 58 backend tests against local D1, and `npm run validate:migrations` in CI. Updated `05-BUILD-SPEC.md` (Implementation Record: Phase 2B and section statuses) and this file. No remote database, queue, notification provider, upload storage, deployment, domain purchase, lead collection, or indexable content.

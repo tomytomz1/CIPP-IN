@@ -9,7 +9,7 @@ import { resolveSiteConfig } from '../src/config/site.ts';
 import { buildRegistry } from '../src/lib/publication/registry.ts';
 import { canonicalUrl, isEffectivelyIndexable, renderRobotsTxt, robotsDirective, sitemapUrls } from '../src/lib/seo/firewall.ts';
 import { checkStructuredData } from '../src/lib/seo/structured-data.ts';
-import { DIST, attrValues, builtPages, metaContent, resolveBuiltPath } from './lib/dist.ts';
+import { DIST, attrValues, builtPages, metaContent, resolveBuiltPath, walk } from './lib/dist.ts';
 import { loadRawApprovals, loadRawRecords } from './lib/load-project.ts';
 
 const errors: string[] = [];
@@ -105,6 +105,14 @@ for (const { record } of registry.entries) {
 for (const e of registry.entries) {
   if (isEffectivelyIndexable(e, site) && e.record.route !== '/' && !inboundLinks.get(e.record.route)) {
     fail(`indexable page ${e.record.route} is orphaned (no internal links point to it)`);
+  }
+}
+
+// Server-only lead code must never reach the browser bundle (docs/05 → Security).
+for (const file of walk(DIST)) {
+  const text = readFileSync(file, 'utf8');
+  for (const marker of ['INSERT INTO leads', 'lead_contacts', 'INSERT INTO consents', 'cloudflare:workers', 'TURNSTILE_SECRET']) {
+    if (text.includes(marker)) fail(`client asset ${file} contains server-only marker "${marker}"`);
   }
 }
 
