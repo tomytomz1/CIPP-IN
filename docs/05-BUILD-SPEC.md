@@ -358,10 +358,23 @@ Use a Domain property, preferably verified through DNS, once the domain is regis
 - Lead/form pages: may additionally load Turnstile.
 - Not at launch without a justified requirement: Google Tag Manager, chat widgets, heatmaps, review widgets, autoplay video, marketing-script stacks.
 
-## Accessibility
+## Accessibility — LOCKED (IMPLEMENTATION PENDING)
 
-- **Expectations:** semantic HTML, keyboard-operable interactions, visible focus, labeled form fields with accessible error messages, sufficient color contrast, and meaningful alt text (decorative images marked as such). Accessibility is part of Technical SEO QA (`04` step 17).
-- **OPEN (agent proposal, awaiting operator confirmation):** adopt WCAG 2.2 AA as the formal conformance target.
+**Target conformance: WCAG 2.2 Level AA** (operator-approved 2026-09-19). AA is the formal target. AAA improvements may be made opportunistically where low-cost, but AAA is not a requirement.
+
+Accessibility is a release and quality requirement, not optional polish. It is part of Technical SEO QA (`04-CONTENT-EDITORIAL-SYSTEM.md` step 17) and the Definition of Done.
+
+- Prefer native semantic HTML before ARIA.
+- All meaningful functionality is keyboard operable.
+- Visible keyboard focus is preserved.
+- Form labels, errors, instructions, and validation feedback are programmatically associated and understandable.
+- Images have appropriate alternative-text handling (meaningful alt text; decorative images marked as such).
+- Color is never the sole means of conveying information.
+- Contrast meets the applicable WCAG 2.2 AA criteria.
+- Interactive targets and controls meet the applicable WCAG 2.2 requirements.
+- Motion and animation must not create avoidable accessibility problems.
+- Automated accessibility checks are useful but do not replace manual keyboard- and screen-reader-oriented review of important workflows (especially lead forms).
+- Accessibility work must preserve the locked Performance Budget. Do not introduce a heavy accessibility framework or overlay merely to satisfy the requirement.
 
 ## Privacy / Consent
 
@@ -474,6 +487,7 @@ The build phase must implement and enforce in CI at least:
   - partner-switch routing
   - absence of an active partner
 - **Security:** no committed secrets; restricted admin paths; private-upload behavior; input-validation behavior.
+- **Accessibility:** automated WCAG 2.2 AA checks for the major page types, plus documented manual keyboard/screen-reader review of important workflows (automated checks alone are insufficient).
 
 ## Launch Checklist — LOCKED minimum (IMPLEMENTATION PENDING)
 
@@ -490,6 +504,7 @@ Before production publishing / live lead collection:
 9. Every indexable page passes the Indexing Gate (`03`), has a complete publication record, and has operator index approval.
 10. Backups (PITR plus scheduled R2 export) verified.
 11. Call recording confirmed OFF (unless legal review has since resolved it).
+12. WCAG 2.2 AA verified for the major page types and lead workflows (automated checks plus manual keyboard/screen-reader review).
 
 ## Definition of Done
 

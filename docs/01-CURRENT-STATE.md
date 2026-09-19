@@ -1,11 +1,11 @@
 # CURRENT STATE
 
 Last updated: 2026-09-19
-Last verified commit: `aa7ffaa337eee02eb96aeacc9aad023d89b06db9` (Phase 0.2). The Phase 1 documentation-lock commit follows; resolve with `git log` (a file cannot contain its own commit SHA).
+Last verified commit: `1cd02af6b2143d9b7179eb09e1e78f90ae8073ef` (Phase 1 documentation lock). The Phase 1 final documentation-reconciliation commit follows; resolve with `git log` (a file cannot contain its own commit SHA).
 Production URL: None — no production deployment exists. Target domain `indysewerresource.com` is approved but NOT registered.
 Repository: https://github.com/tomytomz1/CIPP-IN
 Current branch: main
-Current phase: Phase 1 — Brand, domain target, and production architecture approved and documented (complete). Next: website implementation / build preparation per `05-BUILD-SPEC.md` (not started). No application code or deployment exists; domain not registered.
+Current phase: Phase 1 — Brand, domain target, production architecture, and accessibility target approved and documented; higher-precedence docs reconciled (complete). Next: website implementation / build preparation per `05-BUILD-SPEC.md` (not started). No application code or deployment exists; domain not registered.
 
 > This file is authoritative for what currently exists and what has been completed. It does not override strategic rules in higher-precedence documents (see `/AGENTS.md` §1). Update it after every meaningful piece of work.
 
@@ -50,6 +50,7 @@ Locked by the operator (change only with explicit operator approval):
   - first-party JS: 0 KB target on editorial pages, ≤ 75 KB gzip on form pages
   - CSS ≤ 40 KB gzip
   - system fonts
+- **Accessibility target (Phase 1):** WCAG 2.2 Level AA, a release/quality requirement. The standard is selected but not yet implemented (no site exists).
 - Full specification: `05-BUILD-SPEC.md`.
 - **Run logging:** append-only audit trail in `logs/RUN-LOG.md` (index) and `logs/runs/` (one receipt per meaningful work session), per `/AGENTS.md` §3. History only; this file stays authoritative for current state.
 
@@ -69,6 +70,7 @@ Documentation, research evidence, the run-log audit trail, and the locked Phase 
   - SERP/competitor snapshot: `research/serps/2026-09-19-competitor-snapshot.json`
 - Phase 0.2 run-log system: `logs/RUN-LOG.md`, `logs/RUN-RECEIPT-TEMPLATE.md`, and `logs/runs/`, with receipts backfilled for Phase 0 and Phase 0.1 (2026-09-19).
 - Phase 1 decisions approved by the operator and documented (2026-09-19): brand, target domain (not registered), production architecture, publication/indexing architecture, lead-data architecture, performance budget. `05-BUILD-SPEC.md` is now the locked specification.
+- Phase 1 final documentation reconciliation (2026-09-19): WCAG 2.2 AA locked; stale "NOT YET LOCKED" pointers in `03` and `04` corrected; `04` step 20 renamed "Index Approval" to match the publication/indexing lifecycle.
 
 ## In Progress
 
@@ -81,6 +83,7 @@ Documentation, research evidence, the run-log audit trail, and the locked Phase 
 - Cloudflare resources (Workers, D1, R2, Queues, Turnstile, Access, DNS)
 - Resend, Twilio, and OpenAI accounts/resources for this project
 - GitHub branch protection / ruleset and CODEOWNERS for index governance
+- Accessibility implementation and verification (WCAG 2.2 AA target selected; nothing built)
 - Confirmation of the remaining Lawrence uncertainties with Lawrence Utilities (see Open Questions)
 - Content production
 - Tools/calculators
@@ -186,10 +189,9 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
    - partner disclosure wording
 4. Rental contract terms (pricing, exclusivity boundaries, term, performance and outcome-reporting provisions) — OPEN.
 5. Expert reviewer identity — none recruited; must be a real, verifiable professional.
-6. Formal accessibility conformance target: WCAG 2.2 AA was proposed by the agent in Phase 1 and awaits operator confirmation (`05-BUILD-SPEC.md` → Accessibility).
-7. Any implementation-level choice not approved in Phase 1 (exact folder names, library versions, header values, physical schema, event names) is decided at build time and recorded in the run receipt.
-8. Stale cross-references in higher-precedence docs, to be corrected with operator approval: `03-GOOGLE-RESILIENCE.md` still says the similarity embedding model is "NOT YET LOCKED" and calls the page registry "NOT YET LOCKED". `04-CONTENT-EDITORIAL-SYSTEM.md` calls the workflow-record storage location "NOT YET LOCKED". Phase 1 locked all three in `05-BUILD-SPEC.md`. Separately, `04` step 20 uses "Publish" to mean switching a page to indexable, while `05` separates public availability (`published_noindex`) from indexability. That is a terminology difference only. The rules themselves do not conflict; only these pointers and terms are stale.
-9. Whether to add an on-page AI-use disclosure ("How" content was made) to `04-CONTENT-EDITORIAL-SYSTEM.md`. Google's people-first and gen-AI guidance suggest considering it (`research/sources/google-search-policy.json` goog-003, goog-005). Operator decision.
+6. Any implementation-level choice not approved in Phase 1 (exact folder names, library versions, header values, physical schema, event names) is decided at build time and recorded in the run receipt.
+7. Whether to add an on-page AI-use disclosure ("How" content was made) to `04-CONTENT-EDITORIAL-SYSTEM.md`. Google's people-first and gen-AI guidance suggest considering it (`research/sources/google-search-policy.json` goog-003, goog-005). Operator decision.
+8. Wording observation (no rule conflict): `AGENTS.md` §2 "Decisions not yet locked" refers to items marked `NOT YET LOCKED`, but `05-BUILD-SPEC.md` now labels unresolved items `OPEN`. The rule's intent (never decide unresolved items silently) clearly covers `OPEN` items too. Updating the `AGENTS.md` wording needs operator approval.
 
 ## Known Risks
 
@@ -203,7 +205,7 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 - **Legal/compliance risk** around sharing homeowner contact data with a contractor and call recording, pending legal review.
 - **Evidence staleness:** SERP, contractor, and policy evidence decays. See the `stale_after` guidance in `/research/index.json`.
 - **Domain still unregistered:** the approved target could be registered by someone else before the operator buys it.
-- **`main` is unprotected:** observed 2026-09-19 via GitHub API; no rulesets. Branch protection/ruleset plus CODEOWNERS over the index-approval registry must be configured before production publishing.
+- **`main` is unprotected:** observed 2026-09-19 (re-checked 13:19 EDT) via GitHub API; no rulesets. Branch protection/ruleset plus CODEOWNERS over the index-approval registry must be configured before production publishing.
 - **Privacy/consent legal review** is required before live lead routing.
 - **Expert reviewer** is still required for pages where `04-CONTENT-EDITORIAL-SYSTEM.md` requires expert review. Those pages stay `noindex` until one exists.
 - **Algorithm-update risk:** handled by protocol in `03-GOOGLE-RESILIENCE.md`.
@@ -217,6 +219,7 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 
 ## Last Major Decisions
 
+- 2026-09-19 — Operator approved WCAG 2.2 Level AA as the formal accessibility target, and approved correcting the stale Phase 0 wording in `03`/`04` to match the Phase 1 architecture (similarity tooling pointer, page-record pointer, workflow-record storage pointer, `04` step 20 "Index Approval"). No thresholds, gates, or workflow steps changed.
 - 2026-09-19 — Phase 1 approved by the operator and locked in `05-BUILD-SPEC.md`:
   - brand Indy Sewer Resource; target domain `indysewerresource.com` (not registered)
   - Astro/TypeScript on Cloudflare Workers + Static Assets, with D1, R2, Queues, Turnstile, and Access
@@ -237,7 +240,7 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 2. Website implementation / build preparation per `05-BUILD-SPEC.md` (on operator instruction): scaffold, CI checks, and the publication-record/indexing-gate machinery before any content.
 3. Configure branch/index governance (protected `main` or ruleset, CODEOWNERS) before production publishing.
 4. Confirm the remaining Lawrence uncertainties directly with Lawrence Utilities and record the results in `research/sources/lawrence-primary-sources.json`. Start legal review of consent/privacy.
-5. Begin identifying a real expert reviewer (Indiana-licensed plumber with trenchless/CIPP experience); decide the AI-use disclosure policy (Open Question 9).
+5. Begin identifying a real expert reviewer (Indiana-licensed plumber with trenchless/CIPP experience); decide the AI-use disclosure policy (Open Question 7).
 
 ## Change Log
 
@@ -246,3 +249,9 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 - 2026-09-19 — Phase 0.1: created `/research/` evidence files (index, Lawrence primary sources, prospective tenants, Google policy, SERP snapshot). Re-verified Lawrence rules, competitors, tenant candidates, and Google policy. Reconciled this file and `02-SEO-SERP-BLUEPRINT.md`, added the research row to the ownership table in `AGENTS.md`, and made a narrow repository-contents correction in `05-BUILD-SPEC.md`. No code, framework, content, domain, or fake data created.
 - 2026-09-19 — Phase 0.2: added `logs/` run-log system (index, template, receipts incl. backfills for Phase 0 and 0.1), logging rules in `AGENTS.md` §2–§3, and a reminder in `CLAUDE.md`. No strategy, code, or research changes.
 - 2026-09-19 — Phase 1 documentation lock: `05-BUILD-SPEC.md` rewritten as the locked Phase 1 specification. This file was reconciled (phase, locked decisions, open questions, risks, blockers, priorities, stale SHA). Run receipt and RUN-LOG entry added. No code, packages, infrastructure, accounts, domain purchase, or deployment.
+- 2026-09-19 — Phase 1 final documentation reconciliation:
+  - `05-BUILD-SPEC.md`: Accessibility locked to WCAG 2.2 AA, with accessibility test and launch-checklist items.
+  - `03-GOOGLE-RESILIENCE.md`: two stale pointers corrected (similarity tooling; page-level classification records).
+  - `04-CONTENT-EDITORIAL-SYSTEM.md`: workflow-record storage pointer corrected; step 20 renamed "Index Approval".
+  - This file reconciled. Run receipt and RUN-LOG entry added.
+  - No code, packages, infrastructure, domain purchase, or deployment.

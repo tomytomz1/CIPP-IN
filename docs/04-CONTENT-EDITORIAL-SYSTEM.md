@@ -8,7 +8,7 @@ Gates and thresholds referenced here (similarity, commodity test, publication sc
 
 ## MANDATORY CONTENT WORKFLOW
 
-Every indexable page follows every step, in order. Skipping a step means the page stays draft / `noindex`. Record the output of each step with the page (storage location NOT YET LOCKED — see `05-BUILD-SPEC.md` → Admin / Content Workflow).
+Every indexable page follows every step, in order. Skipping a step means the page stays draft / `noindex`. Record the output of every step in the page's structured page/publication record (see `05-BUILD-SPEC.md` → Content / Editorial Storage and Publication / Indexing Architecture).
 
 1. **User Problem Definition** — Why does this URL deserve to exist? What homeowner problem does it solve, and at which lead-journey stage (`00-PROJECT-CHARTER.md`)? Confirm it is not a keyword variant of an existing page (`02-SEO-SERP-BLUEPRINT.md` → Page Strategy).
 2. **Search Intent Analysis** — Target query set, intent stage, what the current SERP rewards, and what the homeowner needs to decide.
@@ -29,7 +29,7 @@ Every indexable page follows every step, in order. Skipping a step means the pag
 17. **Technical SEO QA** — Per `05-BUILD-SPEC.md` (canonicals, metadata, schema validity/honesty, performance, accessibility).
 18. **Internal Linking QA** — Links reflect the lead journey; no orphan pages; no manipulative anchor patterns.
 19. **Conversion QA** — Lead paths work, disclosures are present, tracking fires, and the page helps even users who should not convert.
-20. **Publish** — Switch to indexable only after steps 1–19 pass. Update `01-CURRENT-STATE.md` → Current Indexed URLs.
+20. **Index Approval** — After steps 1–19 pass, move the page through the publication/indexing controls defined in `05-BUILD-SPEC.md`. A page may be publicly available as `published_noindex`. It becomes `indexable` only when all hard gates, score requirements, evidence-freshness requirements, and operator index approval pass. Update `01-CURRENT-STATE.md` → Current Indexed URLs when a URL actually becomes indexable.
 21. **Monitor** — Indexing, queries, rankings, engagement, leads.
 22. **90/180-Day Review** — Classify per the Site Quality Firewall in `03-GOOGLE-RESILIENCE.md`.
 

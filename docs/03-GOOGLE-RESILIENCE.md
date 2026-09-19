@@ -99,7 +99,7 @@ Also flag for review:
 - ≥ 20% sentence-level near-duplication with any other page
 - ≥ 70% identical heading architecture with any other page
 
-Manual review outcomes and reasons must be recorded. The embedding model and tooling are NOT YET LOCKED (`05-BUILD-SPEC.md` → Publication-Quality Enforcement); record which model produced each score, since scores are not comparable across models.
+Manual review outcomes and reasons must be recorded. The implementation is defined in `05-BUILD-SPEC.md` → Publication-Quality Enforcement. The current locked embedding model is OpenAI `text-embedding-3-small`, supplemented by deterministic sentence-level and heading-architecture checks. Record the model and tooling used for every run, because scores from different embedding models are not directly comparable.
 
 ---
 
@@ -199,7 +199,7 @@ Evaluation rules (days measured from first indexing):
 
 **Do not delete pages solely for low traffic.** Low-volume pages that generate qualified leads, earn links, build trust (e.g., methodology, disclosure), or support money pages are KEEP.
 
-Record every classification with date and reasoning in `01-CURRENT-STATE.md` (or its eventual page registry — NOT YET LOCKED).
+Record every page-level classification, with date and reasoning, in the structured page/publication record defined in `05-BUILD-SPEC.md` → Publication / Indexing Architecture. Summarize material site-level status changes in `01-CURRENT-STATE.md`.
 
 ---
 
