@@ -1,11 +1,11 @@
 # CURRENT STATE
 
 Last updated: 2026-09-19
-Last verified commit: `1cd02af6b2143d9b7179eb09e1e78f90ae8073ef` (Phase 1 documentation lock). The Phase 1 final documentation-reconciliation commit follows; resolve with `git log` (a file cannot contain its own commit SHA).
+Last verified commit: `b3c60e677e2479d410fbaae0f0eae15c4acc14f3` (merge of PR #1, Phase 2A build foundation). The Phase 2A audit-trail merge follows; resolve with `git log` (a file cannot contain its own commit SHA).
 Production URL: None — no production deployment exists. Target domain `indysewerresource.com` is approved but NOT registered.
 Repository: https://github.com/tomytomz1/CIPP-IN
 Current branch: main
-Current phase: Phase 1 — Brand, domain target, production architecture, and accessibility target approved and documented; higher-precedence docs reconciled (complete). Next: website implementation / build preparation per `05-BUILD-SPEC.md` (not started). No application code or deployment exists; domain not registered.
+Current phase: Phase 2A — Build foundation and indexing firewall (complete; merged via PR #1; `main` governance configured). Next: lead-data/backend foundation (Phase 2B, not started). No deployment exists; domain not registered; no page is indexable.
 
 > This file is authoritative for what currently exists and what has been completed. It does not override strategic rules in higher-precedence documents (see `/AGENTS.md` §1). Update it after every meaningful piece of work.
 
@@ -56,7 +56,14 @@ Locked by the operator (change only with explicit operator approval):
 
 ## Current Project Status
 
-Documentation, research evidence, the run-log audit trail, and the locked Phase 1 build specification are in the repository. There is no website, application code, installed framework, database, cloud resource, production deployment, registered domain, analytics or Search Console configuration, Twilio setup, indexing, or collected leads.
+Documentation, research evidence, the run-log audit trail, the locked build specification, and the Phase 2A application foundation are in the repository.
+
+The foundation includes:
+- Astro + TypeScript with the Cloudflare adapter
+- the publication-record schema, indexability evaluator, and noindex/sitemap/robots firewall
+- CI and `main` governance
+
+There is no deployment, cloud or vendor resource, database, registered domain, analytics or Search Console configuration, Twilio setup, lead system, SEO content, indexing, or collected leads. The only page is a non-production development shell (lifecycle `draft`, `noindex`).
 
 ## Completed
 
@@ -71,6 +78,14 @@ Documentation, research evidence, the run-log audit trail, and the locked Phase 
 - Phase 0.2 run-log system: `logs/RUN-LOG.md`, `logs/RUN-RECEIPT-TEMPLATE.md`, and `logs/runs/`, with receipts backfilled for Phase 0 and Phase 0.1 (2026-09-19).
 - Phase 1 decisions approved by the operator and documented (2026-09-19): brand, target domain (not registered), production architecture, publication/indexing architecture, lead-data architecture, performance budget. `05-BUILD-SPEC.md` is now the locked specification.
 - Phase 1 final documentation reconciliation (2026-09-19): WCAG 2.2 AA locked; stale "NOT YET LOCKED" pointers in `03` and `04` corrected; `04` step 20 renamed "Index Approval" to match the publication/indexing lifecycle.
+- Phase 2A build foundation (2026-09-19; PR #1, merge `b3c60e6`):
+  - Astro 7.3.3 + TypeScript 6.0.3 (strictest) with `@astrojs/cloudflare` 14.3.2 (static output; no bindings, sessions, or resources)
+  - Zod publication-record schema and operator approval registry (`governance/index-approvals.json`, empty)
+  - pure indexability evaluator; central robots/canonical/sitemap/robots.txt firewall
+  - non-production builds globally `noindex`; production builds refuse `draft` pages and require a validated origin
+  - CI: `build-and-test`, `accessibility-and-lab-performance`, `secret-scan`
+  - CODEOWNERS; rulesets `main-protection` and `index-governance-code-owner-review`
+  - details: `05-BUILD-SPEC.md` → Implementation Record: Phase 2A
 
 ## In Progress
 
@@ -79,11 +94,12 @@ Documentation, research evidence, the run-log audit trail, and the locked Phase 
 ## Not Started
 
 - Domain registration (approved target; requires separate operator authorization)
-- Website build / application scaffold (Astro project not created; no packages installed)
+- Real site pages / homepage (only a non-production development shell exists)
+- Lead-data/backend foundation (D1 schema and migrations, intake endpoint, queues, notifications, uploads, admin UI)
+- Similarity/embedding runner (records only; no OpenAI calls)
 - Cloudflare resources (Workers, D1, R2, Queues, Turnstile, Access, DNS)
 - Resend, Twilio, and OpenAI accounts/resources for this project
-- GitHub branch protection / ruleset and CODEOWNERS for index governance
-- Accessibility implementation and verification (WCAG 2.2 AA target selected; nothing built)
+- Manual accessibility review of real pages and workflows (only automated checks run on the development shell)
 - Confirmation of the remaining Lawrence uncertainties with Lawrence Utilities (see Open Questions)
 - Content production
 - Tools/calculators
@@ -128,7 +144,12 @@ No finding invalidates Lawrence as the beachhead.
 
 ## Current Architecture
 
-None built. The architecture is chosen and locked in `05-BUILD-SPEC.md` (Phase 1), but no application code exists and no framework is installed.
+Phase 2A foundation built (not deployed). Astro 7.3.3 static site with the Cloudflare adapter; see `05-BUILD-SPEC.md` → Implementation Record: Phase 2A for paths and behavior.
+
+- **Publication records:** 1 (`dev-shell`, utility/draft).
+- **Operator approvals:** 0.
+- **Effectively indexable pages:** 0.
+- **Production sitemap eligibility:** 0 URLs.
 
 ## Current Indexed URLs
 
@@ -192,6 +213,8 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 6. Any implementation-level choice not approved in Phase 1 (exact folder names, library versions, header values, physical schema, event names) is decided at build time and recorded in the run receipt.
 7. Whether to add an on-page AI-use disclosure ("How" content was made) to `04-CONTENT-EDITORIAL-SYSTEM.md`. Google's people-first and gen-AI guidance suggest considering it (`research/sources/google-search-policy.json` goog-003, goog-005). Operator decision.
 8. Wording observation (no rule conflict): `AGENTS.md` §2 "Decisions not yet locked" refers to items marked `NOT YET LOCKED`, but `05-BUILD-SPEC.md` now labels unresolved items `OPEN`. The rule's intent (never decide unresolved items silently) clearly covers `OPEN` items too. Updating the `AGENTS.md` wording needs operator approval.
+9. AI-agent GitHub identity: should agents use a separate non-admin GitHub account or token, so the code-owner/index-approval boundary binds them? (Phase 2A limitation.)
+10. Repository visibility: the repository is public. Keep it public or make it private? (Research and strategy are currently publicly readable.)
 
 ## Known Risks
 
@@ -205,20 +228,27 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 - **Legal/compliance risk** around sharing homeowner contact data with a contractor and call recording, pending legal review.
 - **Evidence staleness:** SERP, contractor, and policy evidence decays. See the `stale_after` guidance in `/research/index.json`.
 - **Domain still unregistered:** the approved target could be registered by someone else before the operator buys it.
-- **`main` is unprotected:** observed 2026-09-19 (re-checked 13:19 EDT) via GitHub API; no rulesets. Branch protection/ruleset plus CODEOWNERS over the index-approval registry must be configured before production publishing.
+- **Agent identity:** AI agents currently use the operator's own GitHub credentials (admin), so they inherit the admin pull-request bypass of `index-governance-code-owner-review`. `main-protection` (PR plus required checks, no bypass) still binds them. A separate non-admin identity for agents is needed to make the code-owner boundary binding on agents.
+- **Public repository:** the GitHub repository is public (observed 2026-09-19). Strategy, competitor research, and prospective-tenant research in `research/` and `docs/` are publicly readable. Operator decision whether that is acceptable.
 - **Privacy/consent legal review** is required before live lead routing.
 - **Expert reviewer** is still required for pages where `04-CONTENT-EDITORIAL-SYSTEM.md` requires expert review. Those pages stay `noindex` until one exists.
 - **Algorithm-update risk:** handled by protocol in `03-GOOGLE-RESILIENCE.md`.
 
 ## Current Blockers
 
-- None block starting website implementation / build preparation.
-- Before **production publishing**: domain registration (operator action), branch/index governance, and the Launch Checklist in `05-BUILD-SPEC.md`.
+- None block Phase 2B (lead-data/backend foundation).
+- Before **production publishing**: domain registration (operator action), replacing the draft development shell, real pages passing the indexing gate with operator approval, and the Launch Checklist in `05-BUILD-SPEC.md`. Branch/index governance is now configured.
 - Before **live lead collection/routing**: legal review of consent/privacy/disclosure/retention.
 - The remaining Lawrence uncertainties must be confirmed with Lawrence Utilities before any Lawrence content is indexed. This does not block Phase 1.
 
 ## Last Major Decisions
 
+- 2026-09-19 — Phase 2A implemented (operator-authorized) and merged via PR #1:
+  - Astro 7.3.3 / TypeScript 6.0.3 / `@astrojs/cloudflare` 14.3.2 / Zod 4.6.5
+  - publication records in `content/publication-records/`; operator approvals in `governance/index-approvals.json`
+  - `utility` page type (never indexable)
+  - GitHub rulesets `main-protection` (no bypass) and `index-governance-code-owner-review` (admin bypass via PR only)
+  - implementation-level choices recorded in `05` → Implementation Record: Phase 2A
 - 2026-09-19 — Operator approved WCAG 2.2 Level AA as the formal accessibility target, and approved correcting the stale Phase 0 wording in `03`/`04` to match the Phase 1 architecture (similarity tooling pointer, page-record pointer, workflow-record storage pointer, `04` step 20 "Index Approval"). No thresholds, gates, or workflow steps changed.
 - 2026-09-19 — Phase 1 approved by the operator and locked in `05-BUILD-SPEC.md`:
   - brand Indy Sewer Resource; target domain `indysewerresource.com` (not registered)
@@ -237,8 +267,8 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 ## Next 5 Priorities
 
 1. Operator: register `indysewerresource.com` (separate authorization; not done by agents).
-2. Website implementation / build preparation per `05-BUILD-SPEC.md` (on operator instruction): scaffold, CI checks, and the publication-record/indexing-gate machinery before any content.
-3. Configure branch/index governance (protected `main` or ruleset, CODEOWNERS) before production publishing.
+2. Phase 2B (on operator instruction): lead-data/backend foundation per `05-BUILD-SPEC.md` (D1 schema/migrations, intake endpoint, queue, notifications). Live lead collection still waits on legal review.
+3. Operator decisions: a separate non-admin GitHub identity for AI agents, and whether the repository should stay public.
 4. Confirm the remaining Lawrence uncertainties directly with Lawrence Utilities and record the results in `research/sources/lawrence-primary-sources.json`. Start legal review of consent/privacy.
 5. Begin identifying a real expert reviewer (Indiana-licensed plumber with trenchless/CIPP experience); decide the AI-use disclosure policy (Open Question 7).
 
@@ -255,3 +285,4 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
   - `04-CONTENT-EDITORIAL-SYSTEM.md`: workflow-record storage pointer corrected; step 20 renamed "Index Approval".
   - This file reconciled. Run receipt and RUN-LOG entry added.
   - No code, packages, infrastructure, domain purchase, or deployment.
+- 2026-09-19 — Phase 2A: build foundation and indexing firewall merged via PR #1 (`b3c60e6`). Rulesets `main-protection` and `index-governance-code-owner-review` configured and read back. `05-BUILD-SPEC.md` gained an Implementation Record and governance status. Audit trail in a follow-up PR. No deployment, cloud/vendor resources, domain purchase, leads, or indexable content.
