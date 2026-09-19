@@ -49,3 +49,13 @@ This file is an audit trail, not a strategy document and not a replacement for `
 - Full receipt: [`logs/runs/2026-09-19-1152-phase-0-2-run-log-system.md`](runs/2026-09-19-1152-phase-0-2-run-log-system.md)
 - Summary: Added `logs/` (this index, a receipt template, and receipts including backfills for Phase 0 and 0.1), logging rules in `AGENTS.md`, and a reminder in `CLAUDE.md`, and updated `docs/01`. No strategy, research, or code changes.
 - Blockers: None.
+
+### 2026-09-19 12:58 — Phase 1: Brand and production architecture documentation lock
+
+- Agent: Claude
+- Starting SHA: `aa7ffaa337eee02eb96aeacc9aad023d89b06db9`
+- Work commit: this run's commit (the commit containing this entry; resolve with `git log -- logs/runs/2026-09-19-1258-phase-1-architecture-lock.md`)
+- Result: COMPLETE
+- Full receipt: [`logs/runs/2026-09-19-1258-phase-1-architecture-lock.md`](runs/2026-09-19-1258-phase-1-architecture-lock.md)
+- Summary: Locked the operator-approved Phase 1 decisions into `docs/05-BUILD-SPEC.md`: Indy Sewer Resource brand, target domain `indysewerresource.com` (not purchased), Astro/Cloudflare architecture, computed indexability with operator approval, lead-data architecture, and performance budget. Reconciled `docs/01`. No code, infrastructure, domain purchase, or deployment.
+- Blockers: None for build preparation. Production publishing needs domain registration and branch/index governance; live leads need legal review.

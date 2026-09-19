@@ -1,11 +1,11 @@
 # CURRENT STATE
 
 Last updated: 2026-09-19
-Last verified commit: `52d4d96b34fb00ab68712cd96dfaaa1893f59cc2` (Phase 0.1). Phase 0.2 commit follows; see `git log`.
-Production URL: None — no production deployment exists
+Last verified commit: `aa7ffaa337eee02eb96aeacc9aad023d89b06db9` (Phase 0.2). The Phase 1 documentation-lock commit follows; resolve with `git log` (a file cannot contain its own commit SHA).
+Production URL: None — no production deployment exists. Target domain `indysewerresource.com` is approved but NOT registered.
 Repository: https://github.com/tomytomz1/CIPP-IN
 Current branch: main
-Current phase: Phase 0.2 — Run log / session receipt system (complete). Next: Phase 1 — Brand, Domain, Technical Architecture & Build Specification (not started).
+Current phase: Phase 1 — Brand, domain target, and production architecture approved and documented (complete). Next: website implementation / build preparation per `05-BUILD-SPEC.md` (not started). No application code or deployment exists; domain not registered.
 
 > This file is authoritative for what currently exists and what has been completed. It does not override strategic rules in higher-precedence documents (see `/AGENTS.md` §1). Update it after every meaningful piece of work.
 
@@ -25,11 +25,37 @@ Locked by the operator (change only with explicit operator approval):
 - **AI policy:** AI assists; it does not substitute for evidence, local research, expert validation, or editorial judgment. No detection evasion.
 - **Documentation structure and precedence:** as defined in `/AGENTS.md`.
 - **Research evidence location:** structured JSON under `/research/` (index: `/research/index.json`). Supporting material only; it does not outrank `/docs/`.
+- **Brand (Phase 1):** Indy Sewer Resource. It is an independent resource, not a plumbing company. Lawrence is the SEO beachhead, not the master brand.
+- **Target domain (Phase 1):** `indysewerresource.com`. Approved target only; not purchased. `.com` preferred; no silent TLD substitution; no defensive purchases without approval.
+- **Production architecture (Phase 1):**
+  - Astro + TypeScript (static-first)
+  - Cloudflare Workers + Static Assets, with D1, private R2, Queues, and Turnstile
+  - Cloudflare Access for admin
+  - Resend email
+  - Twilio: one operator-controlled tracking number; recording OFF by default
+  - Cloudflare Web Analytics + first-party D1 events + Search Console
+  - OpenAI `text-embedding-3-small` for similarity QA
+  - Git (Markdown/MDX + structured records) as the CMS
+- **Indexing governance (Phase 1):**
+  - Publication and indexability are separate states (`draft` → `review` → `published_noindex` → `index_candidate` → `indexable`).
+  - Indexability is computed from recorded gates plus operator index approval. A deploy alone never makes a page indexable.
+  - A protected `main` branch is required before production publishing.
+- **Lead-data architecture (Phase 1):**
+  - minimal initial intake with explicit sharing consent
+  - optional enrichment; event-style outcome history
+  - config-driven partner routing (`partners` / `routing_rules` / `lead_routes`)
+  - persist lead first → queue → notify
+- **Performance targets (Phase 1):**
+  - mobile p75: LCP ≤ 2.0 s, CLS ≤ 0.05, INP ≤ 150 ms
+  - first-party JS: 0 KB target on editorial pages, ≤ 75 KB gzip on form pages
+  - CSS ≤ 40 KB gzip
+  - system fonts
+- Full specification: `05-BUILD-SPEC.md`.
 - **Run logging:** append-only audit trail in `logs/RUN-LOG.md` (index) and `logs/runs/` (one receipt per meaningful work session), per `/AGENTS.md` §3. History only; this file stays authoritative for current state.
 
 ## Current Project Status
 
-Documentation, research evidence, and the run-log audit trail are in the repository. There is no website, framework, production deployment, indexing, or collected leads.
+Documentation, research evidence, the run-log audit trail, and the locked Phase 1 build specification are in the repository. There is no website, application code, installed framework, database, cloud resource, production deployment, registered domain, analytics or Search Console configuration, Twilio setup, indexing, or collected leads.
 
 ## Completed
 
@@ -42,6 +68,7 @@ Documentation, research evidence, and the run-log audit trail are in the reposit
   - Google Search policy evidence: `research/sources/google-search-policy.json`
   - SERP/competitor snapshot: `research/serps/2026-09-19-competitor-snapshot.json`
 - Phase 0.2 run-log system: `logs/RUN-LOG.md`, `logs/RUN-RECEIPT-TEMPLATE.md`, and `logs/runs/`, with receipts backfilled for Phase 0 and Phase 0.1 (2026-09-19).
+- Phase 1 decisions approved by the operator and documented (2026-09-19): brand, target domain (not registered), production architecture, publication/indexing architecture, lead-data architecture, performance budget. `05-BUILD-SPEC.md` is now the locked specification.
 
 ## In Progress
 
@@ -49,11 +76,11 @@ Documentation, research evidence, and the run-log audit trail are in the reposit
 
 ## Not Started
 
-- Brand selection
-- Domain selection/registration
-- Technical architecture / stack selection
-- Build specification lock (`05-BUILD-SPEC.md` is a framework only)
-- Website build
+- Domain registration (approved target; requires separate operator authorization)
+- Website build / application scaffold (Astro project not created; no packages installed)
+- Cloudflare resources (Workers, D1, R2, Queues, Turnstile, Access, DNS)
+- Resend, Twilio, and OpenAI accounts/resources for this project
+- GitHub branch protection / ruleset and CODEOWNERS for index governance
 - Confirmation of the remaining Lawrence uncertainties with Lawrence Utilities (see Open Questions)
 - Content production
 - Tools/calculators
@@ -98,7 +125,7 @@ No finding invalidates Lawrence as the beachhead.
 
 ## Current Architecture
 
-None. No application code exists. No framework has been chosen or installed. See `05-BUILD-SPEC.md` (status: NOT YET LOCKED).
+None built. The architecture is chosen and locked in `05-BUILD-SPEC.md` (Phase 1), but no application code exists and no framework is installed.
 
 ## Current Indexed URLs
 
@@ -110,11 +137,11 @@ No site exists. No rankings, impressions, or indexed pages. The competitive land
 
 ## Search Console State
 
-Not configured.
+Not configured (planned: Domain property verified via DNS once the domain is registered).
 
 ## Analytics State
 
-Not configured.
+Not configured (planned: Cloudflare Web Analytics + first-party D1 events).
 
 ## Current Links / Referring Domains
 
@@ -148,14 +175,20 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 
 ## Open Questions
 
-1. Brand name and positioning for the independent resource — NOT YET LOCKED.
-2. Domain — NOT YET LOCKED.
-3. Technical stack, hosting, CMS/content workflow — NOT YET LOCKED.
-4. Remaining Lawrence uncertainties (listed under Lawrence Municipal Evidence Status). Confirm them with Lawrence Utilities before any Lawrence page is indexed.
-5. Legal review of lead-sharing consent, privacy policy, call recording, and partner disclosure — NOT YET LOCKED.
-6. Rental contract terms (pricing, exclusivity boundaries, term, performance) — NOT YET LOCKED.
-7. Embedding model and tooling used for Similarity QA (`03-GOOGLE-RESILIENCE.md`) — NOT YET LOCKED.
-8. Expert reviewer identity — none recruited; must be a real, verifiable professional.
+1. Domain registration: the approved target `indysewerresource.com` is not yet registered, and purchase requires separate operator authorization. (A Verisign RDAP check on 2026-09-19 16:58 UTC returned no registration record. That is not a registrar availability check.)
+2. Remaining Lawrence uncertainties (listed under Lawrence Municipal Evidence Status). Confirm them with Lawrence Utilities before any Lawrence page is indexed.
+3. Legal review (required before live lead collection/routing and before any call recording):
+   - exact privacy-policy language
+   - exact lead-sharing consent language
+   - data retention/deletion periods
+   - homeowner data sharing
+   - call recording
+   - partner disclosure wording
+4. Rental contract terms (pricing, exclusivity boundaries, term, performance and outcome-reporting provisions) — OPEN.
+5. Expert reviewer identity — none recruited; must be a real, verifiable professional.
+6. Formal accessibility conformance target: WCAG 2.2 AA was proposed by the agent in Phase 1 and awaits operator confirmation (`05-BUILD-SPEC.md` → Accessibility).
+7. Any implementation-level choice not approved in Phase 1 (exact folder names, library versions, header values, physical schema, event names) is decided at build time and recorded in the run receipt.
+8. Stale cross-references in higher-precedence docs, to be corrected with operator approval: `03-GOOGLE-RESILIENCE.md` still says the similarity embedding model is "NOT YET LOCKED" and calls the page registry "NOT YET LOCKED". `04-CONTENT-EDITORIAL-SYSTEM.md` calls the workflow-record storage location "NOT YET LOCKED". Phase 1 locked all three in `05-BUILD-SPEC.md`. Separately, `04` step 20 uses "Publish" to mean switching a page to indexable, while `05` separates public availability (`published_noindex`) from indexability. That is a terminology difference only. The rules themselves do not conflict; only these pointers and terms are stale.
 9. Whether to add an on-page AI-use disclosure ("How" content was made) to `04-CONTENT-EDITORIAL-SYSTEM.md`. Google's people-first and gen-AI guidance suggest considering it (`research/sources/google-search-policy.json` goog-003, goog-005). Operator decision.
 
 ## Known Risks
@@ -169,29 +202,42 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 - **Lead quality risk:** traffic or form fills may not translate into qualified trenchless opportunities.
 - **Legal/compliance risk** around sharing homeowner contact data with a contractor and call recording, pending legal review.
 - **Evidence staleness:** SERP, contractor, and policy evidence decays. See the `stale_after` guidance in `/research/index.json`.
+- **Domain still unregistered:** the approved target could be registered by someone else before the operator buys it.
+- **`main` is unprotected:** observed 2026-09-19 via GitHub API; no rulesets. Branch protection/ruleset plus CODEOWNERS over the index-approval registry must be configured before production publishing.
+- **Privacy/consent legal review** is required before live lead routing.
+- **Expert reviewer** is still required for pages where `04-CONTENT-EDITORIAL-SYSTEM.md` requires expert review. Those pages stay `noindex` until one exists.
 - **Algorithm-update risk:** handled by protocol in `03-GOOGLE-RESILIENCE.md`.
 
 ## Current Blockers
 
-- Phase 1 decisions (brand, domain, architecture) are required before any build work.
+- None block starting website implementation / build preparation.
+- Before **production publishing**: domain registration (operator action), branch/index governance, and the Launch Checklist in `05-BUILD-SPEC.md`.
+- Before **live lead collection/routing**: legal review of consent/privacy/disclosure/retention.
 - The remaining Lawrence uncertainties must be confirmed with Lawrence Utilities before any Lawrence content is indexed. This does not block Phase 1.
 
 ## Last Major Decisions
 
+- 2026-09-19 — Phase 1 approved by the operator and locked in `05-BUILD-SPEC.md`:
+  - brand Indy Sewer Resource; target domain `indysewerresource.com` (not registered)
+  - Astro/TypeScript on Cloudflare Workers + Static Assets, with D1, R2, Queues, Turnstile, and Access
+  - Resend and Twilio; Cloudflare Web Analytics + Search Console; OpenAI `text-embedding-3-small` similarity QA; Git as CMS
+  - publication vs. indexability separation, with computed indexability plus operator approval
+  - minimal lead intake with config-driven partner routing
+  - performance budget
 - 2026-09-19 — Append-only run log adopted: every meaningful work session needs a receipt in `logs/runs/` and a `logs/RUN-LOG.md` entry before the final report (Phase 0.2).
 - 2026-09-19 — Research evidence stored as structured JSON under `/research/`, subordinate to `/docs/` (Phase 0.1).
 - 2026-09-19 — Lawrence private-lateral owner responsibility, permit framework, lining/bursting allowance, and post-repair CCTV requirement recorded as verified from current primary sources. Remaining uncertainties listed explicitly.
 - 2026-09-19 — Documentation system and precedence hierarchy adopted (`/AGENTS.md`).
 - 2026-09-19 — Lawrence confirmed as SEO beachhead; Indianapolis head terms deferred.
-- 2026-09-19 — All technical architecture decisions deliberately left NOT YET LOCKED.
+- 2026-09-19 — All technical architecture decisions deliberately left NOT YET LOCKED (Phase 0; superseded by the Phase 1 lock above).
 
 ## Next 5 Priorities
 
-1. PHASE 1 — Brand and domain decision.
-2. PHASE 1 — Technical architecture decision and lock of `05-BUILD-SPEC.md`.
-3. Confirm the remaining Lawrence uncertainties directly with Lawrence Utilities and record the results in `research/sources/lawrence-primary-sources.json`.
-4. Decide on AI-use disclosure policy (Open Question 9).
-5. Begin identifying a real expert reviewer (Indiana-licensed plumber with trenchless/CIPP experience).
+1. Operator: register `indysewerresource.com` (separate authorization; not done by agents).
+2. Website implementation / build preparation per `05-BUILD-SPEC.md` (on operator instruction): scaffold, CI checks, and the publication-record/indexing-gate machinery before any content.
+3. Configure branch/index governance (protected `main` or ruleset, CODEOWNERS) before production publishing.
+4. Confirm the remaining Lawrence uncertainties directly with Lawrence Utilities and record the results in `research/sources/lawrence-primary-sources.json`. Start legal review of consent/privacy.
+5. Begin identifying a real expert reviewer (Indiana-licensed plumber with trenchless/CIPP experience); decide the AI-use disclosure policy (Open Question 9).
 
 ## Change Log
 
@@ -199,3 +245,4 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 - 2026-09-19 — Initialized Git repository; pushed Phase 0 documentation to `main` at https://github.com/tomytomz1/CIPP-IN (commit `c8cf100`).
 - 2026-09-19 — Phase 0.1: created `/research/` evidence files (index, Lawrence primary sources, prospective tenants, Google policy, SERP snapshot). Re-verified Lawrence rules, competitors, tenant candidates, and Google policy. Reconciled this file and `02-SEO-SERP-BLUEPRINT.md`, added the research row to the ownership table in `AGENTS.md`, and made a narrow repository-contents correction in `05-BUILD-SPEC.md`. No code, framework, content, domain, or fake data created.
 - 2026-09-19 — Phase 0.2: added `logs/` run-log system (index, template, receipts incl. backfills for Phase 0 and 0.1), logging rules in `AGENTS.md` §2–§3, and a reminder in `CLAUDE.md`. No strategy, code, or research changes.
+- 2026-09-19 — Phase 1 documentation lock: `05-BUILD-SPEC.md` rewritten as the locked Phase 1 specification. This file was reconciled (phase, locked decisions, open questions, risks, blockers, priorities, stale SHA). Run receipt and RUN-LOG entry added. No code, packages, infrastructure, accounts, domain purchase, or deployment.
