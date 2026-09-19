@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "id": "dev-shell",
+  "route": "/",
+  "pageType": "utility",
+  "title": "Indy Sewer Resource \u2014 development build",
+  "description": "Non-production development shell for the Indy Sewer Resource build foundation. Not a published page.",
+  "targetIntent": "None. Development placeholder only; not a content page.",
+  "owner": "tomytomz1",
+  "lifecycle": "draft",
+  "workflow": {
+    "1": {
+      "status": "not_started"
+    },
+    "2": {
+      "status": "not_started"
+    },
+    "3": {
+      "status": "not_started"
+    },
+    "4": {
+      "status": "not_started"
+    },
+    "5": {
+      "status": "not_started"
+    },
+    "6": {
+      "status": "not_started"
+    },
+    "7": {
+      "status": "not_started"
+    },
+    "8": {
+      "status": "not_started"
+    },
+    "9": {
+      "status": "not_started"
+    },
+    "10": {
+      "status": "not_started"
+    },
+    "11": {
+      "status": "not_started"
+    },
+    "12": {
+      "status": "not_started"
+    },
+    "13": {
+      "status": "not_started"
+    },
+    "14": {
+      "status": "not_started"
+    },
+    "15": {
+      "status": "not_started"
+    },
+    "16": {
+      "status": "not_started"
+    },
+    "17": {
+      "status": "not_started"
+    },
+    "18": {
+      "status": "not_started"
+    },
+    "19": {
+      "status": "not_started"
+    },
+    "20": {
+      "status": "not_started"
+    },
+    "21": {
+      "status": "not_started"
+    },
+    "22": {
+      "status": "not_started"
+    }
+  },
+  "evidence": {
+    "packageRefs": [],
+    "primarySources": []
+  },
+  "claims": [],
+  "expertReview": {
+    "required": false,
+    "reviewer": null,
+    "scope": null,
+    "date": null,
+    "outcome": null
+  },
+  "similarity": [],
+  "publicationScore": null,
+  "municipalityGate": null,
+  "hardGates": {
+    "commodityContentTest": {
+      "result": "not_run",
+      "checkedBy": null,
+      "date": null
+    },
+    "perfectAiDetectionTest": {
+      "result": "not_run",
+      "checkedBy": null,
+      "date": null
+    },
+    "doorwayPageFirewall": {
+      "result": "not_run",
+      "checkedBy": null,
+      "date": null
+    },
+    "technicalSeoQa": {
+      "result": "not_run",
+      "checkedBy": null,
+      "date": null
+    },
+    "internalLinkingQa": {
+      "result": "not_run",
+      "checkedBy": null,
+      "date": null
+    },
+    "conversionQa": {
+      "result": "not_run",
+      "checkedBy": null,
+      "date": null
+    }
+  },
+  "siteQuality": []
+}

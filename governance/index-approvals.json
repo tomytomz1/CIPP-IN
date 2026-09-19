@@ -1,0 +1,5 @@
+{
+  "$comment": "Operator-controlled index approvals. Only @tomytomz1 may approve (CODEOWNERS). An entry here is necessary but not sufficient: the page must also pass every gate in src/lib/publication/evaluate.ts. Phase 2A: no page is approved.",
+  "schemaVersion": 1,
+  "approvals": []
+}

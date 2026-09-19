@@ -1,0 +1,54 @@
+---
+/**
+ * The only layout pages may use. The SEO head (title, description, robots, canonical) is
+ * derived centrally from the page's publication record and the evaluator; pages cannot
+ * hand-write robots or canonical tags (docs/05 → Shared Components).
+ */
+import '../styles/global.css';
+import { canonicalUrl, robotsDirective, assertShippable } from '../lib/seo/firewall.ts';
+import { getRegistry, siteConfig } from '../lib/publication/load-astro.ts';
+
+interface Props {
+  pageId: string;
+}
+
+const { pageId } = Astro.props;
+const entry = getRegistry().byId(pageId);
+if (!entry) {
+  throw new Error(`No publication record for page id "${pageId}" (content/publication-records/).`);
+}
+if (entry.record.route !== Astro.url.pathname) {
+  throw new Error(`Page "${pageId}" is rendered at ${Astro.url.pathname} but its record route is ${entry.record.route}.`);
+}
+assertShippable(entry, siteConfig);
+
+const robots = robotsDirective(entry, siteConfig);
+const canonical = canonicalUrl(entry.record.route, siteConfig);
+const { title, description } = entry.record;
+---
+
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta name="isr:page-id" content={entry.record.id} />
+    <meta name="isr:lifecycle" content={entry.record.lifecycle} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <header class="site-header">
+      <p class="site-name">Indy Sewer Resource</p>
+    </header>
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <p>Independent resource. Not a plumbing company.</p>
+    </footer>
+  </body>
+</html>

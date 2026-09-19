@@ -1,0 +1,21 @@
+# Index-governance boundary (docs/05-BUILD-SPEC.md, Branch / Index Governance).
+# Changes to these paths require review by the operator. Contractor renters are never code owners.
+
+# Operator index-approval registry
+/governance/                     @tomytomz1
+
+# Indexability evaluator, locked thresholds, schemas, and the noindex/sitemap/robots firewall
+/src/lib/publication/            @tomytomz1
+/src/lib/seo/                    @tomytomz1
+/src/config/                     @tomytomz1
+/src/integrations/               @tomytomz1
+/src/layouts/BaseLayout.astro    @tomytomz1
+/astro.config.mjs                @tomytomz1
+
+# CI, ownership rules, and required checks
+/.github/                        @tomytomz1
+
+# Authoritative project requirements
+/AGENTS.md                       @tomytomz1
+/CLAUDE.md                       @tomytomz1
+/docs/                           @tomytomz1

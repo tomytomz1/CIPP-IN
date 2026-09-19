@@ -1,0 +1,41 @@
+{
+  "name": "indy-sewer-resource",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Indy Sewer Resource: independent Indianapolis-area sewer decision-support resource (Phase 2A build foundation).",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "typecheck": "astro check && tsc --noEmit",
+    "test": "vitest run",
+    "validate:records": "node scripts/validate-records.ts",
+    "check:dist": "node scripts/check-dist.ts",
+    "check:budgets": "node scripts/check-budgets.ts",
+    "test:a11y": "playwright test",
+    "ci": "npm run typecheck && npm run test && npm run validate:records && npm run build && npm run check:dist && npm run check:budgets"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "14.3.2",
+    "astro": "7.3.3",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.63.0",
+    "@types/node": "24.13.6",
+    "typescript": "6.0.3",
+    "vitest": "5.0.1",
+    "wrangler": "4.135.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "esbuild@0.28.1": true,
+    "workerd@1.20260918.1": true
+  }
+}
