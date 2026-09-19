@@ -40,6 +40,8 @@ jobs:
         run: npm test
       - name: Validate publication records and operator approvals
         run: npm run validate:records
+      - name: Validate D1 migrations (local Miniflare; no remote resource)
+        run: npm run validate:migrations
       - name: Astro build
         run: npm run build
       - name: Post-build SEO / indexing firewall / links / structured data

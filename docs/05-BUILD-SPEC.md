@@ -14,7 +14,7 @@ This document distinguishes three kinds of items:
 |---|---|
 | **LOCKED** | Operator-approved architectural decision. Change only with explicit operator approval, logged in `01-CURRENT-STATE.md` → Last Major Decisions. |
 | **IMPLEMENTATION PENDING** | Locked architecture that has not been built yet. |
-| **IMPLEMENTED (Phase 2A)** / **PARTIALLY IMPLEMENTED (Phase 2A)** | Built and tested in the repository (see Implementation Record: Phase 2A). Not deployed; no cloud or vendor resources exist. |
+| **IMPLEMENTED (Phase 2A/2B)** / **PARTIALLY IMPLEMENTED** | Built and tested in the repository (see the Implementation Records below). Not deployed; no cloud or vendor resources exist. |
 | **OPEN** | Legal, business, or operational question that is still unresolved. Must not be decided silently by an agent. |
 
 Implementation-level details that this spec leaves unspecified (exact file names, library versions, header values, table column names) may be decided during the build. Record them in the run receipt and, if material, in this document. They must preserve every LOCKED requirement below.
@@ -249,7 +249,7 @@ Higher-precedence rules still control (`/AGENTS.md` §4.2, §4.6).
 
 ---
 
-## Lead Funnel — LOCKED (IMPLEMENTATION PENDING)
+## Lead Funnel — LOCKED (PARTIALLY IMPLEMENTED — Phase 2B: intake contract + service; live collection DISABLED, no public form)
 
 Inherited requirements (unchanged):
 
@@ -285,7 +285,7 @@ Routed contractor; delivery timestamp; first-contact timestamp; response time; a
 
 Lifecycle actions are stored as immutable, event-style history rather than by overwriting historical facts. Contractor reporting obligations depend on rental contract terms (OPEN).
 
-## Queue / Notification Reliability — LOCKED (IMPLEMENTATION PENDING)
+## Queue / Notification Reliability — LOCKED (IMPLEMENTED — Phase 2B: persist-first + typed message contract; no queue resource, no notification providers)
 
 ```text
 persist lead first -> enqueue delivery -> notify partner/operator
@@ -297,7 +297,7 @@ persist lead first -> enqueue delivery -> notify partner/operator
 - If no partner is active, leads are still persisted and the operator is notified.
 - Notifications (email/SMS) carry no unnecessary homeowner PII.
 
-## Lead Database Schema — logical model LOCKED (IMPLEMENTATION PENDING)
+## Lead Database Schema — logical model LOCKED (IMPLEMENTED — Phase 2B: migration 0001)
 
 Logical data domains. The physical schema may be refined during implementation as long as this separation and these requirements are preserved:
 
@@ -314,16 +314,16 @@ Logical data domains. The physical schema may be refined during implementation a
 | `calls` | Call identifiers, timestamps, duration, routing partner, disposition. |
 | `uploads` | Metadata for private R2 objects (camera reports/images/video). |
 
-These are logical domains, not migrations. No migration has been created.
+Phase 2B implements all ten domains as physical tables in `migrations/0001_lead_data_foundation.sql`. No remote D1 database exists; the migration is exercised against a local database in tests and CI.
 
-## Partner / Renter Switching — LOCKED (IMPLEMENTATION PENDING)
+## Partner / Renter Switching — LOCKED (IMPLEMENTED — Phase 2B; no real partner configured)
 
 - Partner identity and lead routing are driven by configuration and data (`partners`, `routing_rules`, `lead_routes`).
 - A contractor's identity is never hard-coded into editorial content architecture.
 - Each lead's historical routing decision stays immutable and auditable.
 - Changing the active renter affects only future routing. It requires no content rewrite and transfers no ownership or editorial control. The domain remains project-owned.
 
-## Call Tracking — LOCKED (IMPLEMENTATION PENDING)
+## Call Tracking — LOCKED (PARTIALLY IMPLEMENTED — Phase 2B: metadata schema only; no Twilio number, recording structurally disabled)
 
 - One operator-controlled local Twilio tracking number initially.
 - Store call identifiers, timestamps, duration, routing partner, and disposition where available.
@@ -403,7 +403,7 @@ Accessibility is a release and quality requirement, not optional polish. It is p
   - call-recording legal requirements
   - partner disclosure wording
 
-## Security — LOCKED (PARTIALLY IMPLEMENTED — Phase 2A: baseline headers, secret scanning, no secrets)
+## Security — LOCKED (PARTIALLY IMPLEMENTED — Phase 2A: headers, secret scanning; Phase 2B: input validation, prepared statements, idempotency, fail-closed intake)
 
 - Secrets are never committed; Cloudflare/Wrangler secret management.
 - Cloudflare Access protects operational admin. No custom auth system initially.
@@ -424,7 +424,7 @@ Accessibility is a release and quality requirement, not optional polish. It is p
 
 **OPEN:** exact retention periods beyond platform PITR, subject to privacy/legal/data-retention decisions.
 
-## First-Party Data Collection — LOCKED separation (IMPLEMENTATION PENDING)
+## First-Party Data Collection — LOCKED separation (IMPLEMENTED — Phase 2B: three-way separation in the physical schema; no data collected)
 
 Data is separated into three groups, as specified under Lead Funnel:
 
@@ -591,6 +591,59 @@ Record the result in the page's Technical SEO QA gate note.
 - the embedding/similarity runner
 - analytics and Search Console
 - any deployment or Cloudflare resource
+
+## Implementation Record: Phase 2B (lead-data / backend foundation)
+
+Implemented 2026-09-19 on branch `phase-2b-lead-backend`. Live homeowner lead collection remains **disabled**; nothing is deployed and no Cloudflare, Resend, Twilio, or OpenAI resource exists.
+
+**Added dependency:** `miniflare` 4.20260730.0 (dev only), to run the real SQL against a local D1 database in tests. No runtime dependency was added.
+
+**Physical schema** (`migrations/0001_lead_data_foundation.sql`, 28 statements, 10 tables, 14 indexes, 4 triggers, zero seed rows):
+
+| Table | Holds | Notes |
+|---|---|---|
+| `leads` | non-contact intake fields | `submission_key` is UNIQUE (idempotency) |
+| `lead_contacts` | first name, phone, email, preferred channel | the only table with contact PII; one row per lead; at least one channel required |
+| `consents` | consent artifact id/version, accepted flag, timestamp, capture channel | no legal text is stored (wording is OPEN) |
+| `lead_events` | append-only lifecycle history | JSON payloads, validated, no contact PII |
+| `lead_routes` | immutable routing decisions with a rule/partner snapshot | |
+| `lead_outcomes` | append-only outcome entries | a final value requires `value_voluntarily_provided = 1` |
+| `partners`, `routing_rules` | partner configuration | active/inactive, priority, optional municipality, effective dates |
+| `calls` | future call metadata | `CHECK (recording_enabled = 0)`: recording is structurally impossible |
+| `uploads` | future media metadata | storage key only; there is no column for file content |
+
+Triggers reject `UPDATE` on `consents`, `lead_events`, `lead_routes`, and `lead_outcomes`. `DELETE` is deliberately **not** blocked, because retention/deletion policy is OPEN and lawful deletion must stay possible.
+
+**Server modules** (`src/lib/leads/`, server-only; a build check fails if any marker reaches the client bundle):
+
+- `contract.ts`: strict Zod contracts. Intake contains only the approved minimum fields and rejects unknown fields, so address, income, insurance, pipe depth, project value, existing contractor, and media can never enter through intake. Also holds the queue message, outcome, call, and upload contracts.
+- `db.ts`: the narrow D1 interface used here (prepare/bind/first/all/run/batch) plus an injectable clock and id generator.
+- `repository.ts`: prepared statements only; every value is bound, so homeowner input is always data.
+- `routing.ts`: deterministic selection (municipality-specific rule first, then priority, then oldest), reading only current configuration.
+- `intake.ts`: the core service. Persist-first, then enqueue.
+- `enrichment.ts`: outcome/call/upload recording and a derived outcome snapshot (response time is derived, never stored twice).
+- `activation.ts`, `turnstile.ts`, `http.ts`: the activation boundary, fail-closed Turnstile verification, and the thin HTTP adapter.
+- `log.ts`: allow-list logging; only ids and reason codes are ever logged.
+
+**Persistence and delivery order:** one D1 `batch()` (a single transaction) writes the lead, contact, consent, routing decision, and events. Only after it succeeds is a queue message attempted. A queue failure records `delivery_enqueue_failed` and leaves the lead intact; the lead then appears in the operator follow-up query. The queue message carries only `leadId`, `routeId`, and `deliveryId`: the contract rejects any contact field.
+
+**Idempotency:** the client supplies a UUID `submissionKey`. A retry returns the original lead, and a concurrent duplicate loses the UNIQUE race and is resolved by re-reading. Contact details alone are never used as an idempotency key, so a genuinely new submission from the same household still creates a new lead.
+
+**Live-intake activation boundary (`src/lib/leads/activation.ts`):** intake is enabled only when ALL of these exist, and none does today:
+
+1. `LEAD_INTAKE_ENABLED` exactly `"true"`
+2. `LEAD_LEGAL_REVIEW_REF` (reference to the completed legal review)
+3. `LEAD_CONSENT_ARTIFACT_ID` and `LEAD_CONSENT_ARTIFACT_VERSION`
+4. `TURNSTILE_SECRET_KEY`
+5. the `DB` (D1) and `LEAD_QUEUE` bindings
+
+A `TEST-ONLY-` consent artifact is rejected when `SITE_ENV=production`. The endpoint `POST /api/lead-intake` returns 503 before reading the request body, so deploying the repository does not start collecting leads. There is no public lead form.
+
+**Testing:** 58 Phase 2B tests run real SQL against a local D1 (Miniflare) database: no mock database, no remote resource, no network. They cover the required scenarios, including validation, idempotency (incl. concurrent), PII separation, consent audit, event history, routing (active/inactive/switch/history immutability), no-active-partner, persistence-before-queue, queue failure, queue-payload PII rejection, SQL-injection-like input, outcomes, calls, uploads, and the disabled-by-default activation boundary.
+
+**Known limitation:** `wrangler d1 migrations apply` is the production path for migrations, but it requires a configured binding with a real `database_id`, which does not exist and was not invented. Until D1 is provisioned, CI applies the same `.sql` files statement-by-statement to a local database (`npm run validate:migrations`). The local test runtime pins compatibility date `2026-07-30` (the newest its `workerd` supports); `wrangler.jsonc` keeps `2026-09-01`.
+
+**Not implemented in Phase 2B:** any Cloudflare/Resend/Twilio/OpenAI resource or secret; the queue consumer worker; notification sending; R2 uploads; the admin UI; a public lead form; deployment.
 
 ## Definition of Done
 

@@ -12,6 +12,11 @@
 /src/layouts/BaseLayout.astro    @tomytomz1
 /astro.config.mjs                @tomytomz1
 
+# Lead-data architecture: schema/migrations, intake service, routing, activation boundary
+/migrations/                     @tomytomz1
+/src/lib/leads/                  @tomytomz1
+/src/pages/api/                  @tomytomz1
+
 # CI, ownership rules, and required checks
 /.github/                        @tomytomz1
 

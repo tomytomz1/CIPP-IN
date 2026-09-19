@@ -79,3 +79,13 @@ This file is an audit trail, not a strategy document and not a replacement for `
 - Full receipt: [`logs/runs/2026-09-19-1332-phase-2a-build-foundation.md`](runs/2026-09-19-1332-phase-2a-build-foundation.md)
 - Summary: Astro 7.3.3 + TypeScript 6.0.3 + `@astrojs/cloudflare` 14.3.2 scaffold (static, no resources). Zod publication records, a pure indexability evaluator, and a noindex/sitemap/robots firewall (0 indexable pages). CI jobs `build-and-test`, `accessibility-and-lab-performance`, and `secret-scan`, all green. CODEOWNERS plus rulesets `main-protection` (no bypass) and `index-governance-code-owner-review` (admin PR-only bypass; observed inert for the sole owner's own PRs). No deployment, cloud/vendor resources, domain purchase, leads, or SEO content.
 - Blockers: None for Phase 2B. Open: agent GitHub identity, public repository, domain registration, legal review.
+
+### 2026-09-19 17:20 — Phase 2B: Lead-data / backend foundation
+
+- Agent: Claude
+- Starting SHA: `1cde61f908b02dd2719e6d202cc3fb78a3650d22`
+- Work commit: the implementation commit on `phase-2b-lead-backend`, merged via PR #3 (resolve with `git log -- migrations/0001_lead_data_foundation.sql`)
+- Result: COMPLETE
+- Full receipt: [`logs/runs/2026-09-19-1720-phase-2b-lead-backend.md`](runs/2026-09-19-1720-phase-2b-lead-backend.md)
+- Summary: D1 migration for all ten lead domains (10 tables, 14 indexes, 4 append-only triggers, no seed data), strict intake contract, UUID idempotency enforced by the database, contact PII isolated in `lead_contacts`, configuration-driven routing with immutable route history, persist-before-queue delivery with identifier-only queue messages, and enrichment schemas for outcomes/calls/uploads. Live intake is DISABLED and fails closed (`POST /api/lead-intake` returns 503). 128 unit tests (58 new, run against a local D1) plus 6 accessibility tests; CI gained migration validation inside `build-and-test`. No remote database, queue, notification provider, deployment, domain purchase, lead collected, or indexable content.
+- Blockers: None for the next phase. Live lead collection needs legal review plus provisioned bindings.
