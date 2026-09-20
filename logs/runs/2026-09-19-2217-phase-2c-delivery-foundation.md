@@ -107,7 +107,7 @@ No project/market research was performed and no research conclusion changed.
 | Mutation spot-check: disable the "already delivered" short-circuit | DETECTED | 2 idempotency tests failed; the database UNIQUE key blocked the duplicate rather than allowing a second send. |
 | Mutation spot-check: remove the `attempt < MAX_DELIVERY_ATTEMPTS` cap | DETECTED | The "exhausted attempts" test failed. |
 | Real network call during tests | NONE | Both new suites stub global `fetch` to throw and assert a zero call count in `afterEach`. |
-| CI on the PR | See the PR section below | Recorded after the required checks ran. |
+| CI on PR #4 (commit `d4f2a26`) | PASS | `build-and-test` 57s, `accessibility-and-lab-performance` 41s, `secret-scan` 10s (run 35483678053). Merged without bypass; merge commit `1af1e54`. |
 
 Required-test coverage (operator list of 25): 1 historical route load, 2 no re-routing, 3 durable success, 4 duplicate delivery sends once, 5 concurrent duplicates, 6 transient failure retryable, 7 permanent failure becomes follow-up, 8 timeout safe, 9 malformed message, 10 missing lead, 11 missing route, 12 inactive partner without rerouting, 13 partner switch leaves the route unchanged, 14 no-active-partner stays follow-up, 15 queue payload PII-free, 16 event/log payload PII-free, 17 missing Resend config, 18 partial config, 19 test-only config cannot activate production, 20 synthetic Resend success parsed, 21 non-2xx handled, 22 SMS contract minimal, 23 no real network call, 24 follow-up query includes delivery failures, 25 idempotent after restart. Additional tests cover the batch handler, the retry backoff, SMS delivery, an unparsable 2xx, transport failure, Twilio error mapping, and the attempt lease.
 
@@ -175,6 +175,7 @@ Operator decisions remain the critical path: legal review of consent/privacy/ret
 - Work committed: YES
 - Pushed: YES
 - Commit message: `Phase 2C: queue consumer and notification delivery foundation`
+- Merge: PR #4 merged into `main` as `1af1e54a69476138ddf3a9c8d1265d38330335c9` after all three required checks passed, with no admin bypass. Governance read back afterwards: both rulesets active, `main-protection` still has 0 bypass actors and the same 3 required checks, and `governance/index-approvals.json` on `main` still contains 0 approvals.
 - Commit reference: the commit containing this receipt; resolve with `git log -- logs/runs/2026-09-19-2217-phase-2c-delivery-foundation.md`
 
 ## Final Operator Report
