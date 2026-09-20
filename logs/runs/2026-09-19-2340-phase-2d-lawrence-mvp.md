@@ -90,7 +90,7 @@ None. No new research was performed and no `research/` file was changed. The Law
 | `npm run check:budgets` | PASS | Every page: 0 B JS, ~1.8 KB CSS gzip, no custom fonts, no third-party requests. |
 | `npm run test:a11y` | PASS | 18 checks (3 pages × desktop + Pixel 7). One real violation found and fixed: the scrollable table region needed keyboard access. Lab LCP 712–1152 ms, CLS 0.000. |
 | Visual review | PASS | Homepage, Lawrence page, and methodology page reviewed at desktop and 375 px, light and dark. |
-| CI on the PR | See Commit / Push Status | Recorded after the required checks ran. |
+| CI on PR #6 (commit `f3fe6ae`) | PASS | `build-and-test` 1m3s, `accessibility-and-lab-performance` 47s, `secret-scan` 7s (run 35487279568). Merged without bypass; merge commit `a2bf8c3`. |
 
 **Manual accessibility review: NOT performed.** Automated axe checks pass, but the keyboard and screen-reader review that docs/05 requires before a page becomes `index_candidate` has not happened. This is recorded in each record's `technicalSeoQa` gate as `not_run`.
 
@@ -163,6 +163,7 @@ Operator actions on the critical path: a human editorial pass over the three pag
 - Work committed: YES
 - Pushed: YES
 - Commit message: `Phase 2D: Lawrence MVP asset (branded shell, homepage, flagship resource, methodology)`
+- Merge: PR #6 merged into `main` as `a2bf8c34d513ab77316fc300c7bacc5c9271b77f` after all three required checks passed, with no admin bypass. Read back afterwards: both rulesets active, `main-protection` with 0 bypass actors and the same three required checks, `governance/index-approvals.json` still empty, and repository visibility still public (unchanged by this run).
 - Commit reference: the commit containing this receipt; resolve with `git log -- logs/runs/2026-09-19-2340-phase-2d-lawrence-mvp.md`
 
 ## Final Operator Report
