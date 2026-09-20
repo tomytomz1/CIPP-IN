@@ -1,11 +1,11 @@
 # CURRENT STATE
 
 Last updated: 2026-09-19
-Last verified commit: `1cde61f908b02dd2719e6d202cc3fb78a3650d22` (Phase 2A audit trail, PR #2). The Phase 2B merge follows; resolve with `git log` (a file cannot contain its own commit SHA).
+Last verified commit: `4ea356fbf6ffb04bcdf0c1615401d102de010e9c` (Phase 2B, PR #3). The Phase 2C merge follows; resolve with `git log` (a file cannot contain its own commit SHA).
 Production URL: None — no production deployment exists. Target domain `indysewerresource.com` is approved but NOT registered.
 Repository: https://github.com/tomytomz1/CIPP-IN
 Current branch: main
-Current phase: Phase 2B — Lead-data/backend foundation (complete). Next: not scheduled; candidates are the queue consumer/notifications, the admin surface, or first content work. No deployment exists; domain not registered; no page is indexable; live lead collection is DISABLED and no lead has been collected.
+Current phase: Phase 2C — Queue consumer / notification delivery foundation (complete). Next: not scheduled; candidates are the operator admin surface, provisioning infrastructure after legal review, or first content work. No deployment exists; domain not registered; no page is indexable; live lead collection is DISABLED, notification sending is DISABLED, no lead has been collected, and no email or SMS has been sent.
 
 > This file is authoritative for what currently exists and what has been completed. It does not override strategic rules in higher-precedence documents (see `/AGENTS.md` §1). Update it after every meaningful piece of work.
 
@@ -65,7 +65,9 @@ The foundation includes:
 
 Phase 2B adds the lead-data/backend foundation: D1 migrations for all ten logical domains, strict intake contracts, the routing/persistence/queue service, and the fail-closed activation boundary.
 
-There is no deployment, cloud or vendor resource, remote database, registered domain, analytics or Search Console configuration, Twilio number, notification provider, public lead form, SEO content, indexing, or collected lead. The only page is a non-production development shell (lifecycle `draft`, `noindex`).
+Phase 2C completes the delivery path in code: an idempotent queue consumer, database-enforced delivery idempotency, Resend and Twilio provider adapters with injected transports, a separate fail-closed notification activation boundary, and operator follow-up queries.
+
+There is no deployment, cloud or vendor resource, remote database, queue, registered domain, analytics or Search Console configuration, Twilio number, Resend key, notification provider account, public lead form, SEO content, indexing, or collected lead. No email or SMS has ever been sent. The only page is a non-production development shell (lifecycle `draft`, `noindex`).
 
 ## Completed
 
@@ -95,6 +97,15 @@ There is no deployment, cloud or vendor resource, remote database, registered do
   - live intake DISABLED and fail-closed; `POST /api/lead-intake` returns 503 before reading a body
   - 58 backend tests against a local D1 database (Miniflare); CI gained `npm run validate:migrations` inside the existing `build-and-test` check
   - details: `05-BUILD-SPEC.md` → Implementation Record: Phase 2B
+- Phase 2C queue-consumer / notification-delivery foundation (2026-09-19):
+  - `migrations/0002_delivery_foundation.sql`: `lead_events` rebuilt with a UNIQUE `idempotency_key` and the delivery event types; `partners` gained notification destinations with validating triggers; still zero seed rows
+  - idempotent consumer (`src/lib/leads/delivery.ts`): claim-before-send, single success/terminal rows, an attempt lease, and stable provider-side idempotency keys
+  - delivery uses the immutable historical route only; an inactive or unreachable partner becomes operator follow-up instead of a reroute
+  - Resend email adapter and Twilio SMS adapter with injected transports, timeouts, strict response parsing, and retryable/terminal mapping; no account, key, number, or network call
+  - notification activation is separate from intake activation and fails closed; test-only values cannot activate production
+  - operator follow-up query (`src/lib/leads/operator.ts`) covering unrouted, un-enqueued, retry-pending, and permanently failed leads, with contact PII behind an explicit call
+  - 40 new tests (168 unit tests total) against a local D1 database, with fake providers and `fetch` stubbed to throw
+  - details: `05-BUILD-SPEC.md` → Implementation Record: Phase 2C
 
 ## In Progress
 
@@ -104,7 +115,8 @@ There is no deployment, cloud or vendor resource, remote database, registered do
 
 - Domain registration (approved target; requires separate operator authorization)
 - Real site pages / homepage (only a non-production development shell exists)
-- Queue consumer worker, partner/operator notifications (Resend, Twilio), R2 uploads, admin UI
+- R2 uploads, admin UI, and a deployed Worker entrypoint wiring the queue consumer (the consumer itself is implemented and tested; no queue exists)
+- Live partner/operator notifications (Resend and Twilio adapters exist; no account, key, number, or sending is enabled)
 - Live lead collection (blocked by legal review and by production bindings; the code path is disabled)
 - Similarity/embedding runner (records only; no OpenAI calls)
 - Cloudflare resources (Workers, D1, R2, Queues, Turnstile, Access, DNS)
@@ -163,9 +175,13 @@ Phase 2A foundation built (not deployed). Astro 7.3.3 static site with the Cloud
 
 Phase 2B lead backend built (not deployed, not active): D1 migration for 10 tables, intake/routing/persistence service, and the disabled activation boundary. See `05-BUILD-SPEC.md` → Implementation Record: Phase 2B.
 
+Phase 2C delivery pipeline built (not deployed, not active): queue consumer, delivery idempotency in the database, provider adapters, and operator follow-up. See `05-BUILD-SPEC.md` → Implementation Record: Phase 2C.
+
 - **Remote D1 database:** none (migrations run against a local database in tests/CI).
-- **Queue / notification providers / uploads:** none.
+- **Queue, dead-letter queue, notification provider accounts, uploads:** none.
 - **Live intake:** disabled; no public form exists.
+- **Live notifications:** disabled; 0 emails and 0 SMS ever sent.
+- **Partners configured:** 0 (no contractor exists in data or in code).
 - **Leads collected:** 0.
 
 ## Current Indexed URLs
@@ -234,6 +250,8 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 10. Repository visibility: the repository is public. Keep it public or make it private? (Research and strategy are currently publicly readable.)
 11. Contact-PII protection beyond the platform: should `lead_contacts` use application-level (field) encryption, or is Cloudflare's platform encryption-at-rest sufficient? Phase 2B did not implement extra encryption, and did not decide this. Operator/legal decision.
 12. Retention and deletion mechanics: the append-only triggers block UPDATE but deliberately allow DELETE so lawful deletion stays possible. The actual retention periods and the deletion procedure are still OPEN (Open Question 3).
+13. Dead-letter queue: when Cloudflare Queues are provisioned, should the lead-delivery consumer have a dead-letter queue, and with what retention and alerting? Without one, messages that exhaust `max_retries` are deleted permanently. Phase 2C mitigates this in the application (a durable terminal state plus operator follow-up before retries run out) but did not decide the infrastructure. Operator decision.
+14. Partner notification content: may a partner notification contain homeowner contact details directly, or must the partner always retrieve them from the protected operational layer? Phase 2C implements the identifier-only option and did not decide the production answer, which also depends on the legal review in Open Question 3. Operator decision.
 
 ## Known Risks
 
@@ -250,6 +268,7 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 - **Agent identity / inert code-owner rule:** AI agents use the operator's own GitHub account, which is also the sole code owner. As observed on PR #2, GitHub then requires no code-owner review, so `index-governance-code-owner-review` does not currently constrain agents. `main-protection` (PR plus required checks, no bypass) still binds everyone. A separate non-admin identity for agents is needed to make the index-approval boundary binding on agents.
 - **Public repository:** the GitHub repository is public (observed 2026-09-19). Strategy, competitor research, and prospective-tenant research in `research/` and `docs/` are publicly readable. Operator decision whether that is acceptable.
 - **Privacy/consent legal review** is required before live lead routing. The Phase 2B code path is disabled until that review and the production bindings exist, so this is enforced in code, not only in policy.
+- **At-least-once delivery window:** delivery is idempotent through database uniqueness plus provider idempotency keys, but a consumer that crashes mid-send leaves an attempt that another consumer may take over after the lease (120 seconds). That duplicate is then suppressed by the provider's own idempotency window (Resend documents 24 hours), not by this code. A crash plus a retry older than that window could in principle produce a second notification.
 - **Lead data protection:** the schema minimizes and separates PII, but field-level encryption and retention/deletion mechanics are undecided (Open Questions 11–12).
 - **Expert reviewer** is still required for pages where `04-CONTENT-EDITORIAL-SYSTEM.md` requires expert review. Those pages stay `noindex` until one exists.
 - **Algorithm-update risk:** handled by protocol in `03-GOOGLE-RESILIENCE.md`.
@@ -263,6 +282,7 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 
 ## Last Major Decisions
 
+- 2026-09-19 — Phase 2C implemented (operator-authorized): idempotent queue consumer, delivery idempotency enforced by a UNIQUE key in `lead_events` (migration 0002), partner notification destinations, Resend/Twilio adapters, a notification activation boundary separate from intake, retry/terminal handling capped at 5 attempts, and operator follow-up queries. No queue, provider account, key, or deployment was created, and nothing was sent. Details in `05` → Implementation Record: Phase 2C.
 - 2026-09-19 — Phase 2B implemented (operator-authorized): physical lead schema and migration, intake contract, routing, persist-before-queue delivery, idempotency, enrichment (outcomes/calls/uploads), and a fail-closed live-intake activation boundary. Implementation-level choices are recorded in `05` → Implementation Record: Phase 2B. `miniflare` was added as a dev dependency so tests execute real SQL locally.
 - 2026-09-19 — Phase 2A implemented (operator-authorized) and merged via PR #1:
   - Astro 7.3.3 / TypeScript 6.0.3 / `@astrojs/cloudflare` 14.3.2 / Zod 4.6.5
@@ -308,3 +328,4 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
   - No code, packages, infrastructure, domain purchase, or deployment.
 - 2026-09-19 — Phase 2A: build foundation and indexing firewall merged via PR #1 (`b3c60e6`). Rulesets `main-protection` and `index-governance-code-owner-review` configured and read back. `05-BUILD-SPEC.md` gained an Implementation Record and governance status. Audit trail in a follow-up PR. No deployment, cloud/vendor resources, domain purchase, leads, or indexable content.
 - 2026-09-19 — Phase 2B: lead-data/backend foundation. Added `migrations/0001_lead_data_foundation.sql` (10 tables, 14 indexes, 4 append-only triggers, no seed data), `src/lib/leads/*` (contracts, repository, routing, intake, enrichment, activation, Turnstile, HTTP adapter, logging), the disabled `POST /api/lead-intake` route, 58 backend tests against local D1, and `npm run validate:migrations` in CI. Updated `05-BUILD-SPEC.md` (Implementation Record: Phase 2B and section statuses) and this file. No remote database, queue, notification provider, upload storage, deployment, domain purchase, lead collection, or indexable content.
+- 2026-09-19 — Phase 2C: added `migrations/0002_delivery_foundation.sql`, the queue consumer, provider adapters, notification activation, and operator queries under `src/lib/leads/`, plus 40 tests. Updated `05-BUILD-SPEC.md` (Implementation Record: Phase 2C) and this file. No infrastructure, account, key, deployment, content, or indexing change.

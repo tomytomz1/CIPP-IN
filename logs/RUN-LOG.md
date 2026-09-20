@@ -89,3 +89,13 @@ This file is an audit trail, not a strategy document and not a replacement for `
 - Full receipt: [`logs/runs/2026-09-19-1720-phase-2b-lead-backend.md`](runs/2026-09-19-1720-phase-2b-lead-backend.md)
 - Summary: D1 migration for all ten lead domains (10 tables, 14 indexes, 4 append-only triggers, no seed data), strict intake contract, UUID idempotency enforced by the database, contact PII isolated in `lead_contacts`, configuration-driven routing with immutable route history, persist-before-queue delivery with identifier-only queue messages, and enrichment schemas for outcomes/calls/uploads. Live intake is DISABLED and fails closed (`POST /api/lead-intake` returns 503). 128 unit tests (58 new, run against a local D1) plus 6 accessibility tests; CI gained migration validation inside `build-and-test`. No remote database, queue, notification provider, deployment, domain purchase, lead collected, or indexable content.
 - Blockers: None for the next phase. Live lead collection needs legal review plus provisioned bindings.
+
+### 2026-09-19 22:17 — Phase 2C: Queue consumer + notification delivery foundation
+
+- Agent: Claude
+- Starting SHA: `4ea356fbf6ffb04bcdf0c1615401d102de010e9c`
+- Work commit: the implementation commit on `phase-2c-delivery-foundation` (resolve with `git log -- migrations/0002_delivery_foundation.sql`)
+- Result: COMPLETE
+- Full receipt: [`logs/runs/2026-09-19-2217-phase-2c-delivery-foundation.md`](runs/2026-09-19-2217-phase-2c-delivery-foundation.md)
+- Summary: Migration 0002 adds a UNIQUE `idempotency_key` to `lead_events` (table rebuilt to extend its CHECK) plus partner notification destinations with validating triggers; still zero seed rows. Implemented an idempotent queue consumer (claim-before-send, single success/terminal rows, 120s attempt lease, stable provider idempotency keys), Resend and Twilio adapters with injected transports, notification activation separate from intake activation and failing closed, retry/terminal handling capped at 5 attempts, and operator follow-up queries with PII behind an explicit call. Delivery uses only the immutable historical route; an inactive partner becomes operator follow-up, never a reroute. 40 new tests (168 unit total) plus 6 accessibility tests pass; two mutation spot-checks confirmed the tests detect regressions. No queue, D1, R2, Turnstile, Access, Resend, or Twilio resource was created; no email or SMS was sent; no deployment, domain purchase, lead, or indexable page.
+- Blockers: None for the next phase. Live notifications need provider accounts/keys and the same legal review that blocks live intake.

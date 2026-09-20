@@ -37,7 +37,19 @@ export interface EventRow {
   event_type: string;
   actor: string;
   payload_json: string;
+  /** Durable delivery idempotency key (migration 0002); NULL for ordinary history rows. */
+  idempotency_key: string | null;
   created_at: string;
+}
+
+export interface PartnerRow {
+  id: string;
+  display_name: string;
+  status: string;
+  notification_email: string | null;
+  notification_phone_e164: string | null;
+  notify_email_enabled: number;
+  notify_sms_enabled: number;
 }
 
 export interface RouteRow {
@@ -113,11 +125,19 @@ export const insertConsent = (
 
 export const insertEvent = (
   db: SqlDatabase,
-  r: { id: string; lead_id: string; event_type: string; actor: string; payload: Record<string, unknown>; created_at: string },
+  r: {
+    id: string; lead_id: string; event_type: string; actor: string; payload: Record<string, unknown>;
+    created_at: string;
+    /** Durable delivery idempotency key (migration 0002). NULL for ordinary history rows. */
+    idempotency_key?: string | null;
+  },
 ): SqlStatement =>
   db
-    .prepare(`INSERT INTO lead_events (id, lead_id, event_type, actor, payload_json, created_at) VALUES (?, ?, ?, ?, ?, ?)`)
-    .bind(r.id, r.lead_id, r.event_type, r.actor, JSON.stringify(r.payload), r.created_at);
+    .prepare(
+      `INSERT INTO lead_events (id, lead_id, event_type, actor, payload_json, idempotency_key, created_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    )
+    .bind(r.id, r.lead_id, r.event_type, r.actor, JSON.stringify(r.payload), r.idempotency_key ?? null, r.created_at);
 
 export const insertRoute = (
   db: SqlDatabase,
@@ -178,6 +198,41 @@ export async function listOutcomes(db: SqlDatabase, leadId: string): Promise<Out
     .prepare(`SELECT * FROM lead_outcomes WHERE lead_id = ? ORDER BY recorded_at ASC, rowid ASC`)
     .bind(leadId)
     .all<OutcomeRow>();
+  return results;
+}
+
+export async function getEvent(db: SqlDatabase, eventId: string): Promise<EventRow | null> {
+  return db.prepare(`SELECT * FROM lead_events WHERE id = ? LIMIT 1`).bind(eventId).first<EventRow>();
+}
+
+export async function getRoute(db: SqlDatabase, routeId: string): Promise<RouteRow | null> {
+  return db.prepare(`SELECT * FROM lead_routes WHERE id = ? LIMIT 1`).bind(routeId).first<RouteRow>();
+}
+
+export async function getPartner(db: SqlDatabase, partnerId: string): Promise<PartnerRow | null> {
+  return db
+    .prepare(
+      `SELECT id, display_name, status, notification_email, notification_phone_e164,
+              notify_email_enabled, notify_sms_enabled
+         FROM partners WHERE id = ? LIMIT 1`,
+    )
+    .bind(partnerId)
+    .first<PartnerRow>();
+}
+
+/**
+ * Every delivery-lifecycle event for one delivery id, oldest first. Delivery events always carry
+ * `deliveryId` in their JSON payload, so one query returns the whole durable state machine.
+ */
+export async function listDeliveryEvents(db: SqlDatabase, deliveryId: string): Promise<EventRow[]> {
+  const { results } = await db
+    .prepare(
+      `SELECT * FROM lead_events
+        WHERE json_extract(payload_json, '$.deliveryId') = ?
+        ORDER BY created_at ASC, rowid ASC`,
+    )
+    .bind(deliveryId)
+    .all<EventRow>();
   return results;
 }
 

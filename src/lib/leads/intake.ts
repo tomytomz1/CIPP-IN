@@ -173,7 +173,7 @@ export async function submitLead(rawInput: unknown, options: IntakeOptions): Pro
       lead_id: leadId,
       event_type: 'delivery_pending',
       actor: 'system',
-      payload: { routeId, kind: decision.outcome === 'assigned' ? 'deliver_to_partner' : 'operator_follow_up' },
+      payload: { deliveryId, routeId, kind: decision.outcome === 'assigned' ? 'deliver_to_partner' : 'operator_follow_up' },
       created_at: nowIso,
     }),
   ];
