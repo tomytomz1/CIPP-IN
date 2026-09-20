@@ -1,11 +1,11 @@
 # CURRENT STATE
 
 Last updated: 2026-09-20
-Last verified commit: `10c28aa97131682786a5e6080dcbb3da201e260d` (Phase 2D audit trail, PR #7). This reconciliation commit follows; resolve with `git log` (a file cannot contain its own commit SHA).
+Last verified commit: `7a76251d2d3d324da5ef2b2e1f225bcf9f8fc00a` (post-Phase-2D reconciliation, PR #8). The Phase 2E merge follows; resolve with `git log` (a file cannot contain its own commit SHA).
 Production URL: None — no production deployment exists. The domain `indysewerresource.com` is registered and owned by the operator (2026-09-19). It is configured as the canonical production origin in the build, but nothing is deployed to it and DNS has not been moved to Cloudflare or any other host.
 Repository: https://github.com/tomytomz1/CIPP-IN
 Current branch: main
-Current phase: Phase 2D — Lawrence MVP asset (complete). Backend expansion is deliberately paused. Three real homeowner-facing pages exist (homepage, Lawrence sewer-lateral resource, methodology page), all `published_noindex`. No deployment exists; no page is indexable; live lead collection is DISABLED, notification sending is DISABLED, no lead has been collected, and no email or SMS has been sent.
+Current phase: Phase 2E — Lawrence evidence enrichment and editorial QA (complete). Backend expansion is deliberately paused. Three real homeowner-facing pages exist (homepage, Lawrence sewer-lateral resource, methodology page), all `published_noindex`. No deployment exists; no page is indexable; live lead collection is DISABLED, notification sending is DISABLED, no lead has been collected, and no email or SMS has been sent.
 
 > This file is authoritative for what currently exists and what has been completed. It does not override strategic rules in higher-precedence documents (see `/AGENTS.md` §1). Update it after every meaningful piece of work.
 
@@ -68,7 +68,9 @@ Phase 2B adds the lead-data/backend foundation: D1 migrations for all ten logica
 
 Phase 2C completes the delivery path in code: an idempotent queue consumer, database-enforced delivery idempotency, Resend and Twilio provider adapters with injected transports, a separate fail-closed notification activation boundary, and operator follow-up queries.
 
-Phase 2D replaces the development shell with the first real homeowner-facing asset: a branded site shell, a homepage, the flagship Lawrence sewer-lateral resource, and a methodology/trust page. Every page is `published_noindex`, and the Lawrence page cannot become indexable until a qualified reviewer reviews it and the location gate is satisfied.
+Phase 2D replaces the development shell with the first real homeowner-facing asset: a branded site shell, a homepage, the flagship Lawrence sewer-lateral resource, and a methodology/trust page. Every page is `published_noindex`.
+
+Phase 2E strengthens the evidence behind the Lawrence page, corrects editorial overclaims on all three pages, and implements the similarity-QA runner the locked workflow requires. The Location Page Quality Gate now passes on evidence (5 of 8 categories), and the page is still not indexable: expert review is absent, the publication score is 63 against 85, the embedding half of similarity QA has not run, manual accessibility review is outstanding, and there is no operator index approval.
 
 The site exists in the repository; no production deployment exists, and no page is indexable. Specifically:
 
@@ -124,6 +126,15 @@ The site exists in the repository; no production deployment exists, and no page 
   - publication records: Lawrence scores 55/100 against an 85 threshold, location gate 3 of 8 categories, expert review required and absent
   - `indysewerresource.com` configured as the canonical production origin (no deployment, no DNS change)
   - details: `05-BUILD-SPEC.md` → Implementation Record: Phase 2D
+- Phase 2E Lawrence evidence enrichment and editorial QA (2026-09-20):
+  - four new City of Lawrence sources verified directly from the City's own document library: the current sanitary lateral permit application form, the Lawrence Lift for August 2024 and July 2025, and the 2026 46th and Post I/I Removal pre-bid minutes
+  - ten new records in `research/sources/lawrence-primary-sources.json` (now 8 sources, 20 records)
+  - new `research/sources/technical-standards.json`: two government-issued engineering specifications that source the general mechanics of CIPP lateral lining and pipe bursting (not Lawrence requirements)
+  - Location Page Quality Gate reassessed honestly: **3 of 8 → 5 of 8**, all five authoritative local primary-source. Categories 6, 7, and 8 remain false
+  - publication score re-scored after the content changed: **55 → 63** against the 85 threshold
+  - editorial corrections on the Lawrence page (unsupported "cheapest step" claim removed, camera-inspection claims narrowed, the "trenchless is not permitted everywhere" framing removed, the "not a complete quote" line replaced with a question to ask, DVD speculation removed, permit-practice assertion removed), on the About page (contractor-evidence and claim-labelling overstatements), and on the homepage (no implied judgement of whether a quote is reasonable)
+  - similarity-QA runner implemented (`scripts/similarity-qa.ts`, `scripts/lib/similarity.ts`) and added to CI
+  - details: `05-BUILD-SPEC.md` → Implementation Record: Phase 2E
 
 ## In Progress
 
@@ -136,7 +147,7 @@ The site exists in the repository; no production deployment exists, and no page 
 - R2 uploads, admin UI, and a deployed Worker entrypoint wiring the queue consumer (the consumer itself is implemented and tested; no queue exists)
 - Live partner/operator notifications (Resend and Twilio adapters exist; no account, key, number, or sending is enabled)
 - Live lead collection (blocked by legal review and by production bindings; the code path is disabled)
-- Similarity/embedding runner (records only; no OpenAI calls)
+- Embedding half of similarity QA (the runner exists and the deterministic checks run in CI; no OpenAI account, key, or call exists, so the embedding check reports `not_run` and the gate stays unsatisfied)
 - Cloudflare resources (Workers, D1, R2, Queues, Turnstile, Access, DNS)
 - Resend, Twilio, and OpenAI accounts/resources for this project
 - Manual keyboard and screen-reader review of the three real pages (automated axe WCAG 2.2 AA checks already run on all of them in CI)
@@ -170,11 +181,21 @@ Sources: `research/sources/lawrence-primary-sources.json`. The primary sources a
 - **Post-repair CCTV:** Under the same policy, video of lining or bursting repairs must be submitted for approval. Full rehabilitation video covers the cleanout by the structure to the public main connection; point/sectional repairs are filmed from the cleanout to at least 2 feet beyond the repair. The Utility may withhold approval if the video shows a defective repair.
 - **Installation requirements:** The policy (§§1.02–1.04) requires a contractor licensed, bonded, and insured with the City, and sets approved materials, size, depth, and slope, backfill rules near driveways, sidewalks, and roadways, cleanouts, tracer wire, and inspection before backfill.
 
+**Verified in Phase 2E (2026-09-20)**
+
+- **Current permit form:** the City publishes an Application for Sanitary Building Sewer Lateral Construction Permit covering New Line, Repair/Modification Work, and Replace/Relocate. It requires a plat drawing with the location of work and materials, owner and installing/repairing contractor details including a Lawrence registration number, and an emergency-work application no later than the following business day. It states no permit fee and no submission address.
+- **Owner responsibility restated (August 2024):** residents are responsible for maintenance and repair of their sanitary sewer laterals to the point of connection at the city's main sewer line.
+- **Local pipe/failure evidence:** the utility asks owners to replace older clay sewer laterals beyond their useful life, saying old clay pipe cracks and breaks easily, letting dirt and roots in. No prevalence figure is published.
+- **Third-party damage:** the utility reported an increase in laterals damaged by contractors installing underground fiber optic lines for 5G upgrades.
+- **Call the utility first:** the August 2024 issue published an after-hours on-call number (317-260-0220) and repeated that the City does not reimburse contractor costs when the fault turns out to be in the public main.
+- **City system rehabilitation:** the 71st Street Lift Station Basin project (approximately 3,000 ft of 8-inch and 12-inch CIPP plus approximately 1,300 ft of 6-inch lateral lining, under a November 2021 EPA Administrative Order on Consent), the Fort Harrison Phase III project (2,155 ft replaced, 2,478 ft CIPP lined), and the 2026 46th and Post I/I Removal project (CIPP of 8- to 15-inch sewers with associated lateral lining). These are public-system projects and establish nothing about a private lateral.
+- **Retrieval note:** cityoflawrence.org returns HTTP 404 to a default (non-browser) user agent. The August 2023 newsletter is reachable at its original City URL with a browser user agent, which narrows the limitation recorded for it in Phase 0.1.
+
 **Partially verified / still uncertain**
 
 - The policy manual's "from the property line to the point of connection with the public main" wording is reconciled with the ordinance by inference: it assigns the right-of-way segment to the owner and does not create a City-owned segment. Status is `partially_verified`. Confirm with Lawrence Utilities before publishing any responsibility diagram.
 - Whether the 2019 policy is still applied without unpublished revisions. No newer revision was found, but this has not been confirmed with the Utility.
-- The currently accepted CCTV delivery format (the policy says DVD), permit fees and forms, and the current permit office location.
+- The currently accepted CCTV delivery format (the policy says DVD), the current permit fee, and which office accepts the application today. The current form itself is now verified; it states neither a fee nor an address.
 - Who is responsible for the tap/wye at the main, and how often the Director uses the §5-1-2-7 waiver.
 - Whether every Lawrence address is served by Lawrence Utilities sanitary sewer (service-area boundary unverified).
 - Whether any City cost-share or assistance program exists (not found; unverified).
@@ -191,6 +212,7 @@ Astro 7.3.3 static site with the Cloudflare adapter, built from the Phase 2A fou
 - **Effectively indexable pages:** 0.
 - **Production sitemap eligibility:** 0 URLs.
 - **Canonical production origin:** `https://indysewerresource.com` (registered; nothing deployed to it).
+- **Lawrence page status:** Location Page Quality Gate 5 of 8 (passes); publication score 63/85; expert review required and absent; similarity QA deterministic checks clean, embedding check `not_run`.
 - **Client JavaScript:** 0 bytes on every page. CSS: ~1.8 KB gzip.
 
 Phase 2B lead backend built (not deployed, not active): D1 migration for 10 tables, intake/routing/persistence service, and the disabled activation boundary. See `05-BUILD-SPEC.md` → Implementation Record: Phase 2B.
@@ -300,10 +322,11 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 - None block the next implementation phase.
 - Before **production publishing**: DNS and hosting configuration for the registered domain, a deployment, real pages passing the indexing gate with operator approval, and the Launch Checklist in `05-BUILD-SPEC.md`. The domain is owned and branch/index governance is configured; the development shell has been replaced by real pages.
 - Before **live lead collection/routing**: legal review of consent/privacy/disclosure/retention, plus provisioning D1/Queues/Turnstile and setting the activation configuration. Until then the intake endpoint fails closed.
-- Before the **Lawrence page can be indexed**: a real expert review (none exists), a human editorial pass, the Location Page Quality Gate (3 of 8 categories today, 5 required), a publication score of 85 (55 today), a similarity QA run (the embedding runner does not exist), manual accessibility review, and operator index approval. Confirming the open Lawrence questions with Lawrence Utilities is what would raise the evidence categories and the score; an unresolved question only blocks indexing where the page makes or depends on a claim about it (see Open Question 2).
+- Before the **Lawrence page can be indexed**: a real expert review (none exists), a human editorial pass by the operator, a publication score of 85 (63 today), the embedding half of similarity QA (the runner exists; no API key, so it reports `not_run`), manual accessibility review, and operator index approval. The Location Page Quality Gate now passes on evidence (5 of 8, all authoritative local primary-source). Confirming the open Lawrence questions with Lawrence Utilities is what would raise the evidence categories and the score; an unresolved question only blocks indexing where the page makes or depends on a claim about it (see Open Question 2).
 
 ## Last Major Decisions
 
+- 2026-09-20 — Phase 2E implemented (operator-authorized): four new verified City of Lawrence sources and ten new research records; a separate technical-standards evidence file for general method mechanics; the Location Page Quality Gate reassessed from 3 of 8 to 5 of 8; the publication score re-scored from 55 to 63; operator-directed editorial corrections on all three pages; and the similarity-QA runner implemented with the embedding check failing closed. No page became indexable.
 - 2026-09-19 — **Operator registered `indysewerresource.com`** and decided the **GitHub repository stays public**. The domain is configured as the canonical production origin; no DNS change, hosting, or deployment followed.
 - 2026-09-19 — Operator-approved indexing-policy reconciliation for unresolved Lawrence questions (Open Question 2). No gate or threshold was weakened.
 - 2026-09-19 — Phase 2D implemented (operator-authorized): real branded shell, homepage, flagship Lawrence sewer-lateral resource, and methodology page, all `published_noindex`; development shell removed. Details in `05` → Implementation Record: Phase 2D.
@@ -356,3 +379,4 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 - 2026-09-19 — Phase 2C: added `migrations/0002_delivery_foundation.sql`, the queue consumer, provider adapters, notification activation, and operator queries under `src/lib/leads/`, plus 40 tests. Updated `05-BUILD-SPEC.md` (Implementation Record: Phase 2C) and this file. No infrastructure, account, key, deployment, content, or indexing change.
 - 2026-09-19 — Phase 2D: replaced the development shell with three real pages (`/`, `/lawrence-sewer-lateral-repair/`, `/about/`), added the site shell, design system, evidence components, and the decision-flow diagram, and recorded honest publication records (0 indexable, 0 approvals). Reconciled the registered domain, the public-repository decision, and the Lawrence indexing policy in this file. No deployment, no DNS change, no lead collection, no indexable page.
 - 2026-09-20 — Post-Phase-2D reconciliation of this file only: corrected the stale verified-commit pointer, the accessibility wording, the project-status paragraph (registered domain, development shell removed, three real pages), the Not Started list, the architecture and Search Console wording, the production-publishing blocker, and the priorities. Documentation only: no code, content, publication record, research, governance, infrastructure, deployment, or strategy change.
+- 2026-09-20 — Phase 2E: verified four new City of Lawrence sources and added ten research records plus a technical-standards evidence file; corrected editorial overclaims on the Lawrence, About, and home pages; reassessed the location gate (3/8 → 5/8) and the publication score (55 → 63); implemented the similarity-QA runner and added it to CI. No deployment, no lead path, no index approval, and no page became indexable.

@@ -1,0 +1,56 @@
+{
+  "file": "research/sources/technical-standards.json",
+  "category": "technical",
+  "last_verified": "2026-09-20",
+  "note": "General (non-Lawrence) technical evidence for how sewer rehabilitation methods work, from engineering specifications issued by a government body. These support method MECHANICS only. They are issued for another jurisdiction, so they never establish a Lawrence requirement and never count toward the Location Page Quality Gate in docs/03-GOOGLE-RESILIENCE.md, which requires municipality-specific evidence. Paraphrases only.",
+  "sources": [
+    {
+      "source_id": "src-hrpdc-824-cipp-lateral-2016",
+      "source_title": "Regional Construction Standards, Section 824 — Sewer Lateral Rehabilitation by Cured-In-Place Method (June 2016)",
+      "source_url": "https://www.hrpdcva.gov/DocumentCenter/View/5004/Section-824---Sewer-Lateral-Rehabilitation-by-Cured-In-Place-Method-PDF",
+      "publisher": "Hampton Roads Planning District Commission (Virginia regional government body)",
+      "source_date": "2016-06-01",
+      "source_date_note": "Page footer dated June 2016; no day given. Retrieved 2026-09-20.",
+      "authority_tier": 3
+    },
+    {
+      "source_id": "src-hrpdc-815-pipe-bursting-2016",
+      "source_title": "Regional Construction Standards, Section 815 — Pipe Bursting (June 2016)",
+      "source_url": "https://www.hrpdcva.gov/DocumentCenter/View/4995/Section-815---Pipe-Bursting-PDF",
+      "publisher": "Hampton Roads Planning District Commission (Virginia regional government body)",
+      "source_date": "2016-06-01",
+      "source_date_note": "Page footer dated June 2016; no day given. Retrieved 2026-09-20.",
+      "authority_tier": 3
+    }
+  ],
+  "records": [
+    {
+      "id": "tech-001-cipp-lateral-mechanics",
+      "category": "technical",
+      "claim": "Cured-in-place lateral lining installs a flexible tube impregnated with a thermoset resin inside the existing lateral, which cures in place into a hard, impermeable liner pipe that forms a structurally sound pipe within the host pipe.",
+      "status": "verified",
+      "source_title": "Regional Construction Standards, Section 824 — Sewer Lateral Rehabilitation by Cured-In-Place Method",
+      "source_url": "https://www.hrpdcva.gov/DocumentCenter/View/5004/Section-824---Sewer-Lateral-Rehabilitation-by-Cured-In-Place-Method-PDF",
+      "publisher": "Hampton Roads Planning District Commission",
+      "source_date": "2016-06-01",
+      "verified_at": "2026-09-20",
+      "evidence_summary": "Section 824.1.1 describes installation of cured-in-place pipe (CIPP) lateral lining for existing laterals of 3-inch to 6-inch nominal diameter, which may include a transition between the mainline connection and the cleanout. The CIPP is specified to cure into a smooth, hard, impermeable, chemically-inert liner pipe forming a structurally sound liner pipe with a uniformly smooth interior, providing hydraulic flow equal to or greater than the existing lateral in original condition, and sealing so that infiltration cannot re-enter the sanitary sewer between the ends of the liner. The lining process uses a flexible tube of particular length, sized for the diameters and fittings encountered, with a thermoset resin appropriate to the application. The section requires the contractor to notify residents of temporary sewer service disconnection at least 48 hours in advance of liner work, and it references ASTM D5813 (cured-in-place thermosetting resin sewer pipe) and ASTM F1216 (rehabilitation by inversion and curing of a resin-impregnated tube).",
+      "limitations": "An engineering specification issued for a Virginia region. It establishes how the method works and what a specification can require; it does NOT establish any Lawrence, Indiana requirement, any suitability judgment for a particular pipe, or any lifespan, price, or success rate. The referenced ASTM standards were not separately purchased or read.",
+      "supports": ["src/pages/lawrence-sewer-lateral-repair.astro"]
+    },
+    {
+      "id": "tech-002-pipe-bursting-mechanics",
+      "category": "technical",
+      "claim": "Pipe bursting replaces an existing underground pipe in place by fracturing it and displacing the fragments outward into the surrounding soil while a new HDPE or fPVC pipe is drawn into the space left behind; it is launched from an insertion pit and pulled to a reception pit.",
+      "status": "verified",
+      "source_title": "Regional Construction Standards, Section 815 — Pipe Bursting",
+      "source_url": "https://www.hrpdcva.gov/DocumentCenter/View/4995/Section-815---Pipe-Bursting-PDF",
+      "publisher": "Hampton Roads Planning District Commission",
+      "source_date": "2016-06-01",
+      "verified_at": "2026-09-20",
+      "evidence_summary": "Section 815.1.1 defines pipe bursting as the construction technique of replacing an existing underground pipe system in situ by fracturing the pipe and displacing the fragments outwards into the surrounding soil while a new HDPE or fPVC pipe is drawn into the annulus left by the expanding operation. The process may be pneumatic, hydraulic, or static pull, using a conically shaped bursting head; the bursting head and new pipe are launched from an insertion pit and the cable or pulling rod is pulled from the reception pit. The replacement pipe may not be more than 25% larger in diameter than the existing pipe. The scope includes reconnecting existing sewer lateral connections and performing pre- and post-rehabilitation television inspection. The bursting head may not pass within 8 feet of a sensitive surface structure, or within 3 feet of buried pipes or three pipe diameters of the new pipe, whichever is greater, unless special protective measures are approved.",
+      "limitations": "An engineering specification issued for a Virginia region, written for mainline work. It establishes how the method works, not that it is permitted, appropriate, or available for any particular Lawrence property. It supports no lifespan, price, or success-rate claim.",
+      "supports": ["src/pages/lawrence-sewer-lateral-repair.astro"]
+    }
+  ]
+}

@@ -45,15 +45,21 @@ describe('real site pages', () => {
     expect(record.expertReview.reviewer).toBeNull();
     expect(record.expertReview.outcome).toBeNull();
 
-    // Exactly the three categories the current evidence supports, all authoritative local primary.
+    // Exactly the five categories the current evidence supports, all authoritative local primary.
     const gate = record.municipalityGate!;
     const qualifying = Object.entries(gate.categories).filter(([, c]) => c.qualifies);
     expect(qualifying.map(([k]) => k).sort()).toEqual([
       'municipalCippLiningBurstingRule',
+      'municipalHousingPipeFailureEvidence',
+      'municipalInfrastructureInformation',
       'municipalPermitRepairRequirement',
       'verifiedLateralResponsibility',
     ]);
     expect(qualifying.every(([, c]) => c.authoritativeLocalPrimary && c.evidenceRefs.length > 0)).toBe(true);
+    // Categories without genuine evidence stay false; the count is never padded to clear the gate.
+    expect(gate.categories.originalMunicipalVisualDataAsset.qualifies).toBe(false);
+    expect(gate.categories.originalFirstPartyInterviewData.qualifies).toBe(false);
+    expect(gate.categories.municipalCostPermitProjectEvidence.qualifies).toBe(false);
 
     // The publication score is recorded honestly and is below the money/location threshold.
     expect(evaluation.score.calculated).toBeLessThan(evaluation.score.required!);
@@ -63,9 +69,11 @@ describe('real site pages', () => {
     // The blocking reasons name the real problems.
     const reasons = evaluation.blockingReasons.join(' | ');
     expect(reasons).toMatch(/expert review required but no reviewer recorded/);
-    expect(reasons).toMatch(/only 3 of 8 evidence categories qualify/);
+    expect(reasons).toMatch(/no similarity QA run recorded/);
     expect(reasons).toMatch(/no operator index approval recorded/);
     expect(reasons).toMatch(/lifecycle is "published_noindex"/);
+    // The location gate now passes on evidence, and the page is still not indexable.
+    expect(reasons).not.toMatch(/evidence categories qualify/);
   });
 
   it('cites only evidence that exists in the repository, with re-verification dates', () => {
@@ -79,7 +87,12 @@ describe('real site pages', () => {
     for (const claim of record.claims) {
       if (claim.classification === 'FACT') expect(claim.evidenceRefs.length).toBeGreaterThan(0);
     }
-    expect(record.claims.find((c) => c.id === 'repair-method-mechanics')?.classification).toBe('INFERENCE');
+    // Method mechanics moved from an uncited INFERENCE to a cited FACT in Phase 2E.
+    const mechanics = record.claims.find((c) => c.id === 'repair-method-mechanics');
+    expect(mechanics?.classification).toBe('FACT');
+    expect(mechanics?.evidenceRefs).toContain('tech-001');
+    // Reasoning about what a camera can and cannot settle stays an INFERENCE.
+    expect(record.claims.find((c) => c.id === 'cctv-limits')?.classification).toBe('INFERENCE');
   });
 
   it('never points navigation at a page that does not exist', () => {

@@ -14,7 +14,7 @@ This document distinguishes three kinds of items:
 |---|---|
 | **LOCKED** | Operator-approved architectural decision. Change only with explicit operator approval, logged in `01-CURRENT-STATE.md` → Last Major Decisions. |
 | **IMPLEMENTATION PENDING** | Locked architecture that has not been built yet. |
-| **IMPLEMENTED (Phase 2A/2B/2C/2D)** / **PARTIALLY IMPLEMENTED** | Built and tested in the repository (see the Implementation Records below). Not deployed; no cloud or vendor resources exist. |
+| **IMPLEMENTED (Phase 2A/2B/2C/2D/2E)** / **PARTIALLY IMPLEMENTED** | Built and tested in the repository (see the Implementation Records below). Not deployed; no cloud or vendor resources exist. |
 | **OPEN** | Legal, business, or operational question that is still unresolved. Must not be decided silently by an agent. |
 
 Implementation-level details that this spec leaves unspecified (exact file names, library versions, header values, table column names) may be decided during the build. Record them in the run receipt and, if material, in this document. They must preserve every LOCKED requirement below.
@@ -445,7 +445,7 @@ Optional homeowner media upload (camera images/report/video to private R2) is su
 - The operational admin (leads, routing, partners, outcomes) is protected by Cloudflare Access.
 - Contractor renters receive no unrestricted editorial administration and no publishing rights (`00-PROJECT-CHARTER.md`, `/AGENTS.md` §4.7).
 
-## Publication-Quality Enforcement — LOCKED (PARTIALLY IMPLEMENTED — Phase 2A: records + evaluator; embedding runs not yet automated)
+## Publication-Quality Enforcement — LOCKED (PARTIALLY IMPLEMENTED — Phase 2A: records + evaluator; Phase 2E: similarity runner, deterministic checks in CI; embedding runs require an API key that does not exist)
 
 Inherited requirements from `03-GOOGLE-RESILIENCE.md` (thresholds unchanged):
 
@@ -716,6 +716,32 @@ Implemented 2026-09-19 on branch `phase-2d-lawrence-mvp`. This is the first home
 **Production origin.** `resolveSiteConfig` now falls back to `https://indysewerresource.com` when `PUBLIC_SITE_ORIGIN` is unset in a production build, instead of throwing. Indexability is unaffected: `robotsDirective` returns `noindex, follow` for every current page even in a production build on the real domain, and a unit test asserts exactly that.
 
 **Tests.** `tests/unit/site-pages.test.ts` guards the real records: three pages, none a fixture, none indexable in a production build, the Lawrence gaps recorded as described above, FACT claims all cited, and navigation that cannot point at a non-existent page. The accessibility and lab-performance suite covers every built page automatically (18 checks across desktop and Pixel 7 profiles).
+
+## Implementation Record: Phase 2E (Lawrence evidence enrichment, editorial QA, similarity runner)
+
+Implemented 2026-09-20 on branch `phase-2e-lawrence-evidence-editorial`. No page became indexable, nothing was deployed, and no dependency was added.
+
+**Similarity QA runner** (the piece of the locked workflow that was missing):
+
+| Part | Where | Behavior |
+|---|---|---|
+| Primitives | `scripts/lib/similarity.ts` | content hashing (SHA-256), main-content extraction, sentence segmentation and normalization, sentence near-duplication (token Jaccard at or above 0.8), heading-architecture comparison by level and wording, cosine similarity, and the embedding transport |
+| Runner | `scripts/similarity-qa.ts` (`npm run similarity:qa`) | compares every built page against every other built page, and optionally against competitor URLs listed in an uncommitted local file |
+| CI | inside `build-and-test` | deterministic checks run on every push; a flagged comparison fails the job |
+
+- The locked model `text-embedding-3-small` is the only model accepted; any other model is refused rather than substituted.
+- The embedding check **fails closed**: with no `OPENAI_API_KEY` it reports `not_run`, so workflow step 14 stays unsatisfied and no page can pass the Indexing Gate on the deterministic checks alone. No OpenAI account or key exists.
+- Site chrome is excluded by comparing the `<main>` element, because navigation and the site-wide disclosure are identical on every page by design.
+- Competitor handling stores only a reference, a content hash, and scores. Page bodies are fetched into memory and never written to the repository, and a test asserts competitor text cannot appear in a report.
+- Deterministic result on 2026-09-20: 0% sentence near-duplication and 0% heading-architecture overlap between all three pages.
+
+**Evidence added** (`research/`): four City of Lawrence sources verified directly from the City's document library (current permit application form; Lawrence Lift August 2024 and July 2025; 2026 46th and Post I/I Removal pre-bid minutes) and ten new records, plus a new `research/sources/technical-standards.json` holding two government-issued engineering specifications that source the mechanics of CIPP lateral lining and pipe bursting. Those specifications are issued for another jurisdiction: they explain the methods and never count toward the Location Page Quality Gate, which requires municipality-specific evidence.
+
+**Gate and score, reassessed rather than targeted:** the Location Page Quality Gate moved from 3 of 8 to **5 of 8** (lateral responsibility, permit/repair requirement, lining/bursting rule, municipal infrastructure information, and housing/pipe/failure evidence), all five supported by authoritative local primary sources, so the gate passes. Categories 6 (local cost/permit/project evidence), 7 (original municipal visual/data asset) and 8 (first-party data) remain **false**: the compiled table of the City's own rehabilitation projects restates City documents rather than producing new data, and claiming it as category 7 would be padding. The publication score moved from 55 to **63** against the 85 money/location threshold, with expert verification and first-party data still scored 0.
+
+**Still blocking indexability:** expert review (absent), the human editorial pass (an AI revision does not satisfy it), the embedding half of similarity QA, manual accessibility review, conversion QA (no lead path exists by design), the score gap, and operator index approval.
+
+**Not implemented in Phase 2E:** any deployment, DNS, or hosting change; any Cloudflare, Resend, Twilio, or OpenAI resource, key, or account; a lead form or any data collection; additional municipality pages; a Lawrence responsibility diagram (`law-009` is unresolved); and any index approval.
 
 **Not implemented in Phase 2D:** deployment, DNS, hosting, any Cloudflare/Resend/Twilio resource, a public lead form or any data collection, an admin console, additional municipality pages, calculators or tools, a privacy/legal page (no data is collected, and no legal copy may be invented), the embedding/similarity runner, and index approval.
 
