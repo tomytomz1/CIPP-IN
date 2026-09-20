@@ -10,6 +10,8 @@ export const SITE_TAGLINE = 'Independent sewer information for Indianapolis-area
 
 /** The production domain, registered by the operator. Nothing is deployed to it. */
 export const PRODUCTION_ORIGIN = 'https://indysewerresource.com';
+/** The only host that serves this site. Everything else redirects to it. */
+export const APEX_HOST = 'indysewerresource.com';
 
 export interface NavItem {
   href: string;
