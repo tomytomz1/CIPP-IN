@@ -20,8 +20,16 @@
   "compatibility_date": "2026-09-01",
   "observability": { "enabled": true },
   // The apex serves the site; www only ever answers with a 301 to the apex (src/worker.ts).
+  //
+  // These are zone ROUTES rather than Custom Domains. Both hostnames already carry proxied DNS
+  // records imported from the previous registrar, and the Workers Custom Domain API refuses to
+  // replace externally managed records (error 100117) even with its override flags. A route on a
+  // proxied record intercepts every request at the edge, so the old parking origin is never
+  // contacted. Converting to Custom Domains later only requires deleting those two parking
+  // records (apex A, www CNAME) first; the MX and SPF records for email forwarding are untouched
+  // either way.
   "routes": [
-    { "pattern": "indysewerresource.com", "custom_domain": true },
-    { "pattern": "www.indysewerresource.com", "custom_domain": true }
+    { "pattern": "indysewerresource.com/*", "zone_name": "indysewerresource.com" },
+    { "pattern": "www.indysewerresource.com/*", "zone_name": "indysewerresource.com" }
   ]
 }
