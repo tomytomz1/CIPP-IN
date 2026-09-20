@@ -19,9 +19,14 @@ describe('canonical host', () => {
     expect(canonicalRedirect('http://www.indysewerresource.com/about/')).toBe('https://indysewerresource.com/about/');
   });
 
-  it('leaves the canonical host alone', () => {
+  it('leaves the canonical host on https alone', () => {
     expect(canonicalRedirect('https://indysewerresource.com/')).toBeNull();
     expect(canonicalRedirect('https://indysewerresource.com/about/')).toBeNull();
+  });
+
+  it('upgrades plain http on the apex to https', () => {
+    expect(canonicalRedirect('http://indysewerresource.com/')).toBe('https://indysewerresource.com/');
+    expect(canonicalRedirect('http://indysewerresource.com/about/?x=1')).toBe('https://indysewerresource.com/about/?x=1');
   });
 
   it('does not redirect hosts it does not own, and never crashes on a bad URL', () => {
