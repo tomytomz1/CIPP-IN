@@ -1,20 +1,27 @@
 {
   // Cloudflare Workers + Static Assets (docs/05 → Approved Stack).
   //
-  // This file is the source of truth for the Worker's name, compatibility date, and
-  // observability. The Astro adapter reads it during `astro build` and writes the deployable
-  // config to `dist/server/wrangler.json`, adding the static-assets binding that serves
-  // `dist/client`. Deploy with the generated config:
+  // This file is the source of truth for the Worker's name, entrypoint, custom domains,
+  // compatibility date, and observability. `astro build` reads it and writes the deployable
+  // config to `dist/server/wrangler.json`, adding the static-assets binding for `dist/client`.
   //
   //   npm run build:production     # SITE_ENV=production build + production-mode checks
   //   npm run deploy               # wrangler deploy -c dist/server/wrangler.json
   //   npm run verify:production    # live smoke test of the deployed site
   //
+  // `src/worker.ts` is a thin entrypoint: it redirects the non-canonical `www` host to the apex
+  // and delegates everything else to the Astro adapter's handler.
+  //
   // No D1, R2, Queue, Turnstile, or Access binding exists here, and none is provisioned.
   // Adding one is a separate, explicitly authorized phase. Do not invent resource IDs.
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "indy-sewer-resource",
-  "main": "@astrojs/cloudflare/entrypoints/server",
+  "main": "./src/worker.ts",
   "compatibility_date": "2026-09-01",
-  "observability": { "enabled": true }
+  "observability": { "enabled": true },
+  // The apex serves the site; www only ever answers with a 301 to the apex (src/worker.ts).
+  "routes": [
+    { "pattern": "indysewerresource.com", "custom_domain": true },
+    { "pattern": "www.indysewerresource.com", "custom_domain": true }
+  ]
 }

@@ -11,3 +11,19 @@ declare const __SITE_CONFIG__: import('./config/site.ts').SiteConfig;
 declare module 'cloudflare:workers' {
   export const env: Record<string, unknown>;
 }
+
+/**
+ * Minimal Cloudflare Workers runtime globals, declared here rather than pulling in the full
+ * worker-types package. They exist only so the adapter's `handle()` signature resolves for
+ * src/worker.ts; no binding is declared, because none is provisioned.
+ */
+interface Env {
+  readonly [key: string]: unknown;
+}
+interface ExecutionContext {
+  waitUntil(promise: Promise<unknown>): void;
+  passThroughOnException(): void;
+}
+interface ExportedHandler<E = Env> {
+  fetch?(request: Request, env: E, context: ExecutionContext): Promise<Response> | Response;
+}
