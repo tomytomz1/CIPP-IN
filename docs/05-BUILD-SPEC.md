@@ -14,7 +14,7 @@ This document distinguishes three kinds of items:
 |---|---|
 | **LOCKED** | Operator-approved architectural decision. Change only with explicit operator approval, logged in `01-CURRENT-STATE.md` → Last Major Decisions. |
 | **IMPLEMENTATION PENDING** | Locked architecture that has not been built yet. |
-| **IMPLEMENTED (Phase 2A/2B/2C/2D/2E/2F)** / **PARTIALLY IMPLEMENTED** | Built and tested in the repository (see the Implementation Records below). Not deployed; no cloud or vendor resources exist. |
+| **IMPLEMENTED (Phase 2A/2B/2C/2D/2E/2F)** / **PARTIALLY IMPLEMENTED** | Built and tested in the repository (see the Implementation Records below). Since Phase 2F the informational site is deployed to Cloudflare Workers; no other cloud or vendor resource exists. |
 | **OPEN** | Legal, business, or operational question that is still unresolved. Must not be decided silently by an agent. |
 
 Implementation-level details that this spec leaves unspecified (exact file names, library versions, header values, table column names) may be decided during the build. Record them in the run receipt and, if material, in this document. They must preserve every LOCKED requirement below.
@@ -90,7 +90,7 @@ Intended future organization. Responsibilities are locked; exact folder names ar
 
 ---
 
-## Deployment — LOCKED (CONFIGURED — Phase 2F; not yet deployed)
+## Deployment — LOCKED (IMPLEMENTED — Phase 2F; live 2026-09-20)
 
 - Production deploys only from the protected `main` branch after required CI checks pass.
 - Pull requests / non-production branches should get preview deployments once implementation begins.
@@ -107,7 +107,9 @@ npm run verify:production    # live smoke test of the deployed site
 
 `astro build` writes the deployable Worker config to `dist/server/wrangler.json`, inheriting the Worker name, compatibility date, and observability setting from `wrangler.jsonc` and adding the static-assets binding for `dist/client`. No D1, R2, Queue, Turnstile, or Access binding exists in either file.
 
-**Not yet done (operator actions):** Cloudflare authentication, moving the domain's DNS to Cloudflare, creating the Worker, and attaching the custom domain. See `01-CURRENT-STATE.md` for the current state.
+**Live since 2026-09-20.** The Worker `indy-sewer-resource` serves `https://indysewerresource.com` through zone routes (`indysewerresource.com/*`, `www.indysewerresource.com/*`) rather than Workers Custom Domains: the Custom Domain API refuses to replace the externally managed DNS records imported from the previous registrar (error 100117), and the agent's Cloudflare session has `zone:read` without DNS-edit permission. Both hostnames are proxied, so the route answers at the edge and the old parking origin is never contacted. Converting to Custom Domains later only needs those two parking records deleted first.
+
+`src/worker.ts` runs before static assets (`assets.run_worker_first`) and applies one policy: the non-canonical `www` host and any plain-http request get a 301 to the same path on `https://indysewerresource.com`. Everything else goes to the adapter's handler. Without `run_worker_first` the assets are served first and that policy never executes — which is exactly what live verification caught.
 
 ## Branch / Index Governance — LOCKED (CONFIGURED — Phase 2A, 2026-09-19)
 
@@ -755,7 +757,7 @@ Implemented 2026-09-20 on branch `phase-2e-lawrence-evidence-editorial`. No page
 
 ## Implementation Record: Phase 2F (deployment configuration; deployment not completed)
 
-Prepared 2026-09-20 on branch `phase-2f-safe-public-deployment`. **Nothing is deployed**: the environment has no Cloudflare credentials, and the domain's DNS is still at the registrar, so both remaining steps are operator actions.
+Prepared and completed 2026-09-20 (branches `phase-2f-safe-public-deployment`, `phase-2f-custom-domain-cutover`, `phase-2f-worker-routes`, `phase-2f-www-redirect-fix`). **The site is live at https://indysewerresource.com**, public and entirely non-indexable.
 
 **Indexing safety hardened for a public deployment.** `X-Robots-Tag: noindex, nofollow` is now written for every response whenever the build is non-production **or** no page is effectively indexable — so a real production hostname is still globally non-indexable at the header level, not only through each page's robots meta tag. The count comes from the evaluator at build time (`astro.config.mjs`), so the header lifts on its own if and when a page genuinely passes the Indexing Gate with operator approval. It is never toggled by hand.
 
@@ -775,7 +777,11 @@ Prepared 2026-09-20 on branch `phase-2f-safe-public-deployment`. **Nothing is de
 
 **Canonical host:** the apex is canonical. `www` must not become a second serving host; the recommended configuration is a zone-level Cloudflare Redirect Rule sending `www` to the apex with a 301.
 
-**Not provisioned in Phase 2F:** D1, Queues, R2, Turnstile, Access, analytics, Search Console, any email/mailbox DNS, any lead path, and any index approval.
+**Live verification (2026-09-20, external):** all three pages HTTP 200 over HTTPS on the apex; robots meta `noindex, follow` and header `X-Robots-Tag: noindex, nofollow` on every response; apex canonicals; sitemap 0 URLs; robots.txt allows crawling; `POST /api/lead-intake` returns 503; no form and no client JavaScript; only same-origin requests (document + one CSS file); `www` and plain http each return a single 301 to the canonical apex; 404 for an unknown path; the five `eforward` MX records and the SPF TXT record intact after deployment.
+
+**Known zone-level leftovers (operator dashboard actions, neither blocking):** the obsolete parking records (apex `A`, `www` CNAME) are still present but never reached, and Cloudflare Web Analytics automatic setup injects a beacon script that the site's own CSP blocks (no analytics request is made). Both are recorded in `01-CURRENT-STATE.md` → Open Questions.
+
+**Not provisioned in Phase 2F:** D1, Queues, R2, Turnstile, Access, analytics (none authorized or configured by this project), Search Console, any email/mailbox DNS, any lead path, and any index approval.
 
 **Not implemented in Phase 2E:** any deployment, DNS, or hosting change; any Cloudflare, Resend, Twilio, or OpenAI resource, key, or account; a lead form or any data collection; additional municipality pages; a Lawrence responsibility diagram (`law-009` is unresolved); and any index approval.
 
