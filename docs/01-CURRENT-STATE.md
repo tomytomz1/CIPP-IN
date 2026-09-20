@@ -1,11 +1,11 @@
 # CURRENT STATE
 
 Last updated: 2026-09-20
-Last verified commit: `511a7b17484c99710f1cf6db0e1f76313c34437d` (Phase 2E audit trail, PR #10). The Phase 2F merge follows; resolve with `git log` (a file cannot contain its own commit SHA).
-Production URL: None yet — **no production deployment exists**. The domain `indysewerresource.com` is registered and owned by the operator (2026-09-19) and is the canonical origin the production build uses. Observed 2026-09-20: its nameservers are still the registrar's (`dns1.registrar-servers.com` / `dns2.registrar-servers.com`), the apex resolves to a registrar parking address, and HTTPS does not respond. Deployment configuration is complete; the remaining steps are operator actions (Cloudflare authentication and moving DNS to Cloudflare).
+Last verified commit: `d61f0168e7c69bc7e036ce3187fa73958b08c206` (Phase 2F www/https fix, PR #15). The Phase 2F completion commit follows; resolve with `git log` (a file cannot contain its own commit SHA).
+Production URL: **https://indysewerresource.com — LIVE** since 2026-09-20, served by the Cloudflare Worker `indy-sewer-resource` with Static Assets. The site is public and **entirely non-indexable**: every response carries `X-Robots-Tag: noindex, nofollow`, every page carries a `noindex` robots meta tag, and the sitemap has 0 URLs. `www` returns a single 301 to the apex, and plain http returns a 301 to https.
 Repository: https://github.com/tomytomz1/CIPP-IN
 Current branch: main
-Current phase: Phase 2F — safe public noindex deployment (**PARTIAL**: configuration merged, deployment blocked on operator actions). Backend expansion is deliberately paused. Three real homeowner-facing pages exist (homepage, Lawrence sewer-lateral resource, methodology page), all `published_noindex`. No deployment exists; no page is indexable; live lead collection is DISABLED, notification sending is DISABLED, no lead has been collected, and no email or SMS has been sent.
+Current phase: Phase 2F — safe public noindex deployment (**complete**; verified live 2026-09-20). Backend expansion is deliberately paused. Three real homeowner-facing pages exist (homepage, Lawrence sewer-lateral resource, methodology page), all `published_noindex`. No deployment exists; no page is indexable; live lead collection is DISABLED, notification sending is DISABLED, no lead has been collected, and no email or SMS has been sent.
 
 > This file is authoritative for what currently exists and what has been completed. It does not override strategic rules in higher-precedence documents (see `/AGENTS.md` §1). Update it after every meaningful piece of work.
 
@@ -135,20 +135,22 @@ The site exists in the repository; no production deployment exists, and no page 
   - editorial corrections on the Lawrence page (unsupported "cheapest step" claim removed, camera-inspection claims narrowed, the "trenchless is not permitted everywhere" framing removed, the "not a complete quote" line replaced with a question to ask, DVD speculation removed, permit-practice assertion removed), on the About page (contractor-evidence and claim-labelling overstatements), and on the homepage (no implied judgement of whether a quote is reasonable)
   - similarity-QA runner implemented (`scripts/similarity-qa.ts`, `scripts/lib/similarity.ts`) and added to CI
   - details: `05-BUILD-SPEC.md` → Implementation Record: Phase 2E
-- Phase 2F deployment configuration (2026-09-20, **deployment not completed**):
-  - production builds are now globally non-indexable at the header level too: `X-Robots-Tag: noindex, nofollow` is written for every response while 0 pages are effectively indexable, computed from the evaluator rather than set by hand
-  - HSTS (`max-age=31536000`) emitted in production builds now that the domain exists
-  - `npm run build:production`, `npm run deploy`, `npm run verify:production` and their scripts
-  - production build verified locally: 3 pages all `noindex, follow`, apex canonicals, 0 sitemap URLs, robots.txt allows crawling
+- Phase 2F safe public noindex deployment (2026-09-20, **live**):
+  - production builds are globally non-indexable at the header level too: `X-Robots-Tag: noindex, nofollow` on every response while 0 pages are effectively indexable, computed from the evaluator rather than set by hand
+  - HSTS (`max-age=31536000`) in production
+  - `npm run build:production`, `npm run deploy`, `npm run verify:production`
+  - `src/worker.ts`: 301s the non-canonical `www` host to the apex and upgrades http to https; everything else goes to the Astro adapter handler
+  - deployed to Cloudflare Worker `indy-sewer-resource` (account `fece2c9c...`, zone `02c69ab4...`), served through zone routes `indysewerresource.com/*` and `www.indysewerresource.com/*`
+  - verified live externally: 3 pages HTTP 200 over HTTPS, apex canonicals, `noindex` meta and header, 0 sitemap URLs, `/api/lead-intake` 503, no form, no client JS, no third-party request
   - details: `05-BUILD-SPEC.md` → Implementation Record: Phase 2F
 
 ## In Progress
 
-- **Production deployment (blocked on operator actions).** The repository is deployment-ready. Two things must happen outside this environment: (1) Cloudflare authentication (`npx wrangler login`, or an API token in the environment), and (2) moving `indysewerresource.com` to Cloudflare DNS at the registrar so a Workers custom domain can be attached. Until both are done, nothing is deployed and the domain does not serve the site.
+- None.
 
 ## Not Started
 
-- DNS move to Cloudflare and the production deployment itself (configuration is ready; operator actions outstanding)
+- Converting the zone routes to Workers Custom Domains (needs the two obsolete parking DNS records deleted first; see Open Questions)
 - Additional municipality pages (none; they are added only when a municipality has enough verified local evidence)
 - R2 uploads, admin UI, and a deployed Worker entrypoint wiring the queue consumer (the consumer itself is implemented and tested; no queue exists)
 - Live partner/operator notifications (Resend and Twilio adapters exist; no account, key, number, or sending is enabled)
@@ -216,8 +218,10 @@ Astro 7.3.3 static site with the Cloudflare adapter, built from the Phase 2A fou
 - **Operator approvals:** 0.
 - **Effectively indexable pages:** 0.
 - **Production sitemap eligibility:** 0 URLs.
-- **Canonical production origin:** `https://indysewerresource.com` (registered; nothing deployed to it; DNS still at the registrar).
-- **Production deployment:** none. No Cloudflare Worker created, no custom domain attached, and no Cloudflare account authenticated in this environment.
+- **Canonical production origin:** `https://indysewerresource.com` — live.
+- **Production deployment:** Cloudflare Worker `indy-sewer-resource` + Static Assets, deployed 2026-09-20 (version `489d30b2-3e33-4089-b48d-5a34f3c50781`). Served via zone routes; no Workers Custom Domain is attached yet.
+- **DNS:** zone `indysewerresource.com` is active on Cloudflare (`harleigh`/`leonard` nameservers). The imported parking records (apex `A` → 192.64.119.188, `www` CNAME → parkingpage.namecheap.com) are still present and proxied; the Worker route intercepts every request, so that origin is never contacted. Email forwarding is untouched: 5 `eforward` MX records and the SPF TXT record verified intact after deployment.
+- **Live safety:** every response carries `X-Robots-Tag: noindex, nofollow`; every page's robots meta is `noindex, follow`; sitemap 0 URLs; `/api/lead-intake` returns 503.
 - **Lawrence page status:** Location Page Quality Gate 5 of 8 (passes); publication score 63/85; expert review required and absent; similarity QA deterministic checks clean, embedding check `not_run`.
 - **Client JavaScript:** 0 bytes on every page. CSS: ~1.8 KB gzip.
 
@@ -280,6 +284,10 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 
 ## Open Questions
 
+0. Two Cloudflare dashboard items left over from the cutover, neither blocking:
+   a. **Obsolete parking DNS records.** The apex `A` (192.64.119.188) and `www` CNAME (parkingpage.namecheap.com) are still in the zone. They are harmless today because the Worker route answers first, but deleting them is what would allow proper Workers Custom Domains. The Cloudflare OAuth session available to agents has `zone:read` and no DNS-edit permission, so an operator (or a scoped API token) must do it.
+   b. **Cloudflare Web Analytics automatic setup is enabled on the zone.** Cloudflare injects `static.cloudflareinsights.com/beacon.min.js` into every HTML response at the edge. The site's own Content-Security-Policy (`script-src 'self'`) blocks it, so the script never loads and no analytics request is made — verified live — but the injected tag logs a CSP error in the console on every page, and analytics was not authorized for this phase. Disabling it is a dashboard action; the agent session cannot manage RUM settings.
+
 1. ~~Domain registration.~~ **Resolved 2026-09-19:** the operator registered `indysewerresource.com`. Remaining sub-question: when to point DNS at a host, which is a deployment decision and is not scheduled.
 2. Remaining Lawrence uncertainties (listed under Lawrence Municipal Evidence Status). Confirm them with Lawrence Utilities.
 
@@ -326,13 +334,13 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 ## Current Blockers
 
 - None block the next implementation phase.
-- Before the **site is publicly reachable**: Cloudflare authentication and moving `indysewerresource.com` to Cloudflare DNS, then `npm run build:production`, `npm run deploy`, attaching the custom domain, and `npm run verify:production`. Both blockers are operator actions outside this environment.
-- Before **publishing to search engines** (a separate thing from being reachable): real pages passing the indexing gate with operator approval, and the Launch Checklist in `05-BUILD-SPEC.md`.
+- Before **publishing to search engines** (a separate thing from being reachable, which is now done): real pages passing the indexing gate with operator approval, and the Launch Checklist in `05-BUILD-SPEC.md`.
 - Before **live lead collection/routing**: legal review of consent/privacy/disclosure/retention, plus provisioning D1/Queues/Turnstile and setting the activation configuration. Until then the intake endpoint fails closed.
 - Before the **Lawrence page can be indexed**: a real expert review (none exists), a human editorial pass by the operator, a publication score of 85 (63 today), the embedding half of similarity QA (the runner exists; no API key, so it reports `not_run`), manual accessibility review, and operator index approval. The Location Page Quality Gate now passes on evidence (5 of 8, all authoritative local primary-source). Confirming the open Lawrence questions with Lawrence Utilities is what would raise the evidence categories and the score; an unresolved question only blocks indexing where the page makes or depends on a claim about it (see Open Question 2).
 
 ## Last Major Decisions
 
+- 2026-09-20 — **Phase 2F completed: the site is live at https://indysewerresource.com**, public and entirely non-indexable. Served by Cloudflare Worker `indy-sewer-resource` + Static Assets through zone routes rather than Workers Custom Domains, because the Custom Domain API refuses to replace externally managed DNS records and the agent session has no DNS-edit permission. `www` and plain http both 301 to the canonical apex. No analytics, no lead path, no index approval.
 - 2026-09-20 — Phase 2F prepared (operator-authorized): deployment configuration and tooling for Cloudflare Workers + Static Assets, with the production deployment hardened to stay globally non-indexable while no page is indexable. Deployment itself was NOT completed: no Cloudflare credentials in this environment, and the domain's DNS is still at the registrar. Recorded as PARTIAL.
 - 2026-09-20 — Phase 2E implemented (operator-authorized): four new verified City of Lawrence sources and ten new research records; a separate technical-standards evidence file for general method mechanics; the Location Page Quality Gate reassessed from 3 of 8 to 5 of 8; the publication score re-scored from 55 to 63; operator-directed editorial corrections on all three pages; and the similarity-QA runner implemented with the embedding check failing closed. No page became indexable.
 - 2026-09-19 — **Operator registered `indysewerresource.com`** and decided the **GitHub repository stays public**. The domain is configured as the canonical production origin; no DNS change, hosting, or deployment followed.
@@ -389,3 +397,4 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 - 2026-09-20 — Post-Phase-2D reconciliation of this file only: corrected the stale verified-commit pointer, the accessibility wording, the project-status paragraph (registered domain, development shell removed, three real pages), the Not Started list, the architecture and Search Console wording, the production-publishing blocker, and the priorities. Documentation only: no code, content, publication record, research, governance, infrastructure, deployment, or strategy change.
 - 2026-09-20 — Phase 2E: verified four new City of Lawrence sources and added ten research records plus a technical-standards evidence file; corrected editorial overclaims on the Lawrence, About, and home pages; reassessed the location gate (3/8 → 5/8) and the publication score (55 → 63); implemented the similarity-QA runner and added it to CI. No deployment, no lead path, no index approval, and no page became indexable.
 - 2026-09-20 — Phase 2F (PARTIAL): added production deployment configuration and tooling (`build:production`, `deploy`, `verify:production`), made production builds globally noindex at the header level while 0 pages are indexable, and enabled HSTS in production. Nothing was deployed: no Cloudflare credentials and DNS still at the registrar. No infrastructure provisioned, no index approval, no page indexable.
+- 2026-09-20 — Phase 2F completion: deployed the Worker + Static Assets and took the domain live at https://indysewerresource.com through zone routes; added `src/worker.ts` (www → apex 301, http → https 301) and `assets.run_worker_first` after live verification caught www serving a 200; verified externally that all three pages are 200, `noindex` in meta and header, apex-canonical, with 0 sitemap URLs, a 503 intake endpoint, no form, no client JS, and no third-party request. Email DNS untouched. No index approval; no page indexable.
