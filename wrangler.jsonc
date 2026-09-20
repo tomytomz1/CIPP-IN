@@ -28,6 +28,10 @@
   // contacted. Converting to Custom Domains later only requires deleting those two parking
   // records (apex A, www CNAME) first; the MX and SPF records for email forwarding are untouched
   // either way.
+  // Static assets are served BEFORE the Worker by default, which would bypass the canonical-host
+  // redirect entirely (observed live: www served a 200 instead of a 301). Running the Worker
+  // first lets src/worker.ts apply the redirect; it then falls through to the same asset store.
+  "assets": { "run_worker_first": ["/*"] },
   "routes": [
     { "pattern": "indysewerresource.com/*", "zone_name": "indysewerresource.com" },
     { "pattern": "www.indysewerresource.com/*", "zone_name": "indysewerresource.com" }
