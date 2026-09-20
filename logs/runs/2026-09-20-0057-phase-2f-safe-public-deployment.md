@@ -102,7 +102,7 @@ No Cloudflare resource of any kind was created, and no DNS record was changed. `
 | **Production output inspection** | PASS | See the table below. |
 | Live production smoke test | **NOT RUN** | The domain does not resolve to the site; `npm run verify:production` exists for when it does. |
 | Live visual review | **NOT RUN** | No live site to review. The local production build renders identically to the reviewed development build. |
-| CI on the PR | See Commit / Push Status | Recorded after the required checks ran. |
+| CI on PR #11 (commit `2fcc9ab`) | PASS | `build-and-test` 1m3s, `accessibility-and-lab-performance` 45s, `secret-scan` 10s (run 35490517580). Merged without bypass; merge commit `c9da255`. |
 
 **Production build output, inspected directly (`SITE_ENV=production`, origin `https://indysewerresource.com`):**
 
@@ -176,6 +176,7 @@ The operator authenticates Cloudflare and moves the domain's DNS to Cloudflare; 
 - Work committed: YES
 - Pushed: YES
 - Commit message: `Phase 2F: production deployment configuration (not yet deployed)`
+- Merge: PR #11 merged into `main` as `c9da25532e9b5279a2404dba29b6a8de9e167535` after all three required checks passed, with no admin bypass. Read back afterwards: both rulesets active and `governance/index-approvals.json` still empty. Still nothing deployed.
 - Commit reference: the commit containing this receipt; resolve with `git log -- logs/runs/2026-09-20-0057-phase-2f-safe-public-deployment.md`
 
 ## Final Operator Report
