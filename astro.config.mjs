@@ -3,10 +3,19 @@ import { defineConfig } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
 import { resolveSiteConfig } from './src/config/site.ts';
 import { responseHeaders } from './src/integrations/response-headers.ts';
+import { buildRegistry } from './src/lib/publication/registry.ts';
+import { isEffectivelyIndexable } from './src/lib/seo/firewall.ts';
+import { loadRawApprovals, loadRawRecords } from './scripts/lib/load-project.ts';
 
 // Validated, fail-safe site configuration (SITE_ENV, PUBLIC_SITE_ORIGIN).
 // Missing/unknown SITE_ENV => "development" => every page is noindex.
 const site = resolveSiteConfig(process.env);
+
+// How many pages the evaluator actually lets through. While this is 0, the whole deployment is
+// header-noindexed as well as meta-noindexed: a real hostname never authorizes indexing.
+const indexablePages = buildRegistry(loadRawRecords(), loadRawApprovals(), { now: new Date() }).entries.filter((e) =>
+  isEffectivelyIndexable(e, site),
+).length;
 
 export default defineConfig({
   // Canonical origin only when explicitly configured; never a guessed production host.
@@ -22,7 +31,7 @@ export default defineConfig({
   // Static-first: every current route is prerendered. The Cloudflare adapter is present so
   // future on-demand Worker endpoints can be added without changing the architecture.
   adapter: cloudflare({ imageService: 'passthrough' }),
-  integrations: [responseHeaders(site)],
+  integrations: [responseHeaders(site, { indexablePages })],
   vite: {
     define: {
       __SITE_CONFIG__: JSON.stringify(site),

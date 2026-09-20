@@ -1,9 +1,12 @@
 /**
  * Writes a Cloudflare static-assets `_headers` file at build time.
  * - Baseline security headers for every environment.
- * - Non-production builds add `X-Robots-Tag: noindex, nofollow` to every response,
- *   so preview/development deployments are globally non-indexable even for non-HTML files.
- * HSTS is intentionally deferred until the production domain exists (docs/05 → Security).
+ * - `X-Robots-Tag: noindex, nofollow` is written for every response whenever the build is
+ *   non-production OR no page is effectively indexable. The production site is public but
+ *   non-indexable, and this makes that true for every response, not only for HTML that carries
+ *   a robots meta tag. The header disappears on its own once a page genuinely passes the
+ *   Indexing Gate and has operator approval; it is never toggled by hand.
+ * - HSTS is emitted in production only, now that the production domain exists (docs/05 → Security).
  */
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -23,7 +26,16 @@ export const CONTENT_SECURITY_POLICY = [
   "frame-ancestors 'none'",
 ].join('; ');
 
-export function renderHeadersFile(site: SiteConfig): string {
+/** One year. No `includeSubDomains` and no `preload`: subdomain use is undecided. */
+export const HSTS_VALUE = 'max-age=31536000';
+
+export interface HeadersOptions {
+  /** How many pages the evaluator considers effectively indexable in this build. */
+  indexablePages?: number;
+}
+
+export function renderHeadersFile(site: SiteConfig, options: HeadersOptions = {}): string {
+  const indexablePages = options.indexablePages ?? 0;
   const lines = [
     '/*',
     '  X-Content-Type-Options: nosniff',
@@ -32,11 +44,12 @@ export function renderHeadersFile(site: SiteConfig): string {
     `  Content-Security-Policy: ${CONTENT_SECURITY_POLICY}`,
     '  X-Frame-Options: DENY',
   ];
-  if (!site.indexingAllowed) lines.push('  X-Robots-Tag: noindex, nofollow');
+  if (site.environment === 'production') lines.push(`  Strict-Transport-Security: ${HSTS_VALUE}`);
+  if (!site.indexingAllowed || indexablePages === 0) lines.push('  X-Robots-Tag: noindex, nofollow');
   return `${lines.join('\n')}\n`;
 }
 
-export function responseHeaders(site: SiteConfig): AstroIntegration {
+export function responseHeaders(site: SiteConfig, options: HeadersOptions = {}): AstroIntegration {
   return {
     name: 'isr-response-headers',
     hooks: {
@@ -46,8 +59,8 @@ export function responseHeaders(site: SiteConfig): AstroIntegration {
         const existing = existsSync(target) ? readFileSync(target, 'utf8').trimEnd() : '';
         writeFileSync(target, `${existing ? `${existing}
 
-` : ''}${renderHeadersFile(site)}`);
-        console.log(`[isr-response-headers] wrote _headers to ${fileURLToPath(dir)} (env=${site.environment})`);
+` : ''}${renderHeadersFile(site, options)}`);
+        console.log(`[isr-response-headers] wrote _headers to ${fileURLToPath(dir)} (env=${site.environment}, indexable pages=${options.indexablePages ?? 0})`);
       },
     },
   };

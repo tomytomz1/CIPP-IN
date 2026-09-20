@@ -1,8 +1,17 @@
 {
   // Cloudflare Workers + Static Assets (docs/05 → Approved Stack).
-  // Phase 2A: repository configuration only. No Worker, D1, R2, Queue, Turnstile, Access,
-  // or DNS resources exist, and none are referenced here. Bindings will be added (with real
-  // IDs) only when those resources are provisioned in a later phase. Do not invent IDs.
+  //
+  // This file is the source of truth for the Worker's name, compatibility date, and
+  // observability. The Astro adapter reads it during `astro build` and writes the deployable
+  // config to `dist/server/wrangler.json`, adding the static-assets binding that serves
+  // `dist/client`. Deploy with the generated config:
+  //
+  //   npm run build:production     # SITE_ENV=production build + production-mode checks
+  //   npm run deploy               # wrangler deploy -c dist/server/wrangler.json
+  //   npm run verify:production    # live smoke test of the deployed site
+  //
+  // No D1, R2, Queue, Turnstile, or Access binding exists here, and none is provisioned.
+  // Adding one is a separate, explicitly authorized phase. Do not invent resource IDs.
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "indy-sewer-resource",
   "main": "@astrojs/cloudflare/entrypoints/server",

@@ -31,10 +31,25 @@ describe('site configuration', () => {
   });
 });
 
+const PRODUCTION = { environment: 'production' as const, origin: 'https://fixture-origin.com', indexingAllowed: true };
+
 describe('response headers', () => {
   it('non-production builds send X-Robots-Tag noindex on every response', () => {
     expect(renderHeadersFile({ environment: 'preview', origin: null, indexingAllowed: false })).toMatch(/X-Robots-Tag: noindex, nofollow/);
-    expect(renderHeadersFile({ environment: 'production', origin: 'https://fixture-origin.com', indexingAllowed: true })).not.toMatch(/X-Robots-Tag/);
+  });
+
+  it('a production deployment stays globally noindex while no page is indexable', () => {
+    // A real hostname never authorizes indexing: with 0 indexable pages every response,
+    // including non-HTML assets, carries the header.
+    expect(renderHeadersFile(PRODUCTION, { indexablePages: 0 })).toMatch(/X-Robots-Tag: noindex, nofollow/);
+    expect(renderHeadersFile(PRODUCTION)).toMatch(/X-Robots-Tag: noindex, nofollow/);
+    // It lifts on its own once a page genuinely passes the gate; it is never toggled by hand.
+    expect(renderHeadersFile(PRODUCTION, { indexablePages: 1 })).not.toMatch(/X-Robots-Tag/);
+  });
+
+  it('sends HSTS in production only', () => {
+    expect(renderHeadersFile(PRODUCTION, { indexablePages: 0 })).toMatch(/Strict-Transport-Security: max-age=31536000/);
+    expect(renderHeadersFile({ environment: 'development', origin: null, indexingAllowed: false })).not.toMatch(/Strict-Transport-Security/);
   });
   it('includes baseline security headers', () => {
     const h = renderHeadersFile({ environment: 'development', origin: null, indexingAllowed: false });
