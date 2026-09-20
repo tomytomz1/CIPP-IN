@@ -1,8 +1,8 @@
 {
   "file": "research/sources/lawrence-primary-sources.json",
   "category": "municipal",
-  "last_verified": "2026-09-19",
-  "note": "Supporting evidence only. /docs/ remains authoritative. Paraphrases only; short excerpts used solely where exact regulatory language matters. Re-verify before any Lawrence page is indexed.",
+  "last_verified": "2026-09-20",
+  "note": "Supporting evidence only. /docs/ remains authoritative. Paraphrases only; short excerpts used solely where exact regulatory language matters. Re-verify before any Lawrence page is indexed. Note: cityoflawrence.org returns HTTP 404 to a default (non-browser) user agent; a browser user agent is required to retrieve its PDFs.",
   "sources": [
     {
       "source_id": "src-lawrence-code-title5",
@@ -45,6 +45,42 @@
       "source_date": null,
       "source_date_note": "Issue dated August 2023 (no day given). The original City URL returned HTTP 404 on 2026-09-19. The content was verified from the Internet Archive capture dated 2024-08-08. The Lawrence Lift index page (https://www.cityoflawrence.org/utilities/lawrence-lift) no longer lists 2023 issues directly.",
       "authority_tier": 2
+    },
+    {
+      "source_id": "src-lawrence-permit-application",
+      "source_title": "City of Lawrence Utilities — Application for Sanitary Building Sewer Lateral Construction Permit (current form)",
+      "source_url": "https://www.cityoflawrence.org/sites/default/files/document-group/Sanitary%20Sewer%20Permit%20Application.pdf",
+      "publisher": "City of Lawrence Utilities",
+      "source_date": null,
+      "source_date_note": "The form carries no revision date. Retrieved from the City's own document library on 2026-09-20 (HTTP 200, application/pdf). A default user agent receives HTTP 404 from this host; a browser user agent is required.",
+      "authority_tier": 2
+    },
+    {
+      "source_id": "src-lawrence-lift-2024-08",
+      "source_title": "THE LAWRENCE LIFT — AUGUST 2024 — ISSUE 102",
+      "source_url": "https://www.cityoflawrence.org/sites/default/files/document-group/lift-2024-augustv5.pdf",
+      "publisher": "City of Lawrence Utilities",
+      "source_date": null,
+      "source_date_note": "Issue dated August 2024 (no day given). Linked from the City's Lawrence Lift archive for 2024. Retrieved 2026-09-20.",
+      "authority_tier": 2
+    },
+    {
+      "source_id": "src-lawrence-lift-2025-07",
+      "source_title": "THE LAWRENCE LIFT — JULY 2025",
+      "source_url": "https://www.cityoflawrence.org/sites/default/files/document-group/lift-2025-july.pdf",
+      "publisher": "City of Lawrence Utilities",
+      "source_date": null,
+      "source_date_note": "Issue dated July 2025 (no day given). Retrieved 2026-09-20.",
+      "authority_tier": 2
+    },
+    {
+      "source_id": "src-lawrence-46th-post-prebid-2026",
+      "source_title": "Lawrence 46th and Post I/I Removal Project — Pre-Bid Meeting Minutes, February 19, 2026 (project 2025.01995)",
+      "source_url": "https://www.cityoflawrence.org/sites/default/files/addendum/2025.01995.UI_.MIN_.2026-02-19.Lawrence%2046th%20and%20Post%20Rehab%20Pre-Bid%20Meeting%20Minutes.pdf",
+      "publisher": "City of Lawrence (document prepared by American Structurepoint, Inc. for City of Lawrence Utilities)",
+      "source_date": "2026-02-19",
+      "source_date_note": "Pre-bid meeting held 2026-02-19 via Microsoft Teams; minutes hosted in the City's own addendum library. Retrieved 2026-09-20.",
+      "authority_tier": 2
     }
   ],
   "records": [
@@ -60,7 +96,10 @@
       "verified_at": "2026-09-19",
       "evidence_summary": "§ 5-1-1-2(A)(11) defines the building sewer as running from the building drain to the public sewer (or other place of disposal) and expressly includes the portion of the drain in the public right-of-way. § 5-1-1-2(A)(10) says the building drain ends five feet outside the inner face of the building wall.",
       "limitations": "The online code carries American Legal's standard disclaimer that it may not reflect the latest legislation.",
-      "supports": ["docs/01-CURRENT-STATE.md", "docs/02-SEO-SERP-BLUEPRINT.md"]
+      "supports": [
+        "docs/01-CURRENT-STATE.md",
+        "docs/02-SEO-SERP-BLUEPRINT.md"
+      ]
     },
     {
       "id": "law-002-owner-responsibility-ordinance",
@@ -74,7 +113,10 @@
       "verified_at": "2026-09-19",
       "evidence_summary": "§ 5-1-2-7 makes the benefited owner responsible for providing, installing, and connecting the private connection, and for all necessary repairs, extensions, relocations, changes, or replacements and their accessories. The Director may alter, modify, or waive these requirements where compliance is not possible because of extenuating circumstances. Read with law-001, this places responsibility for the whole building sewer, including the right-of-way portion, on the owner.",
       "limitations": "The Director's discretionary waiver means individual cases can differ. We did not verify how often waivers are granted or whether any City cost-share or assistance program exists.",
-      "supports": ["docs/01-CURRENT-STATE.md", "docs/02-SEO-SERP-BLUEPRINT.md"]
+      "supports": [
+        "docs/01-CURRENT-STATE.md",
+        "docs/02-SEO-SERP-BLUEPRINT.md"
+      ]
     },
     {
       "id": "law-003-repair-permit-required-ordinance",
@@ -88,7 +130,9 @@
       "verified_at": "2026-09-19",
       "evidence_summary": "§ 5-1-2-1(A) requires a valid sanitary sewer connection permit for repair, modification, or connection of a building sewer. § 5-1-2-1(D) requires the application to include owner and contractor information, the premises, and plans that show materials of construction and installation method.",
       "limitations": "Current permit fees, forms, and the permit office location were not verified.",
-      "supports": ["docs/01-CURRENT-STATE.md"]
+      "supports": [
+        "docs/01-CURRENT-STATE.md"
+      ]
     },
     {
       "id": "law-004-mandatory-inspection-ordinance",
@@ -102,7 +146,9 @@
       "verified_at": "2026-09-19",
       "evidence_summary": "Permit holders must give at least 24 hours' notice that sewer work is ready for inspection. The building sewer must be exposed from the foundation to the connection for inspection, and the Director may waive the inspection with or without conditions. The Director has a right of entry for inspections.",
       "limitations": "The exposure requirement is written around open-cut connection work. How it applies to lining or bursting is governed in practice by the Utility policy manual (see law-006/law-007), not by explicit ordinance text.",
-      "supports": ["docs/01-CURRENT-STATE.md"]
+      "supports": [
+        "docs/01-CURRENT-STATE.md"
+      ]
     },
     {
       "id": "law-005-owner-responsibility-newsletter",
@@ -116,7 +162,10 @@
       "verified_at": "2026-09-19",
       "evidence_summary": "The newsletter describes the building sewer, or private sanitary sewer lateral, as the pipe carrying wastewater from a home or business to the public sanitary sewer main, and says the owner must maintain it from the structure to the public main. It cites ordinance §5-1-1-2(A)(11) and quotes §5-1-2-7. It lists breaks, partial collapses, offset joints, and broken cleanout caps as defects that allow I&I (a violation of §5-1-2-2). It describes City crews cleaning mains, CCTV-inspecting mains and building sewers, installing liners in old pipes, and excavating broken pipes. It advises owners to call the City's after-hours line first, because the City does not reimburse contractor costs if a problem turns out to be in the public main.",
       "limitations": "The original City URL is now 404. Content was verified from the Internet Archive capture of 2024-08-08 (archived_url in sources). This is homeowner-facing guidance, not law; the ordinance (law-001, law-002) is the governing source. The after-hours phone number printed in 2023 was not re-verified.",
-      "supports": ["docs/01-CURRENT-STATE.md", "docs/02-SEO-SERP-BLUEPRINT.md"]
+      "supports": [
+        "docs/01-CURRENT-STATE.md",
+        "docs/02-SEO-SERP-BLUEPRINT.md"
+      ]
     },
     {
       "id": "law-006-repair-permit-and-trenchless-allowed-policy",
@@ -130,7 +179,10 @@
       "verified_at": "2026-09-19",
       "evidence_summary": "§1.06 (page I-4) requires a permit before repair, replacement, or relocation of any lateral connected to the City's sanitary sewer. The applicant must submit a drawing of existing and proposed structures and utilities and describe the nature, methods, and materials of the work. The section states that the City of Lawrence Utility does allow rehabilitation of laterals by pipe-bursting and lining technologies with appropriate materials.",
       "limitations": "This is a 2019 administrative policy. It is the version the City currently links, and no newer revision was found, but whether it is still applied in practice without unpublished changes was not confirmed with the Utility. The permit office address in the manual (DPW Office, 9001 East 59th Street, Suite 300) was not re-verified as current.",
-      "supports": ["docs/01-CURRENT-STATE.md", "docs/02-SEO-SERP-BLUEPRINT.md"]
+      "supports": [
+        "docs/01-CURRENT-STATE.md",
+        "docs/02-SEO-SERP-BLUEPRINT.md"
+      ]
     },
     {
       "id": "law-007-trenchless-cctv-requirement-policy",
@@ -144,7 +196,10 @@
       "verified_at": "2026-09-19",
       "evidence_summary": "For pipe-bursting or lining repairs to be approved, the contractor must submit video documentation of the repair to the Utility (the text specifies DVD). CCTV must cover the entire lateral from the cleanout near the structure to the public-main connection. The Utility may withhold approval if the video shows a defective repair. For a point repair with a sectional liner, CCTV must run from the cleanout to no less than 2 feet beyond the repaired section.",
       "limitations": "Same currency caveat as law-006. The DVD delivery format is likely outdated in practice, and the currently accepted video format was not verified.",
-      "supports": ["docs/01-CURRENT-STATE.md", "docs/02-SEO-SERP-BLUEPRINT.md"]
+      "supports": [
+        "docs/01-CURRENT-STATE.md",
+        "docs/02-SEO-SERP-BLUEPRINT.md"
+      ]
     },
     {
       "id": "law-008-installation-requirements-policy",
@@ -158,7 +213,9 @@
       "verified_at": "2026-09-19",
       "evidence_summary": "The owner must hire a contractor licensed, bonded, and insured in the City of Lawrence (§1.02). The owner is responsible for installing the lateral to the City main. Allowed materials are SDR35 gasketed pipe, Schedule 40 PVC, or Schedule 80 PVC, in 4-inch or 6-inch diameter, with a minimum 6-inch pipe inside the City right-of-way (§1.03–1.04). Laterals must be at least 18 inches deep at the building and 4 feet deep beyond 10 feet from the building (if stub depth allows), with minimum slopes by pipe size. Laterals in or under a driveway or sidewalk, or within 5 feet of a roadway, need granular backfill to City standards. Cleanouts go 1.5–3 feet from the building, at bends, and at least every 100 feet. Tracer tape or wire is required, the trench may not be backfilled before Utility inspection, and 24 hours' notice is required for lateral inspection. The City may also require a lateral camera inspection, with the video provided on disc, in lieu of excavation.",
       "limitations": "These rules are written for new or replacement installation. How far each applies to trenchless rehabilitation (e.g., pipe material through a burst) was not confirmed with the Utility. Same currency caveat as law-006.",
-      "supports": ["docs/01-CURRENT-STATE.md"]
+      "supports": [
+        "docs/01-CURRENT-STATE.md"
+      ]
     },
     {
       "id": "law-009-responsibility-wording-reconciliation",
@@ -172,7 +229,10 @@
       "verified_at": "2026-09-19",
       "evidence_summary": "The manual's sentence explicitly assigns the property-line-to-main (right-of-way) segment to the owner. The ordinance defines the building sewer as running from the building drain to the public sewer, including the right-of-way portion (§5-1-1-2(A)(11)), and makes the owner responsible for its repairs and replacements (§5-1-2-7). The 2023 Utility newsletter describes owner responsibility from the structure to the public main. All three sources point the same way: owner responsibility for the full lateral, including the right-of-way portion.",
       "limitations": "Marked partially_verified because this reconciliation is an INFERENCE from three consistent sources, not a single statement. The manual's wording, read alone, could be misread as limiting owner responsibility to the right-of-way segment. Who is responsible for the tap or wye at the main itself, and whether the Director has waived responsibility in practice (§5-1-2-7), were not verified. Confirm with Lawrence Utilities before publishing any responsibility diagram.",
-      "supports": ["docs/01-CURRENT-STATE.md", "docs/02-SEO-SERP-BLUEPRINT.md"]
+      "supports": [
+        "docs/01-CURRENT-STATE.md",
+        "docs/02-SEO-SERP-BLUEPRINT.md"
+      ]
     },
     {
       "id": "law-010-utility-service-boundary",
@@ -186,7 +246,169 @@
       "verified_at": "2026-09-19",
       "evidence_summary": "Lawrence Utilities publishes the sources above for its sanitary sewer system. A Citizens Energy Group page on connecting sewer service lines appeared in the SERP for the primary query, but that does not establish Citizens as the provider for any Lawrence address.",
       "limitations": "Before publishing, confirm the service-area boundary with Lawrence Utilities or an official map so content does not mis-assign rules to addresses served by another utility.",
-      "supports": ["docs/01-CURRENT-STATE.md"]
+      "supports": [
+        "docs/01-CURRENT-STATE.md"
+      ]
+    },
+    {
+      "id": "law-011-current-permit-application-form",
+      "category": "municipal",
+      "claim": "The City of Lawrence Utilities publishes a current Application for Sanitary Building Sewer Lateral Construction Permit that explicitly covers repair/modification and replace/relocate work, requires a plat drawing showing location and materials, requires owner and installing/repairing contractor information including a Lawrence registration number, and requires an emergency-work application no later than the following business day.",
+      "status": "verified",
+      "source_title": "City of Lawrence Utilities — Application for Sanitary Building Sewer Lateral Construction Permit",
+      "source_url": "https://www.cityoflawrence.org/sites/default/files/document-group/Sanitary%20Sewer%20Permit%20Application.pdf",
+      "publisher": "City of Lawrence Utilities",
+      "source_date": null,
+      "verified_at": "2026-09-20",
+      "evidence_summary": "The form is headed 'CITY OF LAWRENCE UTILITIES / APPLICATION FOR SANITARY BUILDING SEWER LATERAL CONSTRUCTION PERMIT'. 'APPLICATION MADE FOR' offers New Line, Repair/Modification Work, and Replace/Relocate. An emergency-work checkbox carries the note that for emergency repair work the application must be made no later than the following business day. A plat drawing must accompany the application showing the location of work and materials being used, and carrying the statement 'ALL WORK WILL MEET OR EXCEED CITY OF LAWRENCE STANDARDS AND SPECIFICATIONS'. The form collects the service/work address, property owner name, address, phone and optional e-mail, assessor parcel number, and legal description; installing/repairing contractor name, address, phone, and Lawrence registration number with expiration date; and builder information for new service lines. A grease-trap question notes that a separate grease trap application is required where applicable and that there is no fee for the grease trap application. The foot of the form has a 'DPW/LU USE ONLY' block for submission date, approval date, and approver.",
+      "limitations": "The form is undated and states no permit fee for the lateral permit itself (the only fee statement is that the separate grease-trap application has no fee). It gives no submission address, so the current permit office is still unverified. Retrieval requires a browser user agent; a default user agent receives HTTP 404 from this host.",
+      "supports": [
+        "docs/01-CURRENT-STATE.md"
+      ]
+    },
+    {
+      "id": "law-012-owner-responsibility-newsletter-2024",
+      "category": "municipal",
+      "claim": "Lawrence Utilities restated in August 2024 that residents are responsible for the maintenance and repair of their sanitary sewer laterals to the point of connection at the city's main sewer line, and asked property owners to inspect and repair damaged lateral lines.",
+      "status": "verified",
+      "source_title": "THE LAWRENCE LIFT — AUGUST 2024 — ISSUE 102, 'Lawrence Utilities and Sanitary Sewers'",
+      "source_url": "https://www.cityoflawrence.org/sites/default/files/document-group/lift-2024-augustv5.pdf",
+      "publisher": "City of Lawrence Utilities",
+      "source_date": null,
+      "verified_at": "2026-09-20",
+      "evidence_summary": "Under 'HOW CAN PROPERTY OWNERS HELP?' the newsletter asks owners to inspect and repair damaged sanitary sewer lateral lines, states that damaged laterals can allow dirt and roots to enter the pipe and cause unwanted sewer backups, and states that residents are responsible for the maintenance and repair of their sanitary sewer laterals to the point of connection at the city's main sewer line. It also lists utility crew tasks: routine cleaning and maintenance of sewer mains; using robotic cameras to inspect main pipes and building sewers for cracks and roots; installing liners in old pipes to eliminate I&I and extend the pipes' useful life; digging up and replacing pipes that are broken beyond repair; repairing cracks, holes, and other defects in manholes; and raising manhole covers in areas prone to flooding.",
+      "limitations": "Homeowner-facing guidance, not law; the ordinance (law-001, law-002) remains the governing source. This is a 2024 restatement that agrees with the 2023 newsletter (law-005) and the ordinance.",
+      "supports": [
+        "docs/01-CURRENT-STATE.md"
+      ]
+    },
+    {
+      "id": "law-013-clay-lateral-failure-evidence-2024",
+      "category": "municipal",
+      "claim": "Lawrence Utilities publicly identifies older clay sewer laterals beyond their useful life as a local problem, stating that old clay pipes can crack and break easily, allowing dirt and roots to enter the pipe and causing unwanted sewer backups.",
+      "status": "verified",
+      "source_title": "THE LAWRENCE LIFT — AUGUST 2024 — ISSUE 102, 'Lawrence Utilities and Sanitary Sewers'",
+      "source_url": "https://www.cityoflawrence.org/sites/default/files/document-group/lift-2024-augustv5.pdf",
+      "publisher": "City of Lawrence Utilities",
+      "source_date": null,
+      "verified_at": "2026-09-20",
+      "evidence_summary": "Among the actions the utility asks property owners to take: 'Replace older clay sewer lateral pipes that are beyond their useful life. Old clay pipes can crack and break easily which allows dirt and roots to enter the pipe which can cause unwanted sewer backups.'",
+      "limitations": "The utility gives no prevalence figure, no age distribution, and no share of Lawrence laterals that are clay. Nothing here supports any percentage, count, or statement about a particular property. Do not generalize beyond the utility's own wording.",
+      "supports": [
+        "docs/01-CURRENT-STATE.md"
+      ]
+    },
+    {
+      "id": "law-014-third-party-lateral-damage-2024",
+      "category": "municipal",
+      "claim": "Lawrence Utilities reported in August 2024 an increase in the number of sewer laterals damaged by contractors installing underground fiber optic lines for 5G cable upgrades, and said the utility can help where damage is determined to result from a third-party contractor working in the area.",
+      "status": "verified",
+      "source_title": "THE LAWRENCE LIFT — AUGUST 2024 — ISSUE 102, 'Lawrence Utilities and Sanitary Sewers'",
+      "source_url": "https://www.cityoflawrence.org/sites/default/files/document-group/lift-2024-augustv5.pdf",
+      "publisher": "City of Lawrence Utilities",
+      "source_date": null,
+      "verified_at": "2026-09-20",
+      "evidence_summary": "The newsletter states the utility can also help if an issue is determined to be damage resulting from a third-party contractor who was working in the area, and that there has been an increase in the number of sewer laterals damaged by contractors installing underground fiber optic lines for new 5G cable upgrades.",
+      "limitations": "No counts, dates, locations, or resolution process are given, and 'help' is not defined. This does not establish any entitlement, cost recovery, or outcome for a specific homeowner.",
+      "supports": [
+        "docs/01-CURRENT-STATE.md"
+      ]
+    },
+    {
+      "id": "law-015-after-hours-call-first-2024",
+      "category": "municipal",
+      "claim": "Lawrence Utilities advises residents with sanitary sewer issues to call its after-hours on-call number first, published in August 2024 as 317-260-0220, because the problem may be in the public main; and states that if a homeowner hires a contractor who determines the issue is with the public main, the utility does not reimburse those contractor costs.",
+      "status": "verified",
+      "source_title": "THE LAWRENCE LIFT — AUGUST 2024 — ISSUE 102, 'Lawrence Utilities and Sanitary Sewers'",
+      "source_url": "https://www.cityoflawrence.org/sites/default/files/document-group/lift-2024-augustv5.pdf",
+      "publisher": "City of Lawrence Utilities",
+      "source_date": null,
+      "verified_at": "2026-09-20",
+      "evidence_summary": "The newsletter asks readers to call the After-hours On-Call number at 317-260-0220 for sanitary sewer issues at a home or business in Lawrence, saying it could save money if the issue turns out to be in the public main rather than the sewer lateral, and states that if a homeowner hires a contractor who comes out and determines the issue is with the public main, the utility does not reimburse those contractor costs. The same page lists 317-542-0511 for the utility's customer service line in a separate water-main-flushing notice.",
+      "limitations": "The telephone numbers were published in August 2024 and have not been re-verified as current in 2026. Any published number must be presented with its date, or readers must be directed to the City's current contact page instead.",
+      "supports": [
+        "docs/01-CURRENT-STATE.md"
+      ]
+    },
+    {
+      "id": "law-016-sump-downspout-prohibition-2024",
+      "category": "municipal",
+      "claim": "Lawrence Utilities states that sump pumps and downspouts must not be connected to the sanitary sewer lateral, citing city ordinance section 5-1-2-2, and that such discharges must be directed to storm sewer pipes or ditches.",
+      "status": "partially_verified",
+      "source_title": "THE LAWRENCE LIFT — AUGUST 2024 — ISSUE 102, 'Lawrence Utilities and Sanitary Sewers'",
+      "source_url": "https://www.cityoflawrence.org/sites/default/files/document-group/lift-2024-augustv5.pdf",
+      "publisher": "City of Lawrence Utilities",
+      "source_date": null,
+      "verified_at": "2026-09-20",
+      "evidence_summary": "The newsletter asks property owners to make sure sump pumps and downspouts are not connected to the sanitary sewer system, states that downspout and sump pump discharge pipes are prohibited under section 5-1-2-2 of the city ordinance and cannot be connected to sanitary sewer laterals, and says they must be directed to storm sewer pipes or ditches. It also asks owners to check that the cleanout cap is sealed and secure.",
+      "limitations": "Marked partially_verified because the ordinance text of section 5-1-2-2 was not independently re-read in this run; the citation is the utility's. The underlying prohibition on clear-water inflow is consistent with law-005, which cites section 5-1-2-2 for I&I violations.",
+      "supports": [
+        "docs/01-CURRENT-STATE.md"
+      ]
+    },
+    {
+      "id": "law-017-71st-street-basin-rehabilitation-2025",
+      "category": "municipal",
+      "claim": "Lawrence Utilities is rehabilitating part of its sanitary sewer system in the Oaklandon Northeast Addition using cured-in-place lining, including approximately 1,300 linear feet of 6-inch sanitary lateral lining, under an EPA Administrative Order on Consent.",
+      "status": "verified",
+      "source_title": "THE LAWRENCE LIFT — JULY 2025, 'Sanitary Sewer Infrastructure Repair Projects'",
+      "source_url": "https://www.cityoflawrence.org/sites/default/files/document-group/lift-2025-july.pdf",
+      "publisher": "City of Lawrence Utilities",
+      "source_date": null,
+      "verified_at": "2026-09-20",
+      "evidence_summary": "The 71st Street Lift Station Basin Rehabilitation Project targets eliminating sources of inflow and infiltration in the Oaklandon Northeast Addition. The project area includes 71st Street, Oaklandon Road, Cable Drive, Old Orchard Drive, Meadow Lane, and Brandon Street. The work consists of rehabilitating approximately 3,000 linear feet of 8-inch and 12-inch sanitary sewers using cured-in-place lining (CIPP), approximately 1,300 linear feet of 6-inch sanitary lateral lining, sewer cleaning, bypass pumping as required, installation of 400 linear feet of new 12-inch PVC sanitary sewer, two partial replacements of sewers, manhole rehabilitation, and associated site restoration. The area was included in an Administrative Order on Consent issued to the City by the EPA in November 2021 due to chronic wet weather sanitary sewer overflows in the basin. Lawrence's Sanitary Sewer Overflow Corrective Action Plan was approved by the EPA in April 2025. Work was scheduled to begin on or around August 25, 2025 and to be completed by mid-December 2025 absent delays. The newsletter names the selected contractor and the design firm.",
+      "limitations": "These are public-system projects. They say nothing about whether any particular private lateral is suitable for lining, and nothing about homeowner cost. Schedule dates are the utility's plan as published in July 2025 and were not re-verified as completed. The named contractor also appears in this project's prospective-tenant research (research/sources/prospective-tenants.json); that overlap is recorded here so it is not mistaken for an endorsement.",
+      "supports": [
+        "docs/01-CURRENT-STATE.md"
+      ]
+    },
+    {
+      "id": "law-018-fort-harrison-phase-iii-2025",
+      "category": "municipal",
+      "claim": "Lawrence Utilities is replacing and CIPP-lining 18-inch gravity sanitary sewer inside Fort Harrison State Park under the Fort Harrison Collection System Capacity Improvements Project Phase III.",
+      "status": "verified",
+      "source_title": "THE LAWRENCE LIFT — JULY 2025, 'Sanitary Sewer Infrastructure Repair Projects'",
+      "source_url": "https://www.cityoflawrence.org/sites/default/files/document-group/lift-2025-july.pdf",
+      "publisher": "City of Lawrence Utilities",
+      "source_date": null,
+      "verified_at": "2026-09-20",
+      "evidence_summary": "The project, inside Fort Harrison State Park along Shafter Road, consists of replacing approximately 2,155 lineal feet of 18-inch gravity sanitary sewer, 2,478 lineal feet of cured-in-place (CIPP) lining of existing 18-inch gravity sanitary sewer, installing new sanitary sewer manholes, abandonment of approximately 2,180 lineal feet of existing sanitary sewer main, and associated surface restoration. The newsletter states that the existing main, installed when Fort Harrison was a military installation, has reached the end of its useful life; that manholes have deteriorated with age and need repair; and that defects in the main allow inflow and infiltration that must be eliminated to prevent unnecessary treatment of clear water and to free capacity. It was intended for completion by the end of April 2026 absent delays, with the schedule still awaited from the selected contractor at the time of publication.",
+      "limitations": "Public-system project; it establishes nothing about private laterals or homeowner cost. Completion was not re-verified. The named contractor also appears in this project's prospective-tenant research; recorded so the overlap is not mistaken for an endorsement.",
+      "supports": [
+        "docs/01-CURRENT-STATE.md"
+      ]
+    },
+    {
+      "id": "law-019-46th-post-ii-removal-2026",
+      "category": "municipal",
+      "claim": "The City of Lawrence's 2026 46th and Post I/I Removal Project rehabilitates 8-, 10-, 12-, and 15-inch sewers using cured-in-place pipe with associated lateral lining, and its specifications require pre-installation and post-CIPP television inspection plus advance notice to affected customers whose building sewer laterals will be out of service during lining.",
+      "status": "verified",
+      "source_title": "Lawrence 46th and Post I/I Removal Project — Pre-Bid Meeting Minutes, February 19, 2026",
+      "source_url": "https://www.cityoflawrence.org/sites/default/files/addendum/2025.01995.UI_.MIN_.2026-02-19.Lawrence%2046th%20and%20Post%20Rehab%20Pre-Bid%20Meeting%20Minutes.pdf",
+      "publisher": "City of Lawrence (prepared by American Structurepoint, Inc.)",
+      "source_date": "2026-02-19",
+      "verified_at": "2026-09-20",
+      "evidence_summary": "Project description: rehabilitation of 8-inch, 10-inch, 12-inch and 15-inch sewers using cured-in-place pipe (CIPP) and associated lateral lining; partial replacements of those sewers with wyes; installation of replacement 8-inch sanitary sewers; rehabilitation of 48-inch diameter manholes using manhole lining and replacement of manhole risers; sewer cleaning, bypass pumping as required, and associated site restoration. Access: contractors must notify and coordinate with collection-system customers whose building sewer laterals will be out of service during CIPP installation, curing, and restoration; written notice by door hanger, door flier, or U.S. mail at least 24 and no more than 48 hours in advance; the notice must advise against water usage until the sewer line is back in service, state the consequences of use (sewer backup), and include a local 24-hour contact number; the maximum time of no service is eight hours for any property served by the sewer. Phasing: Phase 1 covers excavation, backfill and restoration, investigation and pre-CCTV; Phase 2 covers all trenchless work, post-CIPP inspection and CCTV, and closeout. Lateral point repairs: if pre-installation television inspection before lateral lining reveals an obstruction that cannot be removed by conventional cleaning and/or cutting equipment, the contractor must notify the Engineer immediately. Sealed bids were received at the City of Lawrence Utility Office, 9201 Harrison Park Court, until 1:30 p.m. on or before March 13, 2026, with a tentative award date of March 24, 2026 and substantial completion 180 days from notice to proceed.",
+      "limitations": "This is a public-main rehabilitation contract. Its notification, inspection, and service-interruption requirements bind the City's contractor on that project; they are NOT rules that apply to a homeowner's private lateral repair. The award outcome and construction dates were not verified from a City source in this run. The Utility Office address given here is the bid-submission location and does not establish where a homeowner submits a lateral permit application.",
+      "supports": [
+        "docs/01-CURRENT-STATE.md"
+      ]
+    },
+    {
+      "id": "law-020-lift-2023-url-recheck",
+      "category": "municipal",
+      "claim": "The August 2023 Lawrence Lift PDF is reachable again at its original City URL as of 2026-09-20, which narrows the limitation recorded in law-005.",
+      "status": "verified",
+      "source_title": "THE LAWRENCE LIFT — AUGUST 2023 — ISSUE 90",
+      "source_url": "https://www.cityoflawrence.org/sites/default/files/document-group/lift-2023-august.pdf",
+      "publisher": "City of Lawrence Utilities",
+      "source_date": null,
+      "verified_at": "2026-09-20",
+      "evidence_summary": "Requested with a browser user agent, the original City URL returned HTTP 200 and application/pdf on 2026-09-20. The 404 recorded on 2026-09-19 (law-005, and the archived_url note on src-lawrence-lift-2023-08) is explained by this host returning 404 to a default (non-browser) user agent rather than by the document being removed.",
+      "limitations": "This record corrects only the reachability limitation in law-005. It does not change any claim law-005 supports, and the Internet Archive capture remains a valid secondary reference. Historical records are not rewritten (AGENTS.md).",
+      "supports": [
+        "docs/01-CURRENT-STATE.md"
+      ]
     }
   ]
 }

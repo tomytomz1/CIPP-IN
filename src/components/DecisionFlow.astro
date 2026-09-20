@@ -19,7 +19,7 @@ const boxes = [
   { x: 40, y: 98, w: 560, h: 56, lines: ['Find out whether the problem is in your', 'lateral or in the public main'] },
   { x: 40, y: 188, w: 268, h: 74, lines: ['Public main:', 'report it to the', 'utility'], muted: true },
   { x: 332, y: 188, w: 268, h: 74, lines: ['Your lateral:', 'the repair decision', 'is yours'] },
-  { x: 40, y: 296, w: 560, h: 56, lines: ['Camera inspection locates the defect,', 'its depth, and its extent'] },
+  { x: 40, y: 296, w: 560, h: 56, lines: ['Camera inspection identifies the defect', 'and how much of the line is affected'] },
   { x: 40, y: 386, w: 560, h: 74, lines: ['Decide the method with the contractor:', 'spot repair, full-length lining, pipe bursting,', 'or open-cut replacement'] },
   { x: 40, y: 494, w: 560, h: 56, lines: ['Permit, inspection, and post-repair', 'verification before the work is accepted'] },
 ];
@@ -39,10 +39,10 @@ const arrows: { from: [number, number]; to: [number, number] }[] = [
     <desc id={descId}>
       A flow chart. A symptom such as repeated backups leads to finding out whether the problem is
       in the private lateral or the public main. A public main problem is reported to the utility.
-      A lateral problem stays with the property owner, who has a camera inspection to locate the
-      defect, decides a repair method with a contractor from spot repair, full-length lining, pipe
-      bursting, or open-cut replacement, and then completes permitting, inspection, and post-repair
-      verification.
+      A lateral problem stays with the property owner, who has a camera inspection to identify the
+      defect and how much of the line is affected, decides a repair method with a contractor from spot
+      repair, full-length lining, pipe bursting, or open-cut replacement, and then completes permitting,
+      inspection, and post-repair verification.
     </desc>
     {
       arrows.map((a) => (

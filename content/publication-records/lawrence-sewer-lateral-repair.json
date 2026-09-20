@@ -20,11 +20,12 @@
       "note": "Competitor dossier from research/serps/2026-09-19-competitor-snapshot.json (Roto-Rooter Lawrence page, 317 Plumber Lawrence service area, Mr. Plumber Lawrence location, YoHomeFix templated city page). None of them states the municipal rules."
     },
     "4": {
-      "status": "complete"
+      "status": "complete",
+      "note": "Phase 2E added the current City permit application form, the August 2024 and July 2025 Lawrence Lift issues, the 2026 46th and Post pre-bid minutes, and two government-issued engineering specifications for method mechanics."
     },
     "5": {
       "status": "complete",
-      "note": "Evidence mapped to the Location Page Quality Gate: only 3 of 8 categories qualify today (responsibility, permit/repair requirement, lining/bursting rule)."
+      "note": "Evidence mapped to the Location Page Quality Gate: 5 of 8 categories qualify after Phase 2E (responsibility, permit/repair requirement, lining/bursting rule, municipal infrastructure information, housing/pipe/failure evidence), all five supported by authoritative local primary sources."
     },
     "6": {
       "status": "complete",
@@ -49,21 +50,22 @@
     },
     "12": {
       "status": "complete",
-      "note": "Original homeowner decision-flow diagram added. A Lawrence-specific responsibility diagram was deliberately NOT created: the tap/wye question (law-009) is unresolved."
+      "note": "Original municipality-neutral decision-flow diagram, plus an original compilation of the City recent sanitary rehabilitation projects. The compilation is NOT claimed as gate category 7: it restates City documents rather than producing new data. A Lawrence responsibility diagram is still withheld (law-009 unresolved)."
     },
     "13": {
       "status": "not_started",
       "note": "No qualified reviewer exists. No reviewer, credential, or date was invented."
     },
     "14": {
-      "status": "not_started",
-      "note": "No similarity run: the embedding runner does not exist yet, and there is no second site page to compare against."
+      "status": "in_progress",
+      "note": "Phase 2E implemented the runner (scripts/similarity-qa.ts). Deterministic checks ran clean on 2026-09-20: 0% sentence near-duplication and 0% heading-architecture overlap against every other site page. The embedding check is not_run because no OPENAI_API_KEY exists, so the gate stays unsatisfied and no similarity run is recorded here."
     },
     "15": {
       "status": "complete"
     },
     "16": {
-      "status": "complete"
+      "status": "complete",
+      "note": "Re-scored 2026-09-20 after the evidence and editorial changes: 63/100 against the 85 money/location threshold. Expert verification and first-party data remain 0."
     },
     "17": {
       "status": "in_progress",
@@ -89,7 +91,8 @@
   "evidence": {
     "packageRefs": [
       "research/sources/lawrence-primary-sources.json",
-      "research/serps/2026-09-19-competitor-snapshot.json"
+      "research/serps/2026-09-19-competitor-snapshot.json",
+      "research/sources/technical-standards.json"
     ],
     "primarySources": [
       {
@@ -115,6 +118,46 @@
         "researchRecordId": "src-lawrence-lift-2023-08",
         "lastVerified": "2026-09-19",
         "reverifyBy": "2027-03-19"
+      },
+      {
+        "id": "src-lawrence-permit-application",
+        "title": "City of Lawrence Utilities - Application for Sanitary Building Sewer Lateral Construction Permit",
+        "url": "https://www.cityoflawrence.org/sites/default/files/document-group/Sanitary%20Sewer%20Permit%20Application.pdf",
+        "researchRecordId": "src-lawrence-permit-application",
+        "lastVerified": "2026-09-20",
+        "reverifyBy": "2027-03-20"
+      },
+      {
+        "id": "src-lawrence-lift-2024-08",
+        "title": "The Lawrence Lift, August 2024 (Issue 102)",
+        "url": "https://www.cityoflawrence.org/sites/default/files/document-group/lift-2024-augustv5.pdf",
+        "researchRecordId": "src-lawrence-lift-2024-08",
+        "lastVerified": "2026-09-20",
+        "reverifyBy": "2027-03-20"
+      },
+      {
+        "id": "src-lawrence-lift-2025-07",
+        "title": "The Lawrence Lift, July 2025",
+        "url": "https://www.cityoflawrence.org/sites/default/files/document-group/lift-2025-july.pdf",
+        "researchRecordId": "src-lawrence-lift-2025-07",
+        "lastVerified": "2026-09-20",
+        "reverifyBy": "2027-03-20"
+      },
+      {
+        "id": "src-lawrence-46th-post-prebid-2026",
+        "title": "Lawrence 46th and Post I/I Removal Project - Pre-Bid Meeting Minutes, 2026-02-19",
+        "url": "https://www.cityoflawrence.org/sites/default/files/addendum/2025.01995.UI_.MIN_.2026-02-19.Lawrence%2046th%20and%20Post%20Rehab%20Pre-Bid%20Meeting%20Minutes.pdf",
+        "researchRecordId": "src-lawrence-46th-post-prebid-2026",
+        "lastVerified": "2026-09-20",
+        "reverifyBy": "2027-03-20"
+      },
+      {
+        "id": "src-hrpdc-method-specs-2016",
+        "title": "HRPDC Regional Construction Standards, Section 824 (CIPP lateral rehabilitation) and Section 815 (pipe bursting), June 2016",
+        "url": "https://www.hrpdcva.gov/DocumentCenter/View/5004/Section-824---Sewer-Lateral-Rehabilitation-by-Cured-In-Place-Method-PDF",
+        "researchRecordId": "src-hrpdc-824-cipp-lateral-2016",
+        "lastVerified": "2026-09-20",
+        "reverifyBy": "2027-09-20"
       }
     ]
   },
@@ -132,9 +175,10 @@
       "classification": "FACT",
       "evidenceRefs": [
         "law-002",
-        "law-005"
+        "law-005",
+        "law-012"
       ],
-      "note": "Ordinance 5-1-2-7, echoed in the utility newsletter."
+      "note": "Ordinance 5-1-2-7, restated to homeowners by the utility in 2023 and again in August 2024."
     },
     {
       "id": "responsibility-extends-into-right-of-way",
@@ -202,9 +246,84 @@
     },
     {
       "id": "repair-method-mechanics",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "tech-001",
+        "tech-002",
+        "law-007",
+        "law-008"
+      ],
+      "note": "Method mechanics are now cited to engineering specifications issued by a government body (HRPDC Sections 824 and 815), plus Lawrence policy for the sectional-liner and replacement cases. The page labels them as general descriptions, not Lawrence requirements, and makes no suitability, lifespan, price, or success-rate claim."
+    },
+    {
+      "id": "current-permit-application-form",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "law-011"
+      ],
+      "note": "The current City form covers Repair/Modification Work and Replace/Relocate, requires a plat drawing with materials, a Lawrence contractor registration number, and an emergency application by the next business day. It states no fee and no submission address; both remain unestablished."
+    },
+    {
+      "id": "call-utility-first-2024",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "law-015",
+        "law-005"
+      ],
+      "note": "The after-hours number published in August 2024 is printed with its date, and the page tells readers to check the City site for the current number."
+    },
+    {
+      "id": "clay-laterals-local-failure-mode",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "law-013"
+      ],
+      "note": "The utility own statement about older clay laterals. No prevalence figure appears anywhere on the page, because none exists in the evidence."
+    },
+    {
+      "id": "third-party-fiber-damage",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "law-014"
+      ],
+      "note": "The utility reported an increase in laterals damaged by fiber and 5G contractors. No counts, and no entitlement, are implied."
+    },
+    {
+      "id": "city-system-rehabilitation-projects",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "law-017",
+        "law-018",
+        "law-019"
+      ],
+      "note": "Public-system projects with the City own documented methods and quantities. The page states explicitly that these do not establish suitability or cost for any private lateral."
+    },
+    {
+      "id": "lining-service-interruption",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "law-019",
+        "tech-001"
+      ],
+      "note": "Presented as a question to ask a contractor, not as a rule binding a private repair; the 24-48 hour notice and the 8-hour limit bind the City contractor on its own project."
+    },
+    {
+      "id": "cctv-limits",
       "classification": "INFERENCE",
-      "evidenceRefs": [],
-      "note": "General descriptions of how spot repair, CIPP lining, pipe bursting, and open-cut replacement work. No engineering-standard citation has been added yet; the page says so explicitly and makes no suitability, lifespan, or cost claim."
+      "evidenceRefs": [
+        "law-007",
+        "law-008",
+        "law-019"
+      ],
+      "note": "That CCTV identifies defect type, condition, position along the line, and extent, while surface location and burial depth generally need separate locating or further investigation, is our reading of how the cited documents use camera work. It is worded cautiously on the page and is a candidate for expert-review correction."
+    },
+    {
+      "id": "sump-downspout-prohibition",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "law-016"
+      ],
+      "note": "The utility cites ordinance 5-1-2-2; that ordinance text was not independently re-read, and the page says so."
     }
   ],
   "expertReview": {
@@ -217,19 +336,19 @@
   "similarity": [],
   "publicationScore": {
     "components": {
-      "originalLocalInformation": 14,
-      "primarySourceEvidence": 9,
-      "homeownerDecisionUtility": 11,
+      "originalLocalInformation": 17,
+      "primarySourceEvidence": 10,
+      "homeownerDecisionUtility": 12,
       "expertVerification": 0,
-      "originalMediaTool": 4,
+      "originalMediaTool": 6,
       "proprietaryFirstPartyData": 0,
-      "nonCommodityDistinctiveness": 7,
+      "nonCommodityDistinctiveness": 8,
       "technicalInternalLinkQuality": 4,
       "transparencyTrust": 5,
       "conversionUsefulness": 1
     },
     "scorer": "claude-agent (draft self-assessment; not confirmed by the operator)",
-    "date": "2026-09-19"
+    "date": "2026-09-20"
   },
   "municipalityGate": {
     "municipality": "Lawrence, Indiana",
@@ -262,14 +381,21 @@
         ]
       },
       "municipalInfrastructureInformation": {
-        "qualifies": false,
-        "authoritativeLocalPrimary": false,
-        "evidenceRefs": []
+        "qualifies": true,
+        "authoritativeLocalPrimary": true,
+        "evidenceRefs": [
+          "law-017",
+          "law-018",
+          "law-019"
+        ]
       },
       "municipalHousingPipeFailureEvidence": {
-        "qualifies": false,
-        "authoritativeLocalPrimary": false,
-        "evidenceRefs": []
+        "qualifies": true,
+        "authoritativeLocalPrimary": true,
+        "evidenceRefs": [
+          "law-013",
+          "law-014"
+        ]
       },
       "municipalCostPermitProjectEvidence": {
         "qualifies": false,
@@ -292,20 +418,20 @@
     "commodityContentTest": {
       "result": "pass",
       "checkedBy": "claude-agent (draft assessment; not confirmed by the operator)",
-      "date": "2026-09-19",
-      "note": "The page states municipality-specific rules with citations a generic model cannot verify, plus an explicit list of what is unknown."
+      "date": "2026-09-20",
+      "note": "Stronger than before: the page now carries the current City permit form, the utility own statements about clay laterals and third-party damage, and a compilation of the City own rehabilitation projects with documented quantities. A generic model cannot produce or verify these."
     },
     "perfectAiDetectionTest": {
       "result": "pass",
       "checkedBy": "claude-agent (draft assessment; not confirmed by the operator)",
-      "date": "2026-09-19",
-      "note": "The page would still be useful without search engines: it translates the governing documents and names the gaps."
+      "date": "2026-09-20",
+      "note": "The page would still be useful without search engines, and it names what it does not know."
     },
     "doorwayPageFirewall": {
       "result": "pass",
       "checkedBy": "claude-agent (draft assessment; not confirmed by the operator)",
-      "date": "2026-09-19",
-      "note": "One municipality page with unique primary-source evidence. No city-swap template, and no other municipality page exists."
+      "date": "2026-09-20",
+      "note": "One municipality page with unique primary-source evidence; deterministic similarity checks on 2026-09-20 show 0% sentence and heading overlap with the other site pages."
     },
     "technicalSeoQa": {
       "result": "not_run",
@@ -316,8 +442,8 @@
     "internalLinkingQa": {
       "result": "pass",
       "checkedBy": "claude-agent (draft assessment; not confirmed by the operator)",
-      "date": "2026-09-19",
-      "note": "Linked from the homepage and site navigation; no orphan pages; CI verifies every internal reference resolves."
+      "date": "2026-09-20",
+      "note": "Linked from the homepage and site navigation; in-page source anchors resolve; CI verifies every internal reference."
     },
     "conversionQa": {
       "result": "not_run",

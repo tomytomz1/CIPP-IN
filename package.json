@@ -17,8 +17,9 @@
     "check:dist": "node scripts/check-dist.ts",
     "check:budgets": "node scripts/check-budgets.ts",
     "test:a11y": "playwright test",
-    "ci": "npm run typecheck && npm run test && npm run validate:records && npm run validate:migrations && npm run build && npm run check:dist && npm run check:budgets",
-    "validate:migrations": "node scripts/validate-migrations.ts"
+    "ci": "npm run typecheck && npm run test && npm run validate:records && npm run validate:migrations && npm run build && npm run check:dist && npm run check:budgets && npm run similarity:qa",
+    "validate:migrations": "node scripts/validate-migrations.ts",
+    "similarity:qa": "node scripts/similarity-qa.ts"
   },
   "dependencies": {
     "@astrojs/cloudflare": "14.3.2",

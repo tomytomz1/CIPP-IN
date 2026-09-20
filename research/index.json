@@ -1,10 +1,36 @@
 {
-  "last_updated": "2026-09-19",
+  "last_updated": "2026-09-20",
   "note": "Research evidence is supporting material only. /docs/ remains authoritative for active project requirements. Dynamic evidence such as SERPs, contractor offerings, hiring, pricing, and Google policies must be reverified before relying on it for a future material decision.",
   "record_format": {
-    "fields": ["id", "category", "claim", "status", "source_title", "source_url", "publisher", "source_date", "verified_at", "evidence_summary", "limitations", "supports"],
-    "status_values": ["verified", "partially_verified", "unverified", "historical", "conflicting"],
-    "category_values": ["municipal", "competitor", "tenant", "google-policy", "serp"],
+    "fields": [
+      "id",
+      "category",
+      "claim",
+      "status",
+      "source_title",
+      "source_url",
+      "publisher",
+      "source_date",
+      "verified_at",
+      "evidence_summary",
+      "limitations",
+      "supports"
+    ],
+    "status_values": [
+      "verified",
+      "partially_verified",
+      "unverified",
+      "historical",
+      "conflicting"
+    ],
+    "category_values": [
+      "municipal",
+      "competitor",
+      "tenant",
+      "google-policy",
+      "serp",
+      "technical"
+    ],
     "rules": [
       "Paraphrase. Do not copy long copyrighted passages; short excerpts only where exact policy language matters.",
       "source_date is the document's own date (or its 'last updated' date) in YYYY-MM-DD format, or null when no day-level date is shown.",
@@ -15,11 +41,15 @@
     {
       "path": "research/sources/lawrence-primary-sources.json",
       "category": "municipal",
-      "records": 10,
-      "sources": 4,
-      "last_verified": "2026-09-19",
+      "records": 20,
+      "sources": 8,
+      "last_verified": "2026-09-20",
       "stale_after": "Re-verify before indexing any Lawrence page, and at least every 6 months. Re-check sooner if the City updates its code (American Legal supplements) or Construction Specifications page.",
-      "related_docs": ["docs/01-CURRENT-STATE.md", "docs/02-SEO-SERP-BLUEPRINT.md", "docs/03-GOOGLE-RESILIENCE.md"]
+      "related_docs": [
+        "docs/01-CURRENT-STATE.md",
+        "docs/02-SEO-SERP-BLUEPRINT.md",
+        "docs/03-GOOGLE-RESILIENCE.md"
+      ]
     },
     {
       "path": "research/sources/prospective-tenants.json",
@@ -28,7 +58,10 @@
       "evidence_records": 13,
       "last_verified": "2026-09-19",
       "stale_after": "Re-verify before any outreach, and at least every 3 months (offerings, hiring, and financing change often).",
-      "related_docs": ["docs/00-PROJECT-CHARTER.md", "docs/01-CURRENT-STATE.md"]
+      "related_docs": [
+        "docs/00-PROJECT-CHARTER.md",
+        "docs/01-CURRENT-STATE.md"
+      ]
     },
     {
       "path": "research/sources/google-search-policy.json",
@@ -36,7 +69,11 @@
       "records": 7,
       "last_verified": "2026-09-19",
       "stale_after": "Re-verify after any announced Google core or spam update, and at least every 6 months.",
-      "related_docs": ["docs/03-GOOGLE-RESILIENCE.md", "docs/04-CONTENT-EDITORIAL-SYSTEM.md", "AGENTS.md"]
+      "related_docs": [
+        "docs/03-GOOGLE-RESILIENCE.md",
+        "docs/04-CONTENT-EDITORIAL-SYSTEM.md",
+        "AGENTS.md"
+      ]
     },
     {
       "path": "research/serps/2026-09-19-competitor-snapshot.json",
@@ -45,7 +82,22 @@
       "competitor_page_records": 8,
       "last_verified": "2026-09-19",
       "stale_after": "A point-in-time snapshot. Do not edit it; add a new dated snapshot file instead. Re-capture before any material publishing decision.",
-      "related_docs": ["docs/02-SEO-SERP-BLUEPRINT.md", "docs/01-CURRENT-STATE.md"]
+      "related_docs": [
+        "docs/02-SEO-SERP-BLUEPRINT.md",
+        "docs/01-CURRENT-STATE.md"
+      ]
+    },
+    {
+      "path": "research/sources/technical-standards.json",
+      "category": "technical",
+      "records": 2,
+      "sources": 2,
+      "last_verified": "2026-09-20",
+      "stale_after": "Re-verify before indexing any page that relies on these method descriptions, and at least every 12 months. Engineering specifications are revised periodically.",
+      "related_docs": [
+        "docs/04-CONTENT-EDITORIAL-SYSTEM.md",
+        "docs/05-BUILD-SPEC.md"
+      ]
     }
   ]
 }

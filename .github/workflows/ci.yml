@@ -48,6 +48,8 @@ jobs:
         run: npm run check:dist
       - name: Build-time performance budgets
         run: npm run check:budgets
+      - name: Similarity QA (deterministic checks; embeddings need OPENAI_API_KEY and are not run in CI)
+        run: npm run similarity:qa
       - name: Upload build output
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
