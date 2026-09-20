@@ -14,7 +14,7 @@ This document distinguishes three kinds of items:
 |---|---|
 | **LOCKED** | Operator-approved architectural decision. Change only with explicit operator approval, logged in `01-CURRENT-STATE.md` → Last Major Decisions. |
 | **IMPLEMENTATION PENDING** | Locked architecture that has not been built yet. |
-| **IMPLEMENTED (Phase 2A/2B/2C)** / **PARTIALLY IMPLEMENTED** | Built and tested in the repository (see the Implementation Records below). Not deployed; no cloud or vendor resources exist. |
+| **IMPLEMENTED (Phase 2A/2B/2C/2D)** / **PARTIALLY IMPLEMENTED** | Built and tested in the repository (see the Implementation Records below). Not deployed; no cloud or vendor resources exist. |
 | **OPEN** | Legal, business, or operational question that is still unresolved. Must not be decided silently by an agent. |
 
 Implementation-level details that this spec leaves unspecified (exact file names, library versions, header values, table column names) may be decided during the build. Record them in the run receipt and, if material, in this document. They must preserve every LOCKED requirement below.
@@ -133,8 +133,7 @@ Configured 2026-09-19 and read back through the GitHub API:
 - **Positioning:** an independent Indianapolis-area sewer intelligence and homeowner decision-support resource focused on residential sewer laterals, diagnosis, repair-method decisions, and legitimate CIPP/trenchless opportunities.
 - The site is **not** a plumbing company and must never imply it performs plumbing work (`04-CONTENT-EDITORIAL-SYSTEM.md` → Disclosure). It stays independently owned and editorially controlled, and must remain valuable if the renter changes.
 - Lawrence is the SEO beachhead, not the master brand. Brand geography is the Indianapolis metro.
-- **Target domain:** `indysewerresource.com` — **approved target, NOT purchased or owned by the project.** Registration is a separate operator action that needs separate authorization.
-  - Point-in-time check: Verisign `.com` RDAP returned no registration record (HTTP 404) on 2026-09-19 16:58 UTC. This is not a registrar availability or price check, and availability can change at any time.
+- **Domain:** `indysewerresource.com` — **registered and owned by the operator** (reported 2026-09-19). It is the canonical production origin used by the build (`src/config/brand.ts` → `PRODUCTION_ORIGIN`). No DNS change, hosting, Cloudflare configuration, or deployment has been made, and owning the domain does not make any page indexable: the evaluator still decides that.
 - Domain strategy:
   - `.com` is the preferred primary TLD.
   - Use a descriptive brand domain, not a keyword-stuffed exact-match domain.
@@ -143,10 +142,10 @@ Configured 2026-09-19 and read back through the GitHub API:
   - No defensive domain purchases without explicit operator approval.
 - The domain is project-owned and never transferred to the renter (`00-PROJECT-CHARTER.md`).
 
-## Design System
+## Design System — (IMPLEMENTED — Phase 2D)
 
 - **LOCKED constraints:** a system font stack at launch (0 custom-font bytes); performance and accessibility budgets below.
-- **OPEN (implementation):** visual design, colors, component styling.
+- Implemented in `src/styles/global.css`: one token set with a light and a dark theme, a reading measure for prose, and the shared components (evidence notes, cards, numbered steps, scrollable tables, figures). No CSS framework, no client JavaScript, no custom fonts, no icon set.
 
 ## Routes
 
@@ -154,7 +153,11 @@ Configured 2026-09-19 and read back through the GitHub API:
   - No route per keyword variant or per municipality unless it passes the gates in `03-GOOGLE-RESILIENCE.md` and the split test in `02-SEO-SERP-BLUEPRINT.md` → Page Strategy.
   - No placeholder municipality routes.
   - Route, page type, and canonical are defined centrally in page configuration/records, not ad hoc.
-- **OPEN:** the specific URL plan. It is decided page by page through the content workflow in `04-CONTENT-EDITORIAL-SYSTEM.md`.
+- **Decided in Phase 2D** (each through the workflow in `04-CONTENT-EDITORIAL-SYSTEM.md`):
+  - `/` — homepage (general)
+  - `/lawrence-sewer-lateral-repair/` — flagship Lawrence resource (location)
+  - `/about/` — methodology / trust page (general)
+- **OPEN:** every later URL. Routes are added page by page, never generated per keyword or per municipality.
 
 ## Page Specifications
 
@@ -681,6 +684,40 @@ Still zero seed rows: the migration cannot enable delivery for anyone, and no co
 **Provider activation boundary (fails closed, separate from intake).** `resolveNotificationActivation` requires `NOTIFICATIONS_ENABLED="true"`, `RESEND_API_KEY`, a valid `NOTIFICATION_FROM_EMAIL` and `OPERATOR_NOTIFICATION_EMAIL`, and the `DB` binding; SMS requires all three Twilio values together or none. In production it rejects test-only keys and reserved test domains. Notification sending is deliberately NOT governed by the homeowner intake flag: enabling one must never implicitly enable the other.
 
 **Operator follow-up.** `listLeadsNeedingAttention` returns safe structured records (lead id, reason, timestamp, reason code) for `no_active_partner`, `delivery_not_enqueued`, `delivery_failed_permanently`, and `delivery_retry_pending`. Contact PII is reachable only through the explicit, separate `getLeadContactForOperator` call. There is still no admin UI.
+
+## Implementation Record: Phase 2D (Lawrence MVP asset)
+
+Implemented 2026-09-19 on branch `phase-2d-lawrence-mvp`. This is the first homeowner-facing content, and all of it is `published_noindex`. Nothing is deployed, no lead path exists, and the operator index-approval registry is still empty. No dependency was added; the site still ships **0 bytes of client JavaScript**.
+
+**Operator decisions reconciled in this phase:** the operator registered `indysewerresource.com`, and decided the GitHub repository stays public. Neither changes any gate.
+
+**Pages** (the Phase 2A development shell and its record were removed):
+
+| Route | Record | Type / lifecycle | Purpose |
+|---|---|---|---|
+| `/` | `home` | general / `published_noindex` | What the resource is, the decisions it covers, and an honest statement of project status |
+| `/lawrence-sewer-lateral-repair/` | `lawrence-sewer-lateral-repair` | location / `published_noindex` | The flagship resource: responsibility, permit, diagnosis, repair methods, post-repair video, replacement standards, and what is not established |
+| `/about/` | `about` | general / `published_noindex` | Independence, source hierarchy, claim classification, expert-review policy, corrections, future contractor disclosure |
+
+**Paths added:** `src/config/brand.ts` (brand strings, production origin, navigation), `src/components/` (`EvidenceNote.astro`, `SourceList.astro`, `DecisionFlow.astro`), `src/lib/content/sources.ts`, and the three page files. `src/layouts/BaseLayout.astro` gained navigation, the site-wide disclosure footer, a pre-publication status line, and minimal truthful JSON-LD (`WebSite` on the homepage, `WebPage` elsewhere; the prohibited business/review types remain impossible).
+
+**Evidence discipline.** Every Lawrence statement traces to `research/sources/lawrence-primary-sources.json` (ordinance Title 5 Article 1, the 2019 Utility policy manual, and the August 2023 Lawrence Lift). The page states plainly what this project has **not** established — current permit fee, forms, and issuing office; the currently accepted video format; responsibility for the tap/wye at the main; the utility service boundary; waiver practice; assistance programs; local pipe prevalence; local prices — and prints no phone number, because the 2023 number was never re-verified. General repair-method mechanics are recorded as an INFERENCE with no engineering-standard citation yet, and the page says so.
+
+**Original assets.** One original diagram (the homeowner decision flow) that is deliberately municipality-neutral. A Lawrence-specific responsibility diagram was **not** created: research record `law-009` leaves the tap/wye question open, and a diagram would imply an answer the evidence does not support.
+
+**Publication state (honest, not engineered):**
+
+- Lawrence publication score **55/100** against the 85 money/location threshold, with 0 for expert verification and 0 for first-party data.
+- Location Page Quality Gate: **3 of 8** categories qualify (lateral responsibility, permit/repair requirement, lining/bursting rule), all three authoritative local primary-source. Five are required. The gate FAILS, as it should.
+- Expert review is **required and absent**. No reviewer, credential, scope, or date was invented.
+- Workflow steps 1–19: complete where they genuinely are, `in_progress` for the human editorial pass and technical SEO QA (manual accessibility review outstanding), `not_started` for expert review, similarity QA (no embedding runner), and conversion QA (no lead path by design).
+- Effectively indexable pages: **0**. Operator approvals: **0**. Sitemap URLs: **0**.
+
+**Production origin.** `resolveSiteConfig` now falls back to `https://indysewerresource.com` when `PUBLIC_SITE_ORIGIN` is unset in a production build, instead of throwing. Indexability is unaffected: `robotsDirective` returns `noindex, follow` for every current page even in a production build on the real domain, and a unit test asserts exactly that.
+
+**Tests.** `tests/unit/site-pages.test.ts` guards the real records: three pages, none a fixture, none indexable in a production build, the Lawrence gaps recorded as described above, FACT claims all cited, and navigation that cannot point at a non-existent page. The accessibility and lab-performance suite covers every built page automatically (18 checks across desktop and Pixel 7 profiles).
+
+**Not implemented in Phase 2D:** deployment, DNS, hosting, any Cloudflare/Resend/Twilio resource, a public lead form or any data collection, an admin console, additional municipality pages, calculators or tools, a privacy/legal page (no data is collected, and no legal copy may be invented), the embedding/similarity runner, and index approval.
 
 **Not implemented in Phase 2C:** any Cloudflare, Resend, Twilio, or OpenAI resource, secret, or binding; a real queue or dead-letter queue; a Worker entrypoint wired to a deployment; R2 uploads; the admin UI; a public lead form; deployment. Live intake and live notifications both remain disabled.
 

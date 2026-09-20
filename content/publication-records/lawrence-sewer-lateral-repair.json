@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 1,
+  "id": "lawrence-sewer-lateral-repair",
+  "route": "/lawrence-sewer-lateral-repair/",
+  "pageType": "location",
+  "title": "Sewer lateral repair in Lawrence, Indiana | Indy Sewer Resource",
+  "description": "What Lawrence, Indiana's ordinance and its utility's current policy say about private sewer lateral responsibility, permits, camera verification, and trenchless repair - with sources and open questions.",
+  "targetIntent": "Lawrence homeowner deciding what to do about a failing sewer lateral: responsibility, permit, diagnosis, and repair-method decision. Primary query: \"sewer lateral repair lawrence in\".",
+  "owner": "tomytomz1",
+  "lifecycle": "published_noindex",
+  "workflow": {
+    "1": {
+      "status": "complete"
+    },
+    "2": {
+      "status": "complete"
+    },
+    "3": {
+      "status": "complete",
+      "note": "Competitor dossier from research/serps/2026-09-19-competitor-snapshot.json (Roto-Rooter Lawrence page, 317 Plumber Lawrence service area, Mr. Plumber Lawrence location, YoHomeFix templated city page). None of them states the municipal rules."
+    },
+    "4": {
+      "status": "complete"
+    },
+    "5": {
+      "status": "complete",
+      "note": "Evidence mapped to the Location Page Quality Gate: only 3 of 8 categories qualify today (responsibility, permit/repair requirement, lining/bursting rule)."
+    },
+    "6": {
+      "status": "complete",
+      "note": "Checked: no first-party, interview, or original dataset exists. Nothing was fabricated to fill the gap."
+    },
+    "7": {
+      "status": "complete",
+      "note": "Expert review determined REQUIRED (repair-method guidance and responsibility determinations affect homeowner decisions)."
+    },
+    "8": {
+      "status": "complete"
+    },
+    "9": {
+      "status": "complete"
+    },
+    "10": {
+      "status": "complete"
+    },
+    "11": {
+      "status": "in_progress",
+      "note": "Drafted and self-edited by the agent from the verified evidence package. A human editorial pass by the operator is still outstanding."
+    },
+    "12": {
+      "status": "complete",
+      "note": "Original homeowner decision-flow diagram added. A Lawrence-specific responsibility diagram was deliberately NOT created: the tap/wye question (law-009) is unresolved."
+    },
+    "13": {
+      "status": "not_started",
+      "note": "No qualified reviewer exists. No reviewer, credential, or date was invented."
+    },
+    "14": {
+      "status": "not_started",
+      "note": "No similarity run: the embedding runner does not exist yet, and there is no second site page to compare against."
+    },
+    "15": {
+      "status": "complete"
+    },
+    "16": {
+      "status": "complete"
+    },
+    "17": {
+      "status": "in_progress",
+      "note": "Automated checks pass (build, canonical, robots, structured data, links, budgets, axe WCAG 2.2 AA). Manual keyboard and screen-reader review is outstanding."
+    },
+    "18": {
+      "status": "complete"
+    },
+    "19": {
+      "status": "not_started",
+      "note": "Cannot be completed: there is no lead path, by design. Live intake is disabled and no form exists."
+    },
+    "20": {
+      "status": "not_started"
+    },
+    "21": {
+      "status": "not_started"
+    },
+    "22": {
+      "status": "not_started"
+    }
+  },
+  "evidence": {
+    "packageRefs": [
+      "research/sources/lawrence-primary-sources.json",
+      "research/serps/2026-09-19-competitor-snapshot.json"
+    ],
+    "primarySources": [
+      {
+        "id": "src-lawrence-code-title5",
+        "title": "Lawrence, IN Code of Ordinances, Title 5, Article 1 (Sewer Utilities)",
+        "url": "https://codelibrary.amlegal.com/codes/lawrence/latest/lawrence_in/0-0-0-16768",
+        "researchRecordId": "src-lawrence-code-title5",
+        "lastVerified": "2026-09-19",
+        "reverifyBy": "2027-03-19"
+      },
+      {
+        "id": "src-lawrence-policy-manual-2019",
+        "title": "City of Lawrence Water & Sewer Design & Construction Standards, Unit I - Policy and Procedures (approved 2019-12-23)",
+        "url": "https://www.cityoflawrence.org/construction-specifications",
+        "researchRecordId": "src-lawrence-policy-manual-2019",
+        "lastVerified": "2026-09-19",
+        "reverifyBy": "2027-03-19"
+      },
+      {
+        "id": "src-lawrence-lift-2023-08",
+        "title": "The Lawrence Lift, August 2023 (Issue 90)",
+        "url": "http://web.archive.org/web/20240808015706/https://www.cityoflawrence.org/sites/default/files/document-group/lift-2023-august.pdf",
+        "researchRecordId": "src-lawrence-lift-2023-08",
+        "lastVerified": "2026-09-19",
+        "reverifyBy": "2027-03-19"
+      }
+    ]
+  },
+  "claims": [
+    {
+      "id": "building-sewer-definition",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "law-001"
+      ],
+      "note": "Ordinance 5-1-1-2(A)(11): building sewer runs from the building drain to the public sewer and includes the right-of-way portion."
+    },
+    {
+      "id": "owner-responsible-for-repairs",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "law-002",
+        "law-005"
+      ],
+      "note": "Ordinance 5-1-2-7, echoed in the utility newsletter."
+    },
+    {
+      "id": "responsibility-extends-into-right-of-way",
+      "classification": "INFERENCE",
+      "evidenceRefs": [
+        "law-009",
+        "law-001",
+        "law-002",
+        "law-005"
+      ],
+      "note": "Reconciliation of three consistent sources; labeled as reasoning on the page. The tap/wye at the main is explicitly NOT established."
+    },
+    {
+      "id": "permit-required-for-repair",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "law-003",
+        "law-006"
+      ],
+      "note": "Ordinance 5-1-2-1(A) and policy manual 1.06."
+    },
+    {
+      "id": "permit-application-contents",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "law-003",
+        "law-006"
+      ]
+    },
+    {
+      "id": "inspection-notice-and-exposure",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "law-004"
+      ]
+    },
+    {
+      "id": "lining-and-bursting-allowed",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "law-006"
+      ]
+    },
+    {
+      "id": "post-repair-cctv-required",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "law-007"
+      ]
+    },
+    {
+      "id": "installation-requirements",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "law-008"
+      ]
+    },
+    {
+      "id": "call-utility-before-hiring",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "law-005"
+      ],
+      "note": "Utility newsletter guidance, including that the City does not reimburse contractor costs when the fault is in the public main."
+    },
+    {
+      "id": "repair-method-mechanics",
+      "classification": "INFERENCE",
+      "evidenceRefs": [],
+      "note": "General descriptions of how spot repair, CIPP lining, pipe bursting, and open-cut replacement work. No engineering-standard citation has been added yet; the page says so explicitly and makes no suitability, lifespan, or cost claim."
+    }
+  ],
+  "expertReview": {
+    "required": true,
+    "reviewer": null,
+    "scope": null,
+    "date": null,
+    "outcome": null
+  },
+  "similarity": [],
+  "publicationScore": {
+    "components": {
+      "originalLocalInformation": 14,
+      "primarySourceEvidence": 9,
+      "homeownerDecisionUtility": 11,
+      "expertVerification": 0,
+      "originalMediaTool": 4,
+      "proprietaryFirstPartyData": 0,
+      "nonCommodityDistinctiveness": 7,
+      "technicalInternalLinkQuality": 4,
+      "transparencyTrust": 5,
+      "conversionUsefulness": 1
+    },
+    "scorer": "claude-agent (draft self-assessment; not confirmed by the operator)",
+    "date": "2026-09-19"
+  },
+  "municipalityGate": {
+    "municipality": "Lawrence, Indiana",
+    "categories": {
+      "verifiedLateralResponsibility": {
+        "qualifies": true,
+        "authoritativeLocalPrimary": true,
+        "evidenceRefs": [
+          "law-001",
+          "law-002",
+          "law-005",
+          "law-009"
+        ]
+      },
+      "municipalPermitRepairRequirement": {
+        "qualifies": true,
+        "authoritativeLocalPrimary": true,
+        "evidenceRefs": [
+          "law-003",
+          "law-004",
+          "law-006"
+        ]
+      },
+      "municipalCippLiningBurstingRule": {
+        "qualifies": true,
+        "authoritativeLocalPrimary": true,
+        "evidenceRefs": [
+          "law-006",
+          "law-007"
+        ]
+      },
+      "municipalInfrastructureInformation": {
+        "qualifies": false,
+        "authoritativeLocalPrimary": false,
+        "evidenceRefs": []
+      },
+      "municipalHousingPipeFailureEvidence": {
+        "qualifies": false,
+        "authoritativeLocalPrimary": false,
+        "evidenceRefs": []
+      },
+      "municipalCostPermitProjectEvidence": {
+        "qualifies": false,
+        "authoritativeLocalPrimary": false,
+        "evidenceRefs": []
+      },
+      "originalMunicipalVisualDataAsset": {
+        "qualifies": false,
+        "authoritativeLocalPrimary": false,
+        "evidenceRefs": []
+      },
+      "originalFirstPartyInterviewData": {
+        "qualifies": false,
+        "authoritativeLocalPrimary": false,
+        "evidenceRefs": []
+      }
+    }
+  },
+  "hardGates": {
+    "commodityContentTest": {
+      "result": "pass",
+      "checkedBy": "claude-agent (draft assessment; not confirmed by the operator)",
+      "date": "2026-09-19",
+      "note": "The page states municipality-specific rules with citations a generic model cannot verify, plus an explicit list of what is unknown."
+    },
+    "perfectAiDetectionTest": {
+      "result": "pass",
+      "checkedBy": "claude-agent (draft assessment; not confirmed by the operator)",
+      "date": "2026-09-19",
+      "note": "The page would still be useful without search engines: it translates the governing documents and names the gaps."
+    },
+    "doorwayPageFirewall": {
+      "result": "pass",
+      "checkedBy": "claude-agent (draft assessment; not confirmed by the operator)",
+      "date": "2026-09-19",
+      "note": "One municipality page with unique primary-source evidence. No city-swap template, and no other municipality page exists."
+    },
+    "technicalSeoQa": {
+      "result": "not_run",
+      "checkedBy": null,
+      "date": null,
+      "note": "Automated checks pass; manual keyboard and screen-reader review is still required (docs/05 - Accessibility)."
+    },
+    "internalLinkingQa": {
+      "result": "pass",
+      "checkedBy": "claude-agent (draft assessment; not confirmed by the operator)",
+      "date": "2026-09-19",
+      "note": "Linked from the homepage and site navigation; no orphan pages; CI verifies every internal reference resolves."
+    },
+    "conversionQa": {
+      "result": "not_run",
+      "checkedBy": null,
+      "date": null,
+      "note": "No conversion path exists by design: live intake is disabled and no form is published."
+    }
+  },
+  "siteQuality": []
+}

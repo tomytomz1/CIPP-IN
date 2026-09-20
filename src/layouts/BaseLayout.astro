@@ -3,16 +3,24 @@
  * The only layout pages may use. The SEO head (title, description, robots, canonical) is
  * derived centrally from the page's publication record and the evaluator; pages cannot
  * hand-write robots or canonical tags (docs/05 → Shared Components).
+ *
+ * The footer disclosure is data-driven and site-wide: Indy Sewer Resource is an independent
+ * resource, it performs no plumbing work, and it currently has no contractor partner
+ * (docs/04 → Disclosure; /AGENTS.md §4.2).
  */
 import '../styles/global.css';
 import { canonicalUrl, robotsDirective, assertShippable } from '../lib/seo/firewall.ts';
+import { serializeJsonLd } from '../lib/seo/structured-data.ts';
 import { getRegistry, siteConfig } from '../lib/publication/load-astro.ts';
+import { NAV_ITEMS, SITE_NAME, SITE_TAGLINE } from '../config/brand.ts';
 
 interface Props {
   pageId: string;
+  /** Emits WebSite instead of WebPage. The homepage only. */
+  isSiteRoot?: boolean;
 }
 
-const { pageId } = Astro.props;
+const { pageId, isSiteRoot = false } = Astro.props;
 const entry = getRegistry().byId(pageId);
 if (!entry) {
   throw new Error(`No publication record for page id "${pageId}" (content/publication-records/).`);
@@ -24,7 +32,23 @@ assertShippable(entry, siteConfig);
 
 const robots = robotsDirective(entry, siteConfig);
 const canonical = canonicalUrl(entry.record.route, siteConfig);
-const { title, description } = entry.record;
+const { title, description, lifecycle } = entry.record;
+
+/**
+ * Minimal, truthful structured data only: the site and the page. No business, service,
+ * address, rating, or review types exist anywhere on this site (src/lib/seo/structured-data.ts
+ * rejects them, and the post-build check re-validates every emitted block).
+ */
+const jsonLd = serializeJsonLd({
+  '@context': 'https://schema.org',
+  '@type': isSiteRoot ? 'WebSite' : 'WebPage',
+  name: isSiteRoot ? SITE_NAME : title,
+  description,
+  inLanguage: 'en-US',
+  ...(canonical ? { url: canonical } : {}),
+});
+
+const year = new Date().getUTCFullYear();
 ---
 
 <!doctype html>
@@ -38,17 +62,58 @@ const { title, description } = entry.record;
     {canonical && <link rel="canonical" href={canonical} />}
     <meta name="isr:page-id" content={entry.record.id} />
     <meta name="isr:lifecycle" content={entry.record.lifecycle} />
+    <script type="application/ld+json" set:html={jsonLd} />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
     <header class="site-header">
-      <p class="site-name">Indy Sewer Resource</p>
+      <div class="shell">
+        <div>
+          <p class="site-name"><a href="/">{SITE_NAME}</a></p>
+          <p class="site-tagline">{SITE_TAGLINE}</p>
+        </div>
+        <nav class="site-nav" aria-label="Main">
+          <ul>
+            {
+              NAV_ITEMS.map((item) => (
+                <li>
+                  <a href={item.href} aria-current={item.href === entry.record.route ? 'page' : undefined}>
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
     </header>
+
+    <p class="status">
+      <strong>Pre-publication draft.</strong> This site is being built in the open. Pages are not
+      published to search engines
+      {lifecycle === 'published_noindex' ? ' while their evidence and review requirements are still open.' : '.'}
+    </p>
+
     <main id="main" tabindex="-1">
       <slot />
     </main>
+
     <footer class="site-footer">
-      <p>Independent resource. Not a plumbing company.</p>
+      <div class="shell">
+        <p>
+          <strong>{SITE_NAME}</strong> is an independent Indianapolis-area sewer information
+          resource. It is not a plumbing company, it performs no repairs or inspections, and it is
+          not affiliated with the City of Lawrence, Lawrence Utilities, or any other government
+          body.
+        </p>
+        <p>
+          No contractor partner is currently active, no homeowner information is collected on this
+          site, and no customer reviews or project data are published here. When a contractor
+          relationship exists, it will be disclosed on the page where it applies. See
+          <a href="/about/">how this resource works</a>.
+        </p>
+        <p>&copy; {year} {SITE_NAME}</p>
+      </div>
     </footer>
   </body>
 </html>

@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "id": "home",
+  "route": "/",
+  "pageType": "general",
+  "title": "Indy Sewer Resource - independent sewer information for Indianapolis-area homeowners",
+  "description": "An independent resource for Indianapolis-area homeowners facing sewer lateral problems: responsibility, permits, diagnosis, and repair-method decisions, cited to the rules that apply.",
+  "targetIntent": "Brand and orientation: what this resource is, who it helps, and where to start. Not a commercial query target.",
+  "owner": "tomytomz1",
+  "lifecycle": "published_noindex",
+  "workflow": {
+    "1": {
+      "status": "complete"
+    },
+    "2": {
+      "status": "complete"
+    },
+    "3": {
+      "status": "not_started",
+      "note": "Not run for the homepage: it targets no commercial query, so no competitor URL dossier applies yet."
+    },
+    "4": {
+      "status": "complete",
+      "note": "The only factual claims are about this project itself; they are recorded in docs/01-CURRENT-STATE.md."
+    },
+    "5": {
+      "status": "not_started",
+      "note": "Not applicable in substance: the homepage makes no municipality-specific claim."
+    },
+    "6": {
+      "status": "complete"
+    },
+    "7": {
+      "status": "complete",
+      "note": "Expert review determined NOT required: the page makes no technical or repair-method claim."
+    },
+    "8": {
+      "status": "complete"
+    },
+    "9": {
+      "status": "complete"
+    },
+    "10": {
+      "status": "complete"
+    },
+    "11": {
+      "status": "in_progress",
+      "note": "Drafted and self-edited by the agent. A human editorial pass by the operator is outstanding."
+    },
+    "12": {
+      "status": "not_started"
+    },
+    "13": {
+      "status": "not_applicable"
+    },
+    "14": {
+      "status": "not_started"
+    },
+    "15": {
+      "status": "not_started"
+    },
+    "16": {
+      "status": "not_started",
+      "note": "No publication score recorded: the page is not a candidate for indexing in this phase."
+    },
+    "17": {
+      "status": "in_progress",
+      "note": "Automated checks pass; manual keyboard and screen-reader review is outstanding."
+    },
+    "18": {
+      "status": "complete"
+    },
+    "19": {
+      "status": "not_started",
+      "note": "No conversion path exists by design."
+    },
+    "20": {
+      "status": "not_started"
+    },
+    "21": {
+      "status": "not_started"
+    },
+    "22": {
+      "status": "not_started"
+    }
+  },
+  "evidence": {
+    "packageRefs": [
+      "docs/01-CURRENT-STATE.md"
+    ],
+    "primarySources": []
+  },
+  "claims": [
+    {
+      "id": "no-active-contractor-partner",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "docs/01-CURRENT-STATE.md"
+      ],
+      "note": "No partner is configured in data or code; the partners table is empty."
+    },
+    {
+      "id": "no-homeowner-data-collected",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "docs/01-CURRENT-STATE.md"
+      ],
+      "note": "Live intake is disabled and no form exists; 0 leads have ever been collected."
+    },
+    {
+      "id": "not-a-plumbing-company",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "docs/00-PROJECT-CHARTER.md"
+      ],
+      "note": "The charter defines an independent resource that performs no plumbing work."
+    }
+  ],
+  "expertReview": {
+    "required": false,
+    "reviewer": null,
+    "scope": null,
+    "date": null,
+    "outcome": null
+  },
+  "similarity": [],
+  "publicationScore": null,
+  "municipalityGate": null,
+  "hardGates": {
+    "commodityContentTest": {
+      "result": "not_run",
+      "checkedBy": null,
+      "date": null
+    },
+    "perfectAiDetectionTest": {
+      "result": "not_run",
+      "checkedBy": null,
+      "date": null
+    },
+    "doorwayPageFirewall": {
+      "result": "pass",
+      "checkedBy": "claude-agent (draft assessment; not confirmed by the operator)",
+      "date": "2026-09-19",
+      "note": "A single orientation page; no templated city variants exist."
+    },
+    "technicalSeoQa": {
+      "result": "not_run",
+      "checkedBy": null,
+      "date": null,
+      "note": "Automated checks pass; manual keyboard and screen-reader review is still required."
+    },
+    "internalLinkingQa": {
+      "result": "pass",
+      "checkedBy": "claude-agent (draft assessment; not confirmed by the operator)",
+      "date": "2026-09-19",
+      "note": "Links to the Lawrence resource and the methodology page; CI verifies every internal reference resolves."
+    },
+    "conversionQa": {
+      "result": "not_run",
+      "checkedBy": null,
+      "date": null,
+      "note": "No conversion path exists by design."
+    }
+  },
+  "siteQuality": []
+}

@@ -2,9 +2,12 @@
  * Build-time site configuration. Pure and fail-safe:
  * - Unknown/missing SITE_ENV resolves to "development" (never production).
  * - Only SITE_ENV=production can ever emit indexable pages.
- * - Production requires a valid PUBLIC_SITE_ORIGIN; there is no default, because
- *   the target domain (indysewerresource.com) is not yet registered.
+ * - Production falls back to the registered brand domain when PUBLIC_SITE_ORIGIN is unset
+ *   (the operator registered indysewerresource.com on 2026-09-19). Knowing the canonical
+ *   origin changes nothing about indexability: the evaluator still decides that, and nothing
+ *   is deployed to the domain.
  */
+import { PRODUCTION_ORIGIN } from './brand.ts';
 export const SITE_ENVIRONMENTS = ['development', 'preview', 'production'] as const;
 export type SiteEnvironment = (typeof SITE_ENVIRONMENTS)[number];
 
@@ -44,10 +47,7 @@ export function resolveSiteConfig(env: Record<string, string | undefined>): Site
   const rawOrigin = (env['PUBLIC_SITE_ORIGIN'] ?? '').trim();
 
   if (environment === 'production') {
-    if (!rawOrigin) {
-      throw new Error('SITE_ENV=production requires PUBLIC_SITE_ORIGIN (no default: the production domain is not yet registered).');
-    }
-    return { environment, origin: validateOrigin(rawOrigin), indexingAllowed: true };
+    return { environment, origin: validateOrigin(rawOrigin || PRODUCTION_ORIGIN), indexingAllowed: true };
   }
   const origin = rawOrigin ? validateOrigin(rawOrigin, { allowNonProductionHosts: true }) : null;
   return { environment, origin, indexingAllowed: false };

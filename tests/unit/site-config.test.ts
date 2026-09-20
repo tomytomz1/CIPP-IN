@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { resolveSiteConfig, validateOrigin } from '../../src/config/site.ts';
+import { PRODUCTION_ORIGIN } from '../../src/config/brand.ts';
 import { renderHeadersFile } from '../../src/integrations/response-headers.ts';
 
 describe('site configuration', () => {
@@ -10,8 +11,16 @@ describe('site configuration', () => {
   it('preview is never indexable, even with an origin', () => {
     expect(resolveSiteConfig({ SITE_ENV: 'preview', PUBLIC_SITE_ORIGIN: 'https://preview.fixture-origin.invalid' }).indexingAllowed).toBe(false);
   });
-  it('production fails safely without a valid origin', () => {
-    expect(() => resolveSiteConfig({ SITE_ENV: 'production' })).toThrow(/requires PUBLIC_SITE_ORIGIN/);
+  it('production uses the registered brand domain when no origin is configured', () => {
+    // The operator registered indysewerresource.com; knowing the canonical origin does not
+    // make any page indexable (the evaluator decides that) and nothing is deployed to it.
+    expect(resolveSiteConfig({ SITE_ENV: 'production' })).toEqual({
+      environment: 'production',
+      origin: PRODUCTION_ORIGIN,
+      indexingAllowed: true,
+    });
+  });
+  it('production rejects an invalid explicit origin', () => {
     expect(() => resolveSiteConfig({ SITE_ENV: 'production', PUBLIC_SITE_ORIGIN: 'http://insecure.fixture' })).toThrow(/https/);
     expect(() => resolveSiteConfig({ SITE_ENV: 'production', PUBLIC_SITE_ORIGIN: 'https://localhost' })).toThrow(/not a production host/);
     expect(() => resolveSiteConfig({ SITE_ENV: 'production', PUBLIC_SITE_ORIGIN: 'https://fixture.invalid' })).toThrow(/not a production host/);
