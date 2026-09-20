@@ -14,7 +14,7 @@ This document distinguishes three kinds of items:
 |---|---|
 | **LOCKED** | Operator-approved architectural decision. Change only with explicit operator approval, logged in `01-CURRENT-STATE.md` → Last Major Decisions. |
 | **IMPLEMENTATION PENDING** | Locked architecture that has not been built yet. |
-| **IMPLEMENTED (Phase 2A/2B/2C/2D/2E)** / **PARTIALLY IMPLEMENTED** | Built and tested in the repository (see the Implementation Records below). Not deployed; no cloud or vendor resources exist. |
+| **IMPLEMENTED (Phase 2A/2B/2C/2D/2E/2F)** / **PARTIALLY IMPLEMENTED** | Built and tested in the repository (see the Implementation Records below). Not deployed; no cloud or vendor resources exist. |
 | **OPEN** | Legal, business, or operational question that is still unresolved. Must not be decided silently by an agent. |
 
 Implementation-level details that this spec leaves unspecified (exact file names, library versions, header values, table column names) may be decided during the build. Record them in the run receipt and, if material, in this document. They must preserve every LOCKED requirement below.
@@ -90,12 +90,24 @@ Intended future organization. Responsibilities are locked; exact folder names ar
 
 ---
 
-## Deployment — LOCKED (IMPLEMENTATION PENDING)
+## Deployment — LOCKED (CONFIGURED — Phase 2F; not yet deployed)
 
 - Production deploys only from the protected `main` branch after required CI checks pass.
 - Pull requests / non-production branches should get preview deployments once implementation begins.
 - **Preview environments are globally non-indexable** (`noindex` on every response, plus no production sitemap).
-- No production infrastructure exists. None is created until the build phase, and production publishing waits for Branch / Index Governance to be in place.
+- **The production deployment is also globally non-indexable while no page is indexable.** See Implementation Record: Phase 2F.
+
+**Deployment procedure (Cloudflare Workers + Static Assets):**
+
+```text
+npm run build:production     # SITE_ENV=production build + production-mode checks
+npm run deploy               # wrangler deploy -c dist/server/wrangler.json
+npm run verify:production    # live smoke test of the deployed site
+```
+
+`astro build` writes the deployable Worker config to `dist/server/wrangler.json`, inheriting the Worker name, compatibility date, and observability setting from `wrangler.jsonc` and adding the static-assets binding for `dist/client`. No D1, R2, Queue, Turnstile, or Access binding exists in either file.
+
+**Not yet done (operator actions):** Cloudflare authentication, moving the domain's DNS to Cloudflare, creating the Worker, and attaching the custom domain. See `01-CURRENT-STATE.md` for the current state.
 
 ## Branch / Index Governance — LOCKED (CONFIGURED — Phase 2A, 2026-09-19)
 
@@ -740,6 +752,30 @@ Implemented 2026-09-20 on branch `phase-2e-lawrence-evidence-editorial`. No page
 **Gate and score, reassessed rather than targeted:** the Location Page Quality Gate moved from 3 of 8 to **5 of 8** (lateral responsibility, permit/repair requirement, lining/bursting rule, municipal infrastructure information, and housing/pipe/failure evidence), all five supported by authoritative local primary sources, so the gate passes. Categories 6 (local cost/permit/project evidence), 7 (original municipal visual/data asset) and 8 (first-party data) remain **false**: the compiled table of the City's own rehabilitation projects restates City documents rather than producing new data, and claiming it as category 7 would be padding. The publication score moved from 55 to **63** against the 85 money/location threshold, with expert verification and first-party data still scored 0.
 
 **Still blocking indexability:** expert review (absent), the human editorial pass (an AI revision does not satisfy it), the embedding half of similarity QA, manual accessibility review, conversion QA (no lead path exists by design), the score gap, and operator index approval.
+
+## Implementation Record: Phase 2F (deployment configuration; deployment not completed)
+
+Prepared 2026-09-20 on branch `phase-2f-safe-public-deployment`. **Nothing is deployed**: the environment has no Cloudflare credentials, and the domain's DNS is still at the registrar, so both remaining steps are operator actions.
+
+**Indexing safety hardened for a public deployment.** `X-Robots-Tag: noindex, nofollow` is now written for every response whenever the build is non-production **or** no page is effectively indexable — so a real production hostname is still globally non-indexable at the header level, not only through each page's robots meta tag. The count comes from the evaluator at build time (`astro.config.mjs`), so the header lifts on its own if and when a page genuinely passes the Indexing Gate with operator approval. It is never toggled by hand.
+
+**HSTS** (`Strict-Transport-Security: max-age=31536000`, no `includeSubDomains`, no `preload`) is now emitted in production builds, which docs/05 deferred until the production domain existed.
+
+**Verified production build output** (`SITE_ENV=production`, origin `https://indysewerresource.com`):
+
+| Output | Result |
+|---|---|
+| Pages built | 3, each `<meta name="robots" content="noindex, follow">` |
+| Canonicals | apex host only (`https://indysewerresource.com/…`) |
+| `_headers` | CSP, nosniff, referrer policy, permissions policy, `X-Frame-Options: DENY`, HSTS, and the global `X-Robots-Tag: noindex, nofollow` |
+| `sitemap.xml` | 0 URLs |
+| `robots.txt` | allows crawling (so the noindex directive is visible) and advertises the empty sitemap |
+
+**Tooling added:** `scripts/build-production.ts` (production build plus production-mode `check-dist`, budgets, and similarity QA), `scripts/verify-production.ts` (live smoke test asserting HTTPS, 200s, robots meta **and** header, canonical host, 0 sitemap URLs, no form, no client JS, security headers, and `503` from `/api/lead-intake`), and the `build:production`, `deploy`, and `verify:production` scripts.
+
+**Canonical host:** the apex is canonical. `www` must not become a second serving host; the recommended configuration is a zone-level Cloudflare Redirect Rule sending `www` to the apex with a 301.
+
+**Not provisioned in Phase 2F:** D1, Queues, R2, Turnstile, Access, analytics, Search Console, any email/mailbox DNS, any lead path, and any index approval.
 
 **Not implemented in Phase 2E:** any deployment, DNS, or hosting change; any Cloudflare, Resend, Twilio, or OpenAI resource, key, or account; a lead form or any data collection; additional municipality pages; a Lawrence responsibility diagram (`law-009` is unresolved); and any index approval.
 

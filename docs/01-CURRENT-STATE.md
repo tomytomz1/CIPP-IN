@@ -1,11 +1,11 @@
 # CURRENT STATE
 
 Last updated: 2026-09-20
-Last verified commit: `7a76251d2d3d324da5ef2b2e1f225bcf9f8fc00a` (post-Phase-2D reconciliation, PR #8). The Phase 2E merge follows; resolve with `git log` (a file cannot contain its own commit SHA).
-Production URL: None — no production deployment exists. The domain `indysewerresource.com` is registered and owned by the operator (2026-09-19). It is configured as the canonical production origin in the build, but nothing is deployed to it and DNS has not been moved to Cloudflare or any other host.
+Last verified commit: `511a7b17484c99710f1cf6db0e1f76313c34437d` (Phase 2E audit trail, PR #10). The Phase 2F merge follows; resolve with `git log` (a file cannot contain its own commit SHA).
+Production URL: None yet — **no production deployment exists**. The domain `indysewerresource.com` is registered and owned by the operator (2026-09-19) and is the canonical origin the production build uses. Observed 2026-09-20: its nameservers are still the registrar's (`dns1.registrar-servers.com` / `dns2.registrar-servers.com`), the apex resolves to a registrar parking address, and HTTPS does not respond. Deployment configuration is complete; the remaining steps are operator actions (Cloudflare authentication and moving DNS to Cloudflare).
 Repository: https://github.com/tomytomz1/CIPP-IN
 Current branch: main
-Current phase: Phase 2E — Lawrence evidence enrichment and editorial QA (complete). Backend expansion is deliberately paused. Three real homeowner-facing pages exist (homepage, Lawrence sewer-lateral resource, methodology page), all `published_noindex`. No deployment exists; no page is indexable; live lead collection is DISABLED, notification sending is DISABLED, no lead has been collected, and no email or SMS has been sent.
+Current phase: Phase 2F — safe public noindex deployment (**PARTIAL**: configuration merged, deployment blocked on operator actions). Backend expansion is deliberately paused. Three real homeowner-facing pages exist (homepage, Lawrence sewer-lateral resource, methodology page), all `published_noindex`. No deployment exists; no page is indexable; live lead collection is DISABLED, notification sending is DISABLED, no lead has been collected, and no email or SMS has been sent.
 
 > This file is authoritative for what currently exists and what has been completed. It does not override strategic rules in higher-precedence documents (see `/AGENTS.md` §1). Update it after every meaningful piece of work.
 
@@ -135,14 +135,20 @@ The site exists in the repository; no production deployment exists, and no page 
   - editorial corrections on the Lawrence page (unsupported "cheapest step" claim removed, camera-inspection claims narrowed, the "trenchless is not permitted everywhere" framing removed, the "not a complete quote" line replaced with a question to ask, DVD speculation removed, permit-practice assertion removed), on the About page (contractor-evidence and claim-labelling overstatements), and on the homepage (no implied judgement of whether a quote is reasonable)
   - similarity-QA runner implemented (`scripts/similarity-qa.ts`, `scripts/lib/similarity.ts`) and added to CI
   - details: `05-BUILD-SPEC.md` → Implementation Record: Phase 2E
+- Phase 2F deployment configuration (2026-09-20, **deployment not completed**):
+  - production builds are now globally non-indexable at the header level too: `X-Robots-Tag: noindex, nofollow` is written for every response while 0 pages are effectively indexable, computed from the evaluator rather than set by hand
+  - HSTS (`max-age=31536000`) emitted in production builds now that the domain exists
+  - `npm run build:production`, `npm run deploy`, `npm run verify:production` and their scripts
+  - production build verified locally: 3 pages all `noindex, follow`, apex canonicals, 0 sitemap URLs, robots.txt allows crawling
+  - details: `05-BUILD-SPEC.md` → Implementation Record: Phase 2F
 
 ## In Progress
 
-- None.
+- **Production deployment (blocked on operator actions).** The repository is deployment-ready. Two things must happen outside this environment: (1) Cloudflare authentication (`npx wrangler login`, or an API token in the environment), and (2) moving `indysewerresource.com` to Cloudflare DNS at the registrar so a Workers custom domain can be attached. Until both are done, nothing is deployed and the domain does not serve the site.
 
 ## Not Started
 
-- DNS and hosting configuration for the registered domain (a deployment decision; not scheduled)
+- DNS move to Cloudflare and the production deployment itself (configuration is ready; operator actions outstanding)
 - Additional municipality pages (none; they are added only when a municipality has enough verified local evidence)
 - R2 uploads, admin UI, and a deployed Worker entrypoint wiring the queue consumer (the consumer itself is implemented and tested; no queue exists)
 - Live partner/operator notifications (Resend and Twilio adapters exist; no account, key, number, or sending is enabled)
@@ -156,7 +162,6 @@ The site exists in the repository; no production deployment exists, and no page 
 - Tools/calculators
 - Further original visuals (one original decision-flow diagram exists; a Lawrence responsibility diagram is deliberately withheld until `law-009` is resolved)
 - Expert reviewer recruitment
-- Production deployment
 - Google Search Console setup
 - Analytics setup
 - Call tracking setup
@@ -211,7 +216,8 @@ Astro 7.3.3 static site with the Cloudflare adapter, built from the Phase 2A fou
 - **Operator approvals:** 0.
 - **Effectively indexable pages:** 0.
 - **Production sitemap eligibility:** 0 URLs.
-- **Canonical production origin:** `https://indysewerresource.com` (registered; nothing deployed to it).
+- **Canonical production origin:** `https://indysewerresource.com` (registered; nothing deployed to it; DNS still at the registrar).
+- **Production deployment:** none. No Cloudflare Worker created, no custom domain attached, and no Cloudflare account authenticated in this environment.
 - **Lawrence page status:** Location Page Quality Gate 5 of 8 (passes); publication score 63/85; expert review required and absent; similarity QA deterministic checks clean, embedding check `not_run`.
 - **Client JavaScript:** 0 bytes on every page. CSS: ~1.8 KB gzip.
 
@@ -320,12 +326,14 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 ## Current Blockers
 
 - None block the next implementation phase.
-- Before **production publishing**: DNS and hosting configuration for the registered domain, a deployment, real pages passing the indexing gate with operator approval, and the Launch Checklist in `05-BUILD-SPEC.md`. The domain is owned and branch/index governance is configured; the development shell has been replaced by real pages.
+- Before the **site is publicly reachable**: Cloudflare authentication and moving `indysewerresource.com` to Cloudflare DNS, then `npm run build:production`, `npm run deploy`, attaching the custom domain, and `npm run verify:production`. Both blockers are operator actions outside this environment.
+- Before **publishing to search engines** (a separate thing from being reachable): real pages passing the indexing gate with operator approval, and the Launch Checklist in `05-BUILD-SPEC.md`.
 - Before **live lead collection/routing**: legal review of consent/privacy/disclosure/retention, plus provisioning D1/Queues/Turnstile and setting the activation configuration. Until then the intake endpoint fails closed.
 - Before the **Lawrence page can be indexed**: a real expert review (none exists), a human editorial pass by the operator, a publication score of 85 (63 today), the embedding half of similarity QA (the runner exists; no API key, so it reports `not_run`), manual accessibility review, and operator index approval. The Location Page Quality Gate now passes on evidence (5 of 8, all authoritative local primary-source). Confirming the open Lawrence questions with Lawrence Utilities is what would raise the evidence categories and the score; an unresolved question only blocks indexing where the page makes or depends on a claim about it (see Open Question 2).
 
 ## Last Major Decisions
 
+- 2026-09-20 — Phase 2F prepared (operator-authorized): deployment configuration and tooling for Cloudflare Workers + Static Assets, with the production deployment hardened to stay globally non-indexable while no page is indexable. Deployment itself was NOT completed: no Cloudflare credentials in this environment, and the domain's DNS is still at the registrar. Recorded as PARTIAL.
 - 2026-09-20 — Phase 2E implemented (operator-authorized): four new verified City of Lawrence sources and ten new research records; a separate technical-standards evidence file for general method mechanics; the Location Page Quality Gate reassessed from 3 of 8 to 5 of 8; the publication score re-scored from 55 to 63; operator-directed editorial corrections on all three pages; and the similarity-QA runner implemented with the embedding check failing closed. No page became indexable.
 - 2026-09-19 — **Operator registered `indysewerresource.com`** and decided the **GitHub repository stays public**. The domain is configured as the canonical production origin; no DNS change, hosting, or deployment followed.
 - 2026-09-19 — Operator-approved indexing-policy reconciliation for unresolved Lawrence questions (Open Question 2). No gate or threshold was weakened.
@@ -380,3 +388,4 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 - 2026-09-19 — Phase 2D: replaced the development shell with three real pages (`/`, `/lawrence-sewer-lateral-repair/`, `/about/`), added the site shell, design system, evidence components, and the decision-flow diagram, and recorded honest publication records (0 indexable, 0 approvals). Reconciled the registered domain, the public-repository decision, and the Lawrence indexing policy in this file. No deployment, no DNS change, no lead collection, no indexable page.
 - 2026-09-20 — Post-Phase-2D reconciliation of this file only: corrected the stale verified-commit pointer, the accessibility wording, the project-status paragraph (registered domain, development shell removed, three real pages), the Not Started list, the architecture and Search Console wording, the production-publishing blocker, and the priorities. Documentation only: no code, content, publication record, research, governance, infrastructure, deployment, or strategy change.
 - 2026-09-20 — Phase 2E: verified four new City of Lawrence sources and added ten research records plus a technical-standards evidence file; corrected editorial overclaims on the Lawrence, About, and home pages; reassessed the location gate (3/8 → 5/8) and the publication score (55 → 63); implemented the similarity-QA runner and added it to CI. No deployment, no lead path, no index approval, and no page became indexable.
+- 2026-09-20 — Phase 2F (PARTIAL): added production deployment configuration and tooling (`build:production`, `deploy`, `verify:production`), made production builds globally noindex at the header level while 0 pages are indexable, and enabled HSTS in production. Nothing was deployed: no Cloudflare credentials and DNS still at the registrar. No infrastructure provisioned, no index approval, no page indexable.

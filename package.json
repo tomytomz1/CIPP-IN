@@ -19,7 +19,10 @@
     "test:a11y": "playwright test",
     "ci": "npm run typecheck && npm run test && npm run validate:records && npm run validate:migrations && npm run build && npm run check:dist && npm run check:budgets && npm run similarity:qa",
     "validate:migrations": "node scripts/validate-migrations.ts",
-    "similarity:qa": "node scripts/similarity-qa.ts"
+    "similarity:qa": "node scripts/similarity-qa.ts",
+    "build:production": "node scripts/build-production.ts",
+    "deploy": "wrangler deploy -c dist/server/wrangler.json",
+    "verify:production": "node scripts/verify-production.ts"
   },
   "dependencies": {
     "@astrojs/cloudflare": "14.3.2",
