@@ -98,6 +98,63 @@ export interface LeadQueue {
   send(message: LeadQueueMessage): Promise<void>;
 }
 
+/** Delivery channels a notification can use. SMS is optional under the locked architecture. */
+export const DELIVERY_CHANNELS = ['email', 'sms'] as const;
+export const deliveryChannelSchema = z.enum(DELIVERY_CHANNELS);
+export type DeliveryChannel = z.infer<typeof deliveryChannelSchema>;
+
+/**
+ * Partner notification destinations, read from the `partners` row at delivery time.
+ * A channel is usable only when it is enabled AND has a destination; the database enforces the
+ * same invariant with triggers (migration 0002).
+ */
+export const partnerNotificationConfigSchema = z
+  .strictObject({
+    partnerId: z.uuid(),
+    displayName: trimmed(120),
+    status: z.enum(['active', 'inactive']),
+    notificationEmail: z.string().trim().max(254).pipe(z.email()).nullable(),
+    notificationPhoneE164: z
+      .string()
+      .regex(/^\+1\d{10}$/, 'notification phone must be E.164 (+1XXXXXXXXXX)')
+      .nullable(),
+    emailEnabled: z.boolean(),
+    smsEnabled: z.boolean(),
+  })
+  .superRefine((v, ctx) => {
+    if (v.emailEnabled && !v.notificationEmail) {
+      ctx.addIssue({ code: 'custom', path: ['notificationEmail'], message: 'email channel enabled without a destination' });
+    }
+    if (v.smsEnabled && !v.notificationPhoneE164) {
+      ctx.addIssue({ code: 'custom', path: ['notificationPhoneE164'], message: 'sms channel enabled without a destination' });
+    }
+  });
+export type PartnerNotificationConfig = z.infer<typeof partnerNotificationConfigSchema>;
+
+/**
+ * Outbound email contract. Notification bodies carry identifiers and operational instructions
+ * only: homeowner contact details are retrieved through the protected operational layer, never
+ * pushed into a provider payload (docs/05 -> Queue / Notification Reliability, Security).
+ */
+export const emailMessageSchema = z.strictObject({
+  from: z.string().trim().max(254).pipe(z.email()),
+  to: z.string().trim().max(254).pipe(z.email()),
+  subject: trimmed(160),
+  text: trimmed(4000),
+  /** Stable per (delivery, channel): a re-send after an uncertain response is deduplicated. */
+  idempotencyKey: z.string().trim().min(1).max(256),
+});
+export type EmailMessage = z.infer<typeof emailMessageSchema>;
+
+/** Outbound SMS contract. Minimal by design: identifiers plus an operator action prompt. */
+export const smsMessageSchema = z.strictObject({
+  to: z.string().regex(/^\+1\d{10}$/, 'SMS recipient must be E.164 (+1XXXXXXXXXX)'),
+  from: z.string().regex(/^\+1\d{10}$/, 'SMS sender must be E.164 (+1XXXXXXXXXX)'),
+  body: trimmed(320),
+  idempotencyKey: z.string().trim().min(1).max(256),
+});
+export type SmsMessage = z.infer<typeof smsMessageSchema>;
+
 const optionalIso = z.iso.datetime({ offset: true }).optional();
 const REPAIR_METHODS = [
   'cipp_lining', 'sectional_point_liner', 'pipe_bursting', 'open_cut_excavation', 'spot_repair', 'cleaning_only', 'other', 'none',

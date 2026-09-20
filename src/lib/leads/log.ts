@@ -2,7 +2,11 @@
  * Minimal logging helper. Only identifiers and enum-like reason codes are logged; homeowner
  * contact details, descriptions, and free text never are (docs/05 → Security).
  */
-const ALLOWED_KEYS = new Set(['leadId', 'routeId', 'deliveryId', 'partnerId', 'reason', 'code', 'count', 'status']);
+const ALLOWED_KEYS = new Set([
+  'leadId', 'routeId', 'deliveryId', 'partnerId', 'reason', 'code', 'count', 'status',
+  // Phase 2C delivery fields: still identifiers and enum-like codes only.
+  'channel', 'attempt', 'provider',
+]);
 
 export function safeLog(level: 'info' | 'warn' | 'error', event: string, fields: Record<string, unknown> = {}): void {
   const safe: Record<string, unknown> = {};

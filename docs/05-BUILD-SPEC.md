@@ -14,7 +14,7 @@ This document distinguishes three kinds of items:
 |---|---|
 | **LOCKED** | Operator-approved architectural decision. Change only with explicit operator approval, logged in `01-CURRENT-STATE.md` → Last Major Decisions. |
 | **IMPLEMENTATION PENDING** | Locked architecture that has not been built yet. |
-| **IMPLEMENTED (Phase 2A/2B)** / **PARTIALLY IMPLEMENTED** | Built and tested in the repository (see the Implementation Records below). Not deployed; no cloud or vendor resources exist. |
+| **IMPLEMENTED (Phase 2A/2B/2C)** / **PARTIALLY IMPLEMENTED** | Built and tested in the repository (see the Implementation Records below). Not deployed; no cloud or vendor resources exist. |
 | **OPEN** | Legal, business, or operational question that is still unresolved. Must not be decided silently by an agent. |
 
 Implementation-level details that this spec leaves unspecified (exact file names, library versions, header values, table column names) may be decided during the build. Record them in the run receipt and, if material, in this document. They must preserve every LOCKED requirement below.
@@ -285,7 +285,7 @@ Routed contractor; delivery timestamp; first-contact timestamp; response time; a
 
 Lifecycle actions are stored as immutable, event-style history rather than by overwriting historical facts. Contractor reporting obligations depend on rental contract terms (OPEN).
 
-## Queue / Notification Reliability — LOCKED (IMPLEMENTED — Phase 2B: persist-first + typed message contract; no queue resource, no notification providers)
+## Queue / Notification Reliability — LOCKED (IMPLEMENTED — Phase 2B: persist-first + typed message contract; Phase 2C: idempotent queue consumer + provider adapters. No queue resource, no provider account, nothing sent.)
 
 ```text
 persist lead first -> enqueue delivery -> notify partner/operator
@@ -316,14 +316,14 @@ Logical data domains. The physical schema may be refined during implementation a
 
 Phase 2B implements all ten domains as physical tables in `migrations/0001_lead_data_foundation.sql`. No remote D1 database exists; the migration is exercised against a local database in tests and CI.
 
-## Partner / Renter Switching — LOCKED (IMPLEMENTED — Phase 2B; no real partner configured)
+## Partner / Renter Switching — LOCKED (IMPLEMENTED — Phase 2B; Phase 2C adds notification destinations and delivery against the historical route; no real partner configured)
 
 - Partner identity and lead routing are driven by configuration and data (`partners`, `routing_rules`, `lead_routes`).
 - A contractor's identity is never hard-coded into editorial content architecture.
 - Each lead's historical routing decision stays immutable and auditable.
 - Changing the active renter affects only future routing. It requires no content rewrite and transfers no ownership or editorial control. The domain remains project-owned.
 
-## Call Tracking — LOCKED (PARTIALLY IMPLEMENTED — Phase 2B: metadata schema only; no Twilio number, recording structurally disabled)
+## Call Tracking — LOCKED (PARTIALLY IMPLEMENTED — Phase 2B: metadata schema only; Phase 2C: Twilio messaging adapter for SMS notifications only. No Twilio account or number; recording structurally disabled.)
 
 - One operator-controlled local Twilio tracking number initially.
 - Store call identifiers, timestamps, duration, routing partner, and disposition where available.
@@ -403,7 +403,7 @@ Accessibility is a release and quality requirement, not optional polish. It is p
   - call-recording legal requirements
   - partner disclosure wording
 
-## Security — LOCKED (PARTIALLY IMPLEMENTED — Phase 2A: headers, secret scanning; Phase 2B: input validation, prepared statements, idempotency, fail-closed intake)
+## Security — LOCKED (PARTIALLY IMPLEMENTED — Phase 2A: headers, secret scanning; Phase 2B: input validation, prepared statements, idempotency, fail-closed intake; Phase 2C: fail-closed provider activation, server-only provider modules, no PII in provider payloads)
 
 - Secrets are never committed; Cloudflare/Wrangler secret management.
 - Cloudflare Access protects operational admin. No custom auth system initially.
@@ -644,6 +644,45 @@ A `TEST-ONLY-` consent artifact is rejected when `SITE_ENV=production`. The endp
 **Known limitation:** `wrangler d1 migrations apply` is the production path for migrations, but it requires a configured binding with a real `database_id`, which does not exist and was not invented. Until D1 is provisioned, CI applies the same `.sql` files statement-by-statement to a local database (`npm run validate:migrations`). The local test runtime pins compatibility date `2026-07-30` (the newest its `workerd` supports); `wrangler.jsonc` keeps `2026-09-01`.
 
 **Not implemented in Phase 2B:** any Cloudflare/Resend/Twilio/OpenAI resource or secret; the queue consumer worker; notification sending; R2 uploads; the admin UI; a public lead form; deployment.
+
+## Implementation Record: Phase 2C (queue consumer + notification delivery)
+
+Implemented 2026-09-19 on branch `phase-2c-delivery-foundation`. The path `persist lead -> route -> enqueue identifier-only message -> queue consumer -> delivery provider` is now complete and tested end to end against a local database with injected providers. Nothing is activated: no Cloudflare Queue, D1 database, Resend account or key, Twilio account or number exists, no message was sent, and nothing is deployed. No dependency was added.
+
+**Migration `0002_delivery_foundation.sql`** (smallest change inside the already-approved logical domains; no new domain):
+
+| Change | Why |
+|---|---|
+| `lead_events` rebuilt with an `idempotency_key TEXT` column and `idx_lead_events_idempotency` (UNIQUE) | durable, database-enforced delivery idempotency. SQLite cannot alter a CHECK constraint, so the table is recreated, its rows copied, and its indexes plus the no-UPDATE trigger restored. History stays append-only. |
+| `lead_events.event_type` CHECK extended | `delivery_attempt_started`, `delivery_succeeded`, `delivery_failed_retryable`, `delivery_failed_permanent`, `delivery_duplicate_suppressed` |
+| `partners` gains `notification_email`, `notification_phone_e164`, `notify_email_enabled`, `notify_sms_enabled` (both flags default `0`) | notification destinations. Two triggers reject a channel that is enabled without a usable destination. |
+
+Still zero seed rows: the migration cannot enable delivery for anyone, and no contractor appears in the schema or in source code.
+
+**Delivery idempotency (the exact decision).** Cloudflare Queues deliver at least once, so exactly-once is enforced in the database, never in memory:
+
+- A **claim** row (`delivery_attempt_started`, key `claim:<deliveryId>:<channel>:<lease>`) is inserted *before* the provider is called. A concurrent duplicate loses the UNIQUE race and does not send.
+- **Success** (`delivery_succeeded`, key `success:<deliveryId>:<channel>`) and **terminal failure** (`delivery_failed_permanent`, key `terminal:<deliveryId>:<channel>`) can each exist only once; a later redelivery short-circuits before any provider call, including after a Worker restart or a fresh service instance.
+- An unfinished claim is treated as in flight for `ATTEMPT_LEASE_SECONDS` (120); after that another consumer may take over, so a crashed attempt cannot wedge a lead forever.
+- Every provider call carries a **stable provider-side idempotency key** (`isr-delivery-<deliveryId>-<channel>`; Resend `Idempotency-Key`, Twilio `I-Twilio-Idempotency-Token`), so a retry after an uncertain timeout is deduplicated by the provider rather than becoming a second notification.
+
+**Routing integrity.** The consumer resolves the partner from the immutable `lead_routes` row selected at intake and never re-runs `decideRoute`. If that partner is now inactive, missing, or has no usable destination, the delivery fails to durable operator-follow-up state. A lead is never handed to a different contractor.
+
+**Retry / failure model.** `processDeliveryMessage` returns `delivered | duplicate | retry | terminal`; `handleDeliveryBatch` acks the first two and the last, and calls `message.retry({ delaySeconds })` with a 30s→30m backoff otherwise. Retrying stops at `MAX_DELIVERY_ATTEMPTS` (5), which records a permanent failure instead of looping. Malformed messages are terminal and never touch lead data. An unexpected exception retries rather than dropping a lead.
+
+**Future queue infrastructure (not created).** Wiring requires a real queue plus a Worker entrypoint: `wrangler.jsonc` would set `main` to a worker module exporting `queue()` alongside the Astro `fetch` handler (the adapter's documented custom-entrypoint path), with `queues.producers` (`LEAD_QUEUE`) and a consumer entry (`max_retries`, and a `dead_letter_queue` — without one, messages that exhaust retries are deleted permanently). None of this is configured, and no binding or id was invented.
+
+**Provider adapters (no network call in this repository):**
+
+- `src/lib/leads/providers/resend.ts` — documented API (`POST https://api.resend.com/emails`, bearer key, JSON body, `Idempotency-Key`). Injected `fetch`, abort-based timeout, strict response parsing, documented error codes mapped to retryable vs terminal. A 2xx that cannot be parsed is terminal, because retrying might duplicate an accepted message.
+- `src/lib/leads/providers/twilio.ts` — documented Messaging API (`POST .../Accounts/{AccountSid}/Messages.json`, basic auth, form-encoded `To`/`From`/`Body`). SMS content is minimal by contract: identifiers plus an operator prompt.
+- `src/lib/leads/notifications.ts` — templates marked `[NON-PRODUCTION TEST TEMPLATE]`. They carry identifiers and an action prompt only; homeowner details are retrieved through the protected operational layer, so no contact PII reaches a provider. Final partner-disclosure and consent wording remains OPEN.
+
+**Provider activation boundary (fails closed, separate from intake).** `resolveNotificationActivation` requires `NOTIFICATIONS_ENABLED="true"`, `RESEND_API_KEY`, a valid `NOTIFICATION_FROM_EMAIL` and `OPERATOR_NOTIFICATION_EMAIL`, and the `DB` binding; SMS requires all three Twilio values together or none. In production it rejects test-only keys and reserved test domains. Notification sending is deliberately NOT governed by the homeowner intake flag: enabling one must never implicitly enable the other.
+
+**Operator follow-up.** `listLeadsNeedingAttention` returns safe structured records (lead id, reason, timestamp, reason code) for `no_active_partner`, `delivery_not_enqueued`, `delivery_failed_permanently`, and `delivery_retry_pending`. Contact PII is reachable only through the explicit, separate `getLeadContactForOperator` call. There is still no admin UI.
+
+**Not implemented in Phase 2C:** any Cloudflare, Resend, Twilio, or OpenAI resource, secret, or binding; a real queue or dead-letter queue; a Worker entrypoint wired to a deployment; R2 uploads; the admin UI; a public lead form; deployment. Live intake and live notifications both remain disabled.
 
 ## Definition of Done
 

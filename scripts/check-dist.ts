@@ -111,7 +111,11 @@ for (const e of registry.entries) {
 // Server-only lead code must never reach the browser bundle (docs/05 → Security).
 for (const file of walk(DIST)) {
   const text = readFileSync(file, 'utf8');
-  for (const marker of ['INSERT INTO leads', 'lead_contacts', 'INSERT INTO consents', 'cloudflare:workers', 'TURNSTILE_SECRET']) {
+  for (const marker of [
+    'INSERT INTO leads', 'lead_contacts', 'INSERT INTO consents', 'cloudflare:workers', 'TURNSTILE_SECRET',
+    // Phase 2C: notification provider code, endpoints, and secrets are server-only too.
+    'RESEND_API_KEY', 'TWILIO_AUTH_TOKEN', 'api.resend.com', 'api.twilio.com', 'Idempotency-Key',
+  ]) {
     if (text.includes(marker)) fail(`client asset ${file} contains server-only marker "${marker}"`);
   }
 }
