@@ -1,0 +1,90 @@
+---
+/**
+ * Original diagram: the general order of decisions a homeowner faces with a suspected sewer
+ * lateral problem.
+ *
+ * Deliberately NOT municipality-specific. It contains no Lawrence fact, no responsibility
+ * boundary, and no cost: those depend on evidence this project has either verified elsewhere on
+ * the page or has not established. A Lawrence-specific responsibility diagram is withheld until
+ * the tap/wye question is confirmed with Lawrence Utilities (research record law-009).
+ *
+ * Accessible as an image: title + description are announced, and the same sequence is written
+ * out in the page text beneath it.
+ */
+const titleId = 'decision-flow-title';
+const descId = 'decision-flow-desc';
+
+const boxes = [
+  { x: 40, y: 8, w: 560, h: 56, lines: ['Symptom: repeated backups, slow drains,', 'or a camera finding'] },
+  { x: 40, y: 98, w: 560, h: 56, lines: ['Find out whether the problem is in your', 'lateral or in the public main'] },
+  { x: 40, y: 188, w: 268, h: 74, lines: ['Public main:', 'report it to the', 'utility'], muted: true },
+  { x: 332, y: 188, w: 268, h: 74, lines: ['Your lateral:', 'the repair decision', 'is yours'] },
+  { x: 40, y: 296, w: 560, h: 56, lines: ['Camera inspection locates the defect,', 'its depth, and its extent'] },
+  { x: 40, y: 386, w: 560, h: 74, lines: ['Decide the method with the contractor:', 'spot repair, full-length lining, pipe bursting,', 'or open-cut replacement'] },
+  { x: 40, y: 494, w: 560, h: 56, lines: ['Permit, inspection, and post-repair', 'verification before the work is accepted'] },
+];
+
+const arrows: { from: [number, number]; to: [number, number] }[] = [
+  { from: [320, 64], to: [320, 96] },
+  { from: [320, 154], to: [320, 186] },
+  { from: [466, 262], to: [466, 294] },
+  { from: [320, 352], to: [320, 384] },
+  { from: [320, 460], to: [320, 492] },
+];
+---
+
+<figure class="figure">
+  <svg viewBox="0 0 640 560" role="img" aria-labelledby={`${titleId} ${descId}`} xmlns="http://www.w3.org/2000/svg">
+    <title id={titleId}>How a homeowner sewer lateral decision usually proceeds</title>
+    <desc id={descId}>
+      A flow chart. A symptom such as repeated backups leads to finding out whether the problem is
+      in the private lateral or the public main. A public main problem is reported to the utility.
+      A lateral problem stays with the property owner, who has a camera inspection to locate the
+      defect, decides a repair method with a contractor from spot repair, full-length lining, pipe
+      bursting, or open-cut replacement, and then completes permitting, inspection, and post-repair
+      verification.
+    </desc>
+    {
+      arrows.map((a) => (
+        <g stroke="var(--line-strong)" stroke-width="2" fill="var(--line-strong)">
+          <line x1={a.from[0]} y1={a.from[1]} x2={a.to[0]} y2={a.to[1] - 8} />
+          <polygon points={`${a.to[0] - 5},${a.to[1] - 9} ${a.to[0] + 5},${a.to[1] - 9} ${a.to[0]},${a.to[1]}`} stroke="none" />
+        </g>
+      ))
+    }
+    {
+      boxes.map((b) => (
+        <g>
+          <rect
+            x={b.x}
+            y={b.y}
+            width={b.w}
+            height={b.h}
+            rx="8"
+            fill={b.muted ? 'var(--paper-soft)' : 'var(--accent-soft)'}
+            stroke={b.muted ? 'var(--line-strong)' : 'var(--accent)'}
+            stroke-width="1.5"
+          />
+          <text
+            x={b.x + b.w / 2}
+            y={b.y + b.h / 2 - (b.lines.length - 1) * 9}
+            text-anchor="middle"
+            font-size="15"
+            font-family="system-ui, sans-serif"
+            fill="var(--ink)"
+          >
+            {b.lines.map((line, i) => (
+              <tspan x={b.x + b.w / 2} dy={i === 0 ? 5 : 18}>
+                {line}
+              </tspan>
+            ))}
+          </text>
+        </g>
+      ))
+    }
+  </svg>
+  <figcaption>
+    The general order of decisions. It is not specific to any municipality, and it is not a
+    substitute for a contractor's on-site assessment.
+  </figcaption>
+</figure>

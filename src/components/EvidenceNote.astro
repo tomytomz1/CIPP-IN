@@ -1,0 +1,27 @@
+---
+/**
+ * A labeled evidence callout. Implements the claim classification in
+ * docs/04-CONTENT-EDITORIAL-SYSTEM.md on the page itself, so a reader can see what is verified,
+ * what is reasoning, and what this project has not established.
+ *
+ * "unverified" is used for things we deliberately do NOT state: the label exists so a gap is
+ * visible instead of being filled with a guess.
+ */
+interface Props {
+  kind: 'fact' | 'inference' | 'unverified';
+  /** Optional override for the label text. */
+  label?: string;
+}
+
+const { kind, label } = Astro.props;
+const defaultLabels = {
+  fact: 'Verified',
+  inference: 'Inference',
+  unverified: 'Not established',
+} as const;
+---
+
+<aside class={`note note--${kind}`}>
+  <span class="note__label">{label ?? defaultLabels[kind]}</span>
+  <slot />
+</aside>

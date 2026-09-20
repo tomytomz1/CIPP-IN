@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "id": "about",
+  "route": "/about/",
+  "pageType": "general",
+  "title": "How this resource works | Indy Sewer Resource",
+  "description": "How Indy Sewer Resource uses municipal and utility primary sources, separates verified facts from reasoning, handles expert review and corrections, and will disclose any contractor relationship.",
+  "targetIntent": "Trust and transparency: how the information is produced, reviewed, and corrected, and what relationships exist.",
+  "owner": "tomytomz1",
+  "lifecycle": "published_noindex",
+  "workflow": {
+    "1": {
+      "status": "complete"
+    },
+    "2": {
+      "status": "complete"
+    },
+    "3": {
+      "status": "not_started",
+      "note": "Not run: a methodology page targets no commercial query."
+    },
+    "4": {
+      "status": "complete",
+      "note": "Describes this project’s own policy, which is set in AGENTS.md and docs/03-04."
+    },
+    "5": {
+      "status": "not_started"
+    },
+    "6": {
+      "status": "complete"
+    },
+    "7": {
+      "status": "complete",
+      "note": "Expert review determined NOT required: the page makes no technical claim about sewer work."
+    },
+    "8": {
+      "status": "complete"
+    },
+    "9": {
+      "status": "complete"
+    },
+    "10": {
+      "status": "complete"
+    },
+    "11": {
+      "status": "in_progress",
+      "note": "Drafted and self-edited by the agent. A human editorial pass by the operator is outstanding."
+    },
+    "12": {
+      "status": "not_started"
+    },
+    "13": {
+      "status": "not_applicable"
+    },
+    "14": {
+      "status": "not_started"
+    },
+    "15": {
+      "status": "not_started"
+    },
+    "16": {
+      "status": "not_started"
+    },
+    "17": {
+      "status": "in_progress",
+      "note": "Automated checks pass; manual keyboard and screen-reader review is outstanding."
+    },
+    "18": {
+      "status": "complete"
+    },
+    "19": {
+      "status": "not_started",
+      "note": "No conversion path exists by design."
+    },
+    "20": {
+      "status": "not_started"
+    },
+    "21": {
+      "status": "not_started"
+    },
+    "22": {
+      "status": "not_started"
+    }
+  },
+  "evidence": {
+    "packageRefs": [
+      "AGENTS.md",
+      "docs/03-GOOGLE-RESILIENCE.md",
+      "docs/04-CONTENT-EDITORIAL-SYSTEM.md"
+    ],
+    "primarySources": []
+  },
+  "claims": [
+    {
+      "id": "no-reviewer-yet",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "docs/01-CURRENT-STATE.md"
+      ],
+      "note": "No expert reviewer has been recruited; stated plainly on the page."
+    },
+    {
+      "id": "source-hierarchy-policy",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "docs/04-CONTENT-EDITORIAL-SYSTEM.md"
+      ]
+    },
+    {
+      "id": "claim-classification-policy",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "docs/04-CONTENT-EDITORIAL-SYSTEM.md"
+      ]
+    },
+    {
+      "id": "future-partner-disclosure-policy",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "docs/00-PROJECT-CHARTER.md",
+        "docs/04-CONTENT-EDITORIAL-SYSTEM.md"
+      ]
+    }
+  ],
+  "expertReview": {
+    "required": false,
+    "reviewer": null,
+    "scope": null,
+    "date": null,
+    "outcome": null
+  },
+  "similarity": [],
+  "publicationScore": null,
+  "municipalityGate": null,
+  "hardGates": {
+    "commodityContentTest": {
+      "result": "not_run",
+      "checkedBy": null,
+      "date": null
+    },
+    "perfectAiDetectionTest": {
+      "result": "not_run",
+      "checkedBy": null,
+      "date": null
+    },
+    "doorwayPageFirewall": {
+      "result": "pass",
+      "checkedBy": "claude-agent (draft assessment; not confirmed by the operator)",
+      "date": "2026-09-19",
+      "note": "A single trust page; no templated variants."
+    },
+    "technicalSeoQa": {
+      "result": "not_run",
+      "checkedBy": null,
+      "date": null,
+      "note": "Automated checks pass; manual keyboard and screen-reader review is still required."
+    },
+    "internalLinkingQa": {
+      "result": "pass",
+      "checkedBy": "claude-agent (draft assessment; not confirmed by the operator)",
+      "date": "2026-09-19",
+      "note": "Linked from navigation, the footer, and both content pages."
+    },
+    "conversionQa": {
+      "result": "not_run",
+      "checkedBy": null,
+      "date": null,
+      "note": "No conversion path exists by design."
+    }
+  },
+  "siteQuality": []
+}

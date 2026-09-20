@@ -1,17 +1,119 @@
 ---
 /**
- * Development shell only (Phase 2A). Lifecycle "draft", page type "utility":
- * always noindex, never in the sitemap, and a production build fails while it exists.
- * Contains no sewer/SEO content, local claims, contractor information, or forms.
+ * Homepage (Phase 2D). Lifecycle: published_noindex.
+ *
+ * States what the resource is, who it helps, and where the work currently stands. It makes no
+ * claim about market position, project counts, contractor networks, homeowner outcomes, savings,
+ * or response times, because none of those exist. There is no lead form and no quote CTA:
+ * live intake is disabled and collecting homeowner information is out of scope
+ * (docs/05 → Lead Funnel; /AGENTS.md §4.1, §4.2).
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout pageId="dev-shell">
-  <h1>Development build</h1>
-  <p>
-    This is a non-production build of the Indy Sewer Resource site foundation. It is not a
-    published page and contains no published content.
-  </p>
-  <p>Status: <strong>not indexable</strong> (lifecycle: draft).</p>
+<BaseLayout pageId="home" isSiteRoot>
+  <div class="prose prose--wide">
+    <h1>Sewer decisions, explained with the rules that actually apply</h1>
+    <p class="lede">
+      Indy Sewer Resource is an independent resource for Indianapolis-area homeowners facing a sewer
+      lateral problem: backups that keep coming back, a camera inspection they did not expect, or a
+      repair quote they have no way to judge. We read the municipal rules, cite them, and say plainly
+      what is still unknown.
+    </p>
+
+    <h2 id="start-here">Start here</h2>
+    <ul class="cards">
+      <li class="card">
+        <h3><a href="/lawrence-sewer-lateral-repair/">Sewer lateral repair in Lawrence, Indiana</a></h3>
+        <p>
+          Who owns the pipe, the permit the City requires, what a camera inspection settles, which
+          repair methods Lawrence allows, and the video the utility requires before trenchless work is
+          approved — each point cited to the ordinance or the utility's own documents.
+        </p>
+      </li>
+      <li class="card">
+        <h3><a href="/about/">How this resource works</a></h3>
+        <p>
+          Where our information comes from, how we separate verified facts from reasoning, when a page
+          needs professional review, and how we correct things. Also: what we will disclose if a
+          contractor ever sponsors this site.
+        </p>
+      </li>
+    </ul>
+
+    <h2 id="what-this-is">What this is</h2>
+    <div class="prose">
+      <p>
+        Most sewer information a homeowner finds online is written by a company that wants to sell the
+        repair, or it is national content that ignores the local rules deciding what is even allowed on
+        your street. Both leave the same questions unanswered: is this pipe mine, what am I required to
+        do, and is the quote in front of me reasonable?
+      </p>
+      <p>
+        This resource works the other way around. It starts from municipal ordinances, utility policy
+        manuals, and the utility's own homeowner guidance, cites each one, and flags the places where
+        the public record does not answer the question.
+      </p>
+    </div>
+
+    <h2 id="decisions">The decisions this covers</h2>
+    <div class="prose">
+      <ol class="steps">
+        <li>
+          <strong>The problem.</strong> Repeated backups, slow drains, wet spots, or a camera finding
+          you did not expect.
+        </li>
+        <li>
+          <strong>Diagnosis.</strong> What a camera inspection can and cannot settle before you spend
+          money.
+        </li>
+        <li>
+          <strong>Responsibility.</strong> Which part of the line is yours, and which belongs to the
+          utility — under the rules for your municipality, not a general answer.
+        </li>
+        <li>
+          <strong>The repair-method decision.</strong> Spot repair, full-length lining, pipe bursting,
+          or open-cut replacement — and which ones your municipality permits.
+        </li>
+        <li>
+          <strong>The quote.</strong> What the local rules require a complete quote to include, such as
+          permits and post-repair verification.
+        </li>
+        <li>
+          <strong>The contractor.</strong> What to ask, and what the municipality requires of whoever
+          does the work.
+        </li>
+      </ol>
+    </div>
+
+    <h2 id="scope">Where this applies</h2>
+    <div class="prose">
+      <p>
+        The scope is the Indianapolis metro. The first municipality covered in depth is
+        <a href="/lawrence-sewer-lateral-repair/">Lawrence</a>, because its rules are published and
+        verifiable and its homeowners face the full range of lateral decisions.
+      </p>
+      <p>
+        Other municipalities are added only when there is enough verified local evidence to be useful.
+        A page that simply swaps a city name into the same text helps nobody, and this project does not
+        publish them.
+      </p>
+    </div>
+
+    <h2 id="status">Where this project currently stands</h2>
+    <div class="prose">
+      <p>Being straight about the state of the work:</p>
+      <ul>
+        <li>The Lawrence resource is a <strong>pre-publication draft</strong> awaiting review by a qualified sewer professional.</li>
+        <li>No page is published to search engines yet.</li>
+        <li>No contractor partner is active, and no contractor pays for placement here.</li>
+        <li>No homeowner information is collected on this site: there is no form, and no data has ever been gathered.</li>
+        <li>There are no reviews, ratings, testimonials, or project statistics here, because none exist.</li>
+      </ul>
+      <p>
+        If a contractor relationship is established later, it will be disclosed where it applies — see
+        <a href="/about/">how this resource works</a>.
+      </p>
+    </div>
+  </div>
 </BaseLayout>

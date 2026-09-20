@@ -1,0 +1,161 @@
+---
+/**
+ * About / methodology trust page (Phase 2D). Lifecycle: published_noindex.
+ *
+ * States independence, the source hierarchy, the FACT / INFERENCE / ESTIMATE discipline, the
+ * expert-review policy, corrections, and the future contractor disclosure. It invents no
+ * personnel, no credentials, and no legal copy (docs/04 → Expert Review, Disclosure;
+ * /AGENTS.md §4.2).
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EvidenceNote from '../components/EvidenceNote.astro';
+---
+
+<BaseLayout pageId="about">
+  <article class="prose">
+    <h1>How this resource works</h1>
+    <p class="lede">
+      Indy Sewer Resource exists to help Indianapolis-area homeowners make sewer decisions with the
+      rules that actually apply to them. Its value depends entirely on being accurate about what is
+      verified and honest about what is not, so the method is published alongside the content.
+    </p>
+
+    <h2 id="independent">Independent, and not a plumbing company</h2>
+    <p>
+      This site is independently owned and edited. It does not perform plumbing work, inspections, or
+      repairs, and it is not affiliated with the City of Lawrence, Lawrence Utilities, or any other
+      government body. Nothing here is a municipal notice, and nothing here replaces what your
+      utility or a licensed contractor tells you about your property.
+    </p>
+    <p>
+      No contractor currently sponsors, pays for, or influences anything on this site. The editorial
+      decisions — what to cover, what to verify, what to leave out — stay with the publisher even if
+      that changes.
+    </p>
+
+    <h2 id="sources">Where the information comes from</h2>
+    <p>Sources are used in a fixed order of preference:</p>
+    <ol class="steps">
+      <li>the municipality's own ordinance or code;</li>
+      <li>the utility or public works department's published policy and standards;</li>
+      <li>engineering specifications issued for that jurisdiction;</li>
+      <li>state or federal government sources;</li>
+      <li>recognized technical standards and manufacturer documentation;</li>
+      <li>credible contractor evidence;</li>
+      <li>reputable secondary research.</li>
+    </ol>
+    <p>
+      Marketing pages from companies selling the repair are treated as competitor claims, never as
+      sources of fact. For every source we record the document, the publisher, the date we verified
+      it, and the limitation that applies — a superseded revision, a scanned PDF, an archived copy of
+      a page the city has since removed. Those limitations are printed on the page, not hidden in a
+      footnote.
+    </p>
+
+    <h2 id="claims">Verified, reasoned, and unknown</h2>
+    <p>Every material statement falls into one of three categories, and they are labeled on the page:</p>
+    <div class="table-scroll" tabindex="0" role="region" aria-label="How statements are classified">
+      <table>
+        <caption>How statements are classified.</caption>
+        <thead>
+          <tr>
+            <th scope="col">Label</th>
+            <th scope="col">What it means</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Verified (fact)</th>
+            <td>Checked against a cited source that you can open and read yourself.</td>
+          </tr>
+          <tr>
+            <th scope="row">Inference</th>
+            <td>
+              A conclusion drawn from more than one source, with the reasoning shown so you can judge
+              it. An inference is never presented as a fact.
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Estimate</th>
+            <td>
+              A modeled figure with its basis and uncertainty stated. This site publishes no cost
+              estimates today, because it has no evidence for them.
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Not established</th>
+            <td>
+              A question we could not answer from the public record. It is named as a gap rather than
+              filled with a plausible-sounding answer.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      The last category is the one most sites omit. A permit fee we have not confirmed, or a
+      responsibility boundary the ordinance does not settle, is written down as an open question and
+      pointed at the office that can answer it.
+    </p>
+
+    <h2 id="expert-review">Review by a qualified professional</h2>
+    <p>
+      Pages that could materially change a homeowner's decision — repair-method guidance, whether a
+      method suits a given line, responsibility determinations, and cost guidance — require review by
+      a genuinely qualified professional before they are published to search engines. The preference
+      is an Indiana-licensed plumber with trenchless and CIPP experience, or another real sewer
+      rehabilitation professional.
+    </p>
+
+    <EvidenceNote kind="unverified" label="Current status">
+      <p>
+        <strong>No reviewer has reviewed this site yet.</strong> We will not invent a reviewer, a
+        credential, a quote, or a review date to fill the gap. Until a named professional has actually
+        reviewed it, the Lawrence resource stays a draft that is not published to search engines. When
+        a review happens, the reviewer's name, relevant credential, what they reviewed, and the date
+        will appear on the page — with their consent, and with any contractor relationship disclosed.
+      </p>
+    </EvidenceNote>
+
+    <h2 id="corrections">Corrections and updates</h2>
+    <p>
+      Ordinances get amended, policy manuals get revised, and cities move documents. Sources are
+      re-verified before a page is submitted for indexing and on a recurring schedule after that, and
+      every page carries the date its sources were last checked.
+    </p>
+    <p>
+      If something here is wrong or out of date, the correction is made on the page rather than
+      quietly deleted, and material corrections are noted. Being publicly wrong about a rule that
+      costs someone money is the worst outcome this project can produce, so accuracy takes priority
+      over publishing quickly.
+    </p>
+
+    <h2 id="ai">How this content is produced</h2>
+    <p>
+      AI tools assist with research organization, drafting, and code. They do not substitute for
+      evidence, for reading the primary sources, for professional review, or for editorial judgment,
+      and no statement of fact enters a page because a model produced it. Anything that cannot be
+      traced to a source is removed or labeled as unestablished.
+    </p>
+
+    <h2 id="contractors">Contractor relationships, if and when they exist</h2>
+    <p>
+      The long-term plan for this resource is to connect homeowners with one qualified trenchless
+      contractor, who would pay for that access. That relationship does not exist today.
+    </p>
+    <p>If it ever does:</p>
+    <ul>
+      <li>it will be disclosed on the page where it applies, and at the point where contact happens;</li>
+      <li>editorial control stays with the publisher — a sponsoring contractor does not get to edit, remove, or soften what the municipal rules say;</li>
+      <li>if a reviewer is affiliated with that contractor, the affiliation will be stated alongside the review.</li>
+    </ul>
+
+    <h2 id="privacy">Your information</h2>
+    <p>
+      This site collects no personal information. There is no contact form, no quote request, no
+      newsletter signup, and no chat widget, and no homeowner data has ever been collected. If contact
+      is added later, a privacy policy and a clear explanation of what is shared with a contractor —
+      reviewed by a lawyer, not drafted here — will be published before any form goes live.
+    </p>
+  </article>
+</BaseLayout>

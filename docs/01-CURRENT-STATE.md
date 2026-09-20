@@ -1,11 +1,11 @@
 # CURRENT STATE
 
 Last updated: 2026-09-19
-Last verified commit: `4ea356fbf6ffb04bcdf0c1615401d102de010e9c` (Phase 2B, PR #3). The Phase 2C merge follows; resolve with `git log` (a file cannot contain its own commit SHA).
-Production URL: None — no production deployment exists. Target domain `indysewerresource.com` is approved but NOT registered.
+Last verified commit: `28294e9ecbd3d6cbc238f0daec14305253d65958` (Phase 2C audit trail, PR #5). The Phase 2D merge follows; resolve with `git log` (a file cannot contain its own commit SHA).
+Production URL: None — no production deployment exists. The domain `indysewerresource.com` is registered and owned by the operator (2026-09-19). It is configured as the canonical production origin in the build, but nothing is deployed to it and DNS has not been moved to Cloudflare or any other host.
 Repository: https://github.com/tomytomz1/CIPP-IN
 Current branch: main
-Current phase: Phase 2C — Queue consumer / notification delivery foundation (complete). Next: not scheduled; candidates are the operator admin surface, provisioning infrastructure after legal review, or first content work. No deployment exists; domain not registered; no page is indexable; live lead collection is DISABLED, notification sending is DISABLED, no lead has been collected, and no email or SMS has been sent.
+Current phase: Phase 2D — Lawrence MVP asset (complete). Backend expansion is deliberately paused. Three real homeowner-facing pages exist (homepage, Lawrence sewer-lateral resource, methodology page), all `published_noindex`. No deployment exists; no page is indexable; live lead collection is DISABLED, notification sending is DISABLED, no lead has been collected, and no email or SMS has been sent.
 
 > This file is authoritative for what currently exists and what has been completed. It does not override strategic rules in higher-precedence documents (see `/AGENTS.md` §1). Update it after every meaningful piece of work.
 
@@ -26,7 +26,8 @@ Locked by the operator (change only with explicit operator approval):
 - **Documentation structure and precedence:** as defined in `/AGENTS.md`.
 - **Research evidence location:** structured JSON under `/research/` (index: `/research/index.json`). Supporting material only; it does not outrank `/docs/`.
 - **Brand (Phase 1):** Indy Sewer Resource. It is an independent resource, not a plumbing company. Lawrence is the SEO beachhead, not the master brand.
-- **Target domain (Phase 1):** `indysewerresource.com`. Approved target only; not purchased. `.com` preferred; no silent TLD substitution; no defensive purchases without approval.
+- **Domain:** `indysewerresource.com` — **registered and owned by the operator** (2026-09-19). It is the canonical production origin. No DNS change, hosting, or deployment has been made. No defensive domains without approval.
+- **Repository visibility (operator decision, 2026-09-19):** the GitHub repository stays **public**. Strategy, research, and documentation are publicly readable by choice. Agents must not change visibility.
 - **Production architecture (Phase 1):**
   - Astro + TypeScript (static-first)
   - Cloudflare Workers + Static Assets, with D1, private R2, Queues, and Turnstile
@@ -67,6 +68,8 @@ Phase 2B adds the lead-data/backend foundation: D1 migrations for all ten logica
 
 Phase 2C completes the delivery path in code: an idempotent queue consumer, database-enforced delivery idempotency, Resend and Twilio provider adapters with injected transports, a separate fail-closed notification activation boundary, and operator follow-up queries.
 
+Phase 2D replaces the development shell with the first real homeowner-facing asset: a branded site shell, a homepage, the flagship Lawrence sewer-lateral resource, and a methodology/trust page. Every page is `published_noindex`, and the Lawrence page cannot become indexable until a qualified reviewer reviews it and the location gate is satisfied.
+
 There is no deployment, cloud or vendor resource, remote database, queue, registered domain, analytics or Search Console configuration, Twilio number, Resend key, notification provider account, public lead form, SEO content, indexing, or collected lead. No email or SMS has ever been sent. The only page is a non-production development shell (lifecycle `draft`, `noindex`).
 
 ## Completed
@@ -106,6 +109,15 @@ There is no deployment, cloud or vendor resource, remote database, queue, regist
   - operator follow-up query (`src/lib/leads/operator.ts`) covering unrouted, un-enqueued, retry-pending, and permanently failed leads, with contact PII behind an explicit call
   - 40 new tests (168 unit tests total) against a local D1 database, with fake providers and `fetch` stubbed to throw
   - details: `05-BUILD-SPEC.md` → Implementation Record: Phase 2C
+- Phase 2D Lawrence MVP asset (2026-09-19):
+  - real branded shell: navigation, site-wide independence disclosure, design system (system fonts, light and dark, 0 client JS)
+  - homepage (`/`), flagship Lawrence resource (`/lawrence-sewer-lateral-repair/`), methodology page (`/about/`) — all `published_noindex`
+  - the development shell (`dev-shell`) and its record were removed
+  - Lawrence content is written only from `research/sources/lawrence-primary-sources.json`; unverified items (permit fee, permit office, current video format, tap/wye responsibility, service boundary, waiver practice, assistance programs, local pipe prevalence, local prices) are named on the page as unresolved, never guessed
+  - original homeowner decision-flow diagram; a Lawrence responsibility diagram was deliberately NOT drawn (law-009 unresolved)
+  - publication records: Lawrence scores 55/100 against an 85 threshold, location gate 3 of 8 categories, expert review required and absent
+  - `indysewerresource.com` configured as the canonical production origin (no deployment, no DNS change)
+  - details: `05-BUILD-SPEC.md` → Implementation Record: Phase 2D
 
 ## In Progress
 
@@ -114,7 +126,7 @@ There is no deployment, cloud or vendor resource, remote database, queue, regist
 ## Not Started
 
 - Domain registration (approved target; requires separate operator authorization)
-- Real site pages / homepage (only a non-production development shell exists)
+- Additional municipality pages (none; they are added only when a municipality has enough verified local evidence)
 - R2 uploads, admin UI, and a deployed Worker entrypoint wiring the queue consumer (the consumer itself is implemented and tested; no queue exists)
 - Live partner/operator notifications (Resend and Twilio adapters exist; no account, key, number, or sending is enabled)
 - Live lead collection (blocked by legal review and by production bindings; the code path is disabled)
@@ -168,10 +180,12 @@ No finding invalidates Lawrence as the beachhead.
 
 Phase 2A foundation built (not deployed). Astro 7.3.3 static site with the Cloudflare adapter; see `05-BUILD-SPEC.md` → Implementation Record: Phase 2A for paths and behavior.
 
-- **Publication records:** 1 (`dev-shell`, utility/draft).
+- **Publication records:** 3 — `home` (general/published_noindex), `lawrence-sewer-lateral-repair` (location/published_noindex), `about` (general/published_noindex).
 - **Operator approvals:** 0.
 - **Effectively indexable pages:** 0.
 - **Production sitemap eligibility:** 0 URLs.
+- **Canonical production origin:** `https://indysewerresource.com` (registered; nothing deployed to it).
+- **Client JavaScript:** 0 bytes on every page. CSS: ~1.8 KB gzip.
 
 Phase 2B lead backend built (not deployed, not active): D1 migration for 10 tables, intake/routing/persistence service, and the disabled activation boundary. See `05-BUILD-SPEC.md` → Implementation Record: Phase 2B.
 
@@ -190,7 +204,7 @@ None.
 
 ## Current SEO State
 
-No site exists. No rankings, impressions, or indexed pages. The competitive landscape as of 2026-09-19 is recorded in `research/serps/2026-09-19-competitor-snapshot.json`.
+Three real pages exist in the repository, none published to search engines and none deployed. No rankings, impressions, or indexed pages. The competitive landscape as of 2026-09-19 is recorded in `research/serps/2026-09-19-competitor-snapshot.json`.
 
 ## Search Console State
 
@@ -232,8 +246,10 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 
 ## Open Questions
 
-1. Domain registration: the approved target `indysewerresource.com` is not yet registered, and purchase requires separate operator authorization. (A Verisign RDAP check on 2026-09-19 16:58 UTC returned no registration record. That is not a registrar availability check.)
-2. Remaining Lawrence uncertainties (listed under Lawrence Municipal Evidence Status). Confirm them with Lawrence Utilities before any Lawrence page is indexed.
+1. ~~Domain registration.~~ **Resolved 2026-09-19:** the operator registered `indysewerresource.com`. Remaining sub-question: when to point DNS at a host, which is a deployment decision and is not scheduled.
+2. Remaining Lawrence uncertainties (listed under Lawrence Municipal Evidence Status). Confirm them with Lawrence Utilities.
+
+   **Indexing policy (operator-approved reconciliation, 2026-09-19).** An unresolved Lawrence question does not by itself block indexing. It blocks indexing whenever the page makes, or depends on, a material claim about that unresolved fact. A Lawrence page may be indexed only when: it makes no material claim about an unresolved fact; every material claim it does make is verified or explicitly labeled; it passes the Location Page Quality Gate (5 of 8 categories including 2 authoritative local primary-source categories); and every other gate in `03-GOOGLE-RESILIENCE.md` passes, including expert review, publication score, similarity QA, the Commodity Content Test, the Perfect-AI-Detection Test, the Doorway Page Firewall, and operator index approval. Unknown facts are omitted, explicitly qualified, or held as internal TODOs — never guessed. No threshold or gate is weakened by this reconciliation.
 3. Legal review (required before live lead collection/routing and before any call recording):
    - exact privacy-policy language
    - exact lead-sharing consent language
@@ -247,7 +263,7 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 7. Whether to add an on-page AI-use disclosure ("How" content was made) to `04-CONTENT-EDITORIAL-SYSTEM.md`. Google's people-first and gen-AI guidance suggest considering it (`research/sources/google-search-policy.json` goog-003, goog-005). Operator decision.
 8. Wording observation (no rule conflict): `AGENTS.md` §2 "Decisions not yet locked" refers to items marked `NOT YET LOCKED`, but `05-BUILD-SPEC.md` now labels unresolved items `OPEN`. The rule's intent (never decide unresolved items silently) clearly covers `OPEN` items too. Updating the `AGENTS.md` wording needs operator approval.
 9. AI-agent GitHub identity: should agents use a separate non-admin GitHub account or token, so the code-owner/index-approval boundary binds them? (Phase 2A limitation.)
-10. Repository visibility: the repository is public. Keep it public or make it private? (Research and strategy are currently publicly readable.)
+10. ~~Repository visibility.~~ **Resolved 2026-09-19:** the operator decided the repository stays **public**. Research, strategy, and documentation are publicly readable by choice.
 11. Contact-PII protection beyond the platform: should `lead_contacts` use application-level (field) encryption, or is Cloudflare's platform encryption-at-rest sufficient? Phase 2B did not implement extra encryption, and did not decide this. Operator/legal decision.
 12. Retention and deletion mechanics: the append-only triggers block UPDATE but deliberately allow DELETE so lawful deletion stays possible. The actual retention periods and the deletion procedure are still OPEN (Open Question 3).
 13. Dead-letter queue: when Cloudflare Queues are provisioned, should the lead-delivery consumer have a dead-letter queue, and with what retention and alerting? Without one, messages that exhaust `max_retries` are deleted permanently. Phase 2C mitigates this in the application (a durable terminal state plus operator follow-up before retries run out) but did not decide the infrastructure. Operator decision.
@@ -264,9 +280,9 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 - **Lead quality risk:** traffic or form fills may not translate into qualified trenchless opportunities.
 - **Legal/compliance risk** around sharing homeowner contact data with a contractor and call recording, pending legal review.
 - **Evidence staleness:** SERP, contractor, and policy evidence decays. See the `stale_after` guidance in `/research/index.json`.
-- **Domain still unregistered:** the approved target could be registered by someone else before the operator buys it.
 - **Agent identity / inert code-owner rule:** AI agents use the operator's own GitHub account, which is also the sole code owner. As observed on PR #2, GitHub then requires no code-owner review, so `index-governance-code-owner-review` does not currently constrain agents. `main-protection` (PR plus required checks, no bypass) still binds everyone. A separate non-admin identity for agents is needed to make the index-approval boundary binding on agents.
-- **Public repository:** the GitHub repository is public (observed 2026-09-19). Strategy, competitor research, and prospective-tenant research in `research/` and `docs/` are publicly readable. Operator decision whether that is acceptable.
+- **Public repository (accepted):** the repository is public by operator decision. Strategy, competitor research, and prospective-tenant research stay publicly readable, including by competitors. This is a known, accepted trade-off rather than an open question.
+- **Pre-publication content quality:** three real pages now exist and none has had a human editorial pass by the operator or review by a sewer professional. They are `noindex`, so the exposure is limited to anyone reading the public repository, but the Lawrence page states municipal rules and must be reviewed before it is ever published to search.
 - **Privacy/consent legal review** is required before live lead routing. The Phase 2B code path is disabled until that review and the production bindings exist, so this is enforced in code, not only in policy.
 - **At-least-once delivery window:** delivery is idempotent through database uniqueness plus provider idempotency keys, but a consumer that crashes mid-send leaves an attempt that another consumer may take over after the lease (120 seconds). That duplicate is then suppressed by the provider's own idempotency window (Resend documents 24 hours), not by this code. A crash plus a retry older than that window could in principle produce a second notification.
 - **Lead data protection:** the schema minimizes and separates PII, but field-level encryption and retention/deletion mechanics are undecided (Open Questions 11–12).
@@ -278,10 +294,13 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 - None block the next implementation phase.
 - Before **production publishing**: domain registration (operator action), replacing the draft development shell, real pages passing the indexing gate with operator approval, and the Launch Checklist in `05-BUILD-SPEC.md`. Branch/index governance is now configured.
 - Before **live lead collection/routing**: legal review of consent/privacy/disclosure/retention, plus provisioning D1/Queues/Turnstile and setting the activation configuration. Until then the intake endpoint fails closed.
-- The remaining Lawrence uncertainties must be confirmed with Lawrence Utilities before any Lawrence content is indexed. This does not block Phase 1.
+- Before the **Lawrence page can be indexed**: a real expert review (none exists), a human editorial pass, the Location Page Quality Gate (3 of 8 categories today, 5 required), a publication score of 85 (55 today), a similarity QA run (the embedding runner does not exist), manual accessibility review, and operator index approval. Confirming the open Lawrence questions with Lawrence Utilities is what would raise the evidence categories and the score; an unresolved question only blocks indexing where the page makes or depends on a claim about it (see Open Question 2).
 
 ## Last Major Decisions
 
+- 2026-09-19 — **Operator registered `indysewerresource.com`** and decided the **GitHub repository stays public**. The domain is configured as the canonical production origin; no DNS change, hosting, or deployment followed.
+- 2026-09-19 — Operator-approved indexing-policy reconciliation for unresolved Lawrence questions (Open Question 2). No gate or threshold was weakened.
+- 2026-09-19 — Phase 2D implemented (operator-authorized): real branded shell, homepage, flagship Lawrence sewer-lateral resource, and methodology page, all `published_noindex`; development shell removed. Details in `05` → Implementation Record: Phase 2D.
 - 2026-09-19 — Phase 2C implemented (operator-authorized): idempotent queue consumer, delivery idempotency enforced by a UNIQUE key in `lead_events` (migration 0002), partner notification destinations, Resend/Twilio adapters, a notification activation boundary separate from intake, retry/terminal handling capped at 5 attempts, and operator follow-up queries. No queue, provider account, key, or deployment was created, and nothing was sent. Details in `05` → Implementation Record: Phase 2C.
 - 2026-09-19 — Phase 2B implemented (operator-authorized): physical lead schema and migration, intake contract, routing, persist-before-queue delivery, idempotency, enrichment (outcomes/calls/uploads), and a fail-closed live-intake activation boundary. Implementation-level choices are recorded in `05` → Implementation Record: Phase 2B. `miniflare` was added as a dev dependency so tests execute real SQL locally.
 - 2026-09-19 — Phase 2A implemented (operator-authorized) and merged via PR #1:
@@ -329,3 +348,4 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 - 2026-09-19 — Phase 2A: build foundation and indexing firewall merged via PR #1 (`b3c60e6`). Rulesets `main-protection` and `index-governance-code-owner-review` configured and read back. `05-BUILD-SPEC.md` gained an Implementation Record and governance status. Audit trail in a follow-up PR. No deployment, cloud/vendor resources, domain purchase, leads, or indexable content.
 - 2026-09-19 — Phase 2B: lead-data/backend foundation. Added `migrations/0001_lead_data_foundation.sql` (10 tables, 14 indexes, 4 append-only triggers, no seed data), `src/lib/leads/*` (contracts, repository, routing, intake, enrichment, activation, Turnstile, HTTP adapter, logging), the disabled `POST /api/lead-intake` route, 58 backend tests against local D1, and `npm run validate:migrations` in CI. Updated `05-BUILD-SPEC.md` (Implementation Record: Phase 2B and section statuses) and this file. No remote database, queue, notification provider, upload storage, deployment, domain purchase, lead collection, or indexable content.
 - 2026-09-19 — Phase 2C: added `migrations/0002_delivery_foundation.sql`, the queue consumer, provider adapters, notification activation, and operator queries under `src/lib/leads/`, plus 40 tests. Updated `05-BUILD-SPEC.md` (Implementation Record: Phase 2C) and this file. No infrastructure, account, key, deployment, content, or indexing change.
+- 2026-09-19 — Phase 2D: replaced the development shell with three real pages (`/`, `/lawrence-sewer-lateral-repair/`, `/about/`), added the site shell, design system, evidence components, and the decision-flow diagram, and recorded honest publication records (0 indexable, 0 approvals). Reconciled the registered domain, the public-repository decision, and the Lawrence indexing policy in this file. No deployment, no DNS change, no lead collection, no indexable page.
