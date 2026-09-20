@@ -1,7 +1,7 @@
 # CURRENT STATE
 
-Last updated: 2026-09-19
-Last verified commit: `28294e9ecbd3d6cbc238f0daec14305253d65958` (Phase 2C audit trail, PR #5). The Phase 2D merge follows; resolve with `git log` (a file cannot contain its own commit SHA).
+Last updated: 2026-09-20
+Last verified commit: `10c28aa97131682786a5e6080dcbb3da201e260d` (Phase 2D audit trail, PR #7). This reconciliation commit follows; resolve with `git log` (a file cannot contain its own commit SHA).
 Production URL: None — no production deployment exists. The domain `indysewerresource.com` is registered and owned by the operator (2026-09-19). It is configured as the canonical production origin in the build, but nothing is deployed to it and DNS has not been moved to Cloudflare or any other host.
 Repository: https://github.com/tomytomz1/CIPP-IN
 Current branch: main
@@ -51,7 +51,7 @@ Locked by the operator (change only with explicit operator approval):
   - first-party JS: 0 KB target on editorial pages, ≤ 75 KB gzip on form pages
   - CSS ≤ 40 KB gzip
   - system fonts
-- **Accessibility target (Phase 1):** WCAG 2.2 Level AA, a release/quality requirement. The standard is selected but not yet implemented (no site exists).
+- **Accessibility target (Phase 1):** WCAG 2.2 Level AA, a release/quality requirement. Implemented and enforced in CI on all three real pages (automated axe checks across desktop and mobile profiles). Manual keyboard and screen-reader review is still outstanding.
 - Full specification: `05-BUILD-SPEC.md`.
 - **Run logging:** append-only audit trail in `logs/RUN-LOG.md` (index) and `logs/runs/` (one receipt per meaningful work session), per `/AGENTS.md` §3. History only; this file stays authoritative for current state.
 
@@ -70,7 +70,13 @@ Phase 2C completes the delivery path in code: an idempotent queue consumer, data
 
 Phase 2D replaces the development shell with the first real homeowner-facing asset: a branded site shell, a homepage, the flagship Lawrence sewer-lateral resource, and a methodology/trust page. Every page is `published_noindex`, and the Lawrence page cannot become indexable until a qualified reviewer reviews it and the location gate is satisfied.
 
-There is no deployment, cloud or vendor resource, remote database, queue, registered domain, analytics or Search Console configuration, Twilio number, Resend key, notification provider account, public lead form, SEO content, indexing, or collected lead. No email or SMS has ever been sent. The only page is a non-production development shell (lifecycle `draft`, `noindex`).
+The site exists in the repository; no production deployment exists, and no page is indexable. Specifically:
+
+- three real pages (`/`, `/lawrence-sewer-lateral-repair/`, `/about/`), all `published_noindex`; the development shell was removed in Phase 2D;
+- 0 effectively indexable pages, 0 operator index approvals, 0 production sitemap URLs;
+- the domain `indysewerresource.com` is registered and owned, but DNS has not been configured for production and nothing is deployed;
+- no cloud or vendor resource, remote database, queue, analytics or Search Console configuration, Twilio number, Resend key, or notification provider account;
+- no public lead form, no lead collected, and no email or SMS ever sent.
 
 ## Completed
 
@@ -83,7 +89,7 @@ There is no deployment, cloud or vendor resource, remote database, queue, regist
   - Google Search policy evidence: `research/sources/google-search-policy.json`
   - SERP/competitor snapshot: `research/serps/2026-09-19-competitor-snapshot.json`
 - Phase 0.2 run-log system: `logs/RUN-LOG.md`, `logs/RUN-RECEIPT-TEMPLATE.md`, and `logs/runs/`, with receipts backfilled for Phase 0 and Phase 0.1 (2026-09-19).
-- Phase 1 decisions approved by the operator and documented (2026-09-19): brand, target domain (not registered), production architecture, publication/indexing architecture, lead-data architecture, performance budget. `05-BUILD-SPEC.md` is now the locked specification.
+- Phase 1 decisions approved by the operator and documented (2026-09-19): brand, target domain (not yet registered at that time; registered later the same day), production architecture, publication/indexing architecture, lead-data architecture, performance budget. `05-BUILD-SPEC.md` is now the locked specification.
 - Phase 1 final documentation reconciliation (2026-09-19): WCAG 2.2 AA locked; stale "NOT YET LOCKED" pointers in `03` and `04` corrected; `04` step 20 renamed "Index Approval" to match the publication/indexing lifecycle.
 - Phase 2A build foundation (2026-09-19; PR #1, merge `b3c60e6`):
   - Astro 7.3.3 + TypeScript 6.0.3 (strictest) with `@astrojs/cloudflare` 14.3.2 (static output; no bindings, sessions, or resources)
@@ -125,7 +131,7 @@ There is no deployment, cloud or vendor resource, remote database, queue, regist
 
 ## Not Started
 
-- Domain registration (approved target; requires separate operator authorization)
+- DNS and hosting configuration for the registered domain (a deployment decision; not scheduled)
 - Additional municipality pages (none; they are added only when a municipality has enough verified local evidence)
 - R2 uploads, admin UI, and a deployed Worker entrypoint wiring the queue consumer (the consumer itself is implemented and tested; no queue exists)
 - Live partner/operator notifications (Resend and Twilio adapters exist; no account, key, number, or sending is enabled)
@@ -133,11 +139,11 @@ There is no deployment, cloud or vendor resource, remote database, queue, regist
 - Similarity/embedding runner (records only; no OpenAI calls)
 - Cloudflare resources (Workers, D1, R2, Queues, Turnstile, Access, DNS)
 - Resend, Twilio, and OpenAI accounts/resources for this project
-- Manual accessibility review of real pages and workflows (only automated checks run on the development shell)
+- Manual keyboard and screen-reader review of the three real pages (automated axe WCAG 2.2 AA checks already run on all of them in CI)
 - Confirmation of the remaining Lawrence uncertainties with Lawrence Utilities (see Open Questions)
-- Content production
+- Further content production beyond the three Phase 2D pages
 - Tools/calculators
-- Original visuals
+- Further original visuals (one original decision-flow diagram exists; a Lawrence responsibility diagram is deliberately withheld until `law-009` is resolved)
 - Expert reviewer recruitment
 - Production deployment
 - Google Search Console setup
@@ -178,7 +184,7 @@ No finding invalidates Lawrence as the beachhead.
 
 ## Current Architecture
 
-Phase 2A foundation built (not deployed). Astro 7.3.3 static site with the Cloudflare adapter; see `05-BUILD-SPEC.md` → Implementation Record: Phase 2A for paths and behavior.
+Astro 7.3.3 static site with the Cloudflare adapter, built from the Phase 2A foundation and carrying the Phase 2D pages and site shell. Built in the repository and verified in CI; not deployed. See `05-BUILD-SPEC.md` → Implementation Records: Phase 2A and Phase 2D.
 
 - **Publication records:** 3 — `home` (general/published_noindex), `lawrence-sewer-lateral-repair` (location/published_noindex), `about` (general/published_noindex).
 - **Operator approvals:** 0.
@@ -208,7 +214,7 @@ Three real pages exist in the repository, none published to search engines and n
 
 ## Search Console State
 
-Not configured (planned: Domain property verified via DNS once the domain is registered).
+Not configured (planned: a Domain property verified via DNS once DNS is configured and a production deployment exists).
 
 ## Analytics State
 
@@ -292,7 +298,7 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 ## Current Blockers
 
 - None block the next implementation phase.
-- Before **production publishing**: domain registration (operator action), replacing the draft development shell, real pages passing the indexing gate with operator approval, and the Launch Checklist in `05-BUILD-SPEC.md`. Branch/index governance is now configured.
+- Before **production publishing**: DNS and hosting configuration for the registered domain, a deployment, real pages passing the indexing gate with operator approval, and the Launch Checklist in `05-BUILD-SPEC.md`. The domain is owned and branch/index governance is configured; the development shell has been replaced by real pages.
 - Before **live lead collection/routing**: legal review of consent/privacy/disclosure/retention, plus provisioning D1/Queues/Turnstile and setting the activation configuration. Until then the intake endpoint fails closed.
 - Before the **Lawrence page can be indexed**: a real expert review (none exists), a human editorial pass, the Location Page Quality Gate (3 of 8 categories today, 5 required), a publication score of 85 (55 today), a similarity QA run (the embedding runner does not exist), manual accessibility review, and operator index approval. Confirming the open Lawrence questions with Lawrence Utilities is what would raise the evidence categories and the score; an unresolved question only blocks indexing where the page makes or depends on a claim about it (see Open Question 2).
 
@@ -311,7 +317,7 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
   - implementation-level choices recorded in `05` → Implementation Record: Phase 2A
 - 2026-09-19 — Operator approved WCAG 2.2 Level AA as the formal accessibility target, and approved correcting the stale Phase 0 wording in `03`/`04` to match the Phase 1 architecture (similarity tooling pointer, page-record pointer, workflow-record storage pointer, `04` step 20 "Index Approval"). No thresholds, gates, or workflow steps changed.
 - 2026-09-19 — Phase 1 approved by the operator and locked in `05-BUILD-SPEC.md`:
-  - brand Indy Sewer Resource; target domain `indysewerresource.com` (not registered)
+  - brand Indy Sewer Resource; target domain `indysewerresource.com` (not registered at the time of that decision; registered 2026-09-19)
   - Astro/TypeScript on Cloudflare Workers + Static Assets, with D1, R2, Queues, Turnstile, and Access
   - Resend and Twilio; Cloudflare Web Analytics + Search Console; OpenAI `text-embedding-3-small` similarity QA; Git as CMS
   - publication vs. indexability separation, with computed indexability plus operator approval
@@ -326,11 +332,11 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 
 ## Next 5 Priorities
 
-1. Operator: register `indysewerresource.com` (separate authorization; not done by agents).
-2. Operator: start the legal review of consent/privacy/retention/disclosure. It blocks live lead collection, which is currently disabled in code.
-3. Operator decisions: a separate non-admin GitHub identity for AI agents; repository visibility; contact-PII encryption and retention mechanics (Open Questions 9–12).
-4. Confirm the remaining Lawrence uncertainties directly with Lawrence Utilities and record the results in `research/sources/lawrence-primary-sources.json`. Start legal review of consent/privacy.
-5. Begin identifying a real expert reviewer (Indiana-licensed plumber with trenchless/CIPP experience); decide the AI-use disclosure policy (Open Question 7).
+1. Operator: a human editorial pass over the three Phase 2D pages.
+2. Begin identifying a real expert reviewer (Indiana-licensed plumber with trenchless/CIPP experience). Expert review is required for the Lawrence page and is currently absent.
+3. Confirm the remaining Lawrence uncertainties directly with Lawrence Utilities and record the results in `research/sources/lawrence-primary-sources.json`. That is what raises the location gate above 3 of 8 and the publication score above 55.
+4. Operator: start the legal review of consent/privacy/retention/disclosure. It blocks live lead collection, which is currently disabled in code.
+5. Operator decisions: a separate non-admin GitHub identity for AI agents; contact-PII encryption and retention mechanics; the AI-use disclosure policy (Open Questions 7, 9, 11–12).
 
 ## Change Log
 
@@ -349,3 +355,4 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 - 2026-09-19 — Phase 2B: lead-data/backend foundation. Added `migrations/0001_lead_data_foundation.sql` (10 tables, 14 indexes, 4 append-only triggers, no seed data), `src/lib/leads/*` (contracts, repository, routing, intake, enrichment, activation, Turnstile, HTTP adapter, logging), the disabled `POST /api/lead-intake` route, 58 backend tests against local D1, and `npm run validate:migrations` in CI. Updated `05-BUILD-SPEC.md` (Implementation Record: Phase 2B and section statuses) and this file. No remote database, queue, notification provider, upload storage, deployment, domain purchase, lead collection, or indexable content.
 - 2026-09-19 — Phase 2C: added `migrations/0002_delivery_foundation.sql`, the queue consumer, provider adapters, notification activation, and operator queries under `src/lib/leads/`, plus 40 tests. Updated `05-BUILD-SPEC.md` (Implementation Record: Phase 2C) and this file. No infrastructure, account, key, deployment, content, or indexing change.
 - 2026-09-19 — Phase 2D: replaced the development shell with three real pages (`/`, `/lawrence-sewer-lateral-repair/`, `/about/`), added the site shell, design system, evidence components, and the decision-flow diagram, and recorded honest publication records (0 indexable, 0 approvals). Reconciled the registered domain, the public-repository decision, and the Lawrence indexing policy in this file. No deployment, no DNS change, no lead collection, no indexable page.
+- 2026-09-20 — Post-Phase-2D reconciliation of this file only: corrected the stale verified-commit pointer, the accessibility wording, the project-status paragraph (registered domain, development shell removed, three real pages), the Not Started list, the architecture and Search Console wording, the production-publishing blocker, and the priorities. Documentation only: no code, content, publication record, research, governance, infrastructure, deployment, or strategy change.
