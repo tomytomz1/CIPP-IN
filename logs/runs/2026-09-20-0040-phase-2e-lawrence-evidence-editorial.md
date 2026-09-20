@@ -97,7 +97,7 @@ None.
 | `npm run similarity:qa` | PASS (incomplete by design) | 0% sentence near-duplication and 0% heading overlap between all three pages; embeddings `not_run` (no API key), so step 14 stays unsatisfied. |
 | `npm run test:a11y` | PASS | 18 checks; lab LCP 476–596 ms, CLS 0.000. |
 | Rendered-page check | PASS (structure) | Page text and the accessibility tree confirm the new sections, the project table with its three rows and working source anchors. Screenshots returned blank this run because the browser pane was not drawing; the visual design was unchanged from Phase 2D, which was reviewed at desktop and 375 px. |
-| CI on the PR | See Commit / Push Status | Recorded after the required checks ran. |
+| CI on PR #9 (commit `6bcd382`) | PASS | `build-and-test` 52s, `accessibility-and-lab-performance` 43s, `secret-scan` 6s (run 35489662173). Merged without bypass; merge commit `f26d499`. |
 
 **Defect found and fixed during the run:** the first similarity run flagged 20% sentence duplication between pages. Investigation showed the runner was comparing whole documents including shared site chrome, because a corrupted escape sequence broke the `<main>` extraction regex. Fixed, and a test now guards it.
 
@@ -170,6 +170,7 @@ Operator actions, in order of what unblocks the most: a human editorial pass ove
 - Work committed: YES
 - Pushed: YES
 - Commit message: `Phase 2E: Lawrence evidence enrichment, editorial QA, similarity runner`
+- Merge: PR #9 merged into `main` as `f26d4994a43a13eb22d673d30ae82e8057dbb221` after all three required checks passed, with no admin bypass. Read back afterwards: both rulesets active and `governance/index-approvals.json` still empty.
 - Commit reference: the commit containing this receipt; resolve with `git log -- logs/runs/2026-09-20-0040-phase-2e-lawrence-evidence-editorial.md`
 
 ## Final Operator Report
