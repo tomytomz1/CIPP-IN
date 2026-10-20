@@ -120,3 +120,11 @@ Run/inspect the documentation closure PR's postdeploy read-only production check
 ## Final Operator Report
 
 Merged and successfully deployed PR #22 through protected main to Worker version `5486a937-a71b-49c5-b773-3bb72de28320`; 2 revised assets uploaded and build checks pass. GitHub CI was all green before and on main merge, with timing distinction for HTTP audit. Publication indexability unchanged, no page approved for search. Expert and human review, 63/85 score, embedding similarity and manual accessibility block Lawrence. Documentation closure should prove postdeploy HTTP via its own live check.
+
+## Post-release HTTP verification addendum (2026-10-20 23:32 UTC)
+
+After the Cloudflare deployment at 23:28:22 UTC, GitHub CI's `production-read-only-audit` on documentation PR #23, run [39515665741](https://github.com/tomytomz1/CIPP-IN/actions/runs/39515665741), executed from 23:32:22 to 23:32:29 UTC and **passed**. Unlike the earlier main-push audit, this was strictly after the new deployed version `5486a937-a71b-49c5-b773-3bb72de28320` entered service at 100% traffic.
+
+The checked scripts `scripts/audit-production.ts` and `scripts/verify-production.ts` fetch live production HTML/headers. A successful run asserts: HTTP 200 on all three pages, self HTTPS apex canonicals, both meta and header `noindex`, expected CSP and security headers, exactly the reviewed `/analytics.js` consent controller (not an actual new GA4 receipt), 0 sitemap URLs, crawl-visible robots directives, expected apex/www redirects and live `POST /api/lead-intake` returns 503. The scripts also print whether a Cloudflare beacon was injected; **the audit does not assert beacon absence**, so this run does not independently re-prove the separate previously authorized RUM disablement. No lead/contact data was accepted.
+
+The final CI status of documentation PR #23 is separately assessed at its final head before the normal merge. Documentation-only commits do not trigger Workers Builds under the existing path excludes. Historical sections above are preserved unchanged.
