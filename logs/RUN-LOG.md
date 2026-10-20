@@ -218,3 +218,12 @@ This file is an audit trail, not a strategy document and not a replacement for `
 - COMPLETE: operator-authorized Cloudflare RUM ruleset disabled; existing site retained and no beacon on all three fresh browser page visits. GA4 Internal Traffic Exclude exact traffic_type=internal changed Testing → Active and visibly confirmed.
 - No IP/location filter, DNS/indexing/security/application/deployment change. Previous test data is not retroactively removed.
 - [Receipt](runs/2026-10-20-2305-analytics-cleanup.md).
+
+### 2026-10-20 19:23 EDT — PR #19 merge and three-page publication-readiness audit
+
+- Agent: ChatGPT / GPT-6
+- Starting main: `916ee4f76bb29c962fcc8364ecee929855f18375`; PR #19 documentation/analytics cleanup merged normally at `f0bfe69ff7d7e1896d182d2aab83595f3cfd09e1` after five passing exact-head CI jobs.
+- Result: PARTIAL pending substantive PR #22 normal merge, Cloudflare production deployment/readback. Branch `feat/editorial-readiness-lawrence-20261020`; initial head `c0d5d29` CI [run 39514380301](https://github.com/tomytomz1/CIPP-IN/actions/runs/39514380301) five green jobs.
+- Corrected homepage publication and consented-GA4 wording, Lawrence fee-note scope (grease-trap application only), added ordinance applicant rules; two incremental research records, provisional 63/85 ledger and exact human/expert review package in `research/editorial/2026-10-20-publication-readiness.json`. No scores inflated; no approval/indexing/lead/DNS/security/analytics configuration changes.
+- Existing GSC Domain/GA4 Windsor reads returned 0 rows in selected windows, not proven zero traffic; Bing current processing not revalidated in authenticated UI. Existing 5/8 location evidence categories pass, but expert/human/similarity/manual-a11y/conversion QA still block Lawrence.
+- Receipt: [2026-10-20-1923-publication-readiness.md](runs/2026-10-20-1923-publication-readiness.md).

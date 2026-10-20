@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-20",
+  "last_updated": "2026-10-20",
   "note": "Research evidence is supporting material only. /docs/ remains authoritative for active project requirements. Dynamic evidence such as SERPs, contractor offerings, hiring, pricing, and Google policies must be reverified before relying on it for a future material decision.",
   "record_format": {
     "fields": [
@@ -29,7 +29,8 @@
       "tenant",
       "google-policy",
       "serp",
-      "technical"
+      "technical",
+      "editorial"
     ],
     "rules": [
       "Paraphrase. Do not copy long copyrighted passages; short excerpts only where exact policy language matters.",
@@ -41,10 +42,10 @@
     {
       "path": "research/sources/lawrence-primary-sources.json",
       "category": "municipal",
-      "records": 20,
+      "records": 22,
       "sources": 8,
       "last_verified": "2026-09-20",
-      "stale_after": "Re-verify before indexing any Lawrence page, and at least every 6 months. Re-check sooner if the City updates its code (American Legal supplements) or Construction Specifications page.",
+      "stale_after": "Re-verify before indexing any Lawrence page, and at least every 6 months. Re-check sooner if the City updates its code (American Legal supplements) or Construction Specifications page. Incremental 2026-10-20 recheck only covers applicant rules and fee-form scope; the remaining prior records were not fully refreshed.",
       "related_docs": [
         "docs/01-CURRENT-STATE.md",
         "docs/02-SEO-SERP-BLUEPRINT.md",
@@ -97,6 +98,18 @@
       "related_docs": [
         "docs/04-CONTENT-EDITORIAL-SYSTEM.md",
         "docs/05-BUILD-SPEC.md"
+      ]
+    },
+    {
+      "path": "research/editorial/2026-10-20-publication-readiness.json",
+      "category": "editorial",
+      "records": 3,
+      "last_verified": "2026-10-20",
+      "stale_after": "Reassess all gates after substantive copy changes, direct utility confirmation, expert review, or before any indexing decision.",
+      "related_docs": [
+        "docs/01-CURRENT-STATE.md",
+        "docs/03-GOOGLE-RESILIENCE.md",
+        "docs/04-CONTENT-EDITORIAL-SYSTEM.md"
       ]
     }
   ]

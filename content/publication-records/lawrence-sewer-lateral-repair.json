@@ -42,7 +42,8 @@
       "status": "complete"
     },
     "10": {
-      "status": "complete"
+      "status": "complete",
+      "note": "Incremental 2026-10-20 permit verification: applicant eligibility cited to ordinance §5-1-2-1(E),(G); corrected misleading 'no permit fee' phrasing to say form is silent on lateral fee, with no-fee note limited to separate grease-trap application. No complete all-claims or human review implied."
     },
     "11": {
       "status": "in_progress",
@@ -65,7 +66,7 @@
     },
     "16": {
       "status": "complete",
-      "note": "Re-scored 2026-09-20 after the evidence and editorial changes: 63/100 against the 85 money/location threshold. Expert verification and first-party data remain 0."
+      "note": "2026-10-20 review: score remains 63/100 (85 location threshold); all ten criterion allocations explicitly cross-checked, no increment without original data or expert validation. Evidence ledger in research/editorial/2026-10-20-publication-readiness.json. Agent-only provisional score."
     },
     "17": {
       "status": "in_progress",
@@ -324,6 +325,22 @@
         "law-016"
       ],
       "note": "The utility cites ordinance 5-1-2-2; that ordinance text was not independently re-read, and the page says so."
+    },
+    {
+      "id": "permit-applicant-requirements",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "law-021-permit-applicant-eligibility-2026"
+      ],
+      "note": "City ordinance §5-1-2-1(E),(G) applicant rules and 150-day commencement condition; published code may lag, and contractor-specific licensing must be confirmed."
+    },
+    {
+      "id": "sewer-permit-fee-and-destination-unknown",
+      "classification": "FACT",
+      "evidenceRefs": [
+        "law-022-sewer-permit-fee-not-stated-2026"
+      ],
+      "note": "FACT limited to what undated form actually says: no lateral fee and no submission address stated; form's no-fee notice concerns a separate grease-trap application. Actual sewer lateral permit fee and submission method UNVERIFIED; never assert free or unavailable."
     }
   ],
   "expertReview": {
@@ -347,8 +364,8 @@
       "transparencyTrust": 5,
       "conversionUsefulness": 1
     },
-    "scorer": "claude-agent (draft self-assessment; not confirmed by the operator)",
-    "date": "2026-09-20"
+    "scorer": "GPT-6 (provisional evidence audit; no operator or expert review)",
+    "date": "2026-10-20"
   },
   "municipalityGate": {
     "municipality": "Lawrence, Indiana",
