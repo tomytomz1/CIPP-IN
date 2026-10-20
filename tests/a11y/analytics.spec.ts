@@ -61,11 +61,11 @@ test.describe('production analytics consent', () => {
     expect(loads).toBe(0);
     await page.getByRole('button', { name: 'Allow analytics', exact: true }).click();
     await expect.poll(() => loads).toBe(1);
-    const views = await page.evaluate(() => {
+    // page_view is queued only after the (stubbed) library's load event; poll instead of racing it.
+    await expect.poll(() => page.evaluate(() => {
       const w = window as typeof window & { dataLayer: Array<ArrayLike<unknown>> };
       return w.dataLayer.filter((x) => x[0] === 'event' && x[1] === 'page_view').map((x) => x[2]);
-    });
-    expect(views).toEqual([expect.objectContaining({ traffic_type: 'internal', page_location: origin + '/' })]);
+    })).toEqual([expect.objectContaining({ traffic_type: 'internal', page_location: origin + '/' })]);
   });
   test('honors Global Privacy Control even after an allow click', async ({ page }) => {
     await page.addInitScript(() => Object.defineProperty(navigator, 'globalPrivacyControl', { value: true }));
