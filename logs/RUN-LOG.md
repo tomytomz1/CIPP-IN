@@ -197,3 +197,10 @@ This file is an audit trail, not a strategy document and not a replacement for `
 - No GA4 write actions exposed; no native authenticated browser/runtime; Cloudflare build trigger list empty and build configuration absent (404/12040).
 - No source/deployment/indexing/DNS changes. PR #18 retained.
 - Receipt: [2026-10-20-2133-windsor-access-confirmed.md](runs/2026-10-20-2133-windsor-access-confirmed.md).
+
+### 2026-10-20 22:40 UTC — GA4 release with Realtime receipt; Bing/GSC verified
+
+- Result: COMPLETE. Bing ownership verified via the existing CNAME; GA4 Admin hardened (Enhanced Measurement, tag auto-detection and user-provided data OFF; ads personalization 0/307; retention 2 months).
+- PR #18 merged (`018dd3b`, head `c59c631`, 5/5 CI) with `?analytics=validate` internal-traffic marker; Workers Builds connected to the existing Worker (main only, preview builds off); PR #20 merge `6134089` deployed version `12800a05-2cf8-4064-94c0-e20308b7f49d`.
+- Live: noindex/canonicals/headers/redirects/sitemap 0/intake 503 intact; consent, decline, withdrawal and internal exclusion verified; GA4 Realtime received the 22:33 UTC validation page_view. GSC verified owner, reports processing. Cloudflare RUM beacon injected but CSP-blocked; unchanged.
+- Receipt: [2026-10-20-2240-ga4-bing-release-verified.md](runs/2026-10-20-2240-ga4-bing-release-verified.md).
