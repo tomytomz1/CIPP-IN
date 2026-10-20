@@ -77,7 +77,7 @@ The site is deployed and publicly reachable, and no page is indexable. Specifica
 - three real pages (`/`, `/lawrence-sewer-lateral-repair/`, `/about/`), all `published_noindex`; the development shell was removed in Phase 2D;
 - 0 effectively indexable pages, 0 operator index approvals, 0 production sitemap URLs;
 - `https://indysewerresource.com` is served by the Cloudflare Worker `indy-sewer-resource` with Static Assets, through zone routes for the apex and `www`; `www` returns a 301 to the apex and plain http returns a 301 to https;
-- the only Cloudflare resource in use is that Worker (its `ASSETS` binding) plus the DNS zone. No remote database, queue, object storage, Turnstile, or Access exists, and there is no Twilio number, Resend key, or notification provider account. As of 2026-10-20, Google Analytics 4 has a separate property and web stream but no tracking implementation, while Search Console and Bing Webmaster Tools are pending DNS verification;
+- the only Cloudflare resource in use is that Worker (its `ASSETS` binding) plus the DNS zone. No remote database, queue, object storage, Turnstile, or Access exists, and there is no Twilio number, Resend key, or notification provider account. As of 2026-10-20, Google Analytics 4 has a separate property and web stream but no tracking implementation, Google Search Console domain ownership is verified and Bing Webmaster Tools' DNS record is published awaiting in-app verification;
 - no public lead form, no lead collected, and no email or SMS ever sent. The intake endpoint answers 503 in production.
 
 ## Completed
