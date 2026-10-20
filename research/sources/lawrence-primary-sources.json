@@ -2,7 +2,7 @@
   "file": "research/sources/lawrence-primary-sources.json",
   "category": "municipal",
   "last_verified": "2026-09-20",
-  "note": "Supporting evidence only. /docs/ remains authoritative. Paraphrases only; short excerpts used solely where exact regulatory language matters. Re-verify before any Lawrence page is indexed. Note: cityoflawrence.org returns HTTP 404 to a default (non-browser) user agent; a browser user agent is required to retrieve its PDFs.",
+  "note": "Supporting evidence only. /docs/ remains authoritative. Paraphrases only; short excerpts used solely where exact regulatory language matters. Re-verify before any Lawrence page is indexed. Note: cityoflawrence.org returns HTTP 404 to a default (non-browser) user agent; a browser user agent is required to retrieve its PDFs. Incremental recheck 2026-10-20: law-021 and law-022 reviewed; this did not reverify all existing 20 records.",
   "sources": [
     {
       "source_id": "src-lawrence-code-title5",
@@ -408,6 +408,40 @@
       "limitations": "This record corrects only the reachability limitation in law-005. It does not change any claim law-005 supports, and the Internet Archive capture remains a valid secondary reference. Historical records are not rewritten (AGENTS.md).",
       "supports": [
         "docs/01-CURRENT-STATE.md"
+      ]
+    },
+    {
+      "id": "law-021-permit-applicant-eligibility-2026",
+      "category": "municipal",
+      "claim": "Lawrence ordinance § 5-1-2-1(E) restricts ordinary sanitary sewer permit applicants to appropriately licensed plumbing contractors or other contractors meeting City bonding and insurance requirements, with Director discretion to accept others; § 5-1-2-1(G) addresses permit commencement within 150 days.",
+      "status": "verified",
+      "source_title": "Lawrence, IN Code of Ordinances § 5-1-2-1(E), (G)",
+      "source_url": "https://codelibrary.amlegal.com/codes/lawrence/latest/lawrence_in/0-0-0-16768",
+      "publisher": "City of Lawrence, Indiana (American Legal Publishing)",
+      "source_date": null,
+      "verified_at": "2026-10-20",
+      "evidence_summary": "The ordinance identifies licenses for Indiana, Marion County and City of Lawrence, permits another contractor meeting Building Commissioner bond/insurance requirements, and says the Director may accept others. Work must begin within 150 days unless extended for good cause. These are ordinance requirements; whether any applicant qualifies must be checked with the City.",
+      "limitations": "Online 2025 S-18 code may lag amendments; license and permit applicability to a specific job requires current City confirmation. The ordinance does not itself confirm contractor credentials.",
+      "supports": [
+        "src/pages/lawrence-sewer-lateral-repair.astro",
+        "content/publication-records/lawrence-sewer-lateral-repair.json"
+      ]
+    },
+    {
+      "id": "law-022-sewer-permit-fee-not-stated-2026",
+      "category": "municipal",
+      "claim": "The City's undated sanitary building sewer lateral permit form does not publish a sewer-lateral permit fee or application destination; its explicit no-fee note applies only to a separate grease-trap application. The current lateral permit fee and submission channel remain unverified.",
+      "status": "partially_verified",
+      "source_title": "City of Lawrence Utilities — Application for Sanitary Building Sewer Lateral Construction Permit",
+      "source_url": "https://www.cityoflawrence.org/sites/default/files/document-group/Sanitary%20Sewer%20Permit%20Application.pdf",
+      "publisher": "City of Lawrence Utilities",
+      "source_date": null,
+      "verified_at": "2026-10-20",
+      "evidence_summary": "Read the permit-form fee language in context. It distinguishes the separate grease-trap application (no fee) from the sanitary building sewer permit. The sewer-lateral application has no stated lateral permit fee, no submission destination and no revision date.",
+      "limitations": "Absence of fee on a form is not evidence the permit is free; City's 2019 construction policy mentions application fees. Current fee, submission channel and revision status require direct City confirmation. No contact made.",
+      "supports": [
+        "src/pages/lawrence-sewer-lateral-repair.astro",
+        "content/publication-records/lawrence-sewer-lateral-repair.json"
       ]
     }
   ]
