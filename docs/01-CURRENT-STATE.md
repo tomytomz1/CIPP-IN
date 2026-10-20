@@ -168,8 +168,8 @@ The site is deployed and publicly reachable, and no page is indexable. Specifica
 - Further original visuals (one original decision-flow diagram exists; a Lawrence responsibility diagram is deliberately withheld until `law-009` is resolved)
 - Expert reviewer recruitment
 - Re-check GSC Performance / Page indexing / HTTPS reports and Bing Search Performance once their "processing" state clears (both showed processing on 2026-10-20)
-- Decide whether to set the GA4 "Internal Traffic" data filter Active (currently Testing; see Analytics State)
-- Decide Cloudflare Web Analytics RUM integration (auto-injected beacon is currently CSP-blocked; see Open Question 0b)
+- GA4 Internal Traffic exclusion activated with operator authorization; see Analytics State for prospective-only behavior.
+- Cloudflare Web Analytics automatic injection disabled with operator authorization; site/history retained (see Analytics State).
 - Call tracking setup
 - Lead funnel / lead database
 - Link building / partnerships
@@ -260,9 +260,9 @@ Three real pages are deployed and publicly reachable, and none is published to s
 
 Live verification (operator's Chrome, clean origin state, 2026-10-20 22:3x UTC): before consent no Google request, no `_ga` cookie, no `gtag`; Decline produced no Google request. A deliberate validation visit to `/?analytics=validate&…junk params…#frag` loaded nothing until **Allow analytics** was clicked at 22:33:32 UTC; then exactly one `gtag/js?id=G-2ZGM4PZ4DK` load and one `g/collect` page_view were sent with `tid=G-2ZGM4PZ4DK`, `dl=https://indysewerresource.com/` (query, click ID, email-like value and fragment removed), fixed `dt`, empty `dr`, `tt=internal`, `npa=1`, `gcs=G101`. **GA4 Realtime for property 559890873 then showed 1 active user, page title "Indy Sewer Resource" 1 view, and events page_view 1 / session_start 1 / first_visit 1.** (The extension network log displayed status 503 for the collect beacon; Realtime receipt, not that code, is the proof.) Withdrawal (Decline after Allow) reloaded the page, removed both `_ga` cookies and loaded no Google script. `?analytics=internal` persisted the exclusion across pages with zero Google requests; that browser profile was left in internal-test mode.
 
-**Separating validation from business reporting:** validation hits carry `traffic_type=internal` and match the existing GA4 "Internal Traffic" data filter, which is in **Testing** state, so they stay visible in Realtime and are labelled by the "Test data filter name" dimension. Business reports must exclude Test data filter name = "Internal Traffic" (or the operator may set the filter Active, after which future validation must use DebugView). This deliberate 2026-10-20 22:33 UTC visit is the only known validation hit. No geographic/IP filter exists.
+**Separating validation from business reporting (operator-approved follow-up, 2026-10-20):** existing GA4 "Internal Traffic" filter changed from Testing to **Active** in property `559890873`. Confirmed operation Exclude, exact parameter `traffic_type=internal`, then saved and confirmed activation. The list visibly shows Active. No location/IP rule was added. Future matching events are excluded from processing; this is not retroactive, and previously collected validation traffic still needs exclusion when interpreting historical business reports. `?analytics=internal` continues to suppress Google entirely for ordinary QA. Do not expect a marked validation visit to appear in ordinary reports or Realtime after exclusion; do not assume DebugView bypasses the filter.
 
-**Cloudflare Web Analytics (RUM):** site tag `f8a0256769d9405aab326585520b1d0f`, mode "Enable, excluding visitor data in the EU" (automatic injection) — unchanged. Browser navigations DO receive Cloudflare's injected `static.cloudflareinsights.com/beacon.min.js` tag (plain `fetch()`/HTTP audits do not see it), and the site CSP blocks it (`script-src-elem` violation confirmed), so it sends nothing. This explains the 20 launch-day events (Sep 20) and no RUM rows since. Decision this session: retain as inactive pending a separate, reviewed integration; CSP was not widened. RUM, GA4 consented visits and edge HTTP request totals are separate measures and must not be compared as the same metric.
+**Cloudflare Web Analytics (RUM), operator-approved follow-up 2026-10-20:** disabled automatic beacon execution through the existing site’s ruleset (`enabled=false`, site tag `f8a0256769d9405aab326585520b1d0f`). API final state retains `auto_install=true` as the setup mode but disables its ruleset; this is not active injection. The initial attempt to set `auto_install=false` alone left the ruleset enabled and live injection present, so it was superseded by explicit disable. Fresh real browser navigation on all three public pages then showed no `static.cloudflareinsights.com` script, retained `/analytics.js`, correct HTTPS apex canonical and noindex meta. Site record and creation date retained; no delete API called, no CSP widening. Historical launch-day RUM and edge request evidence remain separate from consented GA4 visits.
 
 **Bing Webmaster Tools:** ownership of `https://indysewerresource.com/` verified 2026-10-20 ~21:41 UTC with the existing DNS-only CNAME (no new record or site). Search Performance: "Please check back in 48 hours while we prepare the data"; Site Explorer: no indexed URLs; Sitemaps: none known; no URL or sitemap submitted.
 
@@ -302,7 +302,7 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 
 0. Two Cloudflare dashboard items left over from the cutover, neither blocking:
    a. **Obsolete parking DNS records.** The apex `A` (192.64.119.188) and `www` CNAME (parkingpage.namecheap.com) are still in the zone. They are harmless today because the Worker route answers first, but deleting them is what would allow proper Workers Custom Domains. The earlier deployment session lacked DNS-edit permission. The current connected API can read the existing records; no parking-record removal or Custom Domain migration is needed for this analytics task.
-   b. **Cloudflare Web Analytics continuity:** Automatic setup remains enabled (EU-excluded injection). Live browser checks on 2026-10-20 show Cloudflare injects its beacon into page navigations and the CSP blocks it, producing a CSP console violation and no RUM data. Options for the operator: (1) keep as is; (2) switch RUM to manual-snippet or Disable to stop the blocked injection; (3) a separately reviewed integration adding `static.cloudflareinsights.com` (script) and `cloudflareinsights.com` (connect) with disclosure. No setting changed.
+   b. **Cloudflare Web Analytics continuity — resolved by operator decision (2026-10-20):** disabled the existing beacon ruleset instead of widening CSP; fresh browser DOM checks confirm the beacon absent on all three pages. Site/history retained. Re-enabling requires a new reviewed integration decision.
 
 1. ~~Domain registration and DNS.~~ **Resolved:** the operator registered `indysewerresource.com` on 2026-09-19 and moved the zone to Cloudflare; the site has been served from it since 2026-09-20.
 2. Remaining Lawrence uncertainties (listed under Lawrence Municipal Evidence Status). Confirm them with Lawrence Utilities.
@@ -359,6 +359,9 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 
 ## Last Major Decisions
 
+- 2026-10-20 — Operator approved stopping Cloudflare automatic beacon injection and activating GA4’s exact `traffic_type=internal` exclusion. Both settings applied/read back; live pages have no Cloudflare beacon. No geographic/IP filter or indexing permission change.
+
+
 - 2026-10-20 — Operator authorized completing the GA4/GSC/Bing setup and release. Deployment moved to Cloudflare Workers Builds on the EXISTING Worker (main only, preview builds off, same npm build/deploy commands) because the agent runtime cannot reach the Cloudflare API; GA4 privacy settings tightened in the account; `?analytics=validate` marker labels deliberate consented validation hits as internal traffic. Cloudflare RUM left inactive (CSP-blocked) pending a separate decision.
 - 2026-10-20 — Explicit GA4 collection requirement evaluated against the locked architecture: select basic-consent browser tagging over MP-only partial reporting; exact production release gate defaults OFF. Narrow conditional CSP review and privacy/performance trade-offs recorded in BUILD-SPEC. This does not approve indexing or live lead collection. Cloudflare Web Analytics configuration/history retained; no silent platform replacement.
 
@@ -401,6 +404,9 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 5. Operator decisions: a separate non-admin GitHub identity for AI agents; contact-PII encryption and retention mechanics; the AI-use disclosure policy (Open Questions 7, 9, 11–12).
 
 ## Change Log
+
+- 2026-10-20 23:05 UTC — Cloudflare RUM ruleset disabled, site retained, three-page browser beacon absence confirmed; GA4 Internal Traffic filter Active, exact internal marker only. Receipt `logs/runs/2026-10-20-2305-analytics-cleanup.md`.
+
 
 - 2026-10-20 22:57 UTC — PR #21 merged normally as `916ee4f76bb29c962fcc8364ecee929855f18375` after all five final-head CI checks passed. Cloudflare trigger exclusions and unchanged successful release-build list confirmed. Receipt: `logs/runs/2026-10-20-2257-merge-final-pr21.md`.
 

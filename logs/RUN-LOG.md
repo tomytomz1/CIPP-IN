@@ -211,3 +211,10 @@ This file is an audit trail, not a strategy document and not a replacement for `
 - PR #18 normal merge: [receipt](runs/2026-10-20-2216-merge-ga4-pr18.md).
 - PR #20 normal merge and build start (historical state, superseded by Claude's release verification): [receipt](runs/2026-10-20-2230-merge-release-pr20.md).
 - PR #21 merged at 916ee4f76bb29c962fcc8364ecee929855f18375 after five green CI checks; no additional build at readback: [receipt](runs/2026-10-20-2257-merge-final-pr21.md).
+
+
+### 2026-10-20 23:05 UTC — Analytics cleanup
+
+- COMPLETE: operator-authorized Cloudflare RUM ruleset disabled; existing site retained and no beacon on all three fresh browser page visits. GA4 Internal Traffic Exclude exact traffic_type=internal changed Testing → Active and visibly confirmed.
+- No IP/location filter, DNS/indexing/security/application/deployment change. Previous test data is not retroactively removed.
+- [Receipt](runs/2026-10-20-2305-analytics-cleanup.md).
