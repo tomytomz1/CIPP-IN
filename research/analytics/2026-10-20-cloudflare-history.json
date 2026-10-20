@@ -952,5 +952,23 @@
         "modified_on": "2026-09-20T05:15:29.389414Z"
       }
     ]
+  },
+  "validation": {
+    "implementationSha": "9619d3a496f7e45903ff7b5672858fc822ebb33d",
+    "ci": "https://github.com/tomytomz1/CIPP-IN/actions/runs/39498948360",
+    "allFiveJobs": "success",
+    "unitTests": 200,
+    "enabledBrowserTests": 24,
+    "disabledA11yTests": 18,
+    "firstPartyControllerGzipBytes": 2886,
+    "ga4LiveReceiptVerified": false,
+    "productionDeployed": false
+  },
+  "currentDeployment": {
+    "deploymentId": "879e9ce9-0e88-494c-b26e-fe3c2b53bd91",
+    "version": "489d30b2-3e33-4089-b48d-5a34f3c50781",
+    "percentage": 100,
+    "created": "2026-09-20T13:32:17.078444Z",
+    "source": "wrangler"
   }
 }

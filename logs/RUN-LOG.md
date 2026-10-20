@@ -182,3 +182,11 @@ This file is an audit trail, not a strategy document and not a replacement for `
 - Result: PARTIAL. GA4 code prepared, disabled pending account prerequisites and actual Realtime verification; no deploy.
 - Receipt: [2026-10-20-2130-consented-ga4-history.md](runs/2026-10-20-2130-consented-ga4-history.md).
 - DNS verification records and email DNS read; no DNS edits. Daily Cloudflare aggregates reproduce supplied totals; no data before September 20 launch returned. Windsor needs existing Indy properties selected; no built-in interactive browser or shell environment is available. Operator prohibits further Wizard/TinyFish use.
+
+### 2026-10-20 21:18 UTC — GA4 validation / account-access blockers
+
+- Result: PARTIAL; implementation commit `9619d3a496f7e45903ff7b5672858fc822ebb33d` passes all five CI jobs, 200 unit tests, 24 enabled-production browser/a11y tests, 18 disabled-build a11y checks.
+- Live HTTP checks pass: three HTTPS apex canonical pages, noindex meta/header, 0 sitemap URLs, redirects, intake 503.
+- PR: https://github.com/tomytomz1/CIPP-IN/pull/18 (draft; no merge/deploy; GA4 OFF).
+- Current DNS intact; no records modified. Historic RUM exactly 20 launch-day events; direct Windsor Indy requests refused; no native authenticated browser. Bing ownership and GA4 Admin/Realtime unresolved.
+- Receipt: [2026-10-20-2118-consented-ga4-validation.md](runs/2026-10-20-2118-consented-ga4-validation.md).

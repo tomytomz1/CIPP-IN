@@ -1,7 +1,7 @@
 # CURRENT STATE
 
 Last updated: 2026-10-20
-Last verified commit: `d61f0168e7c69bc7e036ce3187fa73958b08c206` (Phase 2F www/https fix, PR #15). The Phase 2F completion commit follows; resolve with `git log` (a file cannot contain its own commit SHA).
+Last verified implementation commit: `9619d3a496f7e45903ff7b5672858fc822ebb33d` (PR #18 feature branch, all five CI jobs green; NOT deployed). Production remains Worker version `489d30b2-3e33-4089-b48d-5a34f3c50781` from 2026-09-20. This documentation-only receipt commit follows; resolve with git log.
 Production URL: **https://indysewerresource.com — LIVE** since 2026-09-20, served by the Cloudflare Worker `indy-sewer-resource` with Static Assets. The site is public and **entirely non-indexable**: every response carries `X-Robots-Tag: noindex, nofollow`, every page carries a `noindex` robots meta tag, and the sitemap has 0 URLs. `www` returns a single 301 to the apex, and plain http returns a 301 to https.
 Repository: https://github.com/tomytomz1/CIPP-IN
 Current branch: main
@@ -34,7 +34,7 @@ Locked by the operator (change only with explicit operator approval):
   - Cloudflare Access for admin
   - Resend email
   - Twilio: one operator-controlled tracking number; recording OFF by default
-  - Cloudflare Web Analytics + first-party D1 events + Search Console
+  - Cloudflare Web Analytics + first-party D1 events + Search Console; operator-requested optional GA4 addition reviewed 2026-10-20 in BUILD-SPEC (staged OFF)
   - OpenAI `text-embedding-3-small` for similarity QA
   - Git (Markdown/MDX + structured records) as the CMS
 - **Indexing governance (Phase 1):**
@@ -77,7 +77,7 @@ The site is deployed and publicly reachable, and no page is indexable. Specifica
 - three real pages (`/`, `/lawrence-sewer-lateral-repair/`, `/about/`), all `published_noindex`; the development shell was removed in Phase 2D;
 - 0 effectively indexable pages, 0 operator index approvals, 0 production sitemap URLs;
 - `https://indysewerresource.com` is served by the Cloudflare Worker `indy-sewer-resource` with Static Assets, through zone routes for the apex and `www`; `www` returns a 301 to the apex and plain http returns a 301 to https;
-- the only Cloudflare resource in use is that Worker (its `ASSETS` binding) plus the DNS zone. No remote database, queue, object storage, Turnstile, or Access exists, and there is no Twilio number, Resend key, or notification provider account. As of 2026-10-20, Google Analytics 4 has a separate property and web stream but no tracking implementation, Google Search Console domain ownership is verified and Bing Webmaster Tools' DNS record is published awaiting in-app verification;
+- the active site runtime is that Worker (its `ASSETS` binding) plus the DNS zone; a Web Analytics site is also configured, with no RUM rows returned after launch day. No remote database, queue, object storage, Turnstile, or Access exists, and there is no Twilio number, Resend key, or notification provider account. As of 2026-10-20, Google Analytics 4 has a separate property and web stream but no deployed tracking implementation (consent-controlled implementation staged OFF in PR #18), Google Search Console domain ownership is verified and Bing Webmaster Tools' DNS record is published awaiting in-app verification;
 - no public lead form, no lead collected, and no email or SMS ever sent. The intake endpoint answers 503 in production.
 
 ## Completed
@@ -146,7 +146,7 @@ The site is deployed and publicly reachable, and no page is indexable. Specifica
 
 ## In Progress
 
-- GA4 consent-controlled browser implementation on `feat/indy-consented-ga4`; defaults OFF and is not deployed. It preserves preview/indexing safeguards and requires account-side Enhanced Measurement/privacy settings plus actual Realtime verification before activation. See `05-BUILD-SPEC.md` → Analytics.
+- GA4 consent-controlled browser implementation on `feat/indy-consented-ga4`; defaults OFF and is not deployed. It preserves preview/indexing safeguards and requires verified account-side Enhanced Measurement/privacy settings before activation and actual Realtime verification for final acceptance. See `05-BUILD-SPEC.md` → Analytics.
 - Independent Cloudflare history audit: daily aggregates queried from 2025-10-22 through 2026-10-20 return data only since 2026-09-20. Completed Sep 20–Oct 19 totals reproduce 25,021 requests, 58,931,486 served bytes, 15,045,592 cached bytes, and 3,515 summed daily unique visitors (not distinct monthly users). October 20 is partial.
 - Browser access is unavailable in this session; local shell reports no execution environment. GitHub CI is the available test execution path. Per operator correction, no further GSC Wizard or TinyFish use.
 - Windsor inventory excludes existing Indy GA4 property and Search Console property; authorization links were supplied. Bing is not connected to Windsor. No new property was created.
@@ -167,9 +167,9 @@ The site is deployed and publicly reachable, and no page is indexable. Specifica
 - Tools/calculators
 - Further original visuals (one original decision-flow diagram exists; a Lawrence responsibility diagram is deliberately withheld until `law-009` is resolved)
 - Expert reviewer recruitment
-- Complete Google Search Console Domain-property DNS verification (started 2026-10-20); keep all pages `noindex` until publication gates are passed
-- Implement consent/privacy-reviewed GA4 tracking and verify events (property and stream created 2026-10-20)
-- Complete Bing Webmaster Tools DNS verification (site added 2026-10-20)
+- Recheck Google Search Console account reports and ownership after the existing Indy property is selected in Windsor; DNS verification was completed in the earlier 2026-10-20 session
+- Activate and verify GA4 after account prerequisites; implementation is staged OFF in PR #18, not collecting in production
+- Complete Bing Webmaster Tools in-app ownership confirmation using the existing DNS-only CNAME (site and record already exist)
 - Call tracking setup
 - Lead funnel / lead database
 - Link building / partnerships
@@ -254,7 +254,11 @@ Three real pages are deployed and publicly reachable, and none is published to s
 
 ## Analytics State
 
-2026-10-20: Created GA4 property **Indy Sewer Resource** (property ID `559890873`) and a web stream for `https://indysewerresource.com` (measurement ID `G-2ZGM4PZ4DK`). **No GA4 tag, tracking endpoint, or production event collection is configured yet.** The site intentionally serves zero client JS and has restrictive `script-src 'self'` CSP; a new tracking architecture and consent/privacy disclosures must be reviewed before installing GA4. The originally locked Cloudflare Web Analytics + first-party D1 plan is not silently replaced. Bing Webmaster Tools has the manually added site and Cloudflare DNS CNAME verification record, but Bing's final Verify confirmation is still pending. The verification CNAME is unproxied. GA4 property and stream are administratively configured only; no page-view events have been verified.
+The existing GA4 property is **Indy Sewer Resource**, ID `559890873`, stream measurement ID `G-2ZGM4PZ4DK`, URL `https://indysewerresource.com/` (created in the earlier 2026-10-20 session). **Production still has no GA4 collection.** PR #18 contains an explicit-opt-in browser tag, restricted attribution/payload, DNT/GPC support, internal-browser opt-out, truthful disclosures, and a production-only reviewed CSP exception. The release switch defaults OFF. The enabled build adds approximately 2.9 KB gzip first-party JS; disabled builds retain 0 JS. Account-side Enhanced Measurement/advertising/retention settings and actual sanitized network plus Realtime receipt are not verified; verify account settings before a controlled production activation, then prove sanitized collection and Realtime receipt before calling tracking complete.
+
+Cloudflare Web Analytics has automatic setup enabled in the API. A siteTag-filtered RUM query from July 20 through October 20 returns only 20 events, all September 20 (10 apex, 10 www). Current live HTTP checks show no beacon script and retain `script-src 'self'`, which would block the external beacon if injected. Retain its configuration and history for now; restoring ongoing beacon measurement needs its own narrow CSP/privacy integration, rather than treating edge HTTP totals as RUM users. No RUM setting was changed.
+
+Bing has the existing site and correct DNS-only verification CNAME; in-app verified status remains unconfirmed. Windsor direct report reads reject both Indy GA4 and GSC properties as unavailable in its selected accounts. The current session exposes no native interactive authenticated browser. The operator prohibits further Wizard/TinyFish use. No duplicate properties, URL submissions or indexing changes were made.
 
 ## Current Links / Referring Domains
 
@@ -289,8 +293,8 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 ## Open Questions
 
 0. Two Cloudflare dashboard items left over from the cutover, neither blocking:
-   a. **Obsolete parking DNS records.** The apex `A` (192.64.119.188) and `www` CNAME (parkingpage.namecheap.com) are still in the zone. They are harmless today because the Worker route answers first, but deleting them is what would allow proper Workers Custom Domains. The Cloudflare OAuth session available to agents has `zone:read` and no DNS-edit permission, so an operator (or a scoped API token) must do it.
-   b. **Cloudflare Web Analytics automatic setup is enabled on the zone.** Cloudflare injects `static.cloudflareinsights.com/beacon.min.js` into every HTML response at the edge. The site's own Content-Security-Policy (`script-src 'self'`) blocks it, so the script never loads and no analytics request is made — verified live — but the injected tag logs a CSP error in the console on every page, and analytics was not authorized for this phase. Disabling it is a dashboard action; the agent session cannot manage RUM settings.
+   a. **Obsolete parking DNS records.** The apex `A` (192.64.119.188) and `www` CNAME (parkingpage.namecheap.com) are still in the zone. They are harmless today because the Worker route answers first, but deleting them is what would allow proper Workers Custom Domains. The earlier deployment session lacked DNS-edit permission. The current connected API can read the existing records; no parking-record removal or Custom Domain migration is needed for this analytics task.
+   b. **Cloudflare Web Analytics continuity:** API automatic setup remains enabled. Historical RUM returns 20 launch-day events and none later through Oct 20; current live responses in the HTTP audit contain no injected beacon and CSP still disallows its external host. This supersedes the older current-state assertion of injection into every response. Preserve the site/history; before restoring ongoing RUM, use an explicit privacy/security-reviewed integration. No setting changed in PR #18.
 
 1. ~~Domain registration and DNS.~~ **Resolved:** the operator registered `indysewerresource.com` on 2026-09-19 and moved the zone to Cloudflare; the site has been served from it since 2026-09-20.
 2. Remaining Lawrence uncertainties (listed under Lawrence Municipal Evidence Status). Confirm them with Lawrence Utilities.
@@ -337,7 +341,8 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 
 ## Current Blockers
 
-- **New on 2026-10-20:** Cloudflare DNS already contains the Google TXT and Bing CNAME verification records. Google Search Console Domain property is verified; Bing's in-app confirmation is still pending because the browser automation service ran out of credits. GA4 data collection must be implemented and validated without silently breaking the site's no-client-JS/CSP/privacy constraints. A new GA4 property and measurement ID do not demonstrate actual tracking or indexing.
+- **Analytics/webmaster completion (2026-10-20):** DNS records already exist. The earlier GSC Domain verification is recorded as successful, but account reports cannot be rechecked because Windsor's selected accounts exclude Indy. GA4 code is staged OFF in PR #18; GA4 Admin/Realtime and final Bing verification require authenticated browser/API access absent in this session. This is a capability/account-access blocker, not permission to create duplicates or change indexing. The operator prohibits Wizard/TinyFish. Live production remains unchanged.
+
 
 - None block the next implementation phase.
 - Before **publishing to search engines** (a separate thing from being reachable, which is now done): real pages passing the indexing gate with operator approval, and the Launch Checklist in `05-BUILD-SPEC.md`.
@@ -345,6 +350,8 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 - Before the **Lawrence page can be indexed**: a real expert review (none exists), a human editorial pass by the operator, a publication score of 85 (63 today), the embedding half of similarity QA (the runner exists; no API key, so it reports `not_run`), manual accessibility review, and operator index approval. The Location Page Quality Gate now passes on evidence (5 of 8, all authoritative local primary-source). Confirming the open Lawrence questions with Lawrence Utilities is what would raise the evidence categories and the score; an unresolved question only blocks indexing where the page makes or depends on a claim about it (see Open Question 2).
 
 ## Last Major Decisions
+
+- 2026-10-20 — Explicit GA4 collection requirement evaluated against the locked architecture: select basic-consent browser tagging over MP-only partial reporting; exact production release gate defaults OFF. Narrow conditional CSP review and privacy/performance trade-offs recorded in BUILD-SPEC. This does not approve indexing or live lead collection. Cloudflare Web Analytics configuration/history retained; no silent platform replacement.
 
 - 2026-10-20 — The operator requested Google Search Console, GA4 and Bing Webmaster Tools for the existing site. The GA4 property/stream was created, Google Search Console Domain ownership verified, and Bing verification CNAME published. This **does not** approve search indexing, modify consent/privacy rules, enable lead collection, or replace the previously locked Cloudflare-first analytics architecture without further review.
 - 2026-09-20 — **Phase 2F completed: the site is live at https://indysewerresource.com**, public and entirely non-indexable. Served by Cloudflare Worker `indy-sewer-resource` + Static Assets through zone routes rather than Workers Custom Domains, because the Custom Domain API refuses to replace externally managed DNS records and the agent session has no DNS-edit permission. `www` and plain http both 301 to the canonical apex. No analytics, no lead path, no index approval.
@@ -385,6 +392,8 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 5. Operator decisions: a separate non-admin GitHub identity for AI agents; contact-PII encryption and retention mechanics; the AI-use disclosure policy (Open Questions 7, 9, 11–12).
 
 ## Change Log
+
+- 2026-10-20 — Validation: PR #18 implementation passes typecheck, 200 unit tests, required CI, enabled production build/24 browser checks, disabled build/18 a11y checks, and live production audit. Actual homepage canonical is HTTPS apex (not localhost), noindex preserved, sitemap 0, intake 503; no deployment. Final receipt: `logs/runs/2026-10-20-2118-consented-ga4-validation.md`.
 
 - 2026-10-20 — PARTIAL follow-up: preserved and built upon the five-commit `docs/indy-search-analytics-setup` branch. Read Cloudflare DNS: existing Google TXT/Bing DNS-only CNAME, five MX and SPF intact. Prepared GA4 consent controller, conditional production-only CSP exception and accurate disclosures, tests, and live HTTP audit; all default OFF pending account access and verified collection. Queried actual daily/Workers/RUM history; RUM returns exactly 20 launch-day events (10 apex/10 www) and no later rows through Oct 20; current production HTTP responses do not contain a beacon and CSP blocks its external script if injected. Left configuration unchanged. No production release or indexing permission change. Receipt: `logs/runs/2026-10-20-2130-consented-ga4-history.md`.
 
