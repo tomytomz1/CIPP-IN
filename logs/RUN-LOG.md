@@ -190,3 +190,10 @@ This file is an audit trail, not a strategy document and not a replacement for `
 - PR: https://github.com/tomytomz1/CIPP-IN/pull/18 (draft; no merge/deploy; GA4 OFF).
 - Current DNS intact; no records modified. Historic RUM exactly 20 launch-day events; direct Windsor Indy requests refused; no native authenticated browser. Bing ownership and GA4 Admin/Realtime unresolved.
 - Receipt: [2026-10-20-2118-consented-ga4-validation.md](runs/2026-10-20-2118-consented-ga4-validation.md).
+
+### 2026-10-20 21:33 UTC — Windsor reporting access confirmed
+
+- Result: PARTIAL; existing Indy GA4/GSC connections now selected/readable. Targeted traffic/performance/sitemap reads return no rows; no collection/indexing inference.
+- No GA4 write actions exposed; no native authenticated browser/runtime; Cloudflare build trigger list empty and build configuration absent (404/12040).
+- No source/deployment/indexing/DNS changes. PR #18 retained.
+- Receipt: [2026-10-20-2133-windsor-access-confirmed.md](runs/2026-10-20-2133-windsor-access-confirmed.md).

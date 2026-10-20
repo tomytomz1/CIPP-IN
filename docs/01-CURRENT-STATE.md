@@ -149,7 +149,7 @@ The site is deployed and publicly reachable, and no page is indexable. Specifica
 - GA4 consent-controlled browser implementation on `feat/indy-consented-ga4`; defaults OFF and is not deployed. It preserves preview/indexing safeguards and requires verified account-side Enhanced Measurement/privacy settings before activation and actual Realtime verification for final acceptance. See `05-BUILD-SPEC.md` → Analytics.
 - Independent Cloudflare history audit: daily aggregates queried from 2025-10-22 through 2026-10-20 return data only since 2026-09-20. Completed Sep 20–Oct 19 totals reproduce 25,021 requests, 58,931,486 served bytes, 15,045,592 cached bytes, and 3,515 summed daily unique visitors (not distinct monthly users). October 20 is partial.
 - Browser access is unavailable in this session; local shell reports no execution environment. GitHub CI is the available test execution path. Per operator correction, no further GSC Wizard or TinyFish use.
-- Windsor inventory excludes existing Indy GA4 property and Search Console property; authorization links were supplied. Bing is not connected to Windsor. No new property was created.
+- Windsor access RESOLVED on 2026-10-20: existing Indy GA4 property 559890873 and sc-domain:indysewerresource.com are selected and readable. Targeted Sep 20–Oct 20 performance/traffic reads and sitemap read each returned zero rows, not a verified zero-traffic or indexing conclusion. GA4 Admin/Realtime and Bing access remain unavailable. Cloudflare returns no build trigger/configuration for this Worker; local Wrangler runtime is absent. No new property was created.
 
 ## Not Started
 
@@ -167,7 +167,7 @@ The site is deployed and publicly reachable, and no page is indexable. Specifica
 - Tools/calculators
 - Further original visuals (one original decision-flow diagram exists; a Lawrence responsibility diagram is deliberately withheld until `law-009` is resolved)
 - Expert reviewer recruitment
-- Recheck Google Search Console account reports and ownership after the existing Indy property is selected in Windsor; DNS verification was completed in the earlier 2026-10-20 session
+- Complete owner-level Search Console/Indexing/HTTPS UI checks; Windsor performance/sitemap reads now succeed but do not expose those account reports. DNS verification was completed in the earlier 2026-10-20 session
 - Activate and verify GA4 after account prerequisites; implementation is staged OFF in PR #18, not collecting in production
 - Complete Bing Webmaster Tools in-app ownership confirmation using the existing DNS-only CNAME (site and record already exist)
 - Call tracking setup
@@ -250,7 +250,7 @@ Three real pages are deployed and publicly reachable, and none is published to s
 
 ## Search Console State
 
-2026-10-20: **Google Search Console Domain property `sc-domain:indysewerresource.com` verified** using a newly created Cloudflare DNS TXT record. Performance and indexing panels initially show "Processing data". Verification is administrative and does not authorize indexing. All three pages remain `noindex`; the sitemap contains 0 URLs and has not been submitted. Do not request indexing or bypass publication gates.
+2026-10-20: **Google Search Console Domain property `sc-domain:indysewerresource.com` verified** using a newly created Cloudflare DNS TXT record. Performance and indexing panels initially show "Processing data". Follow-up at 21:33 UTC: Windsor performance/sitemap queries are readable and return no rows; this connector does not establish current indexing/HTTPS report or owner-role status. Verification is administrative and does not authorize indexing. All three pages remain `noindex`; the sitemap contains 0 URLs and has not been submitted. Do not request indexing or bypass publication gates.
 
 ## Analytics State
 
@@ -258,7 +258,7 @@ The existing GA4 property is **Indy Sewer Resource**, ID `559890873`, stream mea
 
 Cloudflare Web Analytics has automatic setup enabled in the API. A siteTag-filtered RUM query from July 20 through October 20 returns only 20 events, all September 20 (10 apex, 10 www). Current live HTTP checks show no beacon script and retain `script-src 'self'`, which would block the external beacon if injected. Retain its configuration and history for now; restoring ongoing beacon measurement needs its own narrow CSP/privacy integration, rather than treating edge HTTP totals as RUM users. No RUM setting was changed.
 
-Bing has the existing site and correct DNS-only verification CNAME; in-app verified status remains unconfirmed. Windsor direct report reads reject both Indy GA4 and GSC properties as unavailable in its selected accounts. The current session exposes no native interactive authenticated browser. The operator prohibits further Wizard/TinyFish use. No duplicate properties, URL submissions or indexing changes were made.
+Bing has the existing site and correct DNS-only verification CNAME; in-app verified status remains unconfirmed. Windsor access was resolved at 2026-10-20 21:33 UTC: both existing Indy properties now appear and direct report reads succeed. Sep 20–Oct 20 GSC performance, GSC sitemap and GA4 traffic queries each return zero rows. This proves reporting access, not owner-level permissions, indexing state, actual collection or Realtime receipt. Windsor exposes no GA4 write actions. The current session exposes no native interactive authenticated browser. The operator prohibits further Wizard/TinyFish use. No duplicate properties, URL submissions or indexing changes were made.
 
 ## Current Links / Referring Domains
 
@@ -341,7 +341,7 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 
 ## Current Blockers
 
-- **Analytics/webmaster completion (2026-10-20):** DNS records already exist. The earlier GSC Domain verification is recorded as successful, but account reports cannot be rechecked because Windsor's selected accounts exclude Indy. GA4 code is staged OFF in PR #18; GA4 Admin/Realtime and final Bing verification require authenticated browser/API access absent in this session. This is a capability/account-access blocker, not permission to create duplicates or change indexing. The operator prohibits Wizard/TinyFish. Live production remains unchanged.
+- **Analytics/webmaster completion (2026-10-20):** DNS records already exist. The earlier GSC Domain verification is recorded as successful, and current Windsor report reads now succeed (empty returned reports). GA4 code is staged OFF in PR #18; GA4 Admin/Realtime and final Bing verification require authenticated browser/API access absent in this session. This is a capability/account-access blocker, not permission to create duplicates or change indexing. The operator prohibits Wizard/TinyFish. Live production remains unchanged.
 
 
 - None block the next implementation phase.
@@ -392,6 +392,8 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 5. Operator decisions: a separate non-admin GitHub identity for AI agents; contact-PII encryption and retention mechanics; the AI-use disclosure policy (Open Questions 7, 9, 11–12).
 
 ## Change Log
+
+- 2026-10-20 21:33 UTC — Windsor access resolved: existing Indy GA4 and GSC properties now selected; direct traffic/performance/sitemap reads succeed with zero rows. GA4 list_actions empty. No browser/runtime exposed; Cloudflare Workers Builds returns no trigger and no configuration (404/12040) for this Worker. No implementation/deployment/indexing/DNS changes. Receipt: `logs/runs/2026-10-20-2133-windsor-access-confirmed.md`.
 
 - 2026-10-20 — Validation: PR #18 implementation passes typecheck, 200 unit tests, required CI, enabled production build/24 browser checks, disabled build/18 a11y checks, and live production audit. Actual homepage canonical is HTTPS apex (not localhost), noindex preserved, sitemap 0, intake 503; no deployment. Final receipt: `logs/runs/2026-10-20-2118-consented-ga4-validation.md`.
 

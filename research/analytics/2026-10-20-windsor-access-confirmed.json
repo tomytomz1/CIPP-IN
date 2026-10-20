@@ -1,0 +1,80 @@
+{
+  "checkedAt": "2026-10-20T21:33:58.329Z",
+  "ga4": {
+    "propertyId": "559890873",
+    "measurementId": "G-2ZGM4PZ4DK",
+    "selected": true,
+    "request": {
+      "fields": [
+        "date",
+        "sessions",
+        "active_users",
+        "screen_page_views"
+      ],
+      "from": "2026-09-20",
+      "to": "2026-10-20"
+    },
+    "response": {
+      "status": "done",
+      "data": [],
+      "total_rows": 0
+    },
+    "writeActions": []
+  },
+  "gsc": {
+    "property": "sc-domain:indysewerresource.com",
+    "selected": true,
+    "performance": {
+      "request": {
+        "fields": [
+          "date",
+          "clicks",
+          "impressions",
+          "ctr",
+          "position"
+        ],
+        "from": "2026-09-20",
+        "to": "2026-10-20"
+      },
+      "response": {
+        "status": "done",
+        "data": [],
+        "total_rows": 0
+      }
+    },
+    "sitemaps": {
+      "request": {
+        "fields": [
+          "path",
+          "last_submitted",
+          "last_downloaded",
+          "submitted",
+          "errors",
+          "warnings"
+        ],
+        "from": "2026-09-20",
+        "to": "2026-10-20"
+      },
+      "response": {
+        "status": "done",
+        "data": [],
+        "total_rows": 0
+      }
+    }
+  },
+  "cloudflareBuilds": {
+    "workerTag": "7d9c8e9f2c6e43de8459373ae3429f8f",
+    "triggers": [],
+    "configuration": {
+      "httpStatus": 404,
+      "errorCode": 12040,
+      "message": "No build configuration associated with that script tag was found for this account"
+    }
+  },
+  "limits": [
+    "Empty rows do not prove zero search traffic, no indexing, or successful tracking.",
+    "Windsor access is reporting access, not GA4 Admin/Realtime or GSC owner role verification.",
+    "No native authenticated interactive browser or local Wrangler runtime is exposed.",
+    "No production activation/deploy or DNS change."
+  ]
+}
