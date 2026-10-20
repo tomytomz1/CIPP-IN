@@ -31,3 +31,5 @@ for (const url of ['http://indysewerresource.com/about/', 'https://www.indysewer
   if (response.status !== 301 || location !== origin + '/about/') throw new Error('Unexpected redirect: ' + JSON.stringify(evidence.at(-1)));
 }
 console.log(JSON.stringify({ checkedAt: new Date().toISOString(), evidence }, null, 2));
+
+export {};
