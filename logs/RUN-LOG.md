@@ -205,3 +205,8 @@ This file is an audit trail, not a strategy document and not a replacement for `
 - Normal merge commit: `018dd3b8f0f5a16c10b61b61e2f2fa524eb75007`; GitHub read-back confirms PR closed/merged.
 - No production deployment/activation, DNS, indexing or lead change performed. Release switch still defaults OFF in source.
 - Receipt: [2026-10-20-2216-merge-ga4-pr18.md](runs/2026-10-20-2216-merge-ga4-pr18.md).
+
+
+## 2026-10-20 22:30 UTC — Merge release PR #20 (PARTIAL)
+
+Merged PR #20 after five successful CI jobs; main SHA `613408977227549cdbd6875aaa8949d3b777f7d5`. Existing Cloudflare production build started for exact merge, release GA4 flag true. Deployment success and GA4 Realtime receipt pending. [Receipt](runs/2026-10-20-2230-merge-release-pr20.md).

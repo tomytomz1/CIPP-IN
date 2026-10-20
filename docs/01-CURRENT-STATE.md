@@ -1,6 +1,8 @@
 # CURRENT STATE
 
 Last updated: 2026-10-20
+Release update (2026-10-20 22:30 UTC): PR #20 merged as `613408977227549cdbd6875aaa8949d3b777f7d5` on 2026-10-20 after all five CI jobs passed (run 39507896784). Cloudflare API independently confirms the existing Worker's main-only build trigger, `PUBLIC_GA4_ENABLED=true`, Node 24, and build `d09f0d4c-7d4c-43a4-bfd5-c2114ebaa601` running for that merge. Deployment success and GA4 Realtime receipt are not yet verified by Codex. PR #20 BUILD-SPEC records Claude's signed-in GA4 account settings inspection; this supersedes the earlier account-settings-unavailable notes, without independently certifying those UI observations.
+
 Last verified implementation commit: `c59c6311fc626b8962162203d2e1469ee8b23e27`, merged to main by PR #18 as `018dd3b8f0f5a16c10b61b61e2f2fa524eb75007` after all five CI checks passed. This merge is not a production deployment or proof of GA4 collection.
 Production URL: **https://indysewerresource.com — LIVE** since 2026-09-20, served by the Cloudflare Worker `indy-sewer-resource` with Static Assets. The site is public and **entirely non-indexable**: every response carries `X-Robots-Tag: noindex, nofollow`, every page carries a `noindex` robots meta tag, and the sitemap has 0 URLs. `www` returns a single 301 to the apex, and plain http returns a 301 to https.
 Repository: https://github.com/tomytomz1/CIPP-IN
@@ -149,7 +151,7 @@ The site is deployed and publicly reachable, and no page is indexable. Specifica
 - GA4 consent-controlled browser implementation merged to main through PR #18 on 2026-10-20; release switch defaults OFF. No production deployment was performed by this merge session. It preserves preview/indexing safeguards and requires verified account-side Enhanced Measurement/privacy settings before activation and actual Realtime verification for final acceptance. See `05-BUILD-SPEC.md` → Analytics.
 - Independent Cloudflare history audit: daily aggregates queried from 2025-10-22 through 2026-10-20 return data only since 2026-09-20. Completed Sep 20–Oct 19 totals reproduce 25,021 requests, 58,931,486 served bytes, 15,045,592 cached bytes, and 3,515 summed daily unique visitors (not distinct monthly users). October 20 is partial.
 - Earlier sessions lacked browser/runtime access. The 22:16 UTC merge session now exposes a local shell and cloud-browser tool; authenticated browser sessions and Wrangler credentials were not inspected for this merge task. No Wizard or TinyFish use.
-- Windsor access RESOLVED on 2026-10-20: existing Indy GA4 property 559890873 and sc-domain:indysewerresource.com are selected and readable. Targeted Sep 20–Oct 20 performance/traffic reads and sitemap read each returned zero rows, not a verified zero-traffic or indexing conclusion. GA4 Admin/Realtime and Bing access remain unavailable. Cloudflare returns no build trigger/configuration for this Worker; local Wrangler runtime is absent. No new property was created.
+- Windsor access RESOLVED on 2026-10-20: existing Indy GA4 property 559890873 and sc-domain:indysewerresource.com are selected and readable. Targeted Sep 20–Oct 20 performance/traffic reads and sitemap read each returned zero rows, not a verified zero-traffic or indexing conclusion. GA4 Admin/Realtime and Bing access remain unavailable. Superseded at 22:30 UTC: Cloudflare Workers Builds is configured for main on the existing Worker and its first build is running; local Wrangler is not needed for that release path. No new property was created.
 
 ## Not Started
 
@@ -392,6 +394,9 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 5. Operator decisions: a separate non-admin GitHub identity for AI agents; contact-PII encryption and retention mechanics; the AI-use disclosure policy (Open Questions 7, 9, 11–12).
 
 ## Change Log
+
+- 2026-10-20 22:30 UTC — PR #20 merged as `613408977227549cdbd6875aaa8949d3b777f7d5` on 2026-10-20 after all five CI jobs passed (run 39507896784). Cloudflare API independently confirms the existing Worker's main-only build trigger, `PUBLIC_GA4_ENABLED=true`, Node 24, and build `d09f0d4c-7d4c-43a4-bfd5-c2114ebaa601` running for that merge. Deployment success and GA4 Realtime receipt are not yet verified by Codex. PR #20 BUILD-SPEC records Claude's signed-in GA4 account settings inspection; this supersedes the earlier account-settings-unavailable notes, without independently certifying those UI observations. Receipt: `logs/runs/2026-10-20-2230-merge-release-pr20.md`.
+
 
 - 2026-10-20 22:16 UTC — PR #18 merged normally at expected head `c59c6311fc626b8962162203d2e1469ee8b23e27`, merge SHA `018dd3b8f0f5a16c10b61b61e2f2fa524eb75007`. All five CI jobs passed in run 39505452374. Reviewed Claude's consent-preserving validation marker and added tests. No production deploy, analytics activation, DNS/indexing/lead changes by this merge session. Receipt: `logs/runs/2026-10-20-2216-merge-ga4-pr18.md`.
 
