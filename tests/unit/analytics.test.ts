@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { analyticsEnabled } from '../../src/config/analytics.ts';
 import { analyticsCsp, CONTENT_SECURITY_POLICY, renderHeadersFile } from '../../src/integrations/response-headers.ts';
-import { safePageData, readChoice } from '../../public/analytics.js';
+import { safePageData, readChoice, isValidationVisit } from '../../public/analytics.js';
 
 const production = { environment: 'production' as const, origin: 'https://indysewerresource.com', indexingAllowed: true };
 describe('analytics privacy and activation boundaries', () => {
@@ -17,6 +17,11 @@ describe('analytics privacy and activation boundaries', () => {
     expect(safePageData('https://preview.example.com/', '')).toBeNull();
     expect(safePageData('https://indysewerresource.com/private-personal-data/', '')).toBeNull();
     expect(safePageData('https://indysewerresource.com/', 'https://private.example.com/secret')?.page_referrer).toBe('');
+  });
+  it('recognizes only the exact collection-validation marker and never leaks it into page data', () => {
+    expect(isValidationVisit('https://indysewerresource.com/?analytics=validate')).toBe(true);
+    for (const v of ['', 'internal', 'VALIDATE', 'validate2']) expect(isValidationVisit('https://indysewerresource.com/?analytics=' + v)).toBe(false);
+    expect(safePageData('https://indysewerresource.com/?analytics=validate', '')?.page_location).toBe('https://indysewerresource.com/');
   });
   it('fails closed for missing, expired, corrupt, future, or inaccessible preference storage', () => {
     const storage = (raw: string | null) => ({ getItem: () => raw }) as unknown as Storage;
