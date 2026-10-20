@@ -52,6 +52,21 @@ test.describe('production analytics consent', () => {
     await expect(page.locator('#analytics-status')).toContainText('Internal testing');
     expect(loads).toBe(0);
   });
+  test('validation marker needs consent and only labels the page view as internal', async ({ page }) => {
+    let loads = 0;
+    page.on('request', (r) => { if (r.url().includes('googletagmanager.com')) loads++; });
+    await page.goto(origin + '/?analytics=validate');
+    await page.locator('summary').click();
+    await expect(page.locator('#analytics-status')).toHaveText('Optional analytics off.');
+    expect(loads).toBe(0);
+    await page.getByRole('button', { name: 'Allow analytics', exact: true }).click();
+    await expect.poll(() => loads).toBe(1);
+    const views = await page.evaluate(() => {
+      const w = window as typeof window & { dataLayer: Array<ArrayLike<unknown>> };
+      return w.dataLayer.filter((x) => x[0] === 'event' && x[1] === 'page_view').map((x) => x[2]);
+    });
+    expect(views).toEqual([expect.objectContaining({ traffic_type: 'internal', page_location: origin + '/' })]);
+  });
   test('honors Global Privacy Control even after an allow click', async ({ page }) => {
     await page.addInitScript(() => Object.defineProperty(navigator, 'globalPrivacyControl', { value: true }));
     let loads = 0;
