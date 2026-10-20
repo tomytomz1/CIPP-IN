@@ -194,7 +194,7 @@ Sources: `research/sources/lawrence-primary-sources.json`. The primary sources a
 
 **Verified in Phase 2E (2026-09-20)**
 
-- **Current permit form:** the City publishes an Application for Sanitary Building Sewer Lateral Construction Permit covering New Line, Repair/Modification Work, and Replace/Relocate. It requires a plat drawing with the location of work and materials, owner and installing/repairing contractor details including a Lawrence registration number, and an emergency-work application no later than the following business day. It states no permit fee and no submission address.
+- **Current permit form:** the City publishes an Application for Sanitary Building Sewer Lateral Construction Permit covering New Line, Repair/Modification Work, and Replace/Relocate. It requires a plat drawing with the location of work and materials, owner and installing/repairing contractor details including a Lawrence registration number, and an emergency-work application no later than the following business day. It lists no sewer-lateral permit fee or submission address; the separate grease-trap application's no-fee statement must not be misread as a waiver of the lateral permit fee (rechecked 2026-10-20).
 - **Owner responsibility restated (August 2024):** residents are responsible for maintenance and repair of their sanitary sewer laterals to the point of connection at the city's main sewer line.
 - **Local pipe/failure evidence:** the utility asks owners to replace older clay sewer laterals beyond their useful life, saying old clay pipe cracks and breaks easily, letting dirt and roots in. No prevalence figure is published.
 - **Third-party damage:** the utility reported an increase in laterals damaged by contractors installing underground fiber optic lines for 5G upgrades.
@@ -395,15 +395,24 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 - 2026-09-19 — Lawrence confirmed as SEO beachhead; Indianapolis head terms deferred.
 - 2026-09-19 — All technical architecture decisions deliberately left NOT YET LOCKED (Phase 0; superseded by the Phase 1 lock above).
 
+## Publication Readiness Audit (2026-10-20)
+
+A structured, evidence-scored three-page audit, primary-source limitations and exact human/expert review questions are stored in `research/editorial/2026-10-20-publication-readiness.json`. This is an AI draft audit, not a substitute for editorial sign-off or professional advice. Lawrence remains `published_noindex` at **63/100 vs 85/100**; its **5 of 8** local evidence categories pass, but qualified technical review, human restructuring, live manual accessibility, similarity embedding/manual clearance and conversion QA remain incomplete. Home and About are general utility pages with **no publication score or index candidacy**; `/about/` should remain noindex as a trust/utility page. No operator index approval exists.
+
+Today’s additional verification checks were incremental only: City ordinance §5-1-2-1 applicant rules and start deadline, and interpretation of the City's undated sanitary sewer form. That form does **not** say the sewer-lateral permit is free; its no-fee note applies to a separate grease-trap application. Lateral fee, application destination, tap/wye responsibility, current after-hours number and operational currency of 2019 policy still require current source confirmation. The evidence record has specific qualifications and a qualified expert review package; the score is deliberately unchanged. Existing property connection reads through Windsor on 2026-10-20 returned no GSC performance/sitemap and no GA4 summary rows for the selected date windows. These returns neither disprove prior GA4 Realtime receipt nor establish zero organic traffic.
+
 ## Next 5 Priorities
 
 1. Operator: a human editorial pass over the three Phase 2D pages.
 2. Begin identifying a real expert reviewer (Indiana-licensed plumber with trenchless/CIPP experience). Expert review is required for the Lawrence page and is currently absent.
-3. Confirm the remaining Lawrence uncertainties directly with Lawrence Utilities and record the results in `research/sources/lawrence-primary-sources.json`. That is what raises the location gate above 3 of 8 and the publication score above 55.
+3. Confirm the remaining Lawrence uncertainties with Lawrence Utilities only after separate contact authorization. The location evidence gate already passes at 5 of 8, and Lawrence's provisional publication score is 63/100 against the 85-point location threshold. Neither direct utility answers nor a higher numerical score substitute for human/expert review.
 4. Operator: start the legal review of consent/privacy/retention/disclosure. It blocks live lead collection, which is currently disabled in code.
 5. Operator decisions: a separate non-admin GitHub identity for AI agents; contact-PII encryption and retention mechanics; the AI-use disclosure policy (Open Questions 7, 9, 11–12).
 
 ## Change Log
+
+- 2026-10-20 — PR #19 merged through normal GitHub merge after five green exact-head CI checks as `f0bfe69ff7d7e1896d182d2aab83595f3cfd09e1`. Documentation and four historical receipts preserved; no runtime changes in PR #19. Separate editorial branch `feat/editorial-readiness-lawrence-20261020` corrects homepage publication/analytics claims, clarifies Lawrence permit fee and applicant rules (new law-021/022 records), and prepares three-page review evidence in `research/editorial/2026-10-20-publication-readiness.json`. No approvals, indexability changes, lead forms, or DNS changes. Lawrence score remains 63/85 pending independent review, and About is a noindex utility page. Today's existing GSC and GA4 Windsor reads return no rows, which cannot be interpreted as zero site/search traffic; Bing/HTTPS signed-in panels have not been revisited in this session.
+
 
 - 2026-10-20 23:05 UTC — Cloudflare RUM ruleset disabled, site retained, three-page browser beacon absence confirmed; GA4 Internal Traffic filter Active, exact internal marker only. Receipt `logs/runs/2026-10-20-2305-analytics-cleanup.md`.
 
