@@ -163,3 +163,13 @@ This file is an audit trail, not a strategy document and not a replacement for `
 - Full receipt: [`logs/runs/2026-09-20-0949-docs-post-2f-reconciliation.md`](runs/2026-09-20-0949-docs-post-2f-reconciliation.md)
 - Summary: Documentation-only correction to `docs/01-CURRENT-STATE.md`. Removed statements left over from before the deployment: the phase line claiming no deployment exists, the locked domain decision saying no DNS or hosting change had been made, the project-status bullets describing a repository-only site with unconfigured DNS, the Not Started entries implying no Worker or DNS zone exists, the architecture paragraph saying "not deployed", the SEO-state sentence saying the pages are not deployed, the Search Console note tied to a deployment that now exists, and the resolved DNS sub-question. Also corrected the Phase 2B and 2C architecture lines, where "not deployed" became wrong once that code shipped inside the Worker — they now say the code is deployed but inert, with the 503 intake endpoint verified live — and widened the pre-publication content risk, since the unreviewed pages are now publicly readable at the live domain rather than only in the repository. Historical entries were left as written. Verified before and after: 3 records, 0 approvals, 0 effectively indexable, 0 sitemap URLs, and the live site unchanged.
 - Blockers: None. No code, content, publication record, research, deployment, DNS, or governance change.
+
+### 2026-10-20 20:00 UTC — Search Console, GA4 and Bing onboarding (PARTIAL)
+
+- Agent: ChatGPT (GPT-6)
+- Starting SHA: `5fd2bf82066fe18ce6cf832a33cd14f62505d0cb`
+- Work commit: the commit containing this entry (resolve with `git log -- logs/RUN-LOG.md`)
+- Result: PARTIAL
+- Full receipt: [`logs/runs/2026-10-20-2000-webmaster-analytics-setup.md`](runs/2026-10-20-2000-webmaster-analytics-setup.md)
+- Summary: Read five Cloudflare CSVs containing 30 daily records for Sep 20–Oct 19 (25,021 HTTP requests; 3,515 sum of daily uniques, not period-unique visitors); initiated Google Search Console Domain property verification; created a distinct GA4 property `559890873` and Web stream `G-2ZGM4PZ4DK` with no tracking code yet; signed into Bing Webmaster and added the site pending verification. Preserved the `noindex` firewall and empty sitemap. The GSC Wizard trial was expired, so Google's native UI was used.
+- Blockers: Cloudflare browser DNS-edit access for Google TXT and Bing CNAME verification; consent/privacy/CSP decision and implementation for GA4 data collection. No DNS change, new site code, or production deploy occurred.
