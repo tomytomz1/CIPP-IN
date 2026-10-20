@@ -77,7 +77,7 @@ The site is deployed and publicly reachable, and no page is indexable. Specifica
 - three real pages (`/`, `/lawrence-sewer-lateral-repair/`, `/about/`), all `published_noindex`; the development shell was removed in Phase 2D;
 - 0 effectively indexable pages, 0 operator index approvals, 0 production sitemap URLs;
 - `https://indysewerresource.com` is served by the Cloudflare Worker `indy-sewer-resource` with Static Assets, through zone routes for the apex and `www`; `www` returns a 301 to the apex and plain http returns a 301 to https;
-- the only Cloudflare resource in use is that Worker (its `ASSETS` binding) plus the DNS zone. No remote database, queue, object storage, Turnstile, Access, analytics project, or Search Console configuration exists, and there is no Twilio number, Resend key, or notification provider account;
+- the only Cloudflare resource in use is that Worker (its `ASSETS` binding) plus the DNS zone. No remote database, queue, object storage, Turnstile, or Access exists, and there is no Twilio number, Resend key, or notification provider account. As of 2026-10-20, Google Analytics 4 has a separate property and web stream but no tracking implementation, while Search Console and Bing Webmaster Tools are pending DNS verification;
 - no public lead form, no lead collected, and no email or SMS ever sent. The intake endpoint answers 503 in production.
 
 ## Completed
@@ -164,8 +164,9 @@ The site is deployed and publicly reachable, and no page is indexable. Specifica
 - Tools/calculators
 - Further original visuals (one original decision-flow diagram exists; a Lawrence responsibility diagram is deliberately withheld until `law-009` is resolved)
 - Expert reviewer recruitment
-- Google Search Console setup
-- Analytics setup
+- Complete Google Search Console Domain-property DNS verification (started 2026-10-20); keep all pages `noindex` until publication gates are passed
+- Implement consent/privacy-reviewed GA4 tracking and verify events (property and stream created 2026-10-20)
+- Complete Bing Webmaster Tools DNS verification (site added 2026-10-20)
 - Call tracking setup
 - Lead funnel / lead database
 - Link building / partnerships
@@ -246,11 +247,11 @@ Three real pages are deployed and publicly reachable, and none is published to s
 
 ## Search Console State
 
-Not configured, and deliberately not submitted. A Domain property verified via DNS is planned only when pages are actually ready to be indexed; the deployment being live does not change that.
+2026-10-20: Initiated a Google Search Console **Domain property** for `indysewerresource.com`, but DNS TXT verification is pending Cloudflare account access. Verification is administrative and does not authorize indexing. All three pages remain `noindex` and the sitemap contains 0 URLs. Do not submit URLs or bypass publication gates.
 
 ## Analytics State
 
-Not configured (planned: Cloudflare Web Analytics + first-party D1 events).
+2026-10-20: Created GA4 property **Indy Sewer Resource** (property ID `559890873`) and a web stream for `https://indysewerresource.com` (measurement ID `G-2ZGM4PZ4DK`). **No GA4 tag, tracking endpoint, or production event collection is configured yet.** The site intentionally serves zero client JS and has restrictive `script-src 'self'` CSP; a new tracking architecture and consent/privacy disclosures must be reviewed before installing GA4. The originally locked Cloudflare Web Analytics + first-party D1 plan is not silently replaced. Bing Webmaster Tools also has an added site awaiting DNS ownership verification.
 
 ## Current Links / Referring Domains
 
@@ -333,6 +334,8 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 
 ## Current Blockers
 
+- **New on 2026-10-20:** To finish Search Console and Bing administrative ownership verification, the Cloudflare DNS dashboard must be connected with edit permissions to add one Google TXT and one Bing CNAME record. GA4 data collection must be implemented and validated without silently breaking the site's no-client-JS/CSP/privacy constraints. Neither a property being added nor a measurement ID being issued demonstrates tracking or indexing.
+
 - None block the next implementation phase.
 - Before **publishing to search engines** (a separate thing from being reachable, which is now done): real pages passing the indexing gate with operator approval, and the Launch Checklist in `05-BUILD-SPEC.md`.
 - Before **live lead collection/routing**: legal review of consent/privacy/disclosure/retention, plus provisioning D1/Queues/Turnstile and setting the activation configuration. Until then the intake endpoint fails closed.
@@ -340,6 +343,7 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 
 ## Last Major Decisions
 
+- 2026-10-20 — The operator requested Google Search Console, GA4 and Bing Webmaster Tools for the existing site. The GA4 property/stream was created and Google/Bing site verification workflows were started. This **does not** approve search indexing, modify consent/privacy rules, enable lead collection, or replace the previously locked Cloudflare-first analytics architecture without further review.
 - 2026-09-20 — **Phase 2F completed: the site is live at https://indysewerresource.com**, public and entirely non-indexable. Served by Cloudflare Worker `indy-sewer-resource` + Static Assets through zone routes rather than Workers Custom Domains, because the Custom Domain API refuses to replace externally managed DNS records and the agent session has no DNS-edit permission. `www` and plain http both 301 to the canonical apex. No analytics, no lead path, no index approval.
 - 2026-09-20 — Phase 2F prepared (operator-authorized): deployment configuration and tooling for Cloudflare Workers + Static Assets, with the production deployment hardened to stay globally non-indexable while no page is indexable. Deployment itself was NOT completed: no Cloudflare credentials in this environment, and the domain's DNS is still at the registrar. Recorded as PARTIAL.
 - 2026-09-20 — Phase 2E implemented (operator-authorized): four new verified City of Lawrence sources and ten new research records; a separate technical-standards evidence file for general method mechanics; the Location Page Quality Gate reassessed from 3 of 8 to 5 of 8; the publication score re-scored from 55 to 63; operator-directed editorial corrections on all three pages; and the similarity-QA runner implemented with the embedding check failing closed. No page became indexable.
@@ -379,6 +383,7 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 
 ## Change Log
 
+- 2026-10-20 — PARTIAL: reviewed 30-day Cloudflare exports covering Sep 20–Oct 19 (25,021 HTTP requests and sum of daily unique visitors 3,515, not a distinct-user count); created GA4 admin property/stream; initiated Search Console domain verification and added Bing Webmaster site, both pending DNS records in Cloudflare. No pages were made indexable, no tracking added, no sitemap submitted, and no DNS changes were made. GSC Wizard connector use is blocked by an expired subscription; direct Google/Bing browser setup remains available.
 - 2026-09-19 — Phase 0: created `AGENTS.md`, `CLAUDE.md`, and `docs/00-PROJECT-CHARTER.md` through `docs/05-BUILD-SPEC.md`. No code, framework, content, domain, or data created.
 - 2026-09-19 — Initialized Git repository; pushed Phase 0 documentation to `main` at https://github.com/tomytomz1/CIPP-IN (commit `c8cf100`).
 - 2026-09-19 — Phase 0.1: created `/research/` evidence files (index, Lawrence primary sources, prospective tenants, Google policy, SERP snapshot). Re-verified Lawrence rules, competitors, tenant candidates, and Google policy. Reconciled this file and `02-SEO-SERP-BLUEPRINT.md`, added the research row to the ownership table in `AGENTS.md`, and made a narrow repository-contents correction in `05-BUILD-SPEC.md`. No code, framework, content, domain, or fake data created.
