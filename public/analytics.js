@@ -44,6 +44,16 @@ export function safePageData(href, referrer) {
   return data;
 }
 
+/**
+ * Collection-validation marker. It never grants consent: it only labels an already-allowed
+ * page view with GA4's traffic_type=internal so the property's "Internal Traffic" data filter
+ * separates deliberate receipt checks from business reporting. Not persisted.
+ * @param {string} href
+ */
+export function isValidationVisit(href) {
+  return new URL(href).searchParams.get('analytics') === 'validate';
+}
+
 /** @param {Storage} storage @param {number} now */
 export function readChoice(storage, now) {
   try {
@@ -64,6 +74,7 @@ export function startAnalytics(win, doc) {
   let storage;
   try { storage = win.localStorage; } catch { return; }
   let choice = readChoice(storage, Date.now());
+  const marker = isValidationVisit(win.location.href) ? { traffic_type: 'internal' } : {};
   // Explicit operator opt-out, with no geographical/IP exclusions.
   if (new URL(win.location.href).searchParams.get('analytics') === 'internal') {
     choice = 'internal';
@@ -91,7 +102,7 @@ export function startAnalytics(win, doc) {
   const sendPage = () => {
     if (choice !== 'allow' || privacySignal() || pageSent || !globals.gtag) return;
     pageSent = true;
-    globals.gtag('event', 'page_view', { ...pageData, send_to: MEASUREMENT_ID });
+    globals.gtag('event', 'page_view', { ...pageData, ...marker, send_to: MEASUREMENT_ID });
   };
   const apply = () => {
     const allowed = choice === 'allow' && !privacySignal();
@@ -115,7 +126,7 @@ export function startAnalytics(win, doc) {
       // Apply safe locations before config; no free-text form or document title is read.
       globals.gtag('set', { ...pageData, ads_data_redaction: true, url_passthrough: false });
       globals.gtag('config', MEASUREMENT_ID, {
-        ...pageData, send_page_view: false, allow_google_signals: false,
+        ...pageData, ...marker, send_page_view: false, allow_google_signals: false,
         allow_ad_personalization_signals: false, cookie_expires: MAX_AGE / 1000,
         cookie_update: false, cookie_domain: 'none',
       });
