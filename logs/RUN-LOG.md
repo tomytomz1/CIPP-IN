@@ -173,3 +173,12 @@ This file is an audit trail, not a strategy document and not a replacement for `
 - Full receipt: [`logs/runs/2026-10-20-2000-webmaster-analytics-setup.md`](runs/2026-10-20-2000-webmaster-analytics-setup.md)
 - Summary: Read five Cloudflare CSVs containing 30 daily records for Sep 20–Oct 19 (25,021 HTTP requests; 3,515 sum of daily uniques, not period-unique visitors); initiated Google Search Console Domain property verification; created a distinct GA4 property `559890873` and Web stream `G-2ZGM4PZ4DK` with no tracking code yet; signed into Bing Webmaster and added the site pending verification. Preserved the `noindex` firewall and empty sitemap. The GSC Wizard trial was expired, so Google's native UI was used.
 - Blockers: Cloudflare browser DNS-edit access for Google TXT and Bing CNAME verification; consent/privacy/CSP decision and implementation for GA4 data collection. No DNS change, new site code, or production deploy occurred.
+
+### 2026-10-20 — Consented GA4 implementation and Cloudflare history audit (PARTIAL)
+
+- Agent: Codex
+- Starting main SHA: `5fd2bf82066fe18ce6cf832a33cd14f62505d0cb`; incorporated existing documentation branch head `ad0b7e6338886b964415b0b22c9f6607cb752669`.
+- Branch: `feat/indy-consented-ga4`
+- Result: PARTIAL. GA4 code prepared, disabled pending account prerequisites and actual Realtime verification; no deploy.
+- Receipt: [2026-10-20-2130-consented-ga4-history.md](runs/2026-10-20-2130-consented-ga4-history.md).
+- DNS verification records and email DNS read; no DNS edits. Daily Cloudflare aggregates reproduce supplied totals; no data before September 20 launch returned. Windsor needs existing Indy properties selected; no built-in interactive browser or shell environment is available. Operator prohibits further Wizard/TinyFish use.

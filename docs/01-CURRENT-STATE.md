@@ -1,6 +1,6 @@
 # CURRENT STATE
 
-Last updated: 2026-09-20
+Last updated: 2026-10-20
 Last verified commit: `d61f0168e7c69bc7e036ce3187fa73958b08c206` (Phase 2F www/https fix, PR #15). The Phase 2F completion commit follows; resolve with `git log` (a file cannot contain its own commit SHA).
 Production URL: **https://indysewerresource.com — LIVE** since 2026-09-20, served by the Cloudflare Worker `indy-sewer-resource` with Static Assets. The site is public and **entirely non-indexable**: every response carries `X-Robots-Tag: noindex, nofollow`, every page carries a `noindex` robots meta tag, and the sitemap has 0 URLs. `www` returns a single 301 to the apex, and plain http returns a 301 to https.
 Repository: https://github.com/tomytomz1/CIPP-IN
@@ -146,7 +146,10 @@ The site is deployed and publicly reachable, and no page is indexable. Specifica
 
 ## In Progress
 
-- None.
+- GA4 consent-controlled browser implementation on `feat/indy-consented-ga4`; defaults OFF and is not deployed. It preserves preview/indexing safeguards and requires account-side Enhanced Measurement/privacy settings plus actual Realtime verification before activation. See `05-BUILD-SPEC.md` → Analytics.
+- Independent Cloudflare history audit: daily aggregates queried from 2025-10-22 through 2026-10-20 return data only since 2026-09-20. Completed Sep 20–Oct 19 totals reproduce 25,021 requests, 58,931,486 served bytes, 15,045,592 cached bytes, and 3,515 summed daily unique visitors (not distinct monthly users). October 20 is partial.
+- Browser access is unavailable in this session; local shell reports no execution environment. GitHub CI is the available test execution path. Per operator correction, no further GSC Wizard or TinyFish use.
+- Windsor inventory excludes existing Indy GA4 property and Search Console property; authorization links were supplied. Bing is not connected to Windsor. No new property was created.
 
 ## Not Started
 
@@ -382,6 +385,8 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 5. Operator decisions: a separate non-admin GitHub identity for AI agents; contact-PII encryption and retention mechanics; the AI-use disclosure policy (Open Questions 7, 9, 11–12).
 
 ## Change Log
+
+- 2026-10-20 — PARTIAL follow-up: preserved and built upon the five-commit `docs/indy-search-analytics-setup` branch. Read Cloudflare DNS: existing Google TXT/Bing DNS-only CNAME, five MX and SPF intact. Prepared GA4 consent controller, conditional production-only CSP exception and accurate disclosures, tests, and live HTTP audit; all default OFF pending account access and verified collection. Queried actual daily/Workers/RUM history; RUM initially returns 20 events requiring date/hostname investigation. No production release or indexing permission change. Receipt: `logs/runs/2026-10-20-2130-consented-ga4-history.md`.
 
 - 2026-10-20 — PARTIAL: reviewed five 30-day Cloudflare traffic exports covering Sep 20–Oct 19 (25,021 HTTP requests and sum of daily unique visitors 3,515, not a distinct-user count); created GA4 admin property `559890873` and web stream `G-2ZGM4PZ4DK`; created one Google apex TXT and one unproxied Bing CNAME verification record using the connected Cloudflare API, preserving existing A, CNAME, MX and SPF records; Google Search Console Domain property verified; Bing site added but its in-app Verify confirmation is pending. No pages were made indexable, no GA4 tracking deployed, and no sitemap submitted. GSC Wizard connector use is blocked by its expired subscription; browser service subsequently ran out of credits.
 - 2026-09-19 — Phase 0: created `AGENTS.md`, `CLAUDE.md`, and `docs/00-PROJECT-CHARTER.md` through `docs/05-BUILD-SPEC.md`. No code, framework, content, domain, or data created.

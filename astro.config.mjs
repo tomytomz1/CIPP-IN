@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
 import { resolveSiteConfig } from './src/config/site.ts';
+import { analyticsEnabled } from './src/config/analytics.ts';
 import { responseHeaders } from './src/integrations/response-headers.ts';
 import { buildRegistry } from './src/lib/publication/registry.ts';
 import { isEffectivelyIndexable } from './src/lib/seo/firewall.ts';
@@ -31,7 +32,7 @@ export default defineConfig({
   // Static-first: every current route is prerendered. The Cloudflare adapter is present so
   // future on-demand Worker endpoints can be added without changing the architecture.
   adapter: cloudflare({ imageService: 'passthrough' }),
-  integrations: [responseHeaders(site, { indexablePages })],
+  integrations: [responseHeaders(site, { indexablePages, ga4Enabled: analyticsEnabled(site, process.env.PUBLIC_GA4_ENABLED) })],
   vite: {
     define: {
       __SITE_CONFIG__: JSON.stringify(site),

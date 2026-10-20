@@ -1,0 +1,44 @@
+---
+/** Only rendered in an explicitly enabled production build. No analytics without a choice. */
+---
+<section aria-label="Privacy and analytics" data-ga4-consent data-ga4-enabled="true">
+  <details>
+    <summary>Privacy and analytics preferences</summary>
+    <p>
+      Optional Google Analytics helps us understand visits to these public resource pages.
+      It loads only if you choose Allow analytics. Google receives cookie identifiers,
+      page and device information, and your network address when your browser connects to it.
+      Google processes these under its
+      <a href="https://policies.google.com/privacy">privacy policy</a>.
+      This is not anonymous browsing.
+    </p>
+    <p>
+      We send approved page addresses without query strings, limited campaign labels, and
+      approved referrer domains. We do not send names, contact details, financial information,
+      or form contents. Advertising consent stays denied. Your preference is stored in this
+      browser for up to 180 days. Analytics cookies expire after up to 180 days.
+      You can withdraw consent here. Browser Do Not Track and Global Privacy Control turn
+      optional analytics off. Clearing browser storage resets your preference.
+    </p>
+    <p>
+      Our hosting provider Cloudflare processes requests to deliver and secure this site.
+      Hosting request totals can include automated traffic. Optional Google Analytics
+      measures consented browser visits and will report lower totals.
+    </p>
+    <div class="analytics-actions">
+      <button type="button" data-analytics-choice="allow">Allow analytics</button>
+      <button type="button" data-analytics-choice="deny">Decline analytics</button>
+      <button type="button" data-analytics-choice="internal">Exclude my internal tests</button>
+    </div>
+    <p id="analytics-status" role="status">Optional analytics off until you choose.</p>
+    <noscript>Optional analytics is off because JavaScript is disabled.</noscript>
+  </details>
+</section>
+<script is:inline type="module" src="/analytics.js"></script>
+<style>
+  section { margin-block: 1rem; }
+  summary { cursor: pointer; padding-block: .75rem; }
+  .analytics-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+  button { font: inherit; padding: .75rem 1rem; min-height: 44px; cursor: pointer; background: #fff; color: #172b36; border: 2px solid #172b36; border-radius: .25rem; }
+  button:focus-visible { outline: 3px solid #007aa3; outline-offset: 3px; }
+</style>
