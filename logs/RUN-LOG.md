@@ -227,3 +227,15 @@ This file is an audit trail, not a strategy document and not a replacement for `
 - Corrected homepage publication and consented-GA4 wording, Lawrence fee-note scope (grease-trap application only), added ordinance applicant rules; two incremental research records, provisional 63/85 ledger and exact human/expert review package in `research/editorial/2026-10-20-publication-readiness.json`. No scores inflated; no approval/indexing/lead/DNS/security/analytics configuration changes.
 - Existing GSC Domain/GA4 Windsor reads returned 0 rows in selected windows, not proven zero traffic; Bing current processing not revalidated in authenticated UI. Existing 5/8 location evidence categories pass, but expert/human/similarity/manual-a11y/conversion QA still block Lawrence.
 - Receipt: [2026-10-20-1923-publication-readiness.md](runs/2026-10-20-1923-publication-readiness.md).
+
+### 2026-10-20 19:30 EDT — PR #22 merge and safe Cloudflare Worker release
+
+- Result: COMPLETE for normal merge, exact SHA build and deploy. Final-head PR #22 CI run 39514817481 five green checks; merged as `6187cbfddf22ff3c6a55ff6ceb677894da208b33`, independent main/PR readback confirms. Main push CI 39515181423 five green (its HTTP audit ran before Cloudflare completed release).
+- Cloudflare Workers Build `51508c2b-3db5-44dd-a3c1-4659ec793864` from exact merge SHA succeeded; build log confirms SEO/index firewall/links/schema/performance and uploads `/index.html` plus `/lawrence-sewer-lateral-repair/index.html`. Existing Worker deployment `db474693-f15c-49bc-aadf-c42de5671818` serves version `5486a937-a71b-49c5-b773-3bb72de28320` at 100% since 23:28:22 UTC.
+- No changes to operator index registry, robots/meta/header, empty sitemap, disabled intake, analytics consent/filter, Cloudflare RUM, DNS or CSP. Lawrence remains 63/85 and noindex; human/editor/expert and similarity approvals outstanding. A dedicated postrelease HTTP read-only audit should be observed on this doc closure PR, without triggering another Worker build.
+- Receipt: [2026-10-20-1930-publication-release.md](runs/2026-10-20-1930-publication-release.md).
+
+### 2026-10-20 23:32 UTC — Strictly post-deployment live HTTP audit
+
+- Documentation-closure PR #23's `production-read-only-audit` in [run 39515665741](https://github.com/tomytomz1/CIPP-IN/actions/runs/39515665741) completed SUCCESS (23:32:22–23:32:29 UTC), after Cloudflare Worker `5486a937-a71b-49c5-b773-3bb72de28320` entered service at 23:28:22 UTC. Validated public three-page HTTPS/meta+header noindex/canonicals, redirect, headers, zero sitemap URLs, consent controller and intake HTTP 503 through the existing live-site scripts.
+- Receipt addendum: [2026-10-20-1930-publication-release.md](runs/2026-10-20-1930-publication-release.md). This was an HTTP read-only verification; no second release or indexing/configuration change.

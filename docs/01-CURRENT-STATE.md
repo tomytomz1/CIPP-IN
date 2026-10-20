@@ -1,7 +1,7 @@
 # CURRENT STATE
 
 Last updated: 2026-10-20
-Last verified implementation commit: `c59c631` (PR #18 head, all five CI jobs green), merged to `main` as `018dd3b`; release-triggering docs merge `6134089` (PR #20). **Production now serves Worker version `12800a05-2cf8-4064-94c0-e20308b7f49d`** (Cloudflare Workers Builds from `main`, 2026-10-20 22:29 UTC) with consent-gated GA4 enabled. This documentation-only receipt commit follows; resolve with git log.
+Last verified substantive implementation commit: PR #22 final head `1d28f44690219ebb8307ed418b5b73c73b53df28`, merged normally to `main` as `6187cbfddf22ff3c6a55ff6ceb677894da208b33` on 2026-10-20 after all five CI jobs passed. **Production now serves Worker version `5486a937-a71b-49c5-b773-3bb72de28320` at 100% traffic**, deployed through Cloudflare Workers Builds build `51508c2b-3db5-44dd-a3c1-4659ec793864` from the exact main merge commit at 2026-10-20 23:28 UTC. Its build log confirms two updated assets (`/index.html`, `/lawrence-sewer-lateral-repair/index.html`), SEO/index firewall and performance checks passed; consented GA4 remains enabled. Previous release PRs #18/#20/#21 and Worker version `12800a05-2cf8-4064-94c0-e20308b7f49d` are preserved in historical receipts.
 Production URL: **https://indysewerresource.com — LIVE** since 2026-09-20, served by the Cloudflare Worker `indy-sewer-resource` with Static Assets. The site is public and **entirely non-indexable**: every response carries `X-Robots-Tag: noindex, nofollow`, every page carries a `noindex` robots meta tag, and the sitemap has 0 URLs. `www` returns a single 301 to the apex, and plain http returns a 301 to https.
 Repository: https://github.com/tomytomz1/CIPP-IN
 Current branch: main
@@ -410,6 +410,12 @@ Today’s additional verification checks were incremental only: City ordinance �
 5. Operator decisions: a separate non-admin GitHub identity for AI agents; contact-PII encryption and retention mechanics; the AI-use disclosure policy (Open Questions 7, 9, 11–12).
 
 ## Change Log
+
+- 2026-10-20 23:32 UTC — Independent post-deployment live HTTP check SUCCESS on documentation PR #23, GitHub CI run `39515665741` (23:32:22–23:32:29 UTC, **after** Worker deployment 23:28:22 UTC). The read-only audit fetched all three public pages and checked noindex meta+headers, canonical HTTPS apex, security headers, expected consent controller, 0 sitemap URLs, redirect behavior, and inactive lead endpoint HTTP 503. This does not assert new GA4 receipt or a fresh browser check of Cloudflare RUM.
+
+
+- 2026-10-20 23:28 UTC — PR #22 merged normally as `6187cbfddf22ff3c6a55ff6ceb677894da208b33` after all five PR-head CI jobs passed (and five main-push CI jobs also passed). Cloudflare Workers Build `51508c2b-3db5-44dd-a3c1-4659ec793864` succeeded for exact merge SHA; 2 changed static HTML assets uploaded; production Worker version `5486a937-a71b-49c5-b773-3bb72de28320` active at 100%. Indexing firewall, empty sitemap, disabled intake and GA4 consent preserved by source/CI build checks. Independent postdeploy HTTP recheck to follow on the documentation closure PR, which does not trigger a new Worker build.
+
 
 - 2026-10-20 — PR #19 merged through normal GitHub merge after five green exact-head CI checks as `f0bfe69ff7d7e1896d182d2aab83595f3cfd09e1`. Documentation and four historical receipts preserved; no runtime changes in PR #19. Separate editorial branch `feat/editorial-readiness-lawrence-20261020` corrects homepage publication/analytics claims, clarifies Lawrence permit fee and applicant rules (new law-021/022 records), and prepares three-page review evidence in `research/editorial/2026-10-20-publication-readiness.json`. No approvals, indexability changes, lead forms, or DNS changes. Lawrence score remains 63/85 pending independent review, and About is a noindex utility page. Today's existing GSC and GA4 Windsor reads return no rows, which cannot be interpreted as zero site/search traffic; Bing/HTTPS signed-in panels have not been revisited in this session.
 
