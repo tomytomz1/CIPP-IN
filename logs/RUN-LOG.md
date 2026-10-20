@@ -197,3 +197,11 @@ This file is an audit trail, not a strategy document and not a replacement for `
 - No GA4 write actions exposed; no native authenticated browser/runtime; Cloudflare build trigger list empty and build configuration absent (404/12040).
 - No source/deployment/indexing/DNS changes. PR #18 retained.
 - Receipt: [2026-10-20-2133-windsor-access-confirmed.md](runs/2026-10-20-2133-windsor-access-confirmed.md).
+
+### 2026-10-20 22:16 UTC — PR #18 merged
+
+- Result: COMPLETE for the requested merge; broader analytics deployment/Realtime acceptance remains separate.
+- Expected/tested head: `c59c6311fc626b8962162203d2e1469ee8b23e27`; all five CI checks green in run 39505452374.
+- Normal merge commit: `018dd3b8f0f5a16c10b61b61e2f2fa524eb75007`; GitHub read-back confirms PR closed/merged.
+- No production deployment/activation, DNS, indexing or lead change performed. Release switch still defaults OFF in source.
+- Receipt: [2026-10-20-2216-merge-ga4-pr18.md](runs/2026-10-20-2216-merge-ga4-pr18.md).

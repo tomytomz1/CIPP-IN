@@ -1,7 +1,7 @@
 # CURRENT STATE
 
 Last updated: 2026-10-20
-Last verified implementation commit: `9619d3a496f7e45903ff7b5672858fc822ebb33d` (PR #18 feature branch, all five CI jobs green; NOT deployed). Production remains Worker version `489d30b2-3e33-4089-b48d-5a34f3c50781` from 2026-09-20. This documentation-only receipt commit follows; resolve with git log.
+Last verified implementation commit: `c59c6311fc626b8962162203d2e1469ee8b23e27`, merged to main by PR #18 as `018dd3b8f0f5a16c10b61b61e2f2fa524eb75007` after all five CI checks passed. This merge is not a production deployment or proof of GA4 collection.
 Production URL: **https://indysewerresource.com — LIVE** since 2026-09-20, served by the Cloudflare Worker `indy-sewer-resource` with Static Assets. The site is public and **entirely non-indexable**: every response carries `X-Robots-Tag: noindex, nofollow`, every page carries a `noindex` robots meta tag, and the sitemap has 0 URLs. `www` returns a single 301 to the apex, and plain http returns a 301 to https.
 Repository: https://github.com/tomytomz1/CIPP-IN
 Current branch: main
@@ -146,9 +146,9 @@ The site is deployed and publicly reachable, and no page is indexable. Specifica
 
 ## In Progress
 
-- GA4 consent-controlled browser implementation on `feat/indy-consented-ga4`; defaults OFF and is not deployed. It preserves preview/indexing safeguards and requires verified account-side Enhanced Measurement/privacy settings before activation and actual Realtime verification for final acceptance. See `05-BUILD-SPEC.md` → Analytics.
+- GA4 consent-controlled browser implementation merged to main through PR #18 on 2026-10-20; release switch defaults OFF. No production deployment was performed by this merge session. It preserves preview/indexing safeguards and requires verified account-side Enhanced Measurement/privacy settings before activation and actual Realtime verification for final acceptance. See `05-BUILD-SPEC.md` → Analytics.
 - Independent Cloudflare history audit: daily aggregates queried from 2025-10-22 through 2026-10-20 return data only since 2026-09-20. Completed Sep 20–Oct 19 totals reproduce 25,021 requests, 58,931,486 served bytes, 15,045,592 cached bytes, and 3,515 summed daily unique visitors (not distinct monthly users). October 20 is partial.
-- Browser access is unavailable in this session; local shell reports no execution environment. GitHub CI is the available test execution path. Per operator correction, no further GSC Wizard or TinyFish use.
+- Earlier sessions lacked browser/runtime access. The 22:16 UTC merge session now exposes a local shell and cloud-browser tool; authenticated browser sessions and Wrangler credentials were not inspected for this merge task. No Wizard or TinyFish use.
 - Windsor access RESOLVED on 2026-10-20: existing Indy GA4 property 559890873 and sc-domain:indysewerresource.com are selected and readable. Targeted Sep 20–Oct 20 performance/traffic reads and sitemap read each returned zero rows, not a verified zero-traffic or indexing conclusion. GA4 Admin/Realtime and Bing access remain unavailable. Cloudflare returns no build trigger/configuration for this Worker; local Wrangler runtime is absent. No new property was created.
 
 ## Not Started
@@ -168,7 +168,7 @@ The site is deployed and publicly reachable, and no page is indexable. Specifica
 - Further original visuals (one original decision-flow diagram exists; a Lawrence responsibility diagram is deliberately withheld until `law-009` is resolved)
 - Expert reviewer recruitment
 - Complete owner-level Search Console/Indexing/HTTPS UI checks; Windsor performance/sitemap reads now succeed but do not expose those account reports. DNS verification was completed in the earlier 2026-10-20 session
-- Activate and verify GA4 after account prerequisites; implementation is staged OFF in PR #18, not collecting in production
+- Activate and verify GA4 after account prerequisites; implementation is merged with its release switch OFF by default; production activation/receipt remain separate
 - Complete Bing Webmaster Tools in-app ownership confirmation using the existing DNS-only CNAME (site and record already exist)
 - Call tracking setup
 - Lead funnel / lead database
@@ -254,7 +254,7 @@ Three real pages are deployed and publicly reachable, and none is published to s
 
 ## Analytics State
 
-The existing GA4 property is **Indy Sewer Resource**, ID `559890873`, stream measurement ID `G-2ZGM4PZ4DK`, URL `https://indysewerresource.com/` (created in the earlier 2026-10-20 session). **Production still has no GA4 collection.** PR #18 contains an explicit-opt-in browser tag, restricted attribution/payload, DNT/GPC support, internal-browser opt-out, truthful disclosures, and a production-only reviewed CSP exception. The release switch defaults OFF. The enabled build adds approximately 2.9 KB gzip first-party JS; disabled builds retain 0 JS. Account-side Enhanced Measurement/advertising/retention settings and actual sanitized network plus Realtime receipt are not verified; verify account settings before a controlled production activation, then prove sanitized collection and Realtime receipt before calling tracking complete.
+The existing GA4 property is **Indy Sewer Resource**, ID `559890873`, stream measurement ID `G-2ZGM4PZ4DK`, URL `https://indysewerresource.com/` (created in the earlier 2026-10-20 session). **Actual GA4 collection has not been verified.** Merged PR #18 contains an explicit-opt-in browser tag, restricted attribution/payload, DNT/GPC support, internal-browser opt-out, truthful disclosures, and a production-only reviewed CSP exception. The release switch defaults OFF. The enabled build adds approximately 2.9 KB gzip first-party JS; disabled builds retain 0 JS. Account-side Enhanced Measurement/advertising/retention settings and actual sanitized network plus Realtime receipt are not verified; verify account settings before a controlled production activation, then prove sanitized collection and Realtime receipt before calling tracking complete.
 
 Cloudflare Web Analytics has automatic setup enabled in the API. A siteTag-filtered RUM query from July 20 through October 20 returns only 20 events, all September 20 (10 apex, 10 www). Current live HTTP checks show no beacon script and retain `script-src 'self'`, which would block the external beacon if injected. Retain its configuration and history for now; restoring ongoing beacon measurement needs its own narrow CSP/privacy integration, rather than treating edge HTTP totals as RUM users. No RUM setting was changed.
 
@@ -341,7 +341,7 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 
 ## Current Blockers
 
-- **Analytics/webmaster completion (2026-10-20):** DNS records already exist. The earlier GSC Domain verification is recorded as successful, and current Windsor report reads now succeed (empty returned reports). GA4 code is staged OFF in PR #18; GA4 Admin/Realtime and final Bing verification require authenticated browser/API access absent in this session. This is a capability/account-access blocker, not permission to create duplicates or change indexing. The operator prohibits Wizard/TinyFish. Live production remains unchanged.
+- **Analytics/webmaster completion (2026-10-20):** DNS records already exist. The earlier GSC Domain verification is recorded as successful, and current Windsor report reads now succeed (empty returned reports). GA4 code is merged from PR #18 with release switch default OFF; GA4 Admin/Realtime and final Bing verification require authenticated browser/API access absent in this session. This is a capability/account-access blocker, not permission to create duplicates or change indexing. The operator prohibits Wizard/TinyFish. Live production remains unchanged.
 
 
 - None block the next implementation phase.
@@ -392,6 +392,8 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 5. Operator decisions: a separate non-admin GitHub identity for AI agents; contact-PII encryption and retention mechanics; the AI-use disclosure policy (Open Questions 7, 9, 11–12).
 
 ## Change Log
+
+- 2026-10-20 22:16 UTC — PR #18 merged normally at expected head `c59c6311fc626b8962162203d2e1469ee8b23e27`, merge SHA `018dd3b8f0f5a16c10b61b61e2f2fa524eb75007`. All five CI jobs passed in run 39505452374. Reviewed Claude's consent-preserving validation marker and added tests. No production deploy, analytics activation, DNS/indexing/lead changes by this merge session. Receipt: `logs/runs/2026-10-20-2216-merge-ga4-pr18.md`.
 
 - 2026-10-20 21:33 UTC — Windsor access resolved: existing Indy GA4 and GSC properties now selected; direct traffic/performance/sitemap reads succeed with zero rows. GA4 list_actions empty. No browser/runtime exposed; Cloudflare Workers Builds returns no trigger and no configuration (404/12040) for this Worker. No implementation/deployment/indexing/DNS changes. Receipt: `logs/runs/2026-10-20-2133-windsor-access-confirmed.md`.
 
