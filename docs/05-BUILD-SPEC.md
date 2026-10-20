@@ -349,11 +349,32 @@ Phase 2B implements all ten domains as physical tables in `migrations/0001_lead_
 - CallRail is not used at launch unless future scale/attribution needs justify it.
 - Call tracking must not create fake local presence (no fake address or GBP).
 
-## Analytics — LOCKED (IMPLEMENTATION PENDING)
+## Analytics — operator-requested GA4 addition (2026-10-20; release pending)
 
 - Cloudflare Web Analytics.
 - First-party conversion, lead, and outcome events stored in D1.
-- GA4 and Google Tag Manager are not launch dependencies. Add them later only for a concrete requirement that justifies the script and privacy cost.
+- The operator explicitly requested GA4 on 2026-10-20. Use only existing property `559890873` / measurement ID `G-2ZGM4PZ4DK`. No duplicate property or GTM container.
+- The feature branch implements a basic-consent Google tag: no Google script/request until explicit opt-in; DNT/GPC disable optional analytics; explicit browser-level internal opt-out, with no geographic filter. Collection is limited to three approved public routes.
+- Release switch `PUBLIC_GA4_ENABLED=true` is required in a production build with the exact canonical origin. It defaults OFF. Do not turn it on before the account prerequisites below are verified. Preview/dev builds do not render the bootstrap or CSP exception.
+- This addition retains Cloudflare Web Analytics and first-party D1 events as the approved architecture; D1 remains unprovisioned. The current automatic Cloudflare beacon is not repaired by weakening CSP, nor silently disabled.
+
+### GA4 implementation / security and privacy review (2026-10-20)
+
+**Options evaluated:** A first-party Measurement Protocol relay would avoid browser Google scripts and could omit visitor IP/UA from the application payload, but would require a private API secret, consent/session handling, operational bot filtering and a custom collection path. Google states that full server-to-server Measurement Protocol provides only partial reporting; it is intended to supplement browser tagging. It does not satisfy this task's traffic/attribution requirements as reliably. No Measurement Protocol secret is required or created for the selected browser-tag implementation.
+
+**Selected:** consent-controlled browser tag. The small first-party controller is an explicit exception to the 0-KB editorial JS target within the existing 35-KB hard budget. Only enabled production builds render it. Basic consent prevents even cookieless Google pings before opt-in. A visible footer preference control offers equally available allow/decline/internal-test options, withdrawal, a local 180-day preference, and up-to-180-day GA cookies. The disclosure explicitly states that Google receives identifiers, device/page information and the visitor's network address when the browser connects. This is not described as anonymous or as sending no personal data.
+
+**CSP scope:** baseline remains `script-src 'self'`, `connect-src 'self'`. Only when explicitly enabled in production: allow `https://www.googletagmanager.com/gtag/js` in script-src and `https://www.google-analytics.com` / `https://region1.google-analytics.com` in connect-src and img-src. No wildcard, unsafe-inline, unsafe-eval, Ads, DoubleClick or frame permission is added. All other protections, including noindex, remain intact. Residual risk: loading a third-party executable after consent trusts that vendor and adds transfer/processing cost. Keep the exact-host exception narrow and verify actual network behavior before claiming collection.
+
+**Payload:** our code sends one manual page_view after library load, fixed public page title, query/fragment-free canonical address, only reviewed referrer origins, and exact reviewed campaign vocabularies. No arbitrary query strings, click IDs, free-text UTM values, form content, contact or financial data is passed by our code. Google itself still processes network/device/cookie information. Ads consent stays denied, Google signals and ad personalization are disabled in config. Do not add forms/other scripts without repeating this review.
+
+**Account prerequisites before release:** disable all Enhanced Measurement for the existing web stream (prevents automatic forms/outbound-click/search/history events bypassing our payload policy); confirm Google signals and advertising personalization are disabled, no linked destinations inject other tags, and configure event retention to the minimum appropriate period (proposed 2 months). Record actual account settings; do not claim these account actions happened until observed. Windsor is read-only for these settings. Property/stream and Realtime access are currently blocked in this session.
+
+**Internal testing:** `?analytics=internal` or the preference button persists a browser-only opt-out and suppresses GA entirely. Use it before ordinary QA. Playwright tests intercept all Google traffic, so they never contaminate the property. One deliberate actual collection-validation visit still requires an agreed test marker/exclusion in the GA account before business reporting can be certified. Do not exclude Indianapolis IP ranges.
+
+**Activation/deployment:** follow the existing protected-main, CI, production build, Wrangler deploy and live smoke-test process. No production activation/deploy occurred in this run. When activating, export `PUBLIC_GA4_ENABLED=true` consistently for both production build and `verify:production`; that smoke test permits only the reviewed first-party consent controller and still requires a separate Realtime check. CI adds an enabled production build and browser contract tests with a simulated Google library, plus read-only production HTTP evidence. Passing those tests does not prove Google's receipt. Required final acceptance remains actual sanitized network collection plus Realtime receipt and account-side internal-test handling.
+
+**Primary documentation reviewed:** https://developers.google.com/analytics/devguides/collection/protocol/ga4 ; https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference ; https://developers.google.com/analytics/devguides/collection/ga4/reference/config ; https://developers.google.com/tag-platform/security/guides/csp .
 
 ## Conversion Events — LOCKED principles (IMPLEMENTATION PENDING)
 
@@ -382,7 +403,7 @@ Use a Domain property, preferably verified through DNS, once the domain is regis
 
 **Third-party scripts:**
 
-- Global: only Cloudflare Web Analytics, where technically necessary.
+- Global: Cloudflare Web Analytics where technically necessary; the operator-requested GA4 consent-controlled exception is defined in Analytics above. No other third-party scripts.
 - Lead/form pages: may additionally load Turnstile.
 - Not at launch without a justified requirement: Google Tag Manager, chat widgets, heatmaps, review widgets, autoplay video, marketing-script stacks.
 

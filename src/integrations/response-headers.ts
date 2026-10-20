@@ -26,12 +26,23 @@ export const CONTENT_SECURITY_POLICY = [
   "frame-ancestors 'none'",
 ].join('; ');
 
-/** One year. No `includeSubDomains` and no `preload`: subdomain use is undecided. */
+/** Exact-host exception reviewed in docs/05; no wildcard, inline script or eval permission. */
+export function analyticsCsp(enabled: boolean): string {
+  if (!enabled) return CONTENT_SECURITY_POLICY;
+  return CONTENT_SECURITY_POLICY
+    .replace("script-src 'self'", "script-src 'self' https://www.googletagmanager.com/gtag/js")
+    .replace("connect-src 'self'", "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com")
+    .replace("img-src 'self' data:", "img-src 'self' data: https://www.google-analytics.com https://region1.google-analytics.com");
+}
+
+/** One year. No includeSubDomains/preload: subdomain use is undecided. */
 export const HSTS_VALUE = 'max-age=31536000';
 
 export interface HeadersOptions {
   /** How many pages the evaluator considers effectively indexable in this build. */
   indexablePages?: number;
+  /** Enabled only by the explicit production analytics release switch. */
+  ga4Enabled?: boolean;
 }
 
 export function renderHeadersFile(site: SiteConfig, options: HeadersOptions = {}): string {
@@ -41,7 +52,7 @@ export function renderHeadersFile(site: SiteConfig, options: HeadersOptions = {}
     '  X-Content-Type-Options: nosniff',
     '  Referrer-Policy: strict-origin-when-cross-origin',
     '  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()',
-    `  Content-Security-Policy: ${CONTENT_SECURITY_POLICY}`,
+    `  Content-Security-Policy: ${analyticsCsp(site.environment === 'production' && options.ga4Enabled === true)}`,
     '  X-Frame-Options: DENY',
   ];
   if (site.environment === 'production') lines.push(`  Strict-Transport-Security: ${HSTS_VALUE}`);

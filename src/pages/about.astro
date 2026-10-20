@@ -9,6 +9,9 @@
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import EvidenceNote from '../components/EvidenceNote.astro';
+import { siteConfig } from '../lib/publication/load-astro.ts';
+import { analyticsEnabled } from '../config/analytics.ts';
+const ga4Enabled = analyticsEnabled(siteConfig, import.meta.env.PUBLIC_GA4_ENABLED);
 ---
 
 <BaseLayout pageId="about">
@@ -163,10 +166,22 @@ import EvidenceNote from '../components/EvidenceNote.astro';
 
     <h2 id="privacy">Your information</h2>
     <p>
-      This site collects no personal information. There is no contact form, no quote request, no
-      newsletter signup, and no chat widget, and no homeowner data has ever been collected. If contact
-      is added later, a privacy policy and a clear explanation of what is shared with a contractor —
-      reviewed by a lawyer, not drafted here — will be published before any form goes live.
+      There is no contact form, quote request, newsletter signup, or chat widget. We do not
+      collect homeowner contact details or repair requests here. Cloudflare processes network
+      requests to deliver and secure this site. If contact is added later, a privacy policy and a
+      clear explanation of what is shared with a contractor, reviewed by a lawyer, will be published
+      before any form goes live.
     </p>
+    {ga4Enabled ? (
+      <p>
+        Optional Google Analytics loads only if you allow it in the privacy and analytics
+        preferences in the footer. Google then receives cookie identifiers, device and page
+        information, and your network address when your browser connects. You can decline or
+        withdraw consent there. See the footer disclosure for collection details and Google's
+        privacy policy.
+      </p>
+    ) : (
+      <p>Optional Google Analytics is currently disabled.</p>
+    )}
   </article>
 </BaseLayout>

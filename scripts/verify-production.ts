@@ -17,6 +17,7 @@
 import { PRODUCTION_ORIGIN } from '../src/config/brand.ts';
 
 const origin = (process.argv[2] ?? PRODUCTION_ORIGIN).replace(/\/$/, '');
+const ga4Expected = process.env['PUBLIC_GA4_ENABLED'] === 'true';
 const pages = ['/', '/lawrence-sewer-lateral-repair/', '/about/'];
 
 const failures: string[] = [];
@@ -72,10 +73,19 @@ for (const path of pages) {
     fail(`${path}: missing or unexpected Content-Security-Policy`);
   } else ok('security headers present (CSP, nosniff, referrer policy, frame options)');
 
-  if (/<form\b/i.test(page.body)) fail(`${path}: a form element is present; this site collects nothing`);
+  if (/<form\b/i.test(page.body)) fail(`${path}: a form element is present; public lead forms are disabled`);
   const scripts = [...page.body.matchAll(/<script\b([^>]*)>/gi)].filter((m) => !/application\/ld\+json/i.test(m[1] ?? ''));
-  if (scripts.length > 0) fail(`${path}: unexpected script tag(s): ${scripts.length}`);
-  else ok('no forms, no client JavaScript');
+  if (ga4Expected) {
+    if (scripts.length !== 1 || !/\bsrc="\/analytics\.js"/.test(scripts[0]?.[1] ?? '') ||
+        !page.body.includes('data-ga4-consent')) {
+      fail(`${path}: expected exactly the reviewed first-party analytics consent controller`);
+    } else ok('consent controller installed; actual GA4 receipt requires separate Realtime verification');
+    const csp = page.headers.get('content-security-policy') ?? '';
+    if (!csp.includes('https://www.googletagmanager.com/gtag/js') ||
+        !csp.includes('https://www.google-analytics.com')) fail(`${path}: missing reviewed GA4 CSP allowance`);
+  } else if (scripts.length > 0) {
+    fail(`${path}: unexpected script tag(s): ${scripts.length}`);
+  } else ok('no lead forms, no client JavaScript');
   console.log('');
 }
 
@@ -112,4 +122,4 @@ if (failures.length > 0) {
   console.error(`\nverify-production FAILED (${failures.length}):\n- ${failures.join('\n- ')}`);
   process.exit(1);
 }
-console.log('\nOK: the deployment is public, non-indexable, collects nothing, and serves 0 sitemap URLs.');
+console.log('\nOK: the deployment is public, non-indexable, has disabled lead intake, and serves 0 sitemap URLs. GA4 receipt is a separate verification.');

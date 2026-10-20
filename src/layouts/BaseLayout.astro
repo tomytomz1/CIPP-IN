@@ -9,6 +9,8 @@
  * (docs/04 → Disclosure; /AGENTS.md §4.2).
  */
 import '../styles/global.css';
+import AnalyticsConsent from '../components/AnalyticsConsent.astro';
+import { analyticsEnabled } from '../config/analytics.ts';
 import { canonicalUrl, robotsDirective, assertShippable } from '../lib/seo/firewall.ts';
 import { serializeJsonLd } from '../lib/seo/structured-data.ts';
 import { getRegistry, siteConfig } from '../lib/publication/load-astro.ts';
@@ -48,6 +50,7 @@ const jsonLd = serializeJsonLd({
   ...(canonical ? { url: canonical } : {}),
 });
 
+const ga4Enabled = analyticsEnabled(siteConfig, import.meta.env.PUBLIC_GA4_ENABLED);
 const year = new Date().getUTCFullYear();
 ---
 
@@ -107,11 +110,12 @@ const year = new Date().getUTCFullYear();
           body.
         </p>
         <p>
-          No contractor partner is currently active, no homeowner information is collected on this
+          No contractor partner is currently active, no homeowner contact details or repair requests are collected on this
           site, and no customer reviews or project data are published here. When a contractor
           relationship exists, it will be disclosed on the page where it applies. See
           <a href="/about/">how this resource works</a>.
         </p>
+        {ga4Enabled && <AnalyticsConsent />}
         <p>&copy; {year} {SITE_NAME}</p>
       </div>
     </footer>
