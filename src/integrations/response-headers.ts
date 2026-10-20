@@ -26,7 +26,6 @@ export const CONTENT_SECURITY_POLICY = [
   "frame-ancestors 'none'",
 ].join('; ');
 
-/** One year. No `includeSubDomains` and no `preload`: subdomain use is undecided. */
 /** Exact-host exception reviewed in docs/05; no wildcard, inline script or eval permission. */
 export function analyticsCsp(enabled: boolean): string {
   if (!enabled) return CONTENT_SECURITY_POLICY;
@@ -36,6 +35,7 @@ export function analyticsCsp(enabled: boolean): string {
     .replace("img-src 'self' data:", "img-src 'self' data: https://www.google-analytics.com https://region1.google-analytics.com");
 }
 
+/** One year. No includeSubDomains/preload: subdomain use is undecided. */
 export const HSTS_VALUE = 'max-age=31536000';
 
 export interface HeadersOptions {

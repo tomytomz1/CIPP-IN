@@ -123,3 +123,4 @@ jobs:
         with:
           node-version: 24
       - run: node scripts/audit-production.ts
+      - run: npm run verify:production

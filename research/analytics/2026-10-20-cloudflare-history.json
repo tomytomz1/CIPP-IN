@@ -744,5 +744,213 @@
     "edgePageViews": "Cloudflare edge classification, not browser beacon or GA4 page views",
     "worker": "Adaptive Workers execution counts; sampled/estimated and different scope from zone requests",
     "searchTraffic": "Only verified search-engine reports can establish Google/Bing organic search performance"
+  },
+  "rumDetail": {
+    "requestedFrom": "2026-07-20",
+    "requestedThrough": "2026-10-20",
+    "rows": [
+      {
+        "date": "2026-09-20",
+        "host": "www.indysewerresource.com",
+        "count": 10
+      },
+      {
+        "date": "2026-09-20",
+        "host": "indysewerresource.com",
+        "count": 10
+      }
+    ],
+    "note": "No later RUM rows returned; launch-day events are historical beacon events, not a reliable current visitor count."
+  },
+  "workerLogs": {
+    "requestedFrom": "2026-09-20T00:00:00Z",
+    "requestedTo": "2026-10-20T21:00:00Z",
+    "returnedTimeframe": {
+      "from": 1791925851631,
+      "to": 1792530000000
+    },
+    "aggregates": [
+      {
+        "value": 3013,
+        "interval": 1.0501917044266296,
+        "sampleInterval": 1.0501917044266296,
+        "count": 3013
+      }
+    ],
+    "note": "Service-filtered aggregate query; server clamped requested history to approximately 7 days. Not a complete launch-to-date request archive."
+  },
+  "workerOlderWindows": {
+    "requested": [
+      [
+        "2026-07-24",
+        "2026-08-24"
+      ],
+      [
+        "2026-08-24",
+        "2026-09-20"
+      ]
+    ],
+    "bothReturnedEmpty": true
+  },
+  "liveProduction": {
+    "checkedAt": "2026-10-20T21:10:25.672Z",
+    "evidence": [
+      {
+        "path": "/",
+        "status": 200,
+        "canonical": "https://indysewerresource.com/",
+        "robots": "noindex, follow",
+        "robotsHeader": "noindex, nofollow",
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
+        "hsts": "max-age=31536000",
+        "cloudflareBeaconInjected": false,
+        "ga4Bootstrap": false,
+        "sitemapUrls": null
+      },
+      {
+        "path": "/about/",
+        "status": 200,
+        "canonical": "https://indysewerresource.com/about/",
+        "robots": "noindex, follow",
+        "robotsHeader": "noindex, nofollow",
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
+        "hsts": "max-age=31536000",
+        "cloudflareBeaconInjected": false,
+        "ga4Bootstrap": false,
+        "sitemapUrls": null
+      },
+      {
+        "path": "/lawrence-sewer-lateral-repair/",
+        "status": 200,
+        "canonical": "https://indysewerresource.com/lawrence-sewer-lateral-repair/",
+        "robots": "noindex, follow",
+        "robotsHeader": "noindex, nofollow",
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
+        "hsts": "max-age=31536000",
+        "cloudflareBeaconInjected": false,
+        "ga4Bootstrap": false,
+        "sitemapUrls": null
+      },
+      {
+        "path": "/sitemap.xml",
+        "status": 200,
+        "canonical": null,
+        "robots": null,
+        "robotsHeader": "noindex, nofollow",
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
+        "hsts": "max-age=31536000",
+        "cloudflareBeaconInjected": false,
+        "ga4Bootstrap": false,
+        "sitemapUrls": 0
+      },
+      {
+        "path": "/robots.txt",
+        "status": 200,
+        "canonical": null,
+        "robots": null,
+        "robotsHeader": "noindex, nofollow",
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
+        "hsts": "max-age=31536000",
+        "cloudflareBeaconInjected": false,
+        "ga4Bootstrap": false,
+        "sitemapUrls": null
+      },
+      {
+        "url": "http://indysewerresource.com/about/",
+        "status": 301,
+        "location": "https://indysewerresource.com/about/"
+      },
+      {
+        "url": "https://www.indysewerresource.com/about/",
+        "status": 301,
+        "location": "https://indysewerresource.com/about/"
+      },
+      {
+        "url": "http://www.indysewerresource.com/about/",
+        "status": 301,
+        "location": "https://indysewerresource.com/about/"
+      }
+    ]
+  },
+  "dns": {
+    "success": true,
+    "status": 200,
+    "records": [
+      {
+        "type": "A",
+        "name": "indysewerresource.com",
+        "content": "192.64.119.188",
+        "proxied": true,
+        "modified_on": "2026-09-20T05:15:29.369568Z"
+      },
+      {
+        "type": "CNAME",
+        "name": "ed9d7ef6dea8205062a8de3d46fbe31c.indysewerresource.com",
+        "content": "verify.bing.com",
+        "proxied": false,
+        "modified_on": "2026-10-20T20:51:29.168745Z"
+      },
+      {
+        "type": "CNAME",
+        "name": "www.indysewerresource.com",
+        "content": "parkingpage.namecheap.com",
+        "proxied": true,
+        "modified_on": "2026-09-20T05:15:29.379035Z"
+      },
+      {
+        "type": "MX",
+        "name": "indysewerresource.com",
+        "content": "eforward5.registrar-servers.com",
+        "proxied": false,
+        "priority": 20,
+        "modified_on": "2026-09-20T05:15:29.361183Z"
+      },
+      {
+        "type": "MX",
+        "name": "indysewerresource.com",
+        "content": "eforward4.registrar-servers.com",
+        "proxied": false,
+        "priority": 15,
+        "modified_on": "2026-09-20T05:15:29.352809Z"
+      },
+      {
+        "type": "MX",
+        "name": "indysewerresource.com",
+        "content": "eforward3.registrar-servers.com",
+        "proxied": false,
+        "priority": 10,
+        "modified_on": "2026-09-20T05:15:29.344369Z"
+      },
+      {
+        "type": "MX",
+        "name": "indysewerresource.com",
+        "content": "eforward2.registrar-servers.com",
+        "proxied": false,
+        "priority": 10,
+        "modified_on": "2026-09-20T05:15:29.334662Z"
+      },
+      {
+        "type": "MX",
+        "name": "indysewerresource.com",
+        "content": "eforward1.registrar-servers.com",
+        "proxied": false,
+        "priority": 10,
+        "modified_on": "2026-09-20T05:15:29.323444Z"
+      },
+      {
+        "type": "TXT",
+        "name": "indysewerresource.com",
+        "content": "google-site-verification=888Xfe0S7zMMqsXPypwAMGoeFrLjQjhAt_dKmgqPa_o",
+        "proxied": false,
+        "modified_on": "2026-10-20T20:51:28.966536Z"
+      },
+      {
+        "type": "TXT",
+        "name": "indysewerresource.com",
+        "content": "\"v=spf1 include:spf.efwd.registrar-servers.com ~all\"",
+        "proxied": false,
+        "modified_on": "2026-09-20T05:15:29.389414Z"
+      }
+    ]
   }
 }
