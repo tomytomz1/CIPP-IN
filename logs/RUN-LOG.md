@@ -198,15 +198,16 @@ This file is an audit trail, not a strategy document and not a replacement for `
 - No source/deployment/indexing/DNS changes. PR #18 retained.
 - Receipt: [2026-10-20-2133-windsor-access-confirmed.md](runs/2026-10-20-2133-windsor-access-confirmed.md).
 
-### 2026-10-20 22:16 UTC — PR #18 merged
+### 2026-10-20 22:40 UTC — GA4 release with Realtime receipt; Bing/GSC verified
 
-- Result: COMPLETE for the requested merge; broader analytics deployment/Realtime acceptance remains separate.
-- Expected/tested head: `c59c6311fc626b8962162203d2e1469ee8b23e27`; all five CI checks green in run 39505452374.
-- Normal merge commit: `018dd3b8f0f5a16c10b61b61e2f2fa524eb75007`; GitHub read-back confirms PR closed/merged.
-- No production deployment/activation, DNS, indexing or lead change performed. Release switch still defaults OFF in source.
-- Receipt: [2026-10-20-2216-merge-ga4-pr18.md](runs/2026-10-20-2216-merge-ga4-pr18.md).
+- Result: COMPLETE. Bing ownership verified via the existing CNAME; GA4 Admin hardened (Enhanced Measurement, tag auto-detection and user-provided data OFF; ads personalization 0/307; retention 2 months).
+- PR #18 merged (`018dd3b`, head `c59c631`, 5/5 CI) with `?analytics=validate` internal-traffic marker; Workers Builds connected to the existing Worker (main only, preview builds off); PR #20 merge `6134089` deployed version `12800a05-2cf8-4064-94c0-e20308b7f49d`.
+- Live: noindex/canonicals/headers/redirects/sitemap 0/intake 503 intact; consent, decline, withdrawal and internal exclusion verified; GA4 Realtime received the 22:33 UTC validation page_view. GSC verified owner, reports processing. Cloudflare RUM beacon injected but CSP-blocked; unchanged.
+- Receipt: [2026-10-20-2240-ga4-bing-release-verified.md](runs/2026-10-20-2240-ga4-bing-release-verified.md).
 
 
-## 2026-10-20 22:30 UTC — Merge release PR #20 (PARTIAL)
+### 2026-10-20 — Codex merge audit consolidation
 
-Merged PR #20 after five successful CI jobs; main SHA `613408977227549cdbd6875aaa8949d3b777f7d5`. Existing Cloudflare production build started for exact merge, release GA4 flag true. Deployment success and GA4 Realtime receipt pending. [Receipt](runs/2026-10-20-2230-merge-release-pr20.md).
+- PR #18 normal merge: [receipt](runs/2026-10-20-2216-merge-ga4-pr18.md).
+- PR #20 normal merge and build start (historical state, superseded by Claude's release verification): [receipt](runs/2026-10-20-2230-merge-release-pr20.md).
+- PR #21 merged at 916ee4f76bb29c962fcc8364ecee929855f18375 after five green CI checks; no additional build at readback: [receipt](runs/2026-10-20-2257-merge-final-pr21.md).

@@ -117,6 +117,10 @@ jobs:
     name: production-read-only-audit
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    env:
+      # Production has been released with consent-gated GA4 (2026-10-20); the live audit must
+      # expect exactly the reviewed consent controller. Keep in sync with the Workers Build variable.
+      PUBLIC_GA4_ENABLED: 'true'
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
