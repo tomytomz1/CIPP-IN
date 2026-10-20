@@ -1,0 +1,355 @@
+{
+  "file": "research/editorial/2026-10-20-publication-readiness.json",
+  "review_date": "2026-10-20",
+  "reviewer": "GPT-6 (AI technical/editorial auditor; not the human editor or qualified sewer professional)",
+  "basis": [
+    "AGENTS.md",
+    "docs/00-PROJECT-CHARTER.md",
+    "docs/01-CURRENT-STATE.md",
+    "docs/02-SEO-SERP-BLUEPRINT.md",
+    "docs/03-GOOGLE-RESILIENCE.md",
+    "docs/04-CONTENT-EDITORIAL-SYSTEM.md",
+    "docs/05-BUILD-SPEC.md",
+    "content/publication-records/*.json",
+    "src/pages/*.astro",
+    "research/sources/lawrence-primary-sources.json"
+  ],
+  "score_policy": "Internal 03-GOOGLE-RESILIENCE.md thresholds 80 general, 85 money/location. Score does not override hard gates or operator approval.",
+  "pages": [
+    {
+      "route": "/",
+      "role": "General brand/orientation; public support page; maintain published_noindex unless editorial strategy later changes",
+      "current_status": "published_noindex; no index candidacy",
+      "score": null,
+      "threshold_if_index_candidate": 80,
+      "failed_or_unfinished_gates": [
+        "Workflow 3 competitor dossier not completed (commercial intent absent); workflow 11 actual human editorial review outstanding",
+        "Workflow 12 original asset absent; workflow 14 similarity record absent; workflows 15-16 not completed",
+        "Manual keyboard/screen-reader check and full technical gate not completed",
+        "Workflow 19 conversion test unperformed; lead collection intentionally disabled",
+        "No operator index approval"
+      ],
+      "positive_evidence": [
+        "Clear independent publisher identity and absence of contractor affiliation",
+        "Actual decision-journey links to Lawrence and About",
+        "Same-site build/SEO/a11y/security checks on prior CI, subject to current branch CI"
+      ],
+      "work_completed": [
+        "Corrected public-readable-versus-indexable terminology",
+        "Clarified that homeowner contact/repair data is not collected but optional GA4 consented analytics exists"
+      ],
+      "operator_review": [
+        "Read homepage as homeowner and restructure as desired; inspect utility of main links",
+        "Manual keyboard and screen-reader verification on real devices/browser"
+      ],
+      "qualified_expert_review_required": false
+    },
+    {
+      "route": "/about/",
+      "role": "Trust, editorial methods and disclosure utility page; NOINDEX utility rather than commercial search target",
+      "current_status": "published_noindex; no index candidacy",
+      "score": null,
+      "threshold_if_reclassified": 80,
+      "failed_or_unfinished_gates": [
+        "Actual human editorial restructuring workflow 11 outstanding",
+        "Similarity review and commodity/perfect-AI tests not run; no scored index candidacy",
+        "Manual keyboard/screen-reader test and technical gate outstanding",
+        "No actual conversion flow (intentionally disabled); no operator index approval"
+      ],
+      "positive_evidence": [
+        "Clear independence/not-a-plumbing-company declaration",
+        "Source hierarchy, claim labels, reviewer disclosures and consented analytics explanation",
+        "Links from site navigation/footer; programmatic link and schema tests established in CI"
+      ],
+      "work_completed": [
+        "Audited disclosure accuracy against current deployed GA4 rules; no content change needed"
+      ],
+      "operator_review": [
+        "Confirm methodology accurately represents actual editorial operating practice",
+        "Manual keyboard/screen-reader and table accessibility review"
+      ],
+      "qualified_expert_review_required": false
+    },
+    {
+      "route": "/lawrence-sewer-lateral-repair/",
+      "role": "Flagship homeowner commercial-intent Lawrence location resource; potential future index candidate ONLY after full gate and operator approval",
+      "current_status": "published_noindex; review incomplete",
+      "score": 63,
+      "threshold": 85,
+      "location_gate": {
+        "qualified_categories": 5,
+        "authoritative_primary_categories": 5,
+        "required_categories": 5,
+        "required_primary": 2,
+        "pass": true,
+        "qualifying_categories": [
+          "building sewer ownership/responsibility (law-001,law-002,law-005)",
+          "sewer repair permit and inspection (law-003,law-004,law-006)",
+          "Lawrence lining/bursting and CCTV policy (law-006,law-007)",
+          "public municipal rehabilitation projects (law-017 to law-019; do NOT imply suitability of private lateral)",
+          "local utility clay/fiber damage statements (law-013,law-014; no prevalence figure)"
+        ]
+      },
+      "failed_or_unfinished_gates": [
+        "63/85 score fails by 22; do not inflate",
+        "Actual human editorial restructuring step 11 outstanding",
+        "Required named Indiana-licensed plumber/trenchless professional expert review step 13 not started",
+        "Semantic embedding QA not_run; deterministic site-page checks passed historically; no new execution claim",
+        "Manual keyboard/screen-reader QA not performed; workflow 17 incomplete",
+        "Conversion QA step 19 not passed (no lead form or routing, intentionally disabled); no operator index approval",
+        "Critical unknowns remain unverified; must not be silently upgraded to facts"
+      ],
+      "work_completed": [
+        "Corrected misleading fee language; no-fee notice is for the separate grease-trap application, not lateral permit",
+        "Added source-cited permit applicant rules and 150-day commencement condition, subject to online code freshness disclaimer",
+        "Added two provenance records (law-021, law-022), claim classifications and conservative score audit"
+      ],
+      "score_ledger": [
+        {
+          "criterion": "originalLocalInformation",
+          "awarded": 17,
+          "max": 20,
+          "evidence": "Lawrence ordinance, policy, permit, dated utility newsletters, public rehabilitation comparison. Remaining boundaries and policy currency unverified."
+        },
+        {
+          "criterion": "primarySourceEvidence",
+          "awarded": 10,
+          "max": 10,
+          "evidence": "Primary local ordinance, Lawrence Utilities permit and policy, dated City project documentation; age/limitations disclosed."
+        },
+        {
+          "criterion": "homeownerDecisionUtility",
+          "awarded": 12,
+          "max": 15,
+          "evidence": "Responsibility, permit steps, camera limits, method comparison, contractor questions; expert input and current submission path absent."
+        },
+        {
+          "criterion": "expertVerification",
+          "awarded": 0,
+          "max": 10,
+          "evidence": "No actual named qualified technical reviewer; required and outstanding."
+        },
+        {
+          "criterion": "originalMediaTool",
+          "awarded": 6,
+          "max": 10,
+          "evidence": "Original general decision-flow diagram and original compilation of public City projects; neither is an original Lawrence responsibility map."
+        },
+        {
+          "criterion": "proprietaryFirstPartyData",
+          "awarded": 0,
+          "max": 10,
+          "evidence": "No interviews, surveys, contractor case data, price datasets, leads or proprietary measurements."
+        },
+        {
+          "criterion": "nonCommodityDistinctiveness",
+          "awarded": 8,
+          "max": 10,
+          "evidence": "Municipality-specific local primary research and side-by-side city project context rather than generic trenchless overview."
+        },
+        {
+          "criterion": "technicalInternalLinkQuality",
+          "awarded": 4,
+          "max": 5,
+          "evidence": "Shared Astro layout, canonical/robots/sitemap firewall, working source/navigation links; manual accessibility outstanding."
+        },
+        {
+          "criterion": "transparencyTrust",
+          "awarded": 5,
+          "max": 5,
+          "evidence": "Independent publisher status, sources/date limitations, explicit unknowns, reviewer absence, no fake credentials/quotes."
+        },
+        {
+          "criterion": "conversionUsefulness",
+          "awarded": 1,
+          "max": 5,
+          "evidence": "Actionable checklist/questions, but no lead collection/call routing or verified contractor handoff by design."
+        }
+      ],
+      "score_sum_check": 63,
+      "operator_review": [
+        "Human editorial restructuring (workflow step 11) with recorded editor identity/date/scope",
+        "Mobile keyboard and screen-reader checks including diagram and tables, source links and consent controls",
+        "Only if all other gates can pass, separately approve indexability via protected operator registry (not now)"
+      ],
+      "qualified_expert_review_required": true
+    }
+  ],
+  "source_verification": [
+    {
+      "id": "law-021-permit-applicant-eligibility-2026",
+      "classification": "FACT",
+      "publisher": "City of Lawrence Code of Ordinances (American Legal)",
+      "url": "https://codelibrary.amlegal.com/codes/lawrence/latest/lawrence_in/0-0-0-16768",
+      "document_date": "2025 S-18 label; day unknown",
+      "checked_on": "2026-10-20",
+      "scope": "Section 5-1-2-1(E) applicant categories; (G) 150-day commencement and discretionary extension",
+      "limitations": "Publisher warns hosted code may omit recent legislation; jurisdiction credential recognition and individual application still require City confirmation."
+    },
+    {
+      "id": "law-022-sewer-permit-fee-not-stated-2026",
+      "classification": "FACT about the form's text; actual sewer permit amount UNKNOWN",
+      "publisher": "City of Lawrence Utilities",
+      "url": "https://www.cityoflawrence.org/sites/default/files/document-group/Sanitary%20Sewer%20Permit%20Application.pdf",
+      "document_date": null,
+      "checked_on": "2026-10-20",
+      "scope": "Undated form does not specify lateral permit fee or submission destination; 'no fee' belongs to a separate grease-trap application",
+      "limitations": "Neither fee amount nor submission channel confirmed; 2019 policy says fees due."
+    },
+    {
+      "id": "utility-portal-scope-unverified",
+      "classification": "UNVERIFIED for lateral permits",
+      "publisher": "City of Lawrence",
+      "url": "https://cityoflawrencein.nwerp.tylerapp.com/nwprod/eSuite.permits/",
+      "document_date": null,
+      "checked_on": "2026-10-20",
+      "scope": "Portal advertises general permit resident access",
+      "limitations": "Does not establish that sanitary building sewer lateral permits may be submitted there. No change to site recommending it."
+    },
+    {
+      "id": "law-015-after-hours-2024",
+      "classification": "HISTORICAL FACT, not a currently reverified contact number",
+      "publisher": "Lawrence Lift, August 2024",
+      "url": "https://www.cityoflawrence.org/sites/default/files/document-group/lift-2024-augustv5.pdf",
+      "document_date": "2024-08",
+      "checked_on": "2026-09-20 (existing project record)",
+      "scope": "Number 317-260-0220 was published in that dated issue",
+      "limitations": "Do not assume the after-hours contact is still active; page warns to confirm current utility details."
+    },
+    {
+      "id": "law-006-policy-2019",
+      "classification": "FACT as to 2019 published policy; operational currency unverified",
+      "publisher": "Lawrence Utilities",
+      "url": "https://www.cityoflawrence.org/construction-specifications",
+      "document_date": "2019-12-23",
+      "checked_on": "2026-09-19 (existing project record)",
+      "scope": "Permit and lining/bursting policy sections and CCTV requirements",
+      "limitations": "City warns specifications may be changed; unpublished/updated rules require City confirmation."
+    }
+  ],
+  "review_package": {
+    "qualified_reviewer": "Indiana-licensed plumber with demonstrable trenchless/CIPP lateral experience or another verifiably relevant sewer rehabilitation professional. Record actual identity, credential/scope, date, recommended changes, consent and any contractor/partner affiliation.",
+    "exact_passages": [
+      {
+        "route": "/lawrence-sewer-lateral-repair/",
+        "anchor": "#what-is-yours",
+        "passage": "the sewer lateral ... is yours — including the part under the street right-of-way",
+        "question": "Confirm the boundary as used for owners, the tap/wye at the public main, Director waivers and edge cases; should the lede further qualify the responsibility inference?",
+        "sources": [
+          "law-001",
+          "law-002",
+          "law-009"
+        ],
+        "limitation": "Ordinance and utility may not settle the main connection hardware for all owners."
+      },
+      {
+        "route": "/lawrence-sewer-lateral-repair/",
+        "anchor": "#before-you-hire",
+        "passage": "The Lawrence Lift published 317-260-0220 as an after-hours on-call number in August 2024",
+        "question": "Confirm the CURRENT contact method for a sewer backup and whether to retain an historical number on a homeowner action page.",
+        "sources": [
+          "law-015"
+        ],
+        "limitation": "Newsletter dated 2024; no current confirmation."
+      },
+      {
+        "route": "/lawrence-sewer-lateral-repair/",
+        "anchor": "#diagnosis",
+        "passage": "CCTV identifies defects/extent but location/depth generally needs separate locating equipment",
+        "question": "Confirm technically accurate caveats and what an inspection actually establishes, including locating and lateral-vs-main diagnosis.",
+        "sources": [
+          "law-007",
+          "law-008"
+        ],
+        "limitation": "Inference from utility and engineering evidence, not on-property assessment."
+      },
+      {
+        "route": "/lawrence-sewer-lateral-repair/",
+        "anchor": "#methods",
+        "passage": "Repair method table describes sectional repair, CIPP, bursting, open-cut; no suitability claims",
+        "question": "Check resin/host-pipe/cure language, bursting host-pipe constraints, surface access, wastewater interruption, and tradeoffs without turning generic standards into Lawrence rules.",
+        "sources": [
+          "tech-001",
+          "tech-002",
+          "law-006",
+          "law-007"
+        ],
+        "limitation": "Method engineering specifications from another region; not binding Lawrence."
+      },
+      {
+        "route": "/lawrence-sewer-lateral-repair/",
+        "anchor": "#permit",
+        "passage": "Application eligibility, 150-day commencement, unspecified sewer-lateral permit fee, grease-trap-only no-fee note",
+        "question": "City/utility must confirm current fee, application office or online submission, applicable contractor registrations, 150-day permit validity and emergency exception.",
+        "sources": [
+          "law-003",
+          "law-011",
+          "law-021-permit-applicant-eligibility-2026",
+          "law-022-sewer-permit-fee-not-stated-2026"
+        ],
+        "limitation": "City form undated; hosted code 2025 S-18 may lag; 2019 policy may be superseded."
+      },
+      {
+        "route": "/lawrence-sewer-lateral-repair/",
+        "anchor": "#inspection",
+        "passage": "Post-repair video for lining/bursting and 2019 DVD delivery format",
+        "question": "Confirm current CCTV acceptance standards, submission formats, who signs off, waiver situations and what may be billed.",
+        "sources": [
+          "law-007",
+          "law-004"
+        ],
+        "limitation": "2019 policy and ordinance may have later implementation changes."
+      },
+      {
+        "route": "/lawrence-sewer-lateral-repair/",
+        "anchor": "#replacement",
+        "passage": "Specific installation material, depth/slope, backfill, tracer, cleanout standards",
+        "question": "Confirm whether installation rules apply to trenchless rehabilitation vs replacement; explain scope without generic assertions.",
+        "sources": [
+          "law-008",
+          "law-016"
+        ],
+        "limitation": "2019 requirements are for installation; ordinance §5-1-2-2 not independently rechecked."
+      }
+    ],
+    "operator_steps": [
+      "Read all three pages; record actual editorial changes/approval, not just acknowledgment",
+      "Arrange independent qualified technical review; do not ascribe one to AI",
+      "If seeking more local evidence, authorize utility inquiry separately; no contact made",
+      "Verify manual keyboard/screen-reader and mobile usability in a real browser",
+      "Run embedding similarity or documented qualified manual clearance before index candidacy",
+      "After all steps 1-19 and >=85 score, separately decide whether to authorize indexing; currently not approved"
+    ]
+  },
+  "similarity_status": {
+    "deterministic": "Repo CI has a deterministic similarity step; Phase 2E reported 0% overlap vs other site pages (2026-09-20). Await current-branch CI readback.",
+    "embeddings": "not_run; OpenAI text-embedding-3-small requires credentials, no token in repo. Never silently call a different embedding tool/model or claim gate pass.",
+    "manual_similarity_review": "not_done"
+  },
+  "technical_status": {
+    "site_origin": "https://indysewerresource.com",
+    "noindex_expected": true,
+    "sitemap_expected_urls": 0,
+    "analytics_expected": "Consent-controlled G-2ZGM4PZ4DK enabled, existing Internal Traffic filter Active",
+    "live_verification": "Previous 2026-10-20 browser receipt: 3 pages 200, X-Robots noindex, canonical apex, GA4 consent checks, 0 sitemap URLs, intake 503. A new post-merge readback is required; repo evidence is not a substitute for updated prod."
+  },
+  "search_reports": {
+    "gsc_property": "sc-domain:indysewerresource.com",
+    "gsc_ownership": "Previously verified via signed-in UI 2026-10-20; connector lists existing account today",
+    "gsc_windsor_performance": "2026-09-19..2026-10-20 fields date/clicks/impressions/page: 0 rows returned; does not establish zero impressions",
+    "gsc_windsor_sitemaps": "0 rows returned; no sitemap submitted",
+    "gsc_https_indexing_status": "Previously processing 2026-10-20; current browser report not accessible via connected data source",
+    "bing": "Owner previously verified using existing CNAME on 2026-10-20; at last signed-in UI readback performance report processing, no new Bing connector read",
+    "ga4_property": "559890873",
+    "ga4_measurement": "G-2ZGM4PZ4DK",
+    "ga4_windsor": "2026-10-19..2026-10-20 sessions/users/views/channel 0 rows; historical Realtime consented validation event documented separately",
+    "metric_distinctions": "Cloudflare edge requests include bots/static requests; 3,515 summed daily unique visitors is not distinct period-user count; GA4 counts only consented and non-excluded browser sessions; GSC clicks/impressions reflect Google organic search only, not HTTP requests."
+  },
+  "approvals": {
+    "operator_index_approval": false,
+    "technical_expert_review": false,
+    "operator_editor_review": false,
+    "legal_lead_collection_review": false
+  },
+  "status": "Research/editorial audit in progress; does not authorize indexing, leads, DNS, review or submission"
+}
