@@ -3,6 +3,8 @@
  * On-page source list. Every entry mirrors a record in research/sources/*.json: title,
  * publisher, the date we verified it, and the limitation that applies to it
  * (docs/04 → Source Hierarchy: record URL, publisher, date accessed, and the claim supported).
+ *
+ * Limitations are printed in full beside each source, never hidden behind a toggle.
  */
 import type { Source } from '../lib/content/sources.ts';
 
@@ -16,11 +18,27 @@ const { sources } = Astro.props;
 <ol class="sources">
   {
     sources.map((s) => (
-      <li id={`source-${s.id}`}>
-        {s.url ? <a href={s.url} rel="nofollow noopener">{s.title}</a> : s.title} — {s.publisher}.
-        <span class="subtle">
-          Supports: {s.supports} Verified {s.verifiedAt}.{s.limitation ? ` Limitation: ${s.limitation}` : ''}
-        </span>
+      <li id={`source-${s.id}`} class="source">
+        <p class="source__title">
+          {s.url ? <a href={s.url} rel="nofollow noopener">{s.title}</a> : s.title}
+        </p>
+        <p class="source__publisher">{s.publisher}</p>
+        <dl class="source__meta">
+          <div>
+            <dt>Supports</dt>
+            <dd>{s.supports}</dd>
+          </div>
+          <div>
+            <dt>Verified</dt>
+            <dd>{s.verifiedAt}</dd>
+          </div>
+          {s.limitation && (
+            <div>
+              <dt>Limitation</dt>
+              <dd>{s.limitation}</dd>
+            </div>
+          )}
+        </dl>
       </li>
     ))
   }

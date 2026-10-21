@@ -239,3 +239,11 @@ This file is an audit trail, not a strategy document and not a replacement for `
 
 - Documentation-closure PR #23's `production-read-only-audit` in [run 39515665741](https://github.com/tomytomz1/CIPP-IN/actions/runs/39515665741) completed SUCCESS (23:32:22–23:32:29 UTC), after Cloudflare Worker `5486a937-a71b-49c5-b773-3bb72de28320` entered service at 23:28:22 UTC. Validated public three-page HTTPS/meta+header noindex/canonicals, redirect, headers, zero sitemap URLs, consent controller and intake HTTP 503 through the existing live-site scripts.
 - Receipt addendum: [2026-10-20-1930-publication-release.md](runs/2026-10-20-1930-publication-release.md). This was an HTTP read-only verification; no second release or indexing/configuration change.
+
+### 2026-10-21 02:30 UTC — Phase 2G premium visual redesign and credibility upgrade
+
+- Agent: Claude Code (cloud session). Starting main `1ff25f0`; branch `claude/epic-volta-roofwc`; implementation commit `0291cd7`.
+- Presentation-only redesign of `/`, `/lawrence-sewer-lateral-repair/`, `/about/`: new design system (light/dark, system serif display, 0 font bytes, no inline styles), original SVG brand mark, hero illustration with no ownership boundary, generic method schematics, redrawn decision flow; global "Pre-publication draft" bar replaced by footer + page-level editorial status. Municipal statements and caveats carried over; one About overstatement corrected; a pre-existing missing-space rendering bug fixed.
+- Local validation: typecheck, 201 unit tests, records, migrations, dev and production builds, check:dist, check:budgets (CSS 6.4 KB gz), similarity (0%), test:a11y 18 dev / 26 production, dark-mode axe clean, no overflow 320–1920 px. Live domain unreachable from this container, so before/after used local builds of the same source.
+- Unchanged: lifecycles, scores (Lawrence 63/85), gates, approvals (0), noindex meta/header, canonicals, empty sitemap, intake 503, GA4 consent, CSP, DNS, Cloudflare config. No editorial contact address exists, so none was published (Open Question 15).
+- Receipt: [2026-10-21-0230-phase-2g-credibility-redesign.md](runs/2026-10-21-0230-phase-2g-credibility-redesign.md). PR, CI, merge, and release evidence are appended to the receipt.

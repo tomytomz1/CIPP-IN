@@ -7,14 +7,21 @@
  * The footer disclosure is data-driven and site-wide: Indy Sewer Resource is an independent
  * resource, it performs no plumbing work, and it currently has no contractor partner
  * (docs/04 → Disclosure; /AGENTS.md §4.2).
+ *
+ * Editorial status (Phase 2G): the former full-width "Pre-publication draft" bar was replaced by
+ * a site-wide editorial-status block in the footer, plus page-level status where it matters (the
+ * Lawrence guide's review panel, the About page's status section). This is presentation only:
+ * lifecycle, robots meta, the X-Robots-Tag header, canonicals, and the sitemap are unchanged and
+ * still computed by the firewall from the publication records.
  */
 import '../styles/global.css';
 import AnalyticsConsent from '../components/AnalyticsConsent.astro';
+import BrandMark from '../components/BrandMark.astro';
 import { analyticsEnabled } from '../config/analytics.ts';
 import { canonicalUrl, robotsDirective, assertShippable } from '../lib/seo/firewall.ts';
 import { serializeJsonLd } from '../lib/seo/structured-data.ts';
 import { getRegistry, siteConfig } from '../lib/publication/load-astro.ts';
-import { NAV_ITEMS, SITE_NAME, SITE_TAGLINE } from '../config/brand.ts';
+import { NAV_ITEMS, SITE_DESCRIPTOR, SITE_NAME, SITE_TAGLINE } from '../config/brand.ts';
 
 interface Props {
   pageId: string;
@@ -70,11 +77,14 @@ const year = new Date().getUTCFullYear();
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
     <header class="site-header">
-      <div class="shell">
-        <div>
-          <p class="site-name"><a href="/">{SITE_NAME}</a></p>
-          <p class="site-tagline">{SITE_TAGLINE}</p>
-        </div>
+      <div class="container site-header__inner">
+        <a class="brand" href="/">
+          <BrandMark />
+          <span class="brand__text">
+            <span class="brand__name">{SITE_NAME}</span>
+            <span class="brand__descriptor">{SITE_DESCRIPTOR}</span>
+          </span>
+        </a>
         <nav class="site-nav" aria-label="Main">
           <ul>
             {
@@ -91,32 +101,61 @@ const year = new Date().getUTCFullYear();
       </div>
     </header>
 
-    <p class="status">
-      <strong>Pre-publication draft.</strong> This site is being built in the open. Pages are not
-      published to search engines
-      {lifecycle === 'published_noindex' ? ' while their evidence and review requirements are still open.' : '.'}
-    </p>
-
     <main id="main" tabindex="-1">
       <slot />
     </main>
 
     <footer class="site-footer">
-      <div class="shell">
-        <p>
-          <strong>{SITE_NAME}</strong> is an independent Indianapolis-area sewer information
-          resource. It is not a plumbing company, it performs no repairs or inspections, and it is
-          not affiliated with the City of Lawrence, Lawrence Utilities, or any other government
-          body.
-        </p>
-        <p>
-          No contractor partner is currently active, no homeowner contact details or repair requests are collected on this
-          site, and no customer reviews or project data are published here. When a contractor
-          relationship exists, it will be disclosed on the page where it applies. See
-          <a href="/about/">how this resource works</a>.
-        </p>
+      <div class="container">
+        <div class="site-footer__brand">
+          <BrandMark size={32} />
+          <p>
+            <strong>{SITE_NAME}</strong>
+            <span>{SITE_TAGLINE}</span>
+          </p>
+        </div>
+        <div class="site-footer__grid">
+          <section aria-labelledby="footer-independence">
+            <h2 id="footer-independence" class="site-footer__heading">Independence</h2>
+            <p>
+              <strong>{SITE_NAME}</strong> is an independent Indianapolis-area sewer information
+              resource. It is not a plumbing company, it performs no repairs or inspections, and it is
+              not affiliated with the City of Lawrence, Lawrence Utilities, or any other government
+              body.
+            </p>
+            <p>
+              No contractor partner is currently active, no homeowner contact details or repair requests are collected on this
+              site, and no customer reviews or project data are published here. When a contractor
+              relationship exists, it will be disclosed on the page where it applies. See{' '}
+              <a href="/about/">how this resource works</a>.
+            </p>
+          </section>
+          <section aria-labelledby="footer-status">
+            <h2 id="footer-status" class="site-footer__heading">Editorial status</h2>
+            <p>
+              These pages are publicly readable reference drafts. They are not published to search engines
+              {lifecycle === 'published_noindex' ? ' while their evidence and review requirements are still open.' : '.'}
+            </p>
+            <p>
+              The Lawrence guide has not yet been reviewed by a qualified sewer professional. See{' '}
+              <a href="/about/#status">current review status</a>.
+            </p>
+          </section>
+          <nav class="site-footer__nav" aria-label="Footer">
+            <h2 class="site-footer__heading">Read</h2>
+            <ul>
+              {
+                NAV_ITEMS.map((item) => (
+                  <li>
+                    <a href={item.href}>{item.label}</a>
+                  </li>
+                ))
+              }
+            </ul>
+          </nav>
+        </div>
         {ga4Enabled && <AnalyticsConsent />}
-        <p>&copy; {year} {SITE_NAME}</p>
+        <p class="site-footer__legal">&copy; {year} {SITE_NAME}</p>
       </div>
     </footer>
   </body>

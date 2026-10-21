@@ -1,10 +1,10 @@
 # CURRENT STATE
 
-Last updated: 2026-10-20
+Last updated: 2026-10-21
 Last verified substantive implementation commit: PR #22 final head `1d28f44690219ebb8307ed418b5b73c73b53df28`, merged normally to `main` as `6187cbfddf22ff3c6a55ff6ceb677894da208b33` on 2026-10-20 after all five CI jobs passed. **Production now serves Worker version `5486a937-a71b-49c5-b773-3bb72de28320` at 100% traffic**, deployed through Cloudflare Workers Builds build `51508c2b-3db5-44dd-a3c1-4659ec793864` from the exact main merge commit at 2026-10-20 23:28 UTC. Its build log confirms two updated assets (`/index.html`, `/lawrence-sewer-lateral-repair/index.html`), SEO/index firewall and performance checks passed; consented GA4 remains enabled. Previous release PRs #18/#20/#21 and Worker version `12800a05-2cf8-4064-94c0-e20308b7f49d` are preserved in historical receipts.
 Production URL: **https://indysewerresource.com — LIVE** since 2026-09-20, served by the Cloudflare Worker `indy-sewer-resource` with Static Assets. The site is public and **entirely non-indexable**: every response carries `X-Robots-Tag: noindex, nofollow`, every page carries a `noindex` robots meta tag, and the sitemap has 0 URLs. `www` returns a single 301 to the apex, and plain http returns a 301 to https.
 Repository: https://github.com/tomytomz1/CIPP-IN
-Current branch: main
+Current branch: main (Phase 2G redesign on `claude/epic-volta-roofwc`; see Change Log for its PR, merge, and release state)
 Current phase: Phase 2F — safe public noindex deployment (**complete**; verified live 2026-09-20). Backend expansion is deliberately paused. Three real homeowner-facing pages exist (homepage, Lawrence sewer-lateral resource, methodology page), all `published_noindex`. The site is live at https://indysewerresource.com and entirely non-indexable; no page is indexable; live lead collection is DISABLED, notification sending is DISABLED, no lead has been collected, and no email or SMS has been sent.
 
 > This file is authoritative for what currently exists and what has been completed. It does not override strategic rules in higher-precedence documents (see `/AGENTS.md` §1). Update it after every meaningful piece of work.
@@ -135,6 +135,13 @@ The site is deployed and publicly reachable, and no page is indexable. Specifica
   - editorial corrections on the Lawrence page (unsupported "cheapest step" claim removed, camera-inspection claims narrowed, the "trenchless is not permitted everywhere" framing removed, the "not a complete quote" line replaced with a question to ask, DVD speculation removed, permit-practice assertion removed), on the About page (contractor-evidence and claim-labelling overstatements), and on the homepage (no implied judgement of whether a quote is reasonable)
   - similarity-QA runner implemented (`scripts/similarity-qa.ts`, `scripts/lib/similarity.ts`) and added to CI
   - details: `05-BUILD-SPEC.md` → Implementation Record: Phase 2E
+- Phase 2G premium editorial redesign (2026-10-21; presentation only):
+  - shared design system rebuilt (ivory/navy/teal tokens, light and dark, system serif display type, 0 font bytes, no inline styles); original SVG brand mark, hero illustration (no ownership boundary drawn), generic method schematics, and a redrawn decision flow
+  - the global "Pre-publication draft" bar replaced by a footer editorial-status block plus page-level status (Lawrence review-status panel; About page-status table); lifecycle, robots meta, `X-Robots-Tag`, canonicals, sitemap, intake, consent analytics, and CSP unchanged
+  - homepage rebuilt problem-first; Lawrence guide restructured (summary, sticky contents, method/project cards, documented permit sequence, source cards) with every municipal statement and caveat carried over; About redesigned as a methodology/accountability page with an honest no-contact-address statement
+  - a pre-existing whitespace bug that dropped spaces before inline links/emphasis fixed
+  - no score, gate, record, approval, or indexability change: Lawrence stays 63/85, gate 5 of 8, expert review absent
+  - details: `05-BUILD-SPEC.md` → Implementation Record: Phase 2G
 - Phase 2F safe public noindex deployment (2026-09-20, **live**):
   - production builds are globally non-indexable at the header level too: `X-Robots-Tag: noindex, nofollow` on every response while 0 pages are effectively indexable, computed from the evaluator rather than set by hand
   - HSTS (`max-age=31536000`) in production
@@ -165,7 +172,7 @@ The site is deployed and publicly reachable, and no page is indexable. Specifica
 - Confirmation of the remaining Lawrence uncertainties with Lawrence Utilities (see Open Questions)
 - Further content production beyond the three Phase 2D pages
 - Tools/calculators
-- Further original visuals (one original decision-flow diagram exists; a Lawrence responsibility diagram is deliberately withheld until `law-009` is resolved)
+- Further original visuals (Phase 2G added a generic hero illustration and method schematics and redrew the decision flow; none is municipality-specific or claimed as gate category 7; a Lawrence responsibility diagram is deliberately withheld until `law-009` is resolved)
 - Expert reviewer recruitment
 - Re-check GSC Performance / Page indexing / HTTPS reports and Bing Search Performance once their "processing" state clears (both showed processing on 2026-10-20)
 - GA4 Internal Traffic exclusion activated with operator authorization; see Analytics State for prospective-only behavior.
@@ -227,7 +234,7 @@ Astro 7.3.3 static site with the Cloudflare adapter, built from the Phase 2A fou
 - **DNS:** zone `indysewerresource.com` is active on Cloudflare (`harleigh`/`leonard` nameservers). The imported parking records (apex `A` → 192.64.119.188, `www` CNAME → parkingpage.namecheap.com) are still present and proxied; the Worker route intercepts every request, so that origin is never contacted. Email forwarding is untouched: 5 `eforward` MX records and the SPF TXT record verified intact after deployment.
 - **Live safety:** every response carries `X-Robots-Tag: noindex, nofollow`; every page's robots meta is `noindex, follow`; sitemap 0 URLs; `/api/lead-intake` returns 503.
 - **Lawrence page status:** Location Page Quality Gate 5 of 8 (passes); publication score 63/85; expert review required and absent; similarity QA deterministic checks clean, embedding check `not_run`.
-- **Client JavaScript:** 0 bytes on every page. CSS: ~1.8 KB gzip.
+- **Client JavaScript:** none in non-GA4 builds; the GA4-enabled production build ships only the first-party consent controller (`/analytics.js`, 3,090 B gzip). CSS: ~6.4 KB gzip after Phase 2G (budget 40 KB).
 
 Phase 2B lead backend built and **inert**: D1 migration for 10 tables, intake/routing/persistence service, and the disabled activation boundary. Its code ships inside the deployed Worker, but no binding exists and the activation boundary fails closed, so `POST /api/lead-intake` answers 503 in production (verified live). See `05-BUILD-SPEC.md` → Implementation Record: Phase 2B.
 
@@ -326,6 +333,7 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 12. Retention and deletion mechanics: the append-only triggers block UPDATE but deliberately allow DELETE so lawful deletion stays possible. The actual retention periods and the deletion procedure are still OPEN (Open Question 3).
 13. Dead-letter queue: when Cloudflare Queues are provisioned, should the lead-delivery consumer have a dead-letter queue, and with what retention and alerting? Without one, messages that exhaust `max_retries` are deleted permanently. Phase 2C mitigates this in the application (a durable terminal state plus operator follow-up before retries run out) but did not decide the infrastructure. Operator decision.
 14. Partner notification content: may a partner notification contain homeowner contact details directly, or must the partner always retrieve them from the protected operational layer? Phase 2C implements the identifier-only option and did not decide the production answer, which also depends on the legal review in Open Question 3. Operator decision.
+15. **Editorial contact channel (raised Phase 2G, 2026-10-21).** No working, operator-authorized editorial contact exists. The zone has five registrar `eforward` MX records and an SPF record, but no forwarding address is documented or tested, so the About page states that no contact address is published yet. Recommended: the operator creates one dedicated forwarding alias (for example an editorial or corrections address) in the existing registrar email-forwarding settings, which needs no DNS change, sends and receives a test message, and then authorizes adding it to `src/config/brand.ts` and the About page. Do not publish a form for this; a form would collect personal data and needs the legal review in Open Question 3.
 
 ## Known Risks
 
@@ -345,6 +353,7 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 - **At-least-once delivery window:** delivery is idempotent through database uniqueness plus provider idempotency keys, but a consumer that crashes mid-send leaves an attempt that another consumer may take over after the lease (120 seconds). That duplicate is then suppressed by the provider's own idempotency window (Resend documents 24 hours), not by this code. A crash plus a retry older than that window could in principle produce a second notification.
 - **Lead data protection:** the schema minimizes and separates PII, but field-level encryption and retention/deletion mechanics are undecided (Open Questions 11–12).
 - **Expert reviewer** is still required for pages where `04-CONTENT-EDITORIAL-SYSTEM.md` requires expert review. Those pages stay `noindex` until one exists.
+- **Presentation vs. review status:** the Phase 2G design makes the site look established. The pending technical review and noindex status are therefore stated visibly on the Lawrence intro, in every page footer, and on the About page. Keep them visible until review actually happens; a polished design is not editorial approval.
 - **Algorithm-update risk:** handled by protocol in `03-GOOGLE-RESILIENCE.md`.
 
 ## Current Blockers
@@ -359,6 +368,7 @@ Evidence: `research/sources/prospective-tenants.json`. These three categories ar
 
 ## Last Major Decisions
 
+- 2026-10-21 — Operator authorized the Phase 2G visual redesign and credibility upgrade of the three existing pages, explicitly as a presentation change only. The global "Pre-publication draft" bar was replaced by footer and page-level editorial status. No lifecycle, indexing, score, lead, analytics, CSP, DNS, or Cloudflare configuration change. No editorial contact address was published because none exists (Open Question 15).
 - 2026-10-20 — Operator approved stopping Cloudflare automatic beacon injection and activating GA4’s exact `traffic_type=internal` exclusion. Both settings applied/read back; live pages have no Cloudflare beacon. No geographic/IP filter or indexing permission change.
 
 
@@ -407,9 +417,12 @@ Today’s additional verification checks were incremental only: City ordinance �
 2. Begin identifying a real expert reviewer (Indiana-licensed plumber with trenchless/CIPP experience). Expert review is required for the Lawrence page and is currently absent.
 3. Confirm the remaining Lawrence uncertainties with Lawrence Utilities only after separate contact authorization. The location evidence gate already passes at 5 of 8, and Lawrence's provisional publication score is 63/100 against the 85-point location threshold. Neither direct utility answers nor a higher numerical score substitute for human/expert review.
 4. Operator: start the legal review of consent/privacy/retention/disclosure. It blocks live lead collection, which is currently disabled in code.
-5. Operator decisions: a separate non-admin GitHub identity for AI agents; contact-PII encryption and retention mechanics; the AI-use disclosure policy (Open Questions 7, 9, 11–12).
+5. Operator: set up and test a dedicated editorial contact alias before professional outreach (Open Question 15).
+6. Operator decisions: a separate non-admin GitHub identity for AI agents; contact-PII encryption and retention mechanics; the AI-use disclosure policy (Open Questions 7, 9, 11–12).
 
 ## Change Log
+
+- 2026-10-21 02:30 UTC — Phase 2G redesign implemented on `claude/epic-volta-roofwc` (presentation only). Local validation: typecheck, 201 unit tests, record and migration validation, dev and production builds, `check:dist`, `check:budgets`, similarity QA (0% overlap), and `test:a11y` (18 dev / 26 production checks) all pass; additional dark-mode axe runs are clean, with no overflow from 320 to 1920 px. The live site could not be loaded from this agent environment (egress proxy refusal), so before/after review used local production-mode builds of the same source. Receipt: `logs/runs/2026-10-21-0230-phase-2g-credibility-redesign.md`.
 
 - 2026-10-20 23:32 UTC — Independent post-deployment live HTTP check SUCCESS on documentation PR #23, GitHub CI run `39515665741` (23:32:22–23:32:29 UTC, **after** Worker deployment 23:28:22 UTC). The read-only audit fetched all three public pages and checked noindex meta+headers, canonical HTTPS apex, security headers, expected consent controller, 0 sitemap URLs, redirect behavior, and inactive lead endpoint HTTP 503. This does not assert new GA4 receipt or a fresh browser check of Cloudflare RUM.
 

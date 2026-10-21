@@ -40,7 +40,7 @@ export function normalizeWhitespace(text: string): string {
 /**
  * The page's own content: the <main> element when present, otherwise the whole document.
  *
- * Site chrome (navigation, the site-wide disclosure footer, the pre-publication status line) is
+ * Site chrome (navigation, the site-wide disclosure and editorial-status footer) is
  * identical on every page by design. Counting it would report duplication that says nothing about
  * the editorial content, which is what docs/03 -> Semantic Similarity QA is about.
  */
