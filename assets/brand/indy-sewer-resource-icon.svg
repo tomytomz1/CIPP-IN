@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Indy Sewer Resource icon</title>
+  <desc id="desc">A minimal house above a ground line with a sewer pipe below.</desc>
+  <defs>
+    <style>
+      .navy { fill: #0F2D46; }
+      .sand { stroke: #C9A96B; stroke-width: 8; }
+      .pipe { fill: none; stroke: #0F2D46; stroke-width: 12; stroke-linecap: round; stroke-linejoin: round; }
+      .pipe2 { fill: none; stroke: #0F2D46; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </defs>
+  <rect x="0" y="0" width="256" height="256" rx="44" fill="white"/>
+  <g transform="translate(24,24)">
+    <path class="navy" d="M18 88 L88 34 L158 88 H134 V120 H120 V68 L88 43 L56 68 V120 H42 V88 Z"/>
+    <rect class="navy" x="122" y="54" width="16" height="44"/>
+    <rect class="navy" x="64" y="80" width="22" height="24" rx="1"/>
+    <rect class="navy" x="98" y="80" width="10" height="14" rx="1"/>
+    <rect class="navy" x="111" y="80" width="10" height="14" rx="1"/>
+    <line class="sand" x1="10" y1="132" x2="168" y2="132"/>
+    <path class="pipe" d="M30 140 V157 C30 182 49 201 74 201 H152"/>
+    <path class="pipe2" d="M46 140 V157 C46 173 58 185 74 185 H152"/>
+  </g>
+</svg>
