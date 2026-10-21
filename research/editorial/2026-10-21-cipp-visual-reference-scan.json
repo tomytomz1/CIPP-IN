@@ -1,0 +1,237 @@
+{
+  "file": "research/editorial/2026-10-21-cipp-visual-reference-scan.json",
+  "date": "2026-10-21",
+  "search_method": "Web image-search discovery; publisher/municipal/technical source cross-check; not a comprehensive Google Images scrape",
+  "starting_main": "ac8f83e4449c265069b1ce665bacad7982937469",
+  "note": "Links are a sourcing/indexing record, NOT licensed website graphics. Third-party image bytes not mirrored. Seven user-supplied house photos are in chat only, not committed to public GitHub.",
+  "evidence": [
+    {
+      "source_url": "https://www.cityoflawrence.org/sites/default/files/document-group/lift-2025-july.pdf",
+      "claim": "City's July 2025 newsletter specifies approximate 1300 LF of 6-inch sanitary lateral lining in 71st Street Lift Station Basin project",
+      "limit": "planned scope, not as-built completion or private house repair"
+    },
+    {
+      "source_url": "https://www.cityoflawrence.org/sites/default/files/document-group/lift-2024-augustv5.pdf",
+      "claim": "Lawrence Utilities discussed older clay pipes and roots entering cracked laterals",
+      "limit": "does not quantify risk by 1940s-1970s house vintage"
+    },
+    {
+      "source_url": "https://www.nassco.org/trenchless-technology/rehabilitation/pipe-rehabilitation",
+      "claim": "CIPP lateral lining distinct from mainline lining, junction lining and pipe bursting",
+      "limit": "general technique not local requirements"
+    },
+    {
+      "source_url": "https://nassco.org/pipeline-rehabilitation-matrix-2025/",
+      "claim": "CIPP feasibility constrained by host pipe condition, cleaning, access, obstructions and method",
+      "limit": "does not establish suitability of a Lawrence address"
+    },
+    {
+      "source_url": "https://www.wesslerengineering.com/project/combined-sewer-and-sanitary-sewer-rehabilitation/",
+      "claim": "Engineering firm documents CIPP, CCTV and lateral lining work in Indianapolis with Citizens Energy Group",
+      "limit": "municipal system not individual homeowner work"
+    },
+    {
+      "source_url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P1008C45.TXT",
+      "claim": "EPA engineering review distinguishes lateral lining from lateral/main connection solutions",
+      "limit": "national and historical"
+    }
+  ],
+  "references": [
+    {
+      "id": "VIS-01",
+      "title": "CIPP before/after host pipe",
+      "publisher": "E Squared",
+      "geography": "nonlocal manufacturer explainer",
+      "source_url": "https://www.e2techtextiles.com/the-importance-of-cipp-and-its-benefits/",
+      "image_url": "https://www.e2techtextiles.com/wp-content/uploads/2023/12/CIPPPipe-relining-beforeafter-white-1-1024x587.jpeg",
+      "media": "illustration",
+      "rights": "reference_only_permission_not_verified",
+      "limitations": "Reference only; not Lawrence-specific"
+    },
+    {
+      "id": "VIS-02",
+      "title": "Liner preparation beside residential lawn",
+      "publisher": "Municipal Sewer & Water",
+      "geography": "location not independently established",
+      "source_url": "https://www.mswmag.com/editorial/2018/01/cured-in-place-pipe-rehabilitation-basics",
+      "image_url": "https://cdn.mswmag.com/uploads/images/liner_guys_029.jpg",
+      "media": "field photograph",
+      "rights": "reference_only_permission_not_verified",
+      "limitations": "Reference for equipment scale; not proven Indiana"
+    },
+    {
+      "id": "VIS-03",
+      "title": "Municipal CIPP crew and equipment",
+      "publisher": "City of Springfield MO",
+      "geography": "Springfield Missouri",
+      "source_url": "https://www.springfieldmo.gov/5854/Cured-in-Place-Pipe-Lining",
+      "image_url": "https://www.springfieldmo.gov/ImageRepository/Document?documentID=62965",
+      "media": "municipal photograph",
+      "rights": "reference_only_permission_not_verified",
+      "limitations": "Non-Indiana municipal activity"
+    },
+    {
+      "id": "VIS-04",
+      "title": "Residential-area lateral lining crew",
+      "publisher": "City of Columbus Ohio",
+      "geography": "Columbus Ohio",
+      "source_url": "https://www.columbus.gov/Business-Development/Capital-Improvement-Projects/Blueprint-CIPs/Blueprint-CIPs-old/Blueprint-%E2%80%93-Linden-Area-Projects/Blueprint-North-Linden-1-%E2%80%93-HudsonMcGuffey-Lateral-Lining",
+      "image_url": "https://www.columbus.gov/files/sharedassets/city/v/1/utilities/blueprint-cips/nelson-rd-lining.png?dimension=pageimage&w=480",
+      "media": "municipal photograph",
+      "rights": "reference_only_permission_not_verified",
+      "limitations": "Non-Indiana lateral-lining method reference"
+    },
+    {
+      "id": "VIS-05",
+      "title": "Lateral CIPP cutaway illustration",
+      "publisher": "Metropolitan Council",
+      "geography": "Minnesota",
+      "source_url": "https://metrocouncil.org/Wastewater-Water/Planning/Wastewater/Inflow-and-Infiltration/iandi-photo-gallery.aspx",
+      "image_url": "https://metrocouncil.org/getmedia/0cfb1abf-c05e-4d74-8d60-89bf34942b9e/04b-Cured-in-Place-Pipe-Illustration.aspx",
+      "media": "technical diagram",
+      "rights": "reference_only_permission_not_verified",
+      "limitations": "No Lawrence ownership boundaries or pipe geometry may be inferred"
+    },
+    {
+      "id": "VIS-06",
+      "title": "Access-pit inversion-machine explanation",
+      "publisher": "Plummer's Environmental Services",
+      "geography": "general manufacturer graphic",
+      "source_url": "https://plummersenv.com/cured-in-place-pipe-lining.php",
+      "image_url": "https://plummersenv.com/files/img/pages/cured-in-place-pipe-lining%402x.jpg",
+      "media": "technical diagram",
+      "rights": "reference_only_permission_not_verified",
+      "limitations": "Show possible access excavation; no no-dig guarantee"
+    },
+    {
+      "id": "VIS-07",
+      "title": "CCTV before/after liner",
+      "publisher": "LiningPro",
+      "geography": "Iowa directory example",
+      "source_url": "https://liningpro.com/sewer-repair-contractors/iowa/cit-sewer-solutions",
+      "image_url": "https://vsouljrpkzicekyhblfu.supabase.co/storage/v1/object/public/site-assets/cms-pages/trenchless-sewer-repair-lining-pro-48.jpg",
+      "media": "comparison photo",
+      "rights": "reference_only_permission_not_verified",
+      "limitations": "Same-pipe provenance not independently established"
+    },
+    {
+      "id": "VIS-08",
+      "title": "Root intrusion pipe interior",
+      "publisher": "WTS Construction",
+      "geography": "unverified",
+      "source_url": "https://wts-construction.com/blog/cipp-pipe-lining-vs-traditional-sewer-replacement",
+      "image_url": "https://wts-construction.com/images/blog/og/cipp-pipe-lining-vs-traditional-sewer-replacement.jpg",
+      "media": "marketing photo",
+      "rights": "reference_only_permission_not_verified",
+      "limitations": "Do not infer that roots always need CIPP"
+    },
+    {
+      "id": "VIS-09",
+      "title": "Residential sewer CCTV screenshot",
+      "publisher": "INK Inspections",
+      "geography": "unverified as Lawrence",
+      "source_url": "https://www.inkhomeservices.com/blog-1/the-importance-of-a-sewer-lateral-video-inspection",
+      "image_url": "https://images.squarespace-cdn.com/content/v1/5645efcde4b0557e6c26fdb1/1612132978221-685Y0DTCULWIU7KJP2WN/PICT0011.JPG",
+      "media": "inspection image",
+      "rights": "reference_only_permission_not_verified",
+      "limitations": "Use to understand actual CCTV appearance"
+    },
+    {
+      "id": "VIS-10",
+      "title": "Roots and camera joint cutaway",
+      "publisher": "Tailored Inspections",
+      "geography": "not region-specific",
+      "source_url": "https://www.tailoredinspection.com/services/additional-inspection-services/",
+      "image_url": "https://www.tailoredinspection.com/wp-content/uploads/2021/10/Camera-inspections-960.jpg",
+      "media": "instructional composite",
+      "rights": "reference_only_permission_not_verified",
+      "limitations": "Do not present as a real CCTV still"
+    },
+    {
+      "id": "VIS-11",
+      "title": "Pipe bursting excavated equipment",
+      "publisher": "Plumber Magazine",
+      "geography": "site unverified",
+      "source_url": "https://www.plumbermag.com/editorial/2017/10/plumber_uses_pipe_bursting_method_to_repair_broken_line_for_customers",
+      "image_url": "https://cdn.plumbermag.com/uploads/images/pipe_genie_5.jpg?v=1768276305",
+      "media": "editorial field photograph",
+      "rights": "reference_only_permission_not_verified",
+      "limitations": "Bursting is pipe replacement, not CIPP lining"
+    },
+    {
+      "id": "VIS-12",
+      "title": "Pipe bursting worksite and receiving pit",
+      "publisher": "Cleaner Magazine",
+      "geography": "site unverified",
+      "source_url": "https://www.cleaner.com/online_exclusives/2021/02/pipe-bursting-system-provides-reliable-power-and-productivity",
+      "image_url": "https://cole-cleaner.imgix.net/https%3A%2F%2Fwww.cleaner.com%2Fuploads%2Fimages%2Fimg_4954.jpg?fit=clip&ixlib=php-1.1.0&q=75&s=8ac35f1a07f6f67559313c12fc5ab351&w=1024",
+      "media": "editorial field photograph",
+      "rights": "reference_only_permission_not_verified",
+      "limitations": "Reference for pits and actual work zone"
+    },
+    {
+      "id": "VIS-13",
+      "title": "CIPP T-liner at main-lateral junction",
+      "publisher": "Pipe Renewal",
+      "geography": "general proprietary method diagram",
+      "source_url": "https://www.piperenewal.com/",
+      "image_url": "https://images.squarespace-cdn.com/content/v1/661fd1630d1abd40786e5d27/1713361454129-54LKVI7U1IK86752IZ8V/290-I-Solution-T-Liner.jpg",
+      "media": "technical illustration",
+      "rights": "reference_only_permission_not_verified",
+      "limitations": "Specific junction repair; Lawrence tap/wye ownership unverified"
+    },
+    {
+      "id": "VIS-14",
+      "title": "Mainline liner inversion at street",
+      "publisher": "Clean Water Nashville",
+      "geography": "Nashville Tennessee",
+      "source_url": "https://www.cleanwaternashville.org/river-drive-rehabilitation",
+      "image_url": "https://images.squarespace-cdn.com/content/v1/5c2e0ebbf93fd4aa8fce0e8c/1761242191968-MFB8OW37QLCWPE1ILXD6/C4601_SAK%2BLiner%2BInversion.JPG",
+      "media": "public main field photograph",
+      "rights": "reference_only_permission_not_verified",
+      "limitations": "NOT residential lateral; never represent as a homeowner's job"
+    },
+    {
+      "id": "VIS-15",
+      "title": "Sectional CIPP equipment",
+      "publisher": "Visu-Sewer",
+      "geography": "photo location unverified",
+      "source_url": "https://visu-sewer.com/rehabilitation",
+      "image_url": "https://visu-sewer.com/sites/default/files/styles/square_xsmall/public/images/paragraph-accordion-item/field-image/visusewer-services-rehabilitation-Sectional-CIPP.jpg.webp?itok=UYiriOlg",
+      "media": "field photograph",
+      "rights": "reference_only_permission_not_verified",
+      "limitations": "Sectional method example only"
+    },
+    {
+      "id": "VIS-16",
+      "title": "CIPP inflation photograph",
+      "publisher": "Wikimedia Commons contributor",
+      "geography": "Cambridge Massachusetts",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Cured-in-place_pipe_lining_inflation_in_Cambridge,_Massachusetts.jpg",
+      "image_url": null,
+      "media": "potentially licensed media",
+      "rights": "reference_only_permission_not_verified",
+      "limitations": "Re-check actual license and attribution before reuse"
+    },
+    {
+      "id": "VIS-17",
+      "title": "FHWA CIPP culvert installation photograph",
+      "publisher": "FHWA via Wikimedia Commons",
+      "geography": "Montana",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Typical_CIPP_Liner_Installation_MT_(8474585774).jpg",
+      "image_url": null,
+      "media": "public-domain candidate",
+      "rights": "reference_only_permission_not_verified",
+      "limitations": "Verify rights and note culvert is not residential sanitary lateral"
+    }
+  ],
+  "production_guardrails": [
+    "No imported third-party photos without license or written permission",
+    "Do not describe any nonlocal imagery as Lawrence or Indiana",
+    "Do not treat mainline CIPP imagery as residential lateral footage",
+    "Do not infer pipe material or failure from building construction date",
+    "Do not draw a Lawrence tap/wye ownership boundary without utility confirmation",
+    "Avoid promises of no excavation, guaranteed repair performance or universal CIPP suitability",
+    "Obtain technical expert review of any newly created illustration before publishing as verified material"
+  ]
+}
