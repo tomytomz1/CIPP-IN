@@ -3,7 +3,7 @@
   "date": "2026-10-21",
   "search_method": "Web image-search discovery; publisher/municipal/technical source cross-check; not a comprehensive Google Images scrape",
   "starting_main": "ac8f83e4449c265069b1ce665bacad7982937469",
-  "note": "Links are a sourcing/indexing record, NOT licensed website graphics. Third-party image bytes not mirrored. Seven user-supplied house photos are in chat only, not committed to public GitHub.",
+  "note": "Links are a sourcing/indexing record, NOT licensed website graphics. Third-party image bytes not mirrored. Seven user-supplied house photos are in chat only, not committed to public GitHub. Two Wikimedia file pages were additionally inspected: VIS-16 marked CC0 1.0 and VIS-17 marked US federal-government public domain with original CC BY 2.0 note. These rights observations do not grant rights to the other images or establish local depiction.",
   "evidence": [
     {
       "source_url": "https://www.cityoflawrence.org/sites/default/files/document-group/lift-2025-july.pdf",
@@ -211,7 +211,13 @@
       "image_url": null,
       "media": "potentially licensed media",
       "rights": "reference_only_permission_not_verified",
-      "limitations": "Re-check actual license and attribution before reuse"
+      "limitations": "Re-check actual license and attribution before reuse",
+      "licensing_evidence": {
+        "license": "CC0 1.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Cured-in-place_pipe_lining_inflation_in_Cambridge,_Massachusetts.jpg",
+        "status": "file_page_reviewed_2026-10-21",
+        "caveat": "NOT an Indiana site, and technical context is urban mainline; do not mislabel."
+      }
     },
     {
       "id": "VIS-17",
@@ -222,7 +228,13 @@
       "image_url": null,
       "media": "public-domain candidate",
       "rights": "reference_only_permission_not_verified",
-      "limitations": "Verify rights and note culvert is not residential sanitary lateral"
+      "limitations": "Verify rights and note culvert is not residential sanitary lateral",
+      "licensing_evidence": {
+        "license": "US federal-government public-domain declaration; page also reports original CC BY 2.0 Flickr license",
+        "page": "https://commons.wikimedia.org/wiki/File:Typical_CIPP_Liner_Installation_MT_(8474585774).jpg",
+        "status": "file_page_reviewed_2026-10-21",
+        "caveat": "Culvert rehabilitation in Montana; not a residential sanitary sewer lateral."
+      }
     }
   ],
   "production_guardrails": [
