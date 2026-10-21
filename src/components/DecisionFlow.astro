@@ -10,31 +10,77 @@
  *
  * Accessible as an image: title + description are announced, and the same sequence is written
  * out in the page text beneath it.
+ *
+ * Phase 2G redraw: a narrow portrait layout so the text stays legible on a phone, a short stage
+ * label on each step, and theme-aware colors through CSS classes (the CSP forbids inline style).
+ * The steps and their meaning are unchanged.
  */
 const titleId = 'decision-flow-title';
 const descId = 'decision-flow-desc';
 
-const boxes = [
-  { x: 40, y: 8, w: 560, h: 56, lines: ['Symptom: repeated backups, slow drains,', 'or a camera finding'] },
-  { x: 40, y: 98, w: 560, h: 56, lines: ['Find out whether the problem is in your', 'lateral or in the public main'] },
-  { x: 40, y: 188, w: 268, h: 74, lines: ['Public main:', 'report it to the', 'utility'], muted: true },
-  { x: 332, y: 188, w: 268, h: 74, lines: ['Your lateral:', 'the repair decision', 'is yours'] },
-  { x: 40, y: 296, w: 560, h: 56, lines: ['Camera inspection identifies the defect', 'and how much of the line is affected'] },
-  { x: 40, y: 386, w: 560, h: 74, lines: ['Decide the method with the contractor:', 'spot repair, full-length lining, pipe bursting,', 'or open-cut replacement'] },
-  { x: 40, y: 494, w: 560, h: 56, lines: ['Permit, inspection, and post-repair', 'verification before the work is accepted'] },
+interface Box {
+  x: number;
+  w: number;
+  kicker: string;
+  lines: string[];
+  muted?: boolean;
+  /** Boxes sharing a row are drawn side by side. */
+  row: number;
+}
+
+const FULL = { x: 16, w: 368 };
+const HALF_L = { x: 16, w: 176 };
+const HALF_R = { x: 208, w: 176 };
+
+const boxes: Box[] = [
+  { ...FULL, row: 0, kicker: 'Symptom', lines: ['Repeated backups, slow drains,', 'or a camera finding'] },
+  { ...FULL, row: 1, kicker: 'First question', lines: ['Find out whether the problem is in', 'your lateral or in the public main'] },
+  { ...HALF_L, row: 2, kicker: 'Public main', lines: ['Report it to', 'the utility'], muted: true },
+  { ...HALF_R, row: 2, kicker: 'Your lateral', lines: ['The repair', 'decision is yours'] },
+  { ...FULL, row: 3, kicker: 'Diagnosis', lines: ['Camera inspection identifies the', 'defect and how much of the line', 'is affected'] },
+  {
+    ...FULL,
+    row: 4,
+    kicker: 'Repair method',
+    lines: ['Decide the method with the contractor:', 'spot repair, full-length lining, pipe', 'bursting, or open-cut replacement'],
+  },
+  { ...FULL, row: 5, kicker: 'Verification', lines: ['Permit, inspection, and post-repair', 'verification before the work is accepted'] },
 ];
 
-const arrows: { from: [number, number]; to: [number, number] }[] = [
-  { from: [320, 64], to: [320, 96] },
-  { from: [320, 154], to: [320, 186] },
-  { from: [466, 262], to: [466, 294] },
-  { from: [320, 352], to: [320, 384] },
-  { from: [320, 460], to: [320, 492] },
+const LINE = 21;
+const PAD_TOP = 30;
+const PAD_BOTTOM = 16;
+const GAP = 34;
+
+// Row heights follow the tallest box in the row, so side-by-side boxes line up.
+const rows = [...new Set(boxes.map((b) => b.row))].sort((a, b) => a - b);
+const rowHeight = new Map(rows.map((r) => [r, Math.max(...boxes.filter((b) => b.row === r).map((b) => PAD_TOP + b.lines.length * LINE + PAD_BOTTOM))]));
+const rowTop = new Map<number, number>();
+let y = 8;
+for (const r of rows) {
+  rowTop.set(r, y);
+  y += (rowHeight.get(r) ?? 0) + GAP;
+}
+const height = y - GAP + 8;
+
+const placed = boxes.map((b) => ({ ...b, y: rowTop.get(b.row) ?? 0, h: rowHeight.get(b.row) ?? 0 }));
+const bottom = (row: number) => (rowTop.get(row) ?? 0) + (rowHeight.get(row) ?? 0);
+const top = (row: number) => rowTop.get(row) ?? 0;
+
+// Connectors: straight down the spine, a fork into the two branches, and only the
+// "your lateral" branch continuing to diagnosis (the public-main branch ends with the utility).
+const arrows: { d: string; tip: [number, number] }[] = [
+  { d: `M200 ${bottom(0)} V${top(1) - 7}`, tip: [200, top(1)] },
+  { d: `M200 ${bottom(1)} V${bottom(1) + GAP / 2} H104 V${top(2) - 7}`, tip: [104, top(2)] },
+  { d: `M200 ${bottom(1) + GAP / 2} H296 V${top(2) - 7}`, tip: [296, top(2)] },
+  { d: `M296 ${bottom(2)} V${top(3) - 7}`, tip: [296, top(3)] },
+  { d: `M200 ${bottom(3)} V${top(4) - 7}`, tip: [200, top(4)] },
+  { d: `M200 ${bottom(4)} V${top(5) - 7}`, tip: [200, top(5)] },
 ];
 ---
 
-<figure class="figure">
-  <svg viewBox="0 0 640 560" role="img" aria-labelledby={`${titleId} ${descId}`} xmlns="http://www.w3.org/2000/svg">
+<figure class="figure figure--flow">
+  <svg class="flow" viewBox={`0 0 400 ${height}`} role="img" aria-labelledby={`${titleId} ${descId}`} xmlns="http://www.w3.org/2000/svg">
     <title id={titleId}>How a homeowner sewer lateral decision usually proceeds</title>
     <desc id={descId}>
       A flow chart. A symptom such as repeated backups leads to finding out whether the problem is
@@ -46,35 +92,22 @@ const arrows: { from: [number, number]; to: [number, number] }[] = [
     </desc>
     {
       arrows.map((a) => (
-        <g stroke="var(--line-strong)" stroke-width="2" fill="var(--line-strong)">
-          <line x1={a.from[0]} y1={a.from[1]} x2={a.to[0]} y2={a.to[1] - 8} />
-          <polygon points={`${a.to[0] - 5},${a.to[1] - 9} ${a.to[0] + 5},${a.to[1] - 9} ${a.to[0]},${a.to[1]}`} stroke="none" />
+        <g>
+          <path class="flow__connector" d={a.d} />
+          <polygon class="flow__tip" points={`${a.tip[0] - 5},${a.tip[1] - 8} ${a.tip[0] + 5},${a.tip[1] - 8} ${a.tip[0]},${a.tip[1]}`} />
         </g>
       ))
     }
     {
-      boxes.map((b) => (
-        <g>
-          <rect
-            x={b.x}
-            y={b.y}
-            width={b.w}
-            height={b.h}
-            rx="8"
-            fill={b.muted ? 'var(--paper-soft)' : 'var(--accent-soft)'}
-            stroke={b.muted ? 'var(--line-strong)' : 'var(--accent)'}
-            stroke-width="1.5"
-          />
-          <text
-            x={b.x + b.w / 2}
-            y={b.y + b.h / 2 - (b.lines.length - 1) * 9}
-            text-anchor="middle"
-            font-size="15"
-            font-family="system-ui, sans-serif"
-            fill="var(--ink)"
-          >
+      placed.map((b) => (
+        <g class={b.muted ? 'flow__step flow__step--muted' : 'flow__step'}>
+          <rect class="flow__box" x={b.x} y={b.y} width={b.w} height={b.h} rx="10" />
+          <text class="flow__kicker" x={b.x + 16} y={b.y + 22}>
+            {b.kicker.toUpperCase()}
+          </text>
+          <text class="flow__text" x={b.x + 16} y={b.y + PAD_TOP + 14}>
             {b.lines.map((line, i) => (
-              <tspan x={b.x + b.w / 2} dy={i === 0 ? 5 : 18}>
+              <tspan x={b.x + 16} dy={i === 0 ? 0 : LINE}>
                 {line}
               </tspan>
             ))}

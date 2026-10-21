@@ -1,0 +1,27 @@
+---
+/**
+ * In-page table of contents for long pages. Plain anchor links (no client JavaScript); on wide
+ * screens the stylesheet makes it a sticky side column, on narrow screens it sits above the
+ * content. Every href must match a heading id on the same page; the post-build link check
+ * verifies in-page anchors.
+ */
+interface Props {
+  items: readonly { id: string; label: string }[];
+  label?: string;
+}
+
+const { items, label = 'On this page' } = Astro.props;
+---
+
+<nav class="toc" aria-label={label}>
+  <p class="toc__title" aria-hidden="true">{label}</p>
+  <ol>
+    {
+      items.map((item) => (
+        <li>
+          <a href={`#${item.id}`}>{item.label}</a>
+        </li>
+      ))
+    }
+  </ol>
+</nav>

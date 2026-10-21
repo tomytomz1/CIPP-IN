@@ -1,121 +1,296 @@
 ---
 /**
- * Homepage (Phase 2D). Lifecycle: published_noindex.
+ * Homepage. Lifecycle: published_noindex.
  *
- * States what the resource is, who it helps, and where the work currently stands. It makes no
- * claim about market position, project counts, contractor networks, homeowner outcomes, savings,
- * or response times, because none of those exist. There is no lead form and no quote CTA:
- * live intake is disabled and collecting homeowner information is out of scope
- * (docs/05 → Lead Funnel; /AGENTS.md §4.1, §4.2).
+ * Phase 2G hierarchy: the homeowner's problem first, then orientation, the decision sequence,
+ * the one in-depth local guide, the evidence standards, and the publication's independence.
+ *
+ * It makes no claim about market position, project counts, contractor networks, homeowner
+ * outcomes, savings, or response times, because none of those exist. There is no lead form and
+ * no quote CTA: live intake is disabled and collecting homeowner information is out of scope
+ * (docs/05 → Lead Funnel; /AGENTS.md §4.1, §4.2). Only one municipality (Lawrence) is covered in
+ * depth, and the page says so.
+ *
+ * "What brings you here" is navigation, not diagnosis: each card points to the section of the
+ * Lawrence guide that covers the situation and never implies a symptom identifies a failure.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroIllustration from '../components/HeroIllustration.astro';
+import EvidenceChip from '../components/EvidenceChip.astro';
+
+const GUIDE = '/lawrence-sewer-lateral-repair/';
+
+const situations = [
+  {
+    title: 'Backups that keep coming back',
+    body: 'Before hiring anyone, find out whether the fault is in your line or in the public sewer. The Lawrence utility asks residents to call it first.',
+    href: `${GUIDE}#before-you-hire`,
+    more: 'Who to call first',
+  },
+  {
+    title: 'A camera report showing damage',
+    body: 'What a sewer camera run can tell you about a defect and its extent, and what it cannot pin down on its own.',
+    href: `${GUIDE}#diagnosis`,
+    more: 'Reading an inspection',
+  },
+  {
+    title: 'Roots, cracks, or an older clay line',
+    body: 'What the Lawrence utility has said publicly about aging clay laterals, and the questions it leaves unanswered.',
+    href: `${GUIDE}#city-work`,
+    more: 'What the City has said',
+  },
+  {
+    title: 'A large repair quote',
+    body: 'The repair methods side by side, plus the permit, inspection, and post-repair video to ask about. No prices are published here.',
+    href: `${GUIDE}#methods`,
+    more: 'Compare the methods',
+  },
+  {
+    title: 'Not sure who owns the pipe',
+    body: 'How Lawrence ordinance assigns the private lateral, and the one boundary question this project has not been able to settle.',
+    href: `${GUIDE}#responsibility`,
+    more: 'Ownership and responsibility',
+  },
+];
+
+const journey = [
+  {
+    title: 'Problem',
+    body: 'Repeated backups, slow drains, wet spots, or a camera finding you did not expect.',
+  },
+  {
+    title: 'Inspection',
+    body: 'What a camera inspection can and cannot settle before you spend money.',
+  },
+  {
+    title: 'Responsibility',
+    body: 'Which part of the line is yours and which belongs to the utility, under the rules for your municipality rather than a general answer.',
+  },
+  {
+    title: 'Repair options',
+    body: 'How spot repair, full-length lining, pipe bursting, and open-cut replacement differ. Which one suits your line is a contractor’s judgment, not ours.',
+  },
+  {
+    title: 'Permits and verification',
+    body: 'The permit, inspection, and post-repair checks the municipality requires, and what to ask whoever will do the work.',
+  },
+];
 ---
 
 <BaseLayout pageId="home" isSiteRoot>
-  <div class="prose prose--wide">
-    <h1>Sewer decisions, explained with the rules that actually apply</h1>
-    <p class="lede">
-      Indy Sewer Resource is an independent resource for Indianapolis-area homeowners facing a sewer
-      lateral problem: backups that keep coming back, a camera inspection they did not expect, or a
-      repair quote they do not know how to read. We read the municipal rules, cite them, and say plainly
-      what is still unknown.
-    </p>
-
-    <h2 id="start-here">Start here</h2>
-    <ul class="cards">
-      <li class="card">
-        <h3><a href="/lawrence-sewer-lateral-repair/">Sewer lateral repair in Lawrence, Indiana</a></h3>
-        <p>
-          Who owns the pipe, the permit the City requires, what a camera inspection settles, which
-          repair methods Lawrence allows, and the video the utility requires before trenchless work is
-          approved — each point cited to the ordinance or the utility's own documents.
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="container hero__inner">
+      <div>
+        <p class="eyebrow">Independent homeowner guide · Indianapolis area</p>
+        <h1 id="hero-title">Know what’s wrong with your sewer line before deciding how to repair it.</h1>
+        <p class="lede">
+          Understand sewer ownership, inspections, permits, and repair options through clear local
+          information that cites the municipal rules behind it and says plainly what is still unknown.
         </p>
-      </li>
-      <li class="card">
-        <h3><a href="/about/">How this resource works</a></h3>
-        <p>
-          Where our information comes from, how we separate verified facts from reasoning, when a page
-          needs professional review, and how we correct things. Also: what we will disclose if a
-          contractor ever sponsors this site.
+        <div class="actions">
+          <a class="button button--primary" href={GUIDE}>
+            Explore the Lawrence sewer guide
+            <svg class="button__arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8 H13 M9 4 L13 8 L9 12" /></svg>
+          </a>
+          <a class="button button--secondary" href="/about/">How we verify information</a>
+        </div>
+        <ul class="hero__meta" aria-label="About this resource">
+          <li>Cites ordinances and utility documents</li>
+          <li>Not a contractor or a government agency</li>
+          <li>No contractor pays for placement</li>
+        </ul>
+      </div>
+      <figure class="hero__figure">
+        <HeroIllustration />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="situations-title">
+    <div class="container">
+      <div class="section__head">
+        <p class="eyebrow">Start with your situation</p>
+        <h2 id="situations-title">What brings you here?</h2>
+        <p class="lede">
+          Pick the situation closest to yours. Each one opens the part of the Lawrence guide that
+          deals with it.
         </p>
-      </li>
-    </ul>
-
-    <h2 id="what-this-is">What this is</h2>
-    <div class="prose">
-      <p>
-        Most sewer information a homeowner finds online is written by a company that wants to sell the
-        repair, or it is national content that ignores the local rules deciding what is even allowed on
-        your street. Both leave the same questions unanswered: is this pipe mine, what am I required to
-        do, and what should the work in front of me actually include?
-      </p>
-      <p>
-        This resource works the other way around. It starts from municipal ordinances, utility policy
-        manuals, and the utility's own homeowner guidance, cites each one, and flags the places where
-        the public record does not answer the question.
-      </p>
-    </div>
-
-    <h2 id="decisions">The decisions this covers</h2>
-    <div class="prose">
-      <ol class="steps">
-        <li>
-          <strong>The problem.</strong> Repeated backups, slow drains, wet spots, or a camera finding
-          you did not expect.
-        </li>
-        <li>
-          <strong>Diagnosis.</strong> What a camera inspection can and cannot settle before you spend
-          money.
-        </li>
-        <li>
-          <strong>Responsibility.</strong> Which part of the line is yours, and which belongs to the
-          utility — under the rules for your municipality, not a general answer.
-        </li>
-        <li>
-          <strong>The repair-method decision.</strong> How spot repair, full-length lining, pipe
-          bursting, and open-cut replacement differ, and which ones your municipality permits. Which
-          one suits your line is a contractor's judgment, not ours.
-        </li>
-        <li>
-          <strong>The quote.</strong> What to check a quote addresses — the permit, the inspection, and
-          the post-repair verification the municipality requires. We publish no prices and no view on
-          whether a given quote is reasonable; we have no local price evidence.
-        </li>
-        <li>
-          <strong>The contractor.</strong> What to ask, and what the municipality requires of whoever
-          does the work.
-        </li>
-      </ol>
-    </div>
-
-    <h2 id="scope">Where this applies</h2>
-    <div class="prose">
-      <p>
-        The scope is the Indianapolis metro. The first municipality covered in depth is
-        <a href="/lawrence-sewer-lateral-repair/">Lawrence</a>, because its rules are published and
-        verifiable and its homeowners face the full range of lateral decisions.
-      </p>
-      <p>
-        Other municipalities are added only when there is enough verified local evidence to be useful.
-        A page that simply swaps a city name into the same text helps nobody, and this project does not
-        publish them.
-      </p>
-    </div>
-
-    <h2 id="status">Where this project currently stands</h2>
-    <div class="prose">
-      <p>Being straight about the state of the work:</p>
-      <ul>
-        <li>The Lawrence resource is publicly readable but remains <strong>unapproved for search indexing</strong> while qualified professional review is outstanding.</li>
-        <li>No public page is approved for search indexing; all three pages carry noindex directives.</li>
-        <li>No contractor partner is active, and no contractor pays for placement here.</li>
-        <li>No homeowner contact details or repair requests are collected: there is no form or active lead intake. Optional, consent-based Google Analytics is explained in <a href="/about/#privacy">our privacy section</a>.</li>
-        <li>There are no reviews, ratings, testimonials, or project statistics here, because none exist.</li>
+      </div>
+      <ul class="situations">
+        {
+          situations.map((s) => (
+            <li>
+              <article class="situation">
+                <h3>
+                  <a href={s.href}>{s.title}</a>
+                </h3>
+                <p>{s.body}</p>
+                <p class="situation__more" aria-hidden="true">
+                  {s.more} →
+                </p>
+              </article>
+            </li>
+          ))
+        }
       </ul>
-      <p>
-        If a contractor relationship is established later, it will be disclosed where it applies — see
-        <a href="/about/">how this resource works</a>.
+      <p class="disclaimer-line">
+        These are starting points for reading, not a diagnosis. A symptom alone does not identify
+        what has failed or where; that takes an inspection of your line.
       </p>
     </div>
-  </div>
+  </section>
+
+  <section class="section section--sunk" aria-labelledby="decision-title">
+    <div class="container">
+      <div class="section__head">
+        <p class="eyebrow">The repair decision</p>
+        <h2 id="decision-title">Five stages, usually in this order</h2>
+        <p class="lede">
+          Most sewer lateral decisions move through the same stages. Knowing where you are tells you
+          what to settle next, and what can wait.
+        </p>
+      </div>
+      <ol class="journey">
+        {
+          journey.map((step) => (
+            <li>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="disclaimer-line">
+        We publish no prices and no view on whether a given quote is reasonable; we have no local
+        price evidence.
+      </p>
+    </div>
+  </section>
+
+  <section class="section feature" aria-labelledby="lawrence-title">
+    <div class="container feature__grid">
+      <div>
+        <p class="eyebrow">In-depth local guide · Lawrence, Indiana</p>
+        <h2 id="lawrence-title">Sewer lateral repair in Lawrence</h2>
+        <p>
+          Local rules decide what is even allowed on your street: who is responsible for the pipe, whether
+          a permit is needed, which repair methods the utility accepts, and what proof it wants
+          afterwards. National articles cannot answer those questions, and the contractor pages we
+          reviewed for Lawrence did not state them.
+        </p>
+        <p>
+          Lawrence is the first municipality covered in depth, because its rules are published and
+          verifiable. It is the only one so far. Other municipalities are added only when there is
+          enough verified local evidence to be useful, never by swapping a city name into the same
+          text.
+        </p>
+        <div class="actions">
+          <a class="button button--primary" href={GUIDE}>
+            Read the Lawrence guide
+            <svg class="button__arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8 H13 M9 4 L13 8 L9 12" /></svg>
+          </a>
+        </div>
+        <p class="subtle">
+          Qualified professional review of the guide is still pending, and it has not been submitted
+          to search engines.
+        </p>
+      </div>
+      <div>
+        <div class="feature__panel">
+          <h3>Documented in the guide</h3>
+          <ul>
+            <li>Who the ordinance makes responsible for the private lateral</li>
+            <li>The City permit a repair needs, and what the current form asks for</li>
+            <li>The utility policy allowing lining and pipe bursting</li>
+            <li>The camera video required before trenchless work is approved</li>
+            <li>Installation standards if the line is replaced</li>
+          </ul>
+        </div>
+        <div class="feature__panel feature__panel--open">
+          <h3>Named as open, not guessed</h3>
+          <ul>
+            <li>The permit fee and where the application is filed today</li>
+            <li>Responsibility for the tap or wye at the main</li>
+            <li>The video format the utility accepts now</li>
+            <li>Local prices, and how common clay laterals are</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="evidence-title">
+    <div class="container">
+      <div class="section__head">
+        <p class="eyebrow">Evidence and transparency</p>
+        <h2 id="evidence-title">Every claim carries its evidence status</h2>
+        <p class="lede">
+          The work starts from municipal ordinances, utility policy manuals, and the utility’s own
+          homeowner guidance. Each statement is marked by how well it is supported.
+        </p>
+      </div>
+      <ul class="legend">
+        <li>
+          <EvidenceChip kind="fact" />
+          <p>Checked against a cited source that you can open and read yourself.</p>
+        </li>
+        <li>
+          <EvidenceChip kind="inference" />
+          <p>Our reasoning from more than one source, shown so you can judge it. Never presented as fact.</p>
+        </li>
+        <li>
+          <EvidenceChip kind="unverified" />
+          <p>A question the public record does not answer. It is named as a gap, not filled with a guess.</p>
+        </li>
+      </ul>
+      <div class="split">
+        <div>
+          <h3>How the information is checked</h3>
+          <p>
+            Most sewer information a homeowner finds online is written by a company that wants to sell
+            the repair, or it is national content that ignores local rules. This resource works the
+            other way around: primary documents first, each cited, with its date and its limitations
+            printed beside it.
+          </p>
+          <p><a href="/about/#sources">Read the source hierarchy and methodology</a></p>
+        </div>
+        <div>
+          <h3>What it does not do</h3>
+          <ul class="facts-list">
+            <li><strong>No diagnosis.</strong> Only an inspection of your line can say what failed.</li>
+            <li><strong>No method recommendation.</strong> Suitability is a professional judgment.</li>
+            <li><strong>No prices.</strong> There is no local price evidence to publish.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sunk" aria-labelledby="status">
+    <div class="container split">
+      <div>
+        <p class="eyebrow">About the publication</p>
+        <h2 id="status">Independent, and honest about where the work stands</h2>
+        <p>
+          Indy Sewer Resource is an independently owned and edited information resource. It is not a
+          sewer contractor, it does not inspect or repair anything, and it is not a government
+          utility or affiliated with one.
+        </p>
+        <p>
+          If a contractor relationship is established later, it will be disclosed where it applies.
+          See <a href="/about/">how this resource works</a>.
+        </p>
+      </div>
+      <div>
+        <h3>Where this project currently stands</h3>
+        <ul class="facts-list">
+          <li>The Lawrence resource is publicly readable but remains <strong>unapproved for search indexing</strong> while qualified professional review is outstanding.</li>
+          <li>No public page is approved for search indexing; all three pages carry noindex directives.</li>
+          <li>No contractor partner is active, and no contractor pays for placement here.</li>
+          <li>No homeowner contact details or repair requests are collected: there is no form or active lead intake. Optional, consent-based Google Analytics is explained in <a href="/about/#privacy">our privacy section</a>.</li>
+          <li>There are no reviews, ratings, testimonials, or project statistics here, because none exist.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 </BaseLayout>

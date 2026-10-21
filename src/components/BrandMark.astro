@@ -1,0 +1,22 @@
+---
+/**
+ * Original brand mark: an abstract building drain dropping from a structure and running to a
+ * sewer main in cross-section. It is deliberately not a seal, badge, shield, or certification
+ * shape, so it cannot be read as a government or trade mark.
+ *
+ * Decorative: it always sits next to the visible site name, so it is hidden from assistive
+ * technology. Colors come from CSS classes so the mark follows the light and dark themes
+ * (inline style attributes would violate the CSP's style-src 'self').
+ */
+interface Props {
+  size?: number;
+}
+const { size = 36 } = Astro.props;
+---
+
+<svg class="brand-mark" width={size} height={size} viewBox="0 0 36 36" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <rect class="brand-mark__tile" x="0" y="0" width="36" height="36" rx="8" />
+  <path class="brand-mark__line" d="M10.5 6.5 V15.5 Q10.5 19.5 14.5 20.6 L22.4 22.8" />
+  <circle class="brand-mark__main" cx="26.2" cy="24.2" r="4.6" />
+  <circle class="brand-mark__bore" cx="26.2" cy="24.2" r="1.7" />
+</svg>

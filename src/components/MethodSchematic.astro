@@ -1,0 +1,56 @@
+---
+/**
+ * Small original schematics for the four repair methods on the Lawrence page. Decorative: each
+ * sits beside a written description of the same method, so it is hidden from assistive
+ * technology. Pipe bursting follows the page's description: the new pipe trails the bursting head
+ * from the insertion pit while the old pipe ahead of it is fractured outward. Generic mechanics only
+ * (research/sources/technical-standards.json): no pipe size, depth, material, length, cost, or
+ * outcome is drawn, and none is specific to Lawrence.
+ */
+interface Props {
+  kind: 'spot' | 'cipp' | 'bursting' | 'open-cut';
+}
+const { kind } = Astro.props;
+---
+
+<svg class="schematic" viewBox="0 0 160 64" width="160" height="64" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  {
+    kind === 'spot' && (
+      <g>
+        <rect class="sch-host" x="6" y="22" width="148" height="20" rx="3" />
+        <path class="sch-crack" d="M80 22 L76 29 L83 34 L78 42" />
+        <rect class="sch-liner" x="58" y="25" width="44" height="14" rx="2" />
+      </g>
+    )
+  }
+  {
+    kind === 'cipp' && (
+      <g>
+        <rect class="sch-host" x="6" y="22" width="148" height="20" rx="3" />
+        <rect class="sch-liner" x="9" y="25" width="142" height="14" rx="2" />
+      </g>
+    )
+  }
+  {
+    kind === 'bursting' && (
+      <g>
+        <path class="sch-soil-line" d="M0 12 H160" />
+        <rect class="sch-pit" x="4" y="12" width="20" height="40" />
+        <rect class="sch-pit" x="136" y="12" width="20" height="40" />
+        <rect class="sch-new" x="24" y="24" width="64" height="16" rx="3" />
+        <path class="sch-head" d="M88 22 L102 32 L88 42 Z" />
+        <path class="sch-fragment" d="M106 19 L118 17 M122 18 L132 20 M106 45 L118 47 M122 46 L132 44" />
+        <path class="sch-pull" d="M104 32 H148 M141 27 L148 32 L141 37" />
+      </g>
+    )
+  }
+  {
+    kind === 'open-cut' && (
+      <g>
+        <path class="sch-soil-line" d="M0 12 H40 M120 12 H160" />
+        <path class="sch-trench" d="M40 12 L50 52 H110 L120 12" />
+        <rect class="sch-new" x="6" y="38" width="148" height="12" rx="3" />
+      </g>
+    )
+  }
+</svg>

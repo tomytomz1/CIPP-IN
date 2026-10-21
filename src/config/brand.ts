@@ -7,8 +7,10 @@
  */
 export const SITE_NAME = 'Indy Sewer Resource';
 export const SITE_TAGLINE = 'Independent sewer information for Indianapolis-area homeowners';
+/** Short descriptor shown beside the wordmark. Describes the publication, never a service. */
+export const SITE_DESCRIPTOR = 'Independent homeowner guide';
 
-/** The production domain, registered by the operator. Nothing is deployed to it. */
+/** The production domain, registered by the operator and live since 2026-09-20. */
 export const PRODUCTION_ORIGIN = 'https://indysewerresource.com';
 /** The only host that serves this site. Everything else redirects to it. */
 export const APEX_HOST = 'indysewerresource.com';
@@ -20,6 +22,6 @@ export interface NavItem {
 
 export const NAV_ITEMS: readonly NavItem[] = [
   { href: '/', label: 'Home' },
-  { href: '/lawrence-sewer-lateral-repair/', label: 'Lawrence sewer laterals' },
-  { href: '/about/', label: 'How this works' },
+  { href: '/lawrence-sewer-lateral-repair/', label: 'Lawrence guide' },
+  { href: '/about/', label: 'Methodology' },
 ];

@@ -1,0 +1,63 @@
+---
+/**
+ * Original educational illustration for the homepage: a generic house, its sewer lateral
+ * sloping down to a public sewer main under the street, a cleanout, and an inspection camera
+ * inside the line.
+ *
+ * Deliberately generic and cautious (/AGENTS.md §4.1):
+ *   - no property line, ownership boundary, or "yours / the city's" marking: responsibility at
+ *     the tap/wye is unresolved for Lawrence (research record law-009);
+ *   - no depth, dimension, pipe material, or slope value;
+ *   - not any real street, house, or municipality, and labeled as not to scale.
+ */
+const titleId = 'hero-illustration-title';
+const descId = 'hero-illustration-desc';
+---
+
+<svg class="hero-illustration" viewBox="0 0 480 340" role="img" aria-labelledby={`${titleId} ${descId}`} xmlns="http://www.w3.org/2000/svg">
+  <title id={titleId}>Illustration of a household sewer line</title>
+  <desc id={descId}>
+    A simplified cross-section, not to scale. A sewer line leaves the foundation of a house and
+    slopes underground to a public sewer main beneath the street. A cleanout rises from the line
+    to the ground surface, and an inspection camera is shown inside the line. No ownership
+    boundary is drawn.
+  </desc>
+
+  <!-- soil and strata -->
+  <rect class="ill-soil" x="0" y="110" width="480" height="230" />
+  <path class="ill-strata" d="M0 175 H480 M0 245 H480 M0 305 H480" />
+
+  <!-- surface: yard and street -->
+  <path class="ill-surface" d="M0 110 H330 V106 H480" />
+  <rect class="ill-street" x="330" y="106" width="150" height="7" />
+
+  <!-- house -->
+  <rect class="ill-foundation" x="50" y="110" width="110" height="42" />
+  <rect class="ill-house" x="50" y="52" width="110" height="58" />
+  <path class="ill-roof" d="M38 54 L105 16 L172 54" />
+  <rect class="ill-door" x="96" y="78" width="20" height="32" />
+
+  <!-- lateral -->
+  <path class="ill-pipe" d="M150 150 L392 240" />
+  <path class="ill-pipe-bore" d="M150 150 L392 240" />
+
+  <!-- cleanout riser -->
+  <path class="ill-pipe" d="M201 169 V112" />
+  <path class="ill-pipe-bore" d="M201 169 V112" />
+  <rect class="ill-cap" x="193" y="103" width="16" height="8" rx="2" />
+
+  <!-- public main, cross-section -->
+  <circle class="ill-main" cx="420" cy="250" r="30" />
+  <circle class="ill-main-bore" cx="420" cy="250" r="19" />
+
+  <!-- inspection camera and its field of view -->
+  <path class="ill-cone" d="M312 203 L356 206 L346 228 Z" />
+  <rect class="ill-camera" x="292" y="196" width="22" height="13" rx="4" transform="rotate(20.4 303 202.5)" />
+
+  <!-- labels -->
+  <text class="ill-label" x="216" y="98">Cleanout</text>
+  <text class="ill-label" x="262" y="172">Camera inspection</text>
+  <text class="ill-label" x="150" y="214">Sewer lateral</text>
+  <text class="ill-label" x="470" y="306" text-anchor="end">Public sewer main</text>
+  <text class="ill-note" x="16" y="328">Illustrative only · not to scale</text>
+</svg>

@@ -14,11 +14,19 @@
  * /AGENTS.md 4.1).
  *
  * Expert review is required for this page and has NOT happened, so it cannot become indexable.
+ *
+ * Phase 2G presentation: an intro with a visible review-status panel, a summary of the verified
+ * points, a sticky table of contents, method cards with generic schematics, the City's project
+ * compilation as cards, a documented permit sequence, and full source cards. The municipal
+ * statements, caveats, and unknowns are carried over unchanged; nothing is collapsed or hidden.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import DecisionFlow from '../components/DecisionFlow.astro';
 import EvidenceNote from '../components/EvidenceNote.astro';
+import EvidenceChip from '../components/EvidenceChip.astro';
 import SourceList from '../components/SourceList.astro';
+import OnThisPage from '../components/OnThisPage.astro';
+import MethodSchematic from '../components/MethodSchematic.astro';
 import type { Source } from '../lib/content/sources.ts';
 
 const sources: Source[] = [
@@ -96,6 +104,21 @@ const sources: Source[] = [
   },
 ];
 
+/** Table of contents: every id must exist on this page (check-dist verifies fragment links). */
+const toc = [
+  { id: 'what-is-yours', label: 'What counts as your pipe' },
+  { id: 'responsibility', label: 'Who is responsible' },
+  { id: 'before-you-hire', label: 'Before you hire anyone' },
+  { id: 'diagnosis', label: 'Camera inspection' },
+  { id: 'methods', label: 'Repair methods' },
+  { id: 'city-work', label: "The City's own sewer work" },
+  { id: 'permit', label: 'The permit' },
+  { id: 'inspection', label: 'Inspection and video' },
+  { id: 'replacement', label: 'If the line is replaced' },
+  { id: 'open-questions', label: 'Open questions' },
+  { id: 'sources', label: 'Sources' },
+] as const;
+
 /** Original compilation: Lawrence sanitary sewer rehabilitation work documented by the City itself. */
 const rehabProjects = [
   {
@@ -126,422 +149,535 @@ const rehabProjects = [
 ---
 
 <BaseLayout pageId="lawrence-sewer-lateral-repair">
-  <article class="prose">
-    <h1>Sewer lateral repair in Lawrence, Indiana</h1>
+  <div class="page-intro">
+    <div class="container page-intro__inner">
+      <p class="eyebrow">In-depth local guide · Lawrence, Indiana</p>
+      <h1>Sewer lateral repair in Lawrence, Indiana</h1>
 
-    <p class="lede">
-      In Lawrence, the sewer lateral that runs from your house to the public main is yours — including
-      the part under the street right-of-way — and repairing it requires a permit from the City. If the
-      repair is done by lining or pipe bursting, the City's current policy also requires camera video of
-      the finished work before it is approved.
-    </p>
-
-    <EvidenceNote kind="fact">
-      <p>
-        Every Lawrence-specific statement below is tied to a cited City ordinance, utility document, or
-        other recorded Lawrence source, listed under <a href="#sources">sources</a>. Descriptions of how
-        repair methods physically work are cited to engineering specifications issued elsewhere; they
-        explain the methods and are <strong>not</strong> Lawrence requirements.
+      <p class="lede">
+        In Lawrence, the sewer lateral that runs from your house to the public main is yours — including
+        the part under the street right-of-way — and repairing it requires a permit from the City. If the
+        repair is done by lining or pipe bursting, the City's current policy also requires camera video of
+        the finished work before it is approved.
       </p>
-    </EvidenceNote>
 
-    <h2 id="what-is-yours">What counts as your pipe</h2>
-    <p>
-      Lawrence ordinance calls it the <strong>building sewer</strong>: the pipe that runs from your
-      building drain to the public sewer. The definition expressly includes the portion of that pipe
-      inside the public right-of-way. The building drain itself is treated as ending five feet outside
-      the building wall, so almost everything between your foundation and the public main is the
-      building sewer.
-    </p>
-    <p>
-      Other words for the same pipe are <em>lateral</em>, <em>private lateral</em>, and
-      <em>sewer service line</em>. The utility's newsletters use "sanitary sewer lateral" for it.
-    </p>
+      <dl class="status-panel status-panel--four">
+        <div class="status-panel__pending">
+          <dt>Technical review</dt>
+          <dd>
+            <strong>Pending.</strong> Not yet reviewed by a qualified sewer professional, and the open
+            questions below have not been confirmed with Lawrence Utilities.
+          </dd>
+        </div>
+        <div>
+          <dt>Search engines</dt>
+          <dd><strong>Not submitted.</strong> Publicly readable, but not approved for search indexing.</dd>
+        </div>
+        <div>
+          <dt>Sources</dt>
+          <dd>
+            <strong>8 cited documents</strong>, 7 of them published by the City of Lawrence or its
+            utility. <a href="#sources">Each lists the date it was verified.</a>
+          </dd>
+        </div>
+        <div>
+          <dt>Independence</dt>
+          <dd>Not affiliated with the City or Lawrence Utilities. No contractor sponsors or edits this guide.</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
 
-    <h2 id="responsibility">Who is responsible for repairs</h2>
-    <p>
-      The ordinance places responsibility on the property owner who benefits from the connection:
-      providing, installing, and connecting it, and making all necessary repairs, extensions,
-      relocations, changes, or replacements. The utility has said the same thing in plain language to
-      homeowners twice — in 2023, and again in August 2024, when it stated that residents are
-      responsible for the maintenance and repair of their sanitary sewer laterals to the point of
-      connection at the city's main sewer line.
-    </p>
-    <p>
-      The ordinance also lets the Director alter, modify, or waive those requirements where compliance
-      is not possible because of extenuating circumstances.
-    </p>
+  <div class="container article-layout">
+    <OnThisPage items={toc} />
 
-    <EvidenceNote kind="inference">
+    <article class="article-body">
+      <section class="summary" aria-labelledby="summary-title">
+        <h2 class="summary__title" id="summary-title">The short version</h2>
+        <ul>
+          <li>
+            <EvidenceChip kind="fact" />
+            <span><strong>The whole lateral is the owner's.</strong> The ordinance's "building sewer" runs to the public sewer and includes the portion in the right-of-way.</span>
+          </li>
+          <li>
+            <EvidenceChip kind="fact" />
+            <span><strong>A repair needs a City permit.</strong> Both the ordinance and the utility's policy manual say so.</span>
+          </li>
+          <li>
+            <EvidenceChip kind="fact" />
+            <span><strong>Lining and pipe bursting are allowed</strong> under the utility policy the City currently links, alongside excavation.</span>
+          </li>
+          <li>
+            <EvidenceChip kind="fact" />
+            <span><strong>Trenchless repairs are approved on video.</strong> Camera footage of the finished work goes to the utility.</span>
+          </li>
+          <li>
+            <EvidenceChip kind="unverified" />
+            <span><strong>Still open:</strong> responsibility for the tap or wye at the main, the permit fee, and where the application is filed today.</span>
+          </li>
+        </ul>
+      </section>
+
+      <EvidenceNote kind="fact" label="How to read this guide">
+        <p>
+          Every Lawrence-specific statement below is tied to a cited City ordinance, utility document, or
+          other recorded Lawrence source, listed under <a href="#sources">sources</a>. Descriptions of how
+          repair methods physically work are cited to engineering specifications issued elsewhere; they
+          explain the methods and are <strong>not</strong> Lawrence requirements.
+        </p>
+        <p>
+          Reasoning drawn from several sources is labeled <strong>Inference</strong>, and questions the
+          public record does not answer are labeled <strong>Not established</strong>. Neither is ever
+          presented as a verified rule.
+        </p>
+      </EvidenceNote>
+
+      <h2 id="what-is-yours">What counts as your pipe</h2>
       <p>
-        The 2019 policy manual describes owner responsibility "from the property line to the point of
-        connection with the public main." Read alone, that sentence could be mistaken for a rule that
-        the City owns the pipe up to the property line. Read together with the ordinance definition
-        (which includes the right-of-way portion) and the 2023 and 2024 newsletters (structure to main),
-        the sources point the same way: the owner is responsible for the full lateral. This
-        reconciliation is our reasoning from consistent sources, not a single statement in one of them.
+        Lawrence ordinance calls it the <strong>building sewer</strong>: the pipe that runs from your
+        building drain to the public sewer. The definition expressly includes the portion of that pipe
+        inside the public right-of-way. The building drain itself is treated as ending five feet outside
+        the building wall, so almost everything between your foundation and the public main is the
+        building sewer.
       </p>
-    </EvidenceNote>
-
-    <EvidenceNote kind="unverified">
       <p>
-        We have not established who is responsible for the <strong>tap or wye at the main itself</strong>,
-        how often the Director's waiver is used in practice, or whether any cost-share or assistance
-        program exists. We are also not publishing a property-line responsibility diagram until the
-        tap question is confirmed with Lawrence Utilities, because a diagram would imply an answer we
-        do not have.
+        Other words for the same pipe are <em>lateral</em>, <em>private lateral</em>, and{' '}
+        <em>sewer service line</em>. The utility's newsletters use "sanitary sewer lateral" for it.
       </p>
-    </EvidenceNote>
 
-    <h2 id="before-you-hire">Before you hire anyone: find out whose pipe is failing</h2>
-    <p>
-      Lawrence Utilities asks residents with a sanitary sewer problem to call its after-hours on-call
-      line first, and gives a direct financial reason: the problem may be in the public main, and if you
-      hire a contractor who comes out and determines the fault is in the public main, the utility does
-      not reimburse those contractor costs. In its August 2024 newsletter the utility published
-      <strong>317-260-0220</strong> as that after-hours on-call number.
-    </p>
-    <EvidenceNote kind="unverified">
+      <h2 id="responsibility">Who is responsible for repairs</h2>
       <p>
-        That number was published in August 2024 and this project has not re-verified it since. Check
-        the current contact details on the City of Lawrence Utilities website before you rely on it.
+        The ordinance places responsibility on the property owner who benefits from the connection:
+        providing, installing, and connecting it, and making all necessary repairs, extensions,
+        relocations, changes, or replacements. The utility has said the same thing in plain language to
+        homeowners twice — in 2023, and again in August 2024, when it stated that residents are
+        responsible for the maintenance and repair of their sanitary sewer laterals to the point of
+        connection at the city's main sewer line.
       </p>
-    </EvidenceNote>
-    <p>
-      The same newsletter notes something worth knowing if work has recently been done in your street:
-      the utility reported an increase in sewer laterals damaged by contractors installing underground
-      fiber optic lines for 5G upgrades, and said it can help where damage is determined to result from
-      a third-party contractor working in the area. The utility does not say what that help consists of,
-      and neither will we.
-    </p>
+      <p>
+        The ordinance also lets the Director alter, modify, or waive those requirements where compliance
+        is not possible because of extenuating circumstances.
+      </p>
 
-    <h2 id="diagnosis">What a camera inspection can and cannot settle</h2>
-    <p>
-      A camera inspection is what turns "the drain keeps backing up" into something you can act on. A
-      CCTV run through the line helps identify the type and condition of a defect, where it sits along
-      the length of the line, and how much of the line is affected.
-    </p>
-    <p>
-      What it does not by itself establish is where that point is on the surface, or how deep the pipe
-      is buried. Locating the line and its depth generally takes separate locating equipment or further
-      investigation by the contractor. And which repair method suits your line is a professional
-      judgment that depends on the pipe, the defect, the route, and site conditions together — this page
-      does not make it for you.
-    </p>
-    <p>
-      Lawrence's policy manual treats camera work as a normal part of lateral work in both directions:
-      the City may require a lateral camera inspection, with the video provided, instead of excavating
-      to expose the pipe, and it requires video of the finished repair for trenchless methods (below).
-    </p>
+      <EvidenceNote kind="inference">
+        <p>
+          The 2019 policy manual describes owner responsibility "from the property line to the point of
+          connection with the public main." Read alone, that sentence could be mistaken for a rule that
+          the City owns the pipe up to the property line. Read together with the ordinance definition
+          (which includes the right-of-way portion) and the 2023 and 2024 newsletters (structure to main),
+          the sources point the same way: the owner is responsible for the full lateral. This
+          reconciliation is our reasoning from consistent sources, not a single statement in one of them.
+        </p>
+      </EvidenceNote>
 
-    <DecisionFlow />
+      <EvidenceNote kind="unverified">
+        <p>
+          We have not established who is responsible for the <strong>tap or wye at the main itself</strong>,
+          how often the Director's waiver is used in practice, or whether any cost-share or assistance
+          program exists. We are also not publishing a property-line responsibility diagram until the
+          tap question is confirmed with Lawrence Utilities, because a diagram would imply an answer we
+          do not have.
+        </p>
+      </EvidenceNote>
 
-    <p>In sequence, that is:</p>
-    <ol class="steps">
-      <li>A symptom appears — repeated backups, slow drains, or a finding from a camera.</li>
-      <li>Establish whether the failure is in your lateral or in the public main.</li>
-      <li>If it is the main, it is the utility's to fix. If it is your lateral, the decision is yours.</li>
-      <li>A camera inspection identifies the defect and how much of the line is affected.</li>
-      <li>You and the contractor choose a method: spot repair, full-length lining, pipe bursting, or open-cut replacement.</li>
-      <li>The work is permitted, inspected, and — for lining or bursting — verified on video before it is accepted.</li>
-    </ol>
+      <h2 id="before-you-hire">Before you hire anyone: find out whose pipe is failing</h2>
+      <p>
+        Lawrence Utilities asks residents with a sanitary sewer problem to call its after-hours on-call
+        line first, and gives a direct financial reason: the problem may be in the public main, and if you
+        hire a contractor who comes out and determines the fault is in the public main, the utility does
+        not reimburse those contractor costs. In its August 2024 newsletter the utility published{' '}
+        <strong>317-260-0220</strong> as that after-hours on-call number.
+      </p>
+      <EvidenceNote kind="unverified">
+        <p>
+          That number was published in August 2024 and this project has not re-verified it since. Check
+          the current contact details on the City of Lawrence Utilities website before you rely on it.
+        </p>
+      </EvidenceNote>
+      <p>
+        The same newsletter notes something worth knowing if work has recently been done in your street:
+        the utility reported an increase in sewer laterals damaged by contractors installing underground
+        fiber optic lines for 5G upgrades, and said it can help where damage is determined to result from
+        a third-party contractor working in the area. The utility does not say what that help consists of,
+        and neither will we.
+      </p>
 
-    <h2 id="methods">The repair methods you are choosing between</h2>
-    <p>
-      Lawrence's policy manual states plainly that the utility <strong>does allow</strong> rehabilitation
-      of laterals using pipe-bursting and lining technologies with appropriate materials. That is the
-      Lawrence-specific fact that matters here: under the City's current published policy both
-      trenchless approaches are available alongside conventional excavation.
-    </p>
+      <h2 id="diagnosis">What a camera inspection can and cannot settle</h2>
+      <p>
+        A camera inspection is what turns "the drain keeps backing up" into something you can act on. A
+        CCTV run through the line helps identify the type and condition of a defect, where it sits along
+        the length of the line, and how much of the line is affected.
+      </p>
+      <p>
+        What it does not by itself establish is where that point is on the surface, or how deep the pipe
+        is buried. Locating the line and its depth generally takes separate locating equipment or further
+        investigation by the contractor. And which repair method suits your line is a professional
+        judgment that depends on the pipe, the defect, the route, and site conditions together — this page
+        does not make it for you.
+      </p>
+      <p>
+        Lawrence's policy manual treats camera work as a normal part of lateral work in both directions:
+        the City may require a lateral camera inspection, with the video provided, instead of excavating
+        to expose the pipe, and it requires video of the finished repair for trenchless methods (below).
+      </p>
 
-    <div class="table-scroll" tabindex="0" role="region" aria-label="Repair method comparison">
-      <table>
-        <caption>
-          How each method physically works, and what the work involves. Which one suits your line is
-          decided by the inspection and the contractor, not by this page.
-        </caption>
-        <thead>
-          <tr>
-            <th scope="col">Method</th>
-            <th scope="col">What happens</th>
-            <th scope="col">What the work involves</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">Spot or sectional repair</th>
-            <td>A short section is repaired, or a sectional liner is set across one defect.</td>
-            <td>
+      <DecisionFlow />
+
+      <p>In sequence, that is:</p>
+      <ol class="steps">
+        <li>A symptom appears — repeated backups, slow drains, or a finding from a camera.</li>
+        <li>Establish whether the failure is in your lateral or in the public main.</li>
+        <li>If it is the main, it is the utility's to fix. If it is your lateral, the decision is yours.</li>
+        <li>A camera inspection identifies the defect and how much of the line is affected.</li>
+        <li>You and the contractor choose a method: spot repair, full-length lining, pipe bursting, or open-cut replacement.</li>
+        <li>The work is permitted, inspected, and — for lining or bursting — verified on video before it is accepted.</li>
+      </ol>
+
+      <h2 id="methods">The repair methods you are choosing between</h2>
+      <p>
+        Lawrence's policy manual states plainly that the utility <strong>does allow</strong> rehabilitation
+        of laterals using pipe-bursting and lining technologies with appropriate materials. That is the
+        Lawrence-specific fact that matters here: under the City's current published policy both
+        trenchless approaches are available alongside conventional excavation.
+      </p>
+      <p class="subtle">
+        How each method physically works, and what the work involves. Which one suits your line is
+        decided by the inspection and the contractor, not by this page.
+      </p>
+
+      <ul class="methods" aria-label="Repair method comparison">
+        <li>
+          <MethodSchematic kind="spot" />
+          <h3>Spot or sectional repair</h3>
+          <dl>
+            <dt>What happens</dt>
+            <dd>A short section is repaired, or a sectional liner is set across one defect.</dd>
+            <dt>What the work involves</dt>
+            <dd>
               Lawrence's policy contemplates this: for a point repair with a sectional liner, the
               post-repair video must run from the cleanout to at least two feet past the repaired
               section.
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">Full-length lining (CIPP)</th>
-            <td>
+            </dd>
+          </dl>
+        </li>
+        <li>
+          <MethodSchematic kind="cipp" />
+          <h3>Full-length lining (CIPP)</h3>
+          <dl>
+            <dt>What happens</dt>
+            <dd>
               A flexible tube impregnated with a thermoset resin is installed inside the existing pipe
               and cured in place, forming a hard, impermeable liner pipe inside the host pipe.
-            </td>
-            <td>
+            </dd>
+            <dt>What the work involves</dt>
+            <dd>
               The line is cleaned and inspected first; an obstruction that cannot be cleared by
               conventional cleaning or cutting equipment has to be dealt with before lining. Sewer
               service is interrupted while the liner is installed and cured.
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">Pipe bursting</th>
-            <td>
+            </dd>
+          </dl>
+        </li>
+        <li>
+          <MethodSchematic kind="bursting" />
+          <h3>Pipe bursting</h3>
+          <dl>
+            <dt>What happens</dt>
+            <dd>
               The old pipe is fractured in place and its fragments pushed outward into the soil while a
               new HDPE or PVC pipe is pulled into the space left behind.
-            </td>
-            <td>
+            </dd>
+            <dt>What the work involves</dt>
+            <dd>
               Excavation is still needed for an insertion pit and a reception pit, and specifications
               set clearances from nearby structures and buried utilities.
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">Open-cut replacement</th>
-            <td>The pipe is excavated and replaced.</td>
-            <td>
+            </dd>
+          </dl>
+        </li>
+        <li>
+          <MethodSchematic kind="open-cut" />
+          <h3>Open-cut replacement</h3>
+          <dl>
+            <dt>What happens</dt>
+            <dd>The pipe is excavated and replaced.</dd>
+            <dt>What the work involves</dt>
+            <dd>
               Lawrence's installation standards then apply in full — materials, size, depth, slope,
               backfill, cleanouts, tracer wire, and inspection before backfilling. Surface restoration
               becomes part of the job.
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <EvidenceNote kind="unverified">
-      <p>
-        We publish no lifespan, price, success rate, or "best method" claim, because we have no evidence
-        for any of them. How long a repair lasts and what it costs in Lawrence are questions for a
-        qualified contractor and, for this page, for the expert review it has not yet had.
+            </dd>
+          </dl>
+        </li>
+      </ul>
+      <p class="methods-note">
+        The drawings are simplified schematics of each general method. They are not to scale and show
+        no Lawrence-specific pipe, depth, or site.
       </p>
-    </EvidenceNote>
 
-    <h2 id="city-work">What the City's own sewer work tells you</h2>
-    <p>
-      Lawrence publishes what it is doing to its own sanitary system, and two things in that record are
-      useful to a homeowner.
-    </p>
-    <p>
-      First, the utility has publicly identified <strong>older clay sewer laterals</strong> as a local
-      problem: it asks owners to replace clay laterals that are beyond their useful life, and says old
-      clay pipe cracks and breaks easily, letting dirt and roots in and causing backups. It does not say
-      how common clay laterals are in Lawrence, and neither do we.
-    </p>
-    <p>
-      Second, the City is actively rehabilitating parts of its system with the same family of methods
-      being discussed for private laterals, including lateral lining inside its own projects.
-    </p>
+      <EvidenceNote kind="unverified">
+        <p>
+          We publish no lifespan, price, success rate, or "best method" claim, because we have no evidence
+          for any of them. How long a repair lasts and what it costs in Lawrence are questions for a
+          qualified contractor and, for this page, for the expert review it has not yet had.
+        </p>
+      </EvidenceNote>
 
-    <div class="table-scroll" tabindex="0" role="region" aria-label="Recent Lawrence sanitary sewer rehabilitation projects">
-      <table>
-        <caption>
-          Recent Lawrence sanitary sewer rehabilitation, compiled from the City's own documents. These
-          are <strong>public-system</strong> projects.
-        </caption>
-        <thead>
-          <tr>
-            <th scope="col">Project</th>
-            <th scope="col">Area</th>
-            <th scope="col">Documented method</th>
-            <th scope="col">Documented quantity</th>
-            <th scope="col">Source</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            rehabProjects.map((p) => (
-              <tr>
-                <th scope="row">{p.project}</th>
-                <td>{p.area}</td>
-                <td>{p.method}</td>
-                <td>{p.quantity}</td>
-                <td>
-                  <a href={p.href}>{p.source}</a>
-                </td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
-    </div>
-
-    <EvidenceNote kind="unverified" label="Important limit">
+      <h2 id="city-work">What the City's own sewer work tells you</h2>
       <p>
-        These are the City's projects on the <strong>public</strong> system. That Lawrence lines its own
-        sewers, and lines laterals inside its own contracts, does <strong>not</strong> establish that
-        your lateral can be lined, that lining is the right choice for it, or what it would cost. Only
-        an inspection of your line and a qualified contractor can answer that.
+        Lawrence publishes what it is doing to its own sanitary system, and two things in that record are
+        useful to a homeowner.
       </p>
-    </EvidenceNote>
-
-    <p>
-      One practical detail from the City's 2026 lining contract is worth carrying into your own
-      conversation with a contractor, as a question rather than a rule: on that project the contractor
-      must give affected customers 24 to 48 hours' written notice, because building sewer laterals are
-      out of service during installation, curing, and restoration, with a maximum of eight hours without
-      service. Your private repair is not governed by that contract, but the same physical constraint
-      applies — so ask how long your line will be out of service and what you should avoid during it.
-    </p>
-
-    <h2 id="permit">The permit Lawrence requires</h2>
-    <p>
-      Two separate sources say a permit is required. The ordinance makes it unlawful to repair, modify,
-      or connect a building sewer without a valid sanitary sewer connection permit issued by the
-      Director. The utility's policy manual requires a permit before repair, replacement, or relocation
-      of any lateral connected to the City's sanitary sewer.
-    </p>
-    <p>
-      The City publishes the current form: the
-      <a
-        href="https://www.cityoflawrence.org/sites/default/files/document-group/Sanitary%20Sewer%20Permit%20Application.pdf"
-        rel="nofollow noopener">Application for Sanitary Building Sewer Lateral Construction Permit</a
-      >. What it actually asks for:
-    </p>
-    <ul>
-      <li>
-        the type of work — it has boxes for <strong>New Line</strong>,
-        <strong>Repair/Modification Work</strong>, and <strong>Replace/Relocate</strong>, so a repair is
-        squarely within it;
-      </li>
-      <li>
-        whether the work is an emergency. For emergency repair work, the form states the application must
-        be made <strong>no later than the following business day</strong>;
-      </li>
-      <li>
-        a plat drawing of the proposed project showing the location of work and the materials being used,
-        carrying the statement that all work will meet or exceed City of Lawrence standards and
-        specifications;
-      </li>
-      <li>the service address, property owner details, assessor parcel number, and legal description;</li>
-      <li>
-        the installing or repairing contractor's details, including a <strong>Lawrence registration
-        number</strong> and its expiration date;
-      </li>
-      <li>a note that a separate grease trap application is required where a project needs one.</li>
-    </ul>
-    <p>
-      The ordinance separately requires owner and contractor information, the premises, and plans showing
-      materials of construction and the installation method; the policy manual adds a drawing of existing
-      and proposed structures and utilities. The obligation sits with the owner.
-    </p>
-    <p>
-      <strong>Who applies:</strong> Under ordinance § 5-1-2-1(E), an application normally comes from a
-      plumbing contractor licensed by Indiana, Marion County, and Lawrence, or from another contractor
-      meeting the City Building Commissioner's bond and insurance requirements. The Director may
-      accept other applicants at the Director's discretion. Before work starts, ask the contractor
-      who will apply, which registrations apply, and who will coordinate the City inspection. The
-      ordinance also says the permit expires if work has not begun within 150 days of issuance,
-      subject to an extension for good cause (§ 5-1-2-1(G)).
-    </p>
-    <EvidenceNote kind="unverified">
       <p>
-        The form <strong>does not list a sewer-lateral permit fee or a submission address</strong>, and
-        it carries no revision date. Its statement that there is no fee applies only to the
-        <strong>separate grease-trap application</strong>, not the sewer-lateral permit. The 2019
-        policy manual says application fees are due but lists a DPW office address we have not
-        confirmed is current. Confirm the actual sewer-lateral fee, the submission method, and the
-        current office with Lawrence Utilities before you plan around them.
+        First, the utility has publicly identified <strong>older clay sewer laterals</strong> as a local
+        problem: it asks owners to replace clay laterals that are beyond their useful life, and says old
+        clay pipe cracks and breaks easily, letting dirt and roots in and causing backups. It does not say
+        how common clay laterals are in Lawrence, and neither do we.
       </p>
-    </EvidenceNote>
-
-    <h2 id="inspection">Inspection, and the video that gets trenchless work approved</h2>
-    <p>
-      For work done in the open, the ordinance requires at least 24 hours' notice that the sewer work is
-      ready for inspection, and the building sewer must be exposed from the foundation to the connection
-      so it can be inspected. The Director may waive that inspection, with or without conditions, and has
-      a right of entry to inspect.
-    </p>
-    <p>For lining and pipe bursting, the policy manual sets a different kind of proof:</p>
-    <ul>
-      <li>
-        the contractor submits camera video of the repair to the utility for the work to be approved;
-      </li>
-      <li>
-        for a full rehabilitation, the video has to cover the whole lateral, from the cleanout near the
-        structure to the connection at the public main;
-      </li>
-      <li>
-        for a point repair with a sectional liner, the video has to run from the cleanout to at least two
-        feet past the repaired section;
-      </li>
-      <li>the utility may withhold approval if the video shows a defective repair.</li>
-    </ul>
-    <p>
-      A practical question to ask before the work starts: are producing and submitting that post-repair
-      video included in the quoted scope, and who is responsible for them?
-    </p>
-    <EvidenceNote kind="unverified">
       <p>
-        The 2019 policy specifies DVD. This project has not verified the format Lawrence currently
-        accepts.
+        Second, the City is actively rehabilitating parts of its system with the same family of methods
+        being discussed for private laterals, including lateral lining inside its own projects.
       </p>
-    </EvidenceNote>
 
-    <h2 id="replacement">If the line is replaced rather than rehabilitated</h2>
-    <p>The policy manual's installation requirements are specific. Among them:</p>
-    <ul>
-      <li>the owner hires a contractor licensed, bonded, and insured in the City of Lawrence;</li>
-      <li>approved materials — SDR35 gasketed pipe, Schedule 40 PVC, or Schedule 80 PVC;</li>
-      <li>4-inch or 6-inch pipe, with a minimum 6-inch pipe inside the City right-of-way;</li>
-      <li>
-        at least 18 inches of cover at the building, and 4 feet beyond ten feet from the building where
-        the stub depth allows, with minimum slopes set by pipe size;
-      </li>
-      <li>
-        granular backfill to City standards where the lateral runs in or under a driveway or sidewalk, or
-        within five feet of a roadway;
-      </li>
-      <li>cleanouts 1.5 to 3 feet from the building, at bends, and at least every 100 feet;</li>
-      <li>tracer tape or wire;</li>
-      <li>no backfilling before the utility's inspection, with 24 hours' notice for that inspection.</li>
-    </ul>
-    <p>
-      One more thing the utility asks of owners, which is cheap to check: sump pumps and downspouts must
-      not be connected to the sanitary lateral. The utility cites city ordinance section 5-1-2-2 and says
-      those discharges have to go to storm sewer pipes or ditches. It also asks owners to make sure the
-      cleanout cap is sealed and secure.
-    </p>
-    <EvidenceNote kind="unverified">
+      <p class="projects__caption" id="projects-caption">
+        Recent Lawrence sanitary sewer rehabilitation, compiled from the City's own documents. These
+        are <strong>public-system</strong> projects.
+      </p>
+      <ul class="projects" aria-labelledby="projects-caption">
+        {
+          rehabProjects.map((p) => (
+            <li>
+              <h3>{p.project}</h3>
+              <dl>
+                <div>
+                  <dt>Area</dt>
+                  <dd>{p.area}</dd>
+                </div>
+                <div>
+                  <dt>Documented method</dt>
+                  <dd>{p.method}</dd>
+                </div>
+                <div>
+                  <dt>Documented quantity</dt>
+                  <dd>{p.quantity}</dd>
+                </div>
+                <div>
+                  <dt>Source</dt>
+                  <dd>
+                    <a href={p.href}>{p.source}</a>
+                  </dd>
+                </div>
+              </dl>
+            </li>
+          ))
+        }
+      </ul>
+
+      <EvidenceNote kind="unverified" label="Important limit">
+        <p>
+          These are the City's projects on the <strong>public</strong> system. That Lawrence lines its own
+          sewers, and lines laterals inside its own contracts, does <strong>not</strong> establish that
+          your lateral can be lined, that lining is the right choice for it, or what it would cost. Only
+          an inspection of your line and a qualified contractor can answer that.
+        </p>
+      </EvidenceNote>
+
       <p>
-        The installation rules are written for new or replacement installation. How far each one applies
-        to a trenchless rehabilitation — the pipe material pulled through a burst, for instance — was not
-        confirmed with the utility. We also did not re-read ordinance section 5-1-2-2 itself; that
-        citation is the utility's.
+        One practical detail from the City's 2026 lining contract is worth carrying into your own
+        conversation with a contractor, as a question rather than a rule: on that project the contractor
+        must give affected customers 24 to 48 hours' written notice, because building sewer laterals are
+        out of service during installation, curing, and restoration, with a maximum of eight hours without
+        service. Your private repair is not governed by that contract, but the same physical constraint
+        applies — so ask how long your line will be out of service and what you should avoid during it.
       </p>
-    </EvidenceNote>
 
-    <h2 id="open-questions">What this page does not tell you yet</h2>
-    <p>
-      Being explicit about the gaps is part of the method. As of the last verification date, this project
-      has <strong>not</strong> established:
-    </p>
-    <ul>
-      <li>the current permit fee, or which office accepts the application today;</li>
-      <li>the video format the utility accepts today;</li>
-      <li>who is responsible for the tap or wye at the main itself;</li>
-      <li>whether every address inside Lawrence city limits is served by Lawrence Utilities sanitary sewer;</li>
-      <li>how often the Director's waiver is granted, and on what basis;</li>
-      <li>whether any cost-share or assistance program exists for homeowners;</li>
-      <li>whether the City applies its 2019 policy today without unpublished changes;</li>
-      <li>how common clay laterals are in Lawrence housing stock, or how those lines typically fail here;</li>
-      <li>what lateral repair costs in Lawrence.</li>
-    </ul>
-    <p>
-      Each of those is a question for Lawrence Utilities or your contractor. When we verify one, it will
-      appear here with its source, or it will stay off the page.
-    </p>
+      <h2 id="permit">The permit Lawrence requires</h2>
+      <p>
+        Two separate sources say a permit is required. The ordinance makes it unlawful to repair, modify,
+        or connect a building sewer without a valid sanitary sewer connection permit issued by the
+        Director. The utility's policy manual requires a permit before repair, replacement, or relocation
+        of any lateral connected to the City's sanitary sewer.
+      </p>
 
-    <h2 id="sources">Sources</h2>
-    <SourceList sources={sources} />
-    <p class="subtle">
-      Ordinance and policy documents change. These were read and verified on the dates shown, and are
-      re-verified before this page is ever submitted for indexing. See
-      <a href="/about/">how this resource works</a> for the review and correction process.
-    </p>
-  </article>
+      <h3 id="permit-sequence">From application to approval, as documented</h3>
+      <ol class="process">
+        <li>
+          <strong>Apply before the work</strong>{' '}
+          The ordinance and the policy manual both require the permit first. For emergency repair work,
+          the current form says to apply no later than the following business day.
+        </li>
+        <li>
+          <strong>Start within 150 days</strong>{' '}
+          The permit expires if work has not begun within 150 days of issuance, subject to an extension
+          for good cause.
+        </li>
+        <li>
+          <strong>Inspection, or video for trenchless work</strong>{' '}
+          Open-cut work needs at least 24 hours' notice and an exposed line for inspection (the Director
+          may waive it). For lining and bursting, camera video of the finished repair is submitted to the
+          utility for approval.
+        </li>
+        <li>
+          <strong>Approval</strong>{' '}
+          The utility may withhold approval of a lined or burst repair if the video shows a defective
+          repair.
+        </li>
+        <li class="process__open">
+          <strong>Not established</strong>{' '}
+          The sewer-lateral permit fee, where the application is filed today, and the video format the
+          utility accepts now.
+        </li>
+      </ol>
+
+      <h3 id="permit-form">What the current form asks for</h3>
+      <p>
+        The City publishes the current form: the{' '}
+        <a
+          href="https://www.cityoflawrence.org/sites/default/files/document-group/Sanitary%20Sewer%20Permit%20Application.pdf"
+          rel="nofollow noopener">Application for Sanitary Building Sewer Lateral Construction Permit</a
+        >. What it actually asks for:
+      </p>
+      <ul class="checklist">
+        <li>
+          the type of work — it has boxes for <strong>New Line</strong>,{' '}
+          <strong>Repair/Modification Work</strong>, and <strong>Replace/Relocate</strong>, so a repair is
+          squarely within it;
+        </li>
+        <li>
+          whether the work is an emergency. For emergency repair work, the form states the application must
+          be made <strong>no later than the following business day</strong>;
+        </li>
+        <li>
+          a plat drawing of the proposed project showing the location of work and the materials being used,
+          carrying the statement that all work will meet or exceed City of Lawrence standards and
+          specifications;
+        </li>
+        <li>the service address, property owner details, assessor parcel number, and legal description;</li>
+        <li>
+          the installing or repairing contractor's details, including a <strong>Lawrence registration
+          number</strong> and its expiration date;
+        </li>
+        <li>a note that a separate grease trap application is required where a project needs one.</li>
+      </ul>
+      <p>
+        The ordinance separately requires owner and contractor information, the premises, and plans showing
+        materials of construction and the installation method; the policy manual adds a drawing of existing
+        and proposed structures and utilities. The obligation sits with the owner.
+      </p>
+      <p>
+        <strong>Who applies:</strong> Under ordinance § 5-1-2-1(E), an application normally comes from a
+        plumbing contractor licensed by Indiana, Marion County, and Lawrence, or from another contractor
+        meeting the City Building Commissioner's bond and insurance requirements. The Director may
+        accept other applicants at the Director's discretion. Before work starts, ask the contractor
+        who will apply, which registrations apply, and who will coordinate the City inspection. The
+        ordinance also says the permit expires if work has not begun within 150 days of issuance,
+        subject to an extension for good cause (§ 5-1-2-1(G)).
+      </p>
+      <EvidenceNote kind="unverified">
+        <p>
+          The form <strong>does not list a sewer-lateral permit fee or a submission address</strong>, and
+          it carries no revision date. Its statement that there is no fee applies only to the{' '}
+          <strong>separate grease-trap application</strong>, not the sewer-lateral permit. The 2019
+          policy manual says application fees are due but lists a DPW office address we have not
+          confirmed is current. Confirm the actual sewer-lateral fee, the submission method, and the
+          current office with Lawrence Utilities before you plan around them.
+        </p>
+      </EvidenceNote>
+
+      <h2 id="inspection">Inspection, and the video that gets trenchless work approved</h2>
+      <p>
+        For work done in the open, the ordinance requires at least 24 hours' notice that the sewer work is
+        ready for inspection, and the building sewer must be exposed from the foundation to the connection
+        so it can be inspected. The Director may waive that inspection, with or without conditions, and has
+        a right of entry to inspect.
+      </p>
+      <p>For lining and pipe bursting, the policy manual sets a different kind of proof:</p>
+      <ul class="checklist">
+        <li>
+          the contractor submits camera video of the repair to the utility for the work to be approved;
+        </li>
+        <li>
+          for a full rehabilitation, the video has to cover the whole lateral, from the cleanout near the
+          structure to the connection at the public main;
+        </li>
+        <li>
+          for a point repair with a sectional liner, the video has to run from the cleanout to at least two
+          feet past the repaired section;
+        </li>
+        <li>the utility may withhold approval if the video shows a defective repair.</li>
+      </ul>
+      <p>
+        A practical question to ask before the work starts: are producing and submitting that post-repair
+        video included in the quoted scope, and who is responsible for them?
+      </p>
+      <EvidenceNote kind="unverified">
+        <p>
+          The 2019 policy specifies DVD. This project has not verified the format Lawrence currently
+          accepts.
+        </p>
+      </EvidenceNote>
+
+      <h2 id="replacement">If the line is replaced rather than rehabilitated</h2>
+      <p>The policy manual's installation requirements are specific. Among them:</p>
+      <ul>
+        <li>the owner hires a contractor licensed, bonded, and insured in the City of Lawrence;</li>
+        <li>approved materials — SDR35 gasketed pipe, Schedule 40 PVC, or Schedule 80 PVC;</li>
+        <li>4-inch or 6-inch pipe, with a minimum 6-inch pipe inside the City right-of-way;</li>
+        <li>
+          at least 18 inches of cover at the building, and 4 feet beyond ten feet from the building where
+          the stub depth allows, with minimum slopes set by pipe size;
+        </li>
+        <li>
+          granular backfill to City standards where the lateral runs in or under a driveway or sidewalk, or
+          within five feet of a roadway;
+        </li>
+        <li>cleanouts 1.5 to 3 feet from the building, at bends, and at least every 100 feet;</li>
+        <li>tracer tape or wire;</li>
+        <li>no backfilling before the utility's inspection, with 24 hours' notice for that inspection.</li>
+      </ul>
+      <p>
+        One more thing the utility asks of owners, which is cheap to check: sump pumps and downspouts must
+        not be connected to the sanitary lateral. The utility cites city ordinance section 5-1-2-2 and says
+        those discharges have to go to storm sewer pipes or ditches. It also asks owners to make sure the
+        cleanout cap is sealed and secure.
+      </p>
+      <EvidenceNote kind="unverified">
+        <p>
+          The installation rules are written for new or replacement installation. How far each one applies
+          to a trenchless rehabilitation — the pipe material pulled through a burst, for instance — was not
+          confirmed with the utility. We also did not re-read ordinance section 5-1-2-2 itself; that
+          citation is the utility's.
+        </p>
+      </EvidenceNote>
+
+      <h2 id="open-questions">What this page does not tell you yet</h2>
+      <p>
+        Being explicit about the gaps is part of the method. As of the last verification date, this project
+        has <strong>not</strong> established:
+      </p>
+      <div class="open-questions">
+        <ul>
+          <li>the current permit fee, or which office accepts the application today;</li>
+          <li>the video format the utility accepts today;</li>
+          <li>who is responsible for the tap or wye at the main itself;</li>
+          <li>whether every address inside Lawrence city limits is served by Lawrence Utilities sanitary sewer;</li>
+          <li>how often the Director's waiver is granted, and on what basis;</li>
+          <li>whether any cost-share or assistance program exists for homeowners;</li>
+          <li>whether the City applies its 2019 policy today without unpublished changes;</li>
+          <li>how common clay laterals are in Lawrence housing stock, or how those lines typically fail here;</li>
+          <li>what lateral repair costs in Lawrence.</li>
+        </ul>
+      </div>
+      <p>
+        Each of those is a question for Lawrence Utilities or your contractor. When we verify one, it will
+        appear here with its source, or it will stay off the page.
+      </p>
+
+      <h2 id="sources">Sources</h2>
+      <SourceList sources={sources} />
+      <p class="subtle">
+        Ordinance and policy documents change. These were read and verified on the dates shown, and are
+        re-verified before this page is ever submitted for indexing. See{' '}
+        <a href="/about/">how this resource works</a> for the review and correction process.
+      </p>
+    </article>
+  </div>
 </BaseLayout>
