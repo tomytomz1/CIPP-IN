@@ -248,3 +248,12 @@ This file is an audit trail, not a strategy document and not a replacement for `
 - Unchanged: lifecycles, scores (Lawrence 63/85), gates, approvals (0), noindex meta/header, canonicals, empty sitemap, intake 503, GA4 consent, CSP, DNS, Cloudflare config. No editorial contact address exists, so none was published (Open Question 15).
 - Receipt: [2026-10-21-0230-phase-2g-credibility-redesign.md](runs/2026-10-21-0230-phase-2g-credibility-redesign.md). PR, CI, merge, and release evidence are appended to the receipt.
 - 2026-10-21 02:30 UTC addendum: PR #24 passed all five checks on head `a05584b` (run 39532989800) and was merged normally as `2fb6511`. A live GitHub-hosted audit (PR #25 run 39533371994, 02:30:21 UTC) confirmed all three pages serve the Phase 2G H1s and `/_astro/EvidenceChip.BfCQSWKi.css`, with noindex meta and header, the empty sitemap, intake 503, and the CSP intact. Cloudflare build and version IDs were not observable from this environment. PR #25 adds H1 and stylesheet logging to the read-only audit.
+
+### 2026-10-21 00:48 EDT — CIPP Indiana image provenance and technical reference scan
+
+- Agent: ChatGPT / GPT-6. Starting `main` `ac8f83e`; research-only branch `research/cipp-visual-references-20261021`.
+- Image search and publisher review indexed 17 reference photographs/diagrams and six corroborating primary/technical sources to `research/editorial/2026-10-21-cipp-visual-reference-scan.json`. Private downloadable HTML atlas also includes low-resolution reference thumbnails of seven user-supplied home photos; these were not committed to public GitHub.
+- Lawrence's July 2025 utility newsletter documents approximately 1,300 LF of planned 6-inch lateral lining in the 71st Street/Oaklandon Northeast project; the 2024 utility newsletter discusses older clay laterals and root damage. No evidence establishes 1940s–1970s home failure rates or that a pictured home has a particular pipe defect.
+- All external visuals remain reference-only with rights **not verified**. Distinguish mainline work, lateral CIPP, junction liners, pipe bursting, illustrations and CCTV. No third-party image binaries were downloaded or mirrored.
+- No site code, graphics, content, indexing approvals, lead intake, analytics, security or DNS changed. Artwork licensing and qualified technical review remain blockers to using visuals on the live site.
+- Receipt: [2026-10-21-0048-cipp-visual-reference-research.md](runs/2026-10-21-0048-cipp-visual-reference-research.md).

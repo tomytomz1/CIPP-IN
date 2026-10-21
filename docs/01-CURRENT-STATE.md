@@ -82,6 +82,7 @@ The site is deployed and publicly reachable, and no page is indexable. Specifica
 
 ## Completed
 
+- 2026-10-21 — Completed a reference-only CIPP image-provenance and technical illustration research scan (17 external image references, six corroborating source documents) for the proposed Lawrence-site art direction. Indexed `research/editorial/2026-10-21-cipp-visual-reference-scan.json`. User-supplied house images remain in conversation, not the public repository. No external photo rights were acquired; no graphics or site code changed; all index/lead/analytics safeguards unchanged. Before design production, obtain expert review and rights clearance; neither 1940s–1970s house age nor a photo proves lateral condition.
 - Market/competitive research (pre-Phase 0, per operator).
 - Phase 0 documentation system: `AGENTS.md`, `CLAUDE.md`, `docs/00`–`docs/05` (2026-09-19).
 - Git repository initialized and pushed to `main` at https://github.com/tomytomz1/CIPP-IN (2026-09-19).
