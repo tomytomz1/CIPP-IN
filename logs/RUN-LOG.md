@@ -248,3 +248,10 @@ This file is an audit trail, not a strategy document and not a replacement for `
 - Unchanged: lifecycles, scores (Lawrence 63/85), gates, approvals (0), noindex meta/header, canonicals, empty sitemap, intake 503, GA4 consent, CSP, DNS, Cloudflare config. No editorial contact address exists, so none was published (Open Question 15).
 - Receipt: [2026-10-21-0230-phase-2g-credibility-redesign.md](runs/2026-10-21-0230-phase-2g-credibility-redesign.md). PR, CI, merge, and release evidence are appended to the receipt.
 - 2026-10-21 02:30 UTC addendum: PR #24 passed all five checks on head `a05584b` (run 39532989800) and was merged normally as `2fb6511`. A live GitHub-hosted audit (PR #25 run 39533371994, 02:30:21 UTC) confirmed all three pages serve the Phase 2G H1s and `/_astro/EvidenceChip.BfCQSWKi.css`, with noindex meta and header, the empty sitemap, intake 503, and the CSP intact. Cloudflare build and version IDs were not observable from this environment. PR #25 adds H1 and stylesheet logging to the read-only audit.
+
+### 2026-10-21 02:37 EDT — Brand SVG source archive
+
+- Operator requested that the selected Indy Sewer Resource SVG logo family be placed in GitHub. Branch `assets/indy-brand-svgs-20261021`, based on main `ac8f83e4449c265069b1ce665bacad7982937469`.
+- Added primary, favicon/icon and one-color SVG logo exports in `assets/brand/`; corrected clipping/spacing in the source exports only. Local XML parsing, no external resources/script inspection, and SVG raster-preview rendering passed.
+- No change to website code, deployed mark, user-approved desktop/mobile hero imagery, robots/noindex, content, intake, analytics, DNS or Cloudflare. SVG wordmarks use live text requiring font outlines for print production; embroidery file digitization not performed.
+- Receipt: [2026-10-21-0237-brand-svg-archive.md](runs/2026-10-21-0237-brand-svg-archive.md).

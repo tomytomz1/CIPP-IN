@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1530" height="320" viewBox="0 0 1530 320" role="img" aria-labelledby="title desc">
+  <title id="title">Indy Sewer Resource one-color logo</title>
+  <desc id="desc">Embroidery-friendly one-color logo for Indy Sewer Resource.</desc>
+  <defs>
+    <style>
+      .ink { fill: #0F2D46; stroke: #0F2D46; }
+      .pipe { fill: none; stroke: #0F2D46; stroke-width: 18; stroke-linecap: round; stroke-linejoin: round; }
+      .pipe2 { fill: none; stroke: #0F2D46; stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; }
+      .ground { stroke: #0F2D46; stroke-width: 8; }
+      .word { font-family: Georgia, 'Times New Roman', serif; font-size: 78px; font-weight: 700; }
+    </style>
+  </defs>
+  <g transform="translate(34,52)">
+    <path class="ink" d="M26 90 L126 14 L226 90 H190 V132 H172 V58 L126 24 L80 58 V132 H62 V90 Z"/>
+    <rect class="ink" x="174" y="38" width="22" height="62"/>
+    <line class="ground" x1="18" y1="146" x2="236" y2="146"/>
+    <path class="pipe" d="M44 160 V180 C44 208 66 230 94 230 H200"/>
+    <path class="pipe2" d="M64 160 V180 C64 197 77 210 94 210 H200"/>
+  </g>
+  <g transform="translate(310,68)">
+    <text class="word ink" x="0" y="80">INDY SEWER RESOURCE</text>
+  </g>
+</svg>

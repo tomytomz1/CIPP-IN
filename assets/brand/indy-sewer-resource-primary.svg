@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="360" viewBox="0 0 1400 360" role="img" aria-labelledby="title desc">
+  <title id="title">Indy Sewer Resource logo</title>
+  <desc id="desc">A simple house above a ground line with a sewer pipe motif below, next to the words Indy Sewer Resource.</desc>
+  <defs>
+    <style>
+      .navy { fill: #0F2D46; }
+      .sand { fill: #C9A96B; }
+      .light { fill: #8FA6B8; }
+      .pipe { fill: none; stroke: #8FA6B8; stroke-width: 20; stroke-linecap: round; stroke-linejoin: round; }
+      .pipe2 { fill: none; stroke: #8FA6B8; stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
+      .ground { stroke: #C9A96B; stroke-width: 10; stroke-linecap: square; }
+      .word { font-family: Georgia, 'Times New Roman', serif; font-size: 86px; font-weight: 700; letter-spacing: -1px; }
+    </style>
+  </defs>
+  <g transform="translate(40,52)">
+    <path class="navy" d="M30 108 L150 16 L270 108 H226 V158 H204 V74 L150 34 L96 74 V158 H74 V108 Z"/>
+    <rect class="navy" x="206" y="48" width="26" height="74"/>
+    <rect class="navy" x="110" y="96" width="40" height="44" rx="2"/>
+    <rect class="navy" x="168" y="96" width="18" height="26" rx="1"/>
+    <rect class="navy" x="191" y="96" width="18" height="26" rx="1"/>
+    <line class="ground" x1="20" y1="172" x2="286" y2="172"/>
+    <path class="pipe" d="M48 184 V210 C48 244 74 270 108 270 H242"/>
+    <path class="pipe2" d="M74 184 V210 C74 230 89 245 109 245 H242"/>
+  </g>
+  <g transform="translate(360,68)">
+    <text class="word navy" x="0" y="88">INDY</text>
+    <text class="word sand" x="275" y="88">SEWER</text>
+    <text class="word navy" x="0" y="184">RESOURCE</text>
+  </g>
+</svg>
