@@ -11,7 +11,7 @@
 - Branch: `claude/epic-volta-roofwc` (the branch this session is required to use; the operator's suggested `feat/phase-2g-credibility-redesign` name was not used for that reason)
 - Starting SHA: `1ff25f0eec571f0083856f9bf73b63ed02b4de6b` (`main`, unchanged from the SHA named in the request)
 - Ending/work commit: implementation commit `0291cd7`; documentation commit is the commit containing this receipt (resolve with `git log`)
-- Run result: PARTIAL (updated below as PR, CI, merge, and release steps complete)
+- Run result: COMPLETE. The release was verified from live production content; Cloudflare build and Worker version IDs could not be read from this environment (see addendum).
 
 ## Operator Request
 
@@ -97,7 +97,10 @@ None. No new source was consulted and no research record changed. Contact-channe
 | Visual review of local renders, light and dark | PASS after fixes | fixed: clipped hero label, missing spaces, nav wrap at 320 px, chip wrap, bursting schematic, spacing |
 | Live production before-audit | NOT RUN | egress proxy refused the domain from this container |
 | Manual screen-reader review | NOT RUN | no screen reader available in this environment |
-| GitHub CI on PR head, merge, Cloudflare release, post-deploy live check | PENDING | recorded in the addendum below |
+| Five required CI checks on PR #24 final head `a05584b` | PASS | run 39532989800: build-and-test, accessibility-and-lab-performance, secret-scan, analytics-production-build, production-read-only-audit all success |
+| Normal merge of PR #24 | DONE | merge commit `2fb6511eb205081bf97ac66d28c5d62306084753` |
+| Post-deployment live verification (GitHub-hosted audit) | PASS | PR #25 run 39533371994, job 119004255200, checkedAt 2026-10-21T02:30:21.523Z: all three pages serve the Phase 2G H1 and `/_astro/EvidenceChip.BfCQSWKi.css`; noindex meta and header, canonicals, CSP, HSTS, 0 sitemap URLs, 301 redirects, intake 503, consent controller present, no Cloudflare beacon |
+| Cloudflare Workers Build ID / Worker version ID | NOT OBSERVED | the dashboard and API are not reachable from this environment |
 
 ## Decisions Made
 
@@ -158,10 +161,31 @@ Operator: review the redesigned pages, set up and test an editorial contact alia
 
 - Branch: `claude/epic-volta-roofwc`
 - Work committed: YES
-- Pushed: see addendum
+- Pushed: YES (PR #24 head `a05584b`; follow-up PR #25)
 - Commit message: "Phase 2G: premium editorial redesign of all three pages" (implementation); "Record Phase 2G redesign in current state, build spec, and run log" (documentation)
 - Commit reference: implementation `0291cd7`; documentation is the commit containing this receipt; resolve with `git log`
 
+## Addendum — PR, CI, merge, and release (2026-10-21, UTC)
+
+- PR #24 (https://github.com/tomytomz1/CIPP-IN/pull/24), opened 02:26. CI run 39532989800 on final head `a05584bd7faeb02a1e6054479846c325bb073a8e`: all five required checks passed (02:26:08–02:28:04). Mergeable state `clean`. The only review was an automated Greptile "trial has ended" notice, which contained no findings.
+- Merged normally (merge commit, protected-main process, no bypass) at ~02:28:35 as `2fb6511eb205081bf97ac66d28c5d62306084753`. Main-push CI run 39533220539 on `2fb6511`: all five jobs succeeded (accessibility-and-lab-performance completed 02:30:42). That run's production audit ran at 02:28:41, seconds after the merge, so it is not treated as post-deployment evidence.
+- Release identification: neither this container nor a web-fetch agent could reach `indysewerresource.com` (egress proxy refusal; DNS not found), and no Cloudflare dashboard or API access exists here. Follow-up PR #25 therefore makes `scripts/audit-production.ts` also **log** each page's H1 and its content-hashed stylesheet. This adds no assertion.
+- **Live result** (PR #25 CI run 39533371994, job `production-read-only-audit` 119004255200, `checkedAt` 2026-10-21T02:30:21.523Z):
+  - `/`, HTTP 200, H1 "Know what’s wrong with your sewer line before deciding how to repair it."
+  - `/lawrence-sewer-lateral-repair/`, HTTP 200, H1 "Sewer lateral repair in Lawrence, Indiana"
+  - `/about/`, HTTP 200, H1 "How this resource works"
+  - All three serve `/_astro/EvidenceChip.BfCQSWKi.css`, which is the stylesheet a local build of `2fb6511` produces. The pre-2G build served `/_astro/BaseLayout.7XeGN8VO.css`. Production is therefore serving the Phase 2G build.
+  - Unchanged: robots meta `noindex, follow` and `X-Robots-Tag: noindex, nofollow` on every page; apex canonicals; unchanged CSP; HSTS; `/sitemap.xml` 0 URLs; robots.txt allows crawling; http and www 301 to the apex; `/api/lead-intake` 503; consent controller present; no Cloudflare beacon injected.
+- Not observed: the Workers Builds build ID and the active Worker version ID. Record them from the Cloudflare dashboard when one is available.
+
 ## Final Operator Report
 
-To be completed after the release steps; see addendum.
+The Phase 2G redesign is live. PR #24 passed all five required checks on its exact head `a05584b` and was merged normally as `2fb6511`. A GitHub-hosted read-only audit at 02:30:21 UTC confirmed that all three production pages serve the new build: new H1s and the new content-hashed stylesheet. Noindex meta and header, canonicals, the empty sitemap, disabled intake, consent analytics, CSP, and redirects are all intact.
+
+Still outstanding:
+- the Cloudflare build and version IDs, which could not be observed from this environment;
+- a manual screen-reader review;
+- qualified professional review of the Lawrence guide, and confirmation of the open Lawrence facts with Lawrence Utilities (the score stays 63/85);
+- an operator-authorized editorial contact address (Open Question 15).
+
+The redesign does not constitute editorial approval or expert review.

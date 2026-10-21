@@ -15,6 +15,10 @@ for (const path of paths) {
     csp: response.headers.get('content-security-policy'), hsts: response.headers.get('strict-transport-security'),
     cloudflareBeaconInjected: html.includes('static.cloudflareinsights.com'),
     ga4Bootstrap: html.includes('/analytics.js'),
+    // Release identification only (no assertion): the H1 and the content-hashed stylesheet
+    // show which build is actually being served, so a release can be confirmed from CI.
+    h1: /<h1\b[^>]*>([\s\S]*?)<\/h1>/i.exec(html)?.[1]?.replace(/<[^>]+>/g, '').trim() ?? null,
+    stylesheets: [...html.matchAll(/<link\s+rel="stylesheet"\s+href="([^"]*)"/gi)].map((m) => m[1]),
     sitemapUrls: path === '/sitemap.xml' ? [...html.matchAll(/<loc>/g)].length : null };
   evidence.push(row);
   if (response.status !== 200) throw new Error(JSON.stringify(row));
