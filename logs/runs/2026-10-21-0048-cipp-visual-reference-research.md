@@ -130,3 +130,7 @@ Use the visual atlas to design *original* side-by-side residential cutaway and p
 ## Final Operator Report
 
 Completed an external-image provenance research pack: 17 external source URLs, seven user-supplied private house thumbnails, six corroborating documents in GitHub (seven in the private atlas), clear regional/technical labeling and rights caveats. Reusable image rights remain unverified. No page, artwork or published image was changed. Research and audit trail are proposed for the normal GitHub protected-main PR workflow.
+
+## Later evidence addendum — public media licensing review (2026-10-21 00:50 EDT)
+
+The Wikimedia Commons source pages for VIS-16 and VIS-17 were read after the initial image-source scan. VIS-16's original photographer has dedicated the image to CC0 1.0; it depicts an April 2026 street installation in Cambridge, Massachusetts. VIS-17's page contains a U.S. federal-government public-domain designation (and a separately displayed original Flickr CC BY 2.0 license notice); the image depicts a Montana highway culvert rehabilitation, NOT a private sanitary lateral. These status notes were added to the JSON reference records. No third-party image file was downloaded or inserted into the website. All other discovered images have unverified reuse rights, and no use permission is assumed for them. This license-source review does not establish that either image is suitable to depict a Lawrence residential CIPP job.
