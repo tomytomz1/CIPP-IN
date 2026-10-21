@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-20",
+  "last_updated": "2026-10-21",
   "note": "Research evidence is supporting material only. /docs/ remains authoritative for active project requirements. Dynamic evidence such as SERPs, contractor offerings, hiring, pricing, and Google policies must be reverified before relying on it for a future material decision.",
   "record_format": {
     "fields": [
@@ -110,6 +110,18 @@
         "docs/01-CURRENT-STATE.md",
         "docs/03-GOOGLE-RESILIENCE.md",
         "docs/04-CONTENT-EDITORIAL-SYSTEM.md"
+      ]
+    },
+    {
+      "path": "research/editorial/2026-10-21-cipp-visual-reference-scan.json",
+      "category": "editorial",
+      "records": 17,
+      "source_documents": 6,
+      "last_verified": "2026-10-21",
+      "stale_after": "Recheck source images, copyright/permission and technical depiction against expert review before producing or deploying website visuals; do not equate public-main and private-lateral contexts.",
+      "related_docs": [
+        "docs/04-CONTENT-EDITORIAL-SYSTEM.md",
+        "docs/01-CURRENT-STATE.md"
       ]
     }
   ]
